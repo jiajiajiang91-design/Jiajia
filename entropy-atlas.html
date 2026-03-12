@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>熵图集 Entropy Atlas — 江佳佳</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<nav><a href="index.html" class="nav-logo">JJ.</a><a href="index.html" class="nav-back">← 返回首页</a></nav>
+<section class="hero">
+  <div class="hero-content">
+    <h1>熵图集<span class="en">Entropy Atlas</span></h1>
+    <p class="hero-sub">东伦敦约 1,000 个后工业场地的交互地图，整合 Overpass API 工业场地数据与 Google Places 情绪评论。使用 n8n 自动化管道构建，为 AA VIBE AI Workshop 制作并在闭幕式展示。</p>
+    <div class="tags">
+      <span class="tag tag--cyan">n8n 自动化</span><span class="tag tag--green">Leaflet.js</span>
+      <span class="tag">Overpass API</span><span class="tag">Google Places</span><span class="tag">AA VIBE Workshop</span>
+    </div>
+  </div>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl">交互地图 Interactive Map</div>
+  <h2>在线地图</h2>
+  <p class="txt">Entropy Atlas 是一个独立 HTML 文件。部署网站时将 N8N_OUTPUT_entropy_atlas.html 放到同一文件夹，下方 iframe 即可加载。或直接用下方链接在新标签页打开。</p>
+  <div class="atlas-frame">
+    <iframe src="N8N_OUTPUT_entropy_atlas.html"></iframe>
+  </div>
+  <a href="N8N_OUTPUT_entropy_atlas.html" target="_blank" class="atlas-link">在新标签页打开 Entropy Atlas →</a>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl">n8n 工作流 Workflow</div>
+  <h2>自动化管道视频</h2>
+  <p class="txt">n8n 自动化工作流的演示视频 — 展示从数据采集到地图生成的完整流程。</p>
+  <div class="vid"><iframe src="https://www.youtube.com/embed/XA8W4Zhc5Ek" allowfullscreen></iframe></div>
+</section>
+
+<footer>
+  <a href="index.html">← 返回首页</a>
+  <span>熵图集 — n8n + AA VIBE 2026</span>
+  <a href="index.html">返回首页 →</a>
+</footer>
+<script>document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1}).observe(el))</script>
+</body>
+</html>

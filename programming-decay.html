@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming Decay — Jiajia Jiang</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<nav><a href="index.html" class="nav-logo">JJ.</a><a href="index.html" class="nav-back">← Back</a></nav>
+
+<section class="hero">
+  <div class="hero-bg" style="background:linear-gradient(135deg,rgba(0,240,255,.03),rgba(255,0,229,.03))"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="status">● In Progress — UCL MArch Thesis</div>
+    <h1>Programming Decay<span class="en">UCL Bartlett RC18 — 2025/26</span></h1>
+    <p class="hero-sub">A cyber-physical design research into fungal bioremediation of post-industrial contaminated concrete at Dagenham Dock, East London. How can algorithmic site selection, Neural CA simulation, and Pix2Pix translation propose site-responsive alternatives to conventional remediation zoning?</p>
+    <div class="tags">
+      <span class="tag tag--cyan">Neural CA</span><span class="tag tag--magenta">Pix2Pix</span>
+      <span class="tag tag--green">Unreal Engine 5</span><span class="tag tag--yellow">ArcGIS</span>
+      <span class="tag tag--cyan">K-Means Clustering</span><span class="tag">Dagenham Dock</span>
+    </div>
+  </div>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl">Chapter 01</div>
+  <h2>The Global Context of Pollution</h2>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_02.jpg" alt="Global Cement and Concrete Tracking"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_03.jpg" alt="Distribution of Major Global Cement Producers"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_04.jpg" alt="Annual CO2 Emissions from Cement"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_05.jpg" alt="Concrete Beyond Borders"></div>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl magenta">Chapter 02</div>
+  <h2>Air and Heavy Metal Pollution in the UK</h2>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_07.jpg" alt="The Infrastructure-Ecology Inversion"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_08.jpg" alt="The Atmospheric Legacy of Concrete"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_09.jpg" alt="Concrete's Afterlife: The Waste Landscape"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_10.jpg" alt="Heavy Metals in England's Topsoil"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_11.jpg" alt="Chemical Stratigraphy of Concrete Decay"></div>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl green">Chapter 03</div>
+  <h2>Main Pollutants: Concrete Production</h2>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_13.jpg" alt="Compressed Timeline of Cement and Concrete"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_14.jpg" alt="The Hazards of Cement and Concrete Production"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_15.jpg" alt="Traditional Concrete Production Process"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_16.jpg" alt="Concrete as a Global Material Network with Heavy Metal"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_17.jpg" alt="Metal Elements Related to the Cement Industry"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_18.jpg" alt="Concrete Versus Living Soil"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_19.jpg" alt="Bio-Cycling Process"></div>
+</section>
+
+<section class="sect reveal">
+  <div class="lbl yellow">Chapter 04</div>
+  <h2>Algorithmic Site Selection</h2>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_21.jpg" alt="Dataset: Barking and Dagenham"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_22.jpg" alt="64-Cell Grid Label and Feature Extraction"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_23.jpg" alt="K-Means Clustering Analysis"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_24.jpg" alt="Classification Features"></div>
+  <div class="img-block"><img src="images_programming_decay/260312-1 programming decay_页面_25.jpg" alt="Digital Phenomenology: User Feedback"></div>
+</section>
+
+<footer>
+  <a href="index.html">← Back to Index</a>
+  <span>Programming Decay — UCL Bartlett RC18</span>
+  <a href="demo-decay.html">Next: Demo Before Programming Decay →</a>
+</footer>
+<script>
+document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1}).observe(el));
+</script>
+</body>
+</html>
