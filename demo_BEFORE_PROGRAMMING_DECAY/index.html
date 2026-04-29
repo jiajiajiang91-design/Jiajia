@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Programmable Decay Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail" aria-label="Primary">
+        <a class="back-home" href="../index.html" aria-label="Back to portfolio home">
+          <span class="arr" aria-hidden="true">←</span>
+          <span>返回主页 / Portfolio</span>
+        </a>
+        <div class="brand">
+          <span class="brand-mark">B</span>
+          <span>
+            <strong>Programmable Decay</strong>
+            <small>Bio-cybernetic interface</small>
+          </span>
+        </div>
+
+        <nav class="nav-stack" aria-label="Views">
+          <button class="nav-item active" data-view="scan" title="Observation">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"/></svg>
+            <span>扫描</span>
+          </button>
+          <button class="nav-item" data-view="decode" title="Decoding">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7zM3 12h4M17 12h4M12 3v4M12 17v4M5 5l3 3M19 5l-3 3M5 19l3-3M19 19l-3-3"/></svg>
+            <span>转译</span>
+          </button>
+          <button class="nav-item" data-view="build" title="Module Builder">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>
+            <span>构件</span>
+          </button>
+          <button class="nav-item" data-view="twin" title="Digital Twin">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4ZM4 7l8 4 8-4M12 11v10"/></svg>
+            <span>孪生</span>
+          </button>
+          <button class="nav-item" data-view="atlas" title="Atlas">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16M7 5v14M17 5v14"/></svg>
+            <span>图集</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Metabolic Cyclicality Console</p>
+            <h1 id="screenTitle">Observation & Scanning</h1>
+          </div>
+          <div class="top-actions">
+            <div class="segmented" role="tablist" aria-label="System mode">
+              <button class="mode-btn active" data-mode="hibernation">HIBERNATION</button>
+              <button class="mode-btn" data-mode="respiration">RESPIRATION</button>
+            </div>
+            <button class="icon-btn" id="runToggle" title="Run live cycle" aria-label="Run live cycle">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <section class="view active" id="scanView" aria-labelledby="scanTitle">
+          <div class="scan-layout">
+            <section class="material-column" aria-label="Material objects">
+              <div class="section-heading">
+                <span>SELECT OBJECTS</span>
+                <small>function / form / context</small>
+              </div>
+              <div class="material-list" id="materialList"></div>
+            </section>
+
+            <section class="scanner-stage" aria-label="Material scanner">
+              <div class="stage-header">
+                <div>
+                  <p id="scanKicker">Material Decoding</p>
+                  <h2 id="materialName">Pineapple Skin</h2>
+                </div>
+                <span class="status-pill" id="stageStatus">Phase change active</span>
+              </div>
+              <div class="scan-window">
+                <img id="scanImage" src="assets/page10.jpg" alt="Selected material board" />
+                <div class="scan-reticle" aria-hidden="true"></div>
+                <div class="scan-readout">
+                  <strong id="scanOutput">Hygromorphic actuator</strong>
+                  <span id="scanSignal">Moisture signal: 90% to 32%</span>
+                </div>
+              </div>
+              <div class="pipeline">
+                <span>Organic residue</span>
+                <span>Sensor trace</span>
+                <span>Material character</span>
+                <span>Morphological response</span>
+              </div>
+            </section>
+
+            <section class="data-column" aria-label="Telemetry">
+              <div class="section-heading">
+                <span>LIVE TELEMETRY</span>
+                <small id="sampleWindow">15 days sample</small>
+              </div>
+              <div class="metric-grid" id="metricGrid"></div>
+              <canvas class="mini-chart" id="scanChart" width="420" height="220" aria-label="Temperature and humidity chart"></canvas>
+              <div class="trait-box">
+                <h3>Derived Module</h3>
+                <p id="moduleDescription">Porous pineapple epidermis becomes a humidity-sensitive ventilation skin for the facade.</p>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="decodeView" aria-labelledby="decodeTitle">
+          <div class="decode-grid">
+            <section class="decode-main">
+              <div class="section-heading">
+                <span>TRANSCODING ENGINE</span>
+                <small>biological decay to morphological response</small>
+              </div>
+              <div class="conversion-board">
+                <div class="conversion-node">
+                  <span>INPUT</span>
+                  <strong id="decodeInput">Decayed sliced pineapple</strong>
+                  <img id="decodeInputImg" src="assets/page10.jpg" alt="Input material board" />
+                </div>
+                <div class="conversion-arrow" aria-hidden="true"></div>
+                <div class="conversion-node output-node">
+                  <span>OUTPUT</span>
+                  <strong id="decodeOutput">Hygromorphic actuator</strong>
+                  <div class="module-visual" id="moduleVisual"></div>
+                </div>
+              </div>
+              <div class="logic-strip" id="logicStrip"></div>
+            </section>
+
+            <section class="control-surface" aria-label="Environmental controls">
+              <div class="section-heading">
+                <span>PARAMETRIC CONTROL</span>
+                <small>temperature / humidity / biomass</small>
+              </div>
+              <label class="range-row">
+                <span>Ambient temp</span>
+                <input type="range" id="tempRange" min="0" max="42" value="8" />
+                <output id="tempOut">8°C</output>
+              </label>
+              <label class="range-row">
+                <span>Humidity</span>
+                <input type="range" id="humidityRange" min="0" max="100" value="38" />
+                <output id="humidityOut">38%</output>
+              </label>
+              <label class="range-row">
+                <span>Biomass load</span>
+                <input type="range" id="bioRange" min="0" max="100" value="62" />
+                <output id="bioOut">62%</output>
+              </label>
+              <div class="algorithm-card">
+                <div class="section-heading compact">
+                  <span>WINTER SURVIVAL ALGORITHM</span>
+                  <small id="algoMode">HIBERNATION</small>
+                </div>
+                <pre id="algorithmText"></pre>
+              </div>
+            </section>
+
+            <section class="response-panel" aria-label="Response model">
+              <div class="section-heading">
+                <span>RESPONSE MODEL</span>
+                <small id="responseState">ventilation closes</small>
+              </div>
+              <canvas class="response-canvas" id="responseCanvas" width="540" height="330" aria-label="Response curve"></canvas>
+              <div class="response-readouts" id="responseReadouts"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="buildView" aria-labelledby="buildTitle">
+          <div class="builder-layout">
+            <section class="palette-panel" aria-label="Module palette">
+              <div class="section-heading">
+                <span>MODULE PALETTE</span>
+                <small>material behaviors</small>
+              </div>
+              <div id="modulePalette" class="module-palette"></div>
+              <div class="preset-row">
+                <button class="text-btn" data-preset="thermal">Heat island</button>
+                <button class="text-btn" data-preset="filtration">Water cycle</button>
+                <button class="text-btn" data-preset="growth">Plant growth</button>
+              </div>
+            </section>
+
+            <section class="facade-panel" aria-label="Facade composer">
+              <div class="section-heading">
+                <span>LIVING FACADE RETROFIT</span>
+                <small id="activeBrushLabel">Brush: Pineapple Skin</small>
+              </div>
+              <div class="building-frame">
+                <div class="facade-grid" id="facadeGrid"></div>
+              </div>
+              <div class="facade-stats" id="facadeStats"></div>
+            </section>
+
+            <section class="system-panel" aria-label="System anatomy">
+              <div class="section-heading">
+                <span>SYSTEM ANATOMY</span>
+                <small>exploded wall unit</small>
+              </div>
+              <img src="assets/page32.jpg" alt="System anatomy board" />
+              <div class="layer-list" id="layerList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="twinView" aria-labelledby="twinTitle">
+          <div class="twin-layout">
+            <section class="dashboard-panel" aria-label="Digital twin dashboard">
+              <div class="section-heading">
+                <span>DIGITAL TWIN</span>
+                <small>sensing / processing / actuating</small>
+              </div>
+              <div class="gauge-row" id="gaugeRow"></div>
+              <canvas class="dashboard-chart" id="dashboardChart" width="640" height="280" aria-label="Composite sensor chart"></canvas>
+              <div class="event-log" id="eventLog"></div>
+            </section>
+
+            <section class="haptic-panel" aria-label="Haptic interface">
+              <img src="assets/page37.jpg" alt="Haptic facade interface board" />
+              <div class="touch-hotspots" id="touchHotspots"></div>
+            </section>
+
+            <section class="actuator-panel" aria-label="Metabolic actuators">
+              <div class="section-heading">
+                <span>METABOLIC ACTUATORS</span>
+                <small id="actuatorMode">phase change active</small>
+              </div>
+              <div id="actuatorStack" class="actuator-stack"></div>
+              <div class="eco-flow">
+                <span>Solar collection</span>
+                <span>Water filtration</span>
+                <span>Plant growth</span>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="atlasView" aria-labelledby="atlasTitle">
+          <div class="atlas-header">
+            <div class="section-heading">
+              <span>SOURCE ATLAS</span>
+              <small>38 boards mapped into prototype logic</small>
+            </div>
+            <div class="segmented compact-segment" id="atlasFilters" role="tablist" aria-label="Atlas filters"></div>
+          </div>
+          <div class="atlas-grid" id="atlasGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="image-dialog" id="imageDialog">
+      <button class="icon-btn dialog-close" id="dialogClose" title="Close" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <img id="dialogImage" src="assets/page01.jpg" alt="Source board preview" />
+      <div class="dialog-caption">
+        <strong id="dialogTitle">Board 01</strong>
+        <span id="dialogMeta">Overview</span>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -41,6 +41,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5000;display:flex;justify-conten
 .section-title .en{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:.65em;color:var(--dim-light);display:block;margin-top:4px}
 .section-desc{font-size:.72rem;color:var(--dim-light);margin-top:16px;max-width:600px;line-height:1.9}
 .projects-grid{padding:0 80px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:24px}
+.featured-row{padding:0 80px 24px;display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:stretch}
+.featured-side-stack{display:grid;grid-template-rows:1fr 1fr;gap:24px;min-width:0}
+.featured-side-stack .project-card{display:flex;flex-direction:column;min-height:0}
+.featured-side-stack .card-img{aspect-ratio:auto;flex:1 1 auto;min-height:120px}
+.featured-side-stack .card-body{padding:18px 20px;flex:0 0 auto}
+.featured-side-stack .card-body h3{font-size:1rem;margin-bottom:6px}
+.featured-side-stack .card-body h3 .en{font-size:.7em}
+.featured-side-stack .card-body p{font-size:.62rem;line-height:1.7;margin-bottom:12px}
+.featured-side-stack .card-meta{font-size:.55rem;padding-top:12px}
+.project-card.featured{border:1px solid rgba(0,240,255,.4);box-shadow:0 0 60px rgba(0,240,255,.05);position:relative}
+.project-card.featured::before{content:'PRIMARY DEMO';position:absolute;top:16px;right:16px;font-family:var(--font-mono);font-size:.55rem;letter-spacing:2px;color:var(--cyan);background:rgba(0,0,0,.7);backdrop-filter:blur(8px);padding:4px 10px;border:1px solid rgba(0,240,255,.4);z-index:3}
+.project-card.featured .card-img{aspect-ratio:16/9}
+.project-card.featured:hover{border-color:var(--cyan);box-shadow:0 20px 60px rgba(0,240,255,.18)}
+.project-card.featured .card-body{padding:32px}
+.project-card.featured .card-body h3{font-size:1.5rem}
+.demo-cta{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--font-mono);font-size:.7rem;letter-spacing:1.5px;color:var(--cyan);padding:10px 20px;border:1px solid rgba(0,240,255,.4);transition:all .3s;text-transform:uppercase}
+.project-card.featured:hover .demo-cta{background:rgba(0,240,255,.1);border-color:var(--cyan);transform:translateX(4px)}
+.subhero-cta{display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:1.5px;color:var(--dim-light);padding:6px 14px;border:1px solid var(--border);transition:all .3s;text-transform:uppercase}
+.project-card:hover .subhero-cta{color:var(--cyan);border-color:rgba(0,240,255,.3)}
 .project-card{position:relative;border:1px solid var(--border);background:var(--bg-elevated);overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;text-decoration:none;color:inherit;display:block}
 .project-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,240,255,.05)}
 .card-img{width:100%;aspect-ratio:16/9;background:var(--bg);position:relative;overflow:hidden}
@@ -69,6 +88,44 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5000;display:flex;justify-conten
 footer{padding:40px 80px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--dim)}
 footer a{color:var(--dim-light);text-decoration:none;transition:color .3s}footer a:hover{color:var(--cyan)}
 .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.reveal.visible{opacity:1;transform:translateY(0)}
+.demo-interpretation{margin-top:22px;padding:22px 24px;border:1px solid var(--border);border-left:2px solid var(--cyan);background:linear-gradient(135deg,rgba(0,240,255,.04),rgba(255,0,229,.02));position:relative;overflow:hidden}
+.demo-interpretation::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at top right,rgba(0,240,255,.1),transparent 70%);pointer-events:none}
+.demo-interp-eyebrow{font-family:var(--font-mono);font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.demo-interp-eyebrow .diamond{color:var(--cyan);font-size:.55rem}
+.demo-interp-eyebrow .rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(0,240,255,.35),transparent)}
+.demo-interp-eyebrow .ix{font-family:var(--font-serif);font-style:italic;font-size:.7rem;color:var(--dim-light);letter-spacing:1px;text-transform:none}
+.demo-interp-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.demo-interp-col{position:relative}
+.demo-interp-col + .demo-interp-col{padding-left:22px;border-left:1px solid var(--border)}
+.demo-interp-lang{font-family:var(--font-mono);font-size:.5rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.demo-interp-title{font-family:var(--font-serif);font-style:italic;font-size:.95rem;color:#fff;margin-bottom:10px;line-height:1.35}
+.demo-interp-title.cn{font-family:var(--font-cn);font-style:normal;font-weight:500;font-size:.88rem;letter-spacing:.2px}
+.demo-interp-body{font-size:.66rem;line-height:1.95;color:var(--dim-light)}
+.demo-interp-body em{font-family:var(--font-mono);font-style:normal;color:var(--cyan);font-size:.92em;letter-spacing:.5px}
+.demo-interp-flow{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.08);font-family:var(--font-mono);font-size:.55rem;letter-spacing:1.5px;color:var(--dim-light);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.demo-interp-flow .arr{color:var(--cyan);opacity:.7}
+.featured-row.full{grid-template-columns:1fr}
+.project-card.featured.prequel{display:grid;grid-template-columns:1fr 2fr;grid-template-rows:auto 1fr;gap:0;align-items:stretch;border-color:rgba(255,0,229,.4);box-shadow:0 0 60px rgba(255,0,229,.05)}
+.project-card.featured.prequel .card-img{grid-column:2;grid-row:1;aspect-ratio:16/9;height:auto;align-self:start}
+.project-card.featured.prequel .card-title-below{grid-column:2;grid-row:2;padding:32px 36px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:32px;align-items:center;border-top:1px solid var(--border)}
+.project-card.featured.prequel .card-title-below h3{font-size:1.85rem;color:#fff;margin:0;line-height:1.15;letter-spacing:-.4px;font-weight:700}
+.project-card.featured.prequel .card-title-below h3 .en{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:.5em;color:var(--dim-light);display:block;margin-top:10px;letter-spacing:0}
+.project-card.featured.prequel .card-title-below .lede{font-size:.7rem;color:var(--dim-light);line-height:1.85;margin:0;padding-left:24px;border-left:1px solid var(--border)}
+.project-card.featured.prequel .card-body{grid-column:1;grid-row:1/span 2;padding:32px;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.project-card.featured.prequel .card-body p{font-size:.65rem;line-height:1.85}
+.project-card.featured.prequel .demo-interp-grid{grid-template-columns:1fr;gap:18px}
+.project-card.featured.prequel .demo-interp-col + .demo-interp-col{padding-left:0;padding-top:18px;border-left:none;border-top:1px solid var(--border)}
+.project-card.featured.prequel::before{content:'PREQUEL DEMO';color:var(--magenta);border-color:rgba(255,0,229,.4)}
+.project-card.featured.prequel:hover{border-color:var(--magenta);box-shadow:0 20px 60px rgba(255,0,229,.18)}
+.project-card.featured.prequel .demo-cta{color:var(--magenta);border-color:rgba(255,0,229,.4)}
+.project-card.featured.prequel:hover .demo-cta{background:rgba(255,0,229,.1);border-color:var(--magenta)}
+.project-card.featured.prequel .demo-interpretation{border-left-color:var(--magenta);background:linear-gradient(135deg,rgba(255,0,229,.04),rgba(255,230,0,.02))}
+.project-card.featured.prequel .demo-interpretation::before{background:radial-gradient(circle at top right,rgba(255,0,229,.1),transparent 70%)}
+.project-card.featured.prequel .demo-interp-eyebrow,.project-card.featured.prequel .demo-interp-eyebrow .diamond{color:var(--magenta)}
+.project-card.featured.prequel .demo-interp-eyebrow .rule{background:linear-gradient(90deg,rgba(255,0,229,.35),transparent)}
+.project-card.featured.prequel .demo-interp-body em{color:var(--magenta)}
+.project-card.featured.prequel .demo-interp-flow .arr{color:var(--magenta)}
+@media(max-width:900px){.featured-row{grid-template-columns:1fr;padding:0 24px 24px}.project-card.featured .card-body{padding:24px}.project-card.featured .card-body h3{font-size:1.2rem}.featured-side-stack{grid-template-rows:auto auto}.featured-side-stack .card-img{aspect-ratio:16/9}.demo-interp-grid{grid-template-columns:1fr;gap:18px}.demo-interp-col + .demo-interp-col{padding-left:0;padding-top:18px;border-left:none;border-top:1px solid var(--border)}.project-card.featured.prequel{grid-template-columns:1fr;grid-template-rows:auto auto auto}.project-card.featured.prequel .card-img{grid-column:1;grid-row:1}.project-card.featured.prequel .card-title-below{grid-column:1;grid-row:2;padding:24px;grid-template-columns:1fr;gap:18px}.project-card.featured.prequel .card-title-below h3{font-size:1.4rem}.project-card.featured.prequel .card-title-below .lede{padding-left:0;padding-top:14px;border-left:none;border-top:1px solid var(--border)}.project-card.featured.prequel .card-body{grid-column:1;grid-row:3;border-right:none;border-top:1px solid var(--border)}}
 @media(max-width:768px){.hero{padding:0 24px}.hero-meta{left:24px;right:24px}.section-header{padding:80px 24px 40px}.projects-grid{padding:0 24px 60px;grid-template-columns:1fr}.about-section{padding:80px 24px;grid-template-columns:1fr;gap:40px}nav{padding:16px 24px}.nav-links{gap:16px}footer{padding:24px;flex-direction:column;gap:12px}}
 </style>
 </head>
@@ -102,29 +159,91 @@ footer a{color:var(--dim-light);text-decoration:none;transition:color .3s}footer
   <div class="section-header reveal">
     <div class="section-number">01 — Interactive Systems</div>
     <h2 class="section-title">交互与系统<span class="en">Simulation & Intelligence</span></h2>
-    <p class="section-desc">运用 Neural CA、Pix2Pix 和游戏引擎构建的网络物理设计系统。</p>
+    <p class="section-desc">运用 Neural CA、Pix2Pix、n8n 自动化与游戏引擎构建的网络物理决策系统。</p>
   </div>
-  <div class="projects-grid">
-    <a href="programming-decay.html" class="project-card reveal">
+
+  <div class="featured-row">
+    <a href="programming-decay-v3/index.html" class="project-card featured reveal">
       <div class="card-img">
-        <img src="images_programming_decay/260312-1 programming decay_页面_00.jpg" alt="Programming Decay">
-        <div class="overlay"><span class="tag tag--cyan">Neural CA</span><span class="tag tag--magenta">Pix2Pix</span><span class="tag tag--green">UE5</span></div>
+        <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_48.jpg" alt="Programming Decay — Sky Bridge Condition at the Planetary Intelligence Hub">
+        <div class="overlay"><span class="tag tag--cyan">交互式产品原型</span><span class="tag tag--magenta">Decision Intelligence</span><span class="tag tag--green">UCL 毕设</span></div>
       </div>
       <div class="card-body">
-        <h3>编程衰变 <span class="en">Programming Decay</span></h3>
-        <p>UCL 硕士毕设（进行中）。Dagenham Dock 受污染混凝土的真菌生物修复 — Neural CA 模拟菌丝生长，Pix2Pix 空间转译，UE5 多尺度交互环境。</p>
-        <div class="card-meta"><span>UCL 毕设 — 2025/26（进行中）</span><div class="card-arrow">→</div></div>
+        <h3>Programming Decay — 产品 Demo <span class="en">Decision Intelligence Prototype</span></h3>
+        <p>将毕设研究包装为产品化决策系统原型 — 从污染数据采集、GIS 图谱、K-Means 聚类选址、四色策略 OS 到 ML 生成与反馈闭环。</p>
+        <div class="card-meta"><span>UCL 毕设 V3 — 2026</span><span class="demo-cta">▶ 查看交互 Demo →</span></div>
+        <div class="demo-interpretation">
+          <div class="demo-interp-eyebrow"><span class="diamond">◆</span><span>Demo Interpretation</span><span class="rule"></span><span class="ix">解读 / a reading</span></div>
+          <div class="demo-interp-grid">
+            <div class="demo-interp-col">
+              <div class="demo-interp-lang">— EN</div>
+              <div class="demo-interp-title">Not a finished proposal — a decision machine you can operate.</div>
+              <div class="demo-interp-body">From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into explainable steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</div>
+            </div>
+            <div class="demo-interp-col">
+              <div class="demo-interp-lang">— 中文 / ZH</div>
+              <div class="demo-interp-title cn">这不是一份已完成的提案，而是一台可被操作的决策机器。</div>
+              <div class="demo-interp-body">从全球水泥代谢，到 Dagenham Dock 上的某一格 8×8 网格，毕设研究被压缩成可点击的产品逻辑。每一次滚动、每一次切换图层、每一次跑推理，都是对同一片污染场地的一次再判断。黑箱被翻译成可被解释的步骤；观者被邀请放下<em>看作品</em>的姿态，进入<em>用系统</em>的姿态——决策不再属于设计师一个人，而是人与机器协同的结果。</div>
+            </div>
+          </div>
+          <div class="demo-interp-flow">Evidence <span class="arr">→</span> Site <span class="arr">→</span> Strategy <span class="arr">→</span> Generation <span class="arr">→</span> Feedback　·　证据 <span class="arr">→</span> 选址 <span class="arr">→</span> 策略 <span class="arr">→</span> 生成 <span class="arr">→</span> 反馈</div>
+        </div>
       </div>
     </a>
-    <a href="demo-decay.html" class="project-card reveal">
+    <div class="featured-side-stack">
+      <a href="programming-decay.html" class="project-card reveal">
+        <div class="card-img">
+          <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_04.jpg" alt="Programming Decay Research Booklet">
+          <div class="overlay"><span class="tag tag--yellow">研究图集</span><span class="tag tag--cyan">UCL 毕设</span></div>
+        </div>
+        <div class="card-body">
+          <h3>Programming Decay — 研究文档 <span class="en">Research Booklet (56p)</span></h3>
+          <p>56 页完整研究文档 — 全球水泥追踪、英国污染分析、Dagenham Dock 场地选择、四色策略框架。</p>
+          <div class="card-meta"><span>UCL 毕设 — 2025/26</span><span class="subhero-cta">浏览图集 →</span></div>
+        </div>
+      </a>
+      <a href="entropy-atlas.html" class="project-card reveal">
+        <div class="card-img">
+          <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_29.jpg" alt="Entropy Atlas — Digital Phenomenology of 137 Resident Narratives">
+          <div class="overlay"><span class="tag tag--cyan">n8n</span><span class="tag tag--green">Leaflet.js</span></div>
+        </div>
+        <div class="card-body">
+          <h3>熵图集 <span class="en">Entropy Atlas</span></h3>
+          <p>东伦敦约 1,000 个后工业场地交互地图，n8n + Overpass + Google Places 情绪数据 — Programming Decay 的场地证据层。</p>
+          <div class="card-meta"><span>n8n 产出 — 2026</span><span class="subhero-cta">浏览地图 →</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="featured-row full" style="padding-bottom:80px">
+    <a href="demo_BEFORE_PROGRAMMING_DECAY/index.html" class="project-card featured prequel reveal">
       <div class="card-img">
-        <img src="images_BEFORE_PROGRAMMING_DECAY/DEMO_BEFORE_PROGRAMMING_DECAY_页面_01.jpg" alt="Demo">
-        <div class="overlay"><span class="tag tag--yellow">原型</span><span class="tag tag--cyan">UE5</span></div>
+        <img src="demo_BEFORE_PROGRAMMING_DECAY/assets/page33.jpg" alt="衰变前传 — Scaling Metabolism: From Unit to Urban Fabric">
+        <div class="overlay"><span class="tag tag--magenta">课设原型</span><span class="tag tag--yellow">Bio-Cybernetic</span><span class="tag tag--cyan">UCL Term 1</span></div>
+      </div>
+      <div class="card-title-below">
+        <h3>衰变前传 — 可编程衰变原型 <span class="en">Programmable Decay — Bio-Cybernetic Prototype</span></h3>
+        <p class="lede">UCL Bartlett RC18 第一学期课设 — 把"衰变"还原到材料的尺度：菠萝皮、有机残料与季节循环被读作传感器和执行器，组合成会"呼吸"的立面与数字孪生闭环。</p>
       </div>
       <div class="card-body">
-        <h3>衰变前传 <span class="en">Demo: Before Programming Decay</span></h3>
-        <p>UCL Bartlett RC18 第一学期课设 — 毕设主题的早期原型探索。</p>
-        <div class="card-meta"><span>UCL 课设 — 2025</span><div class="card-arrow">→</div></div>
+        <div class="card-meta"><span>UCL 课设 — 2025</span><span class="demo-cta">▶ 查看交互 Demo →</span></div>
+        <div class="demo-interpretation">
+          <div class="demo-interp-eyebrow"><span class="diamond">◆</span><span>Demo Interpretation</span><span class="rule"></span><span class="ix">解读 / a reading</span></div>
+          <div class="demo-interp-grid">
+            <div class="demo-interp-col">
+              <div class="demo-interp-lang">— EN</div>
+              <div class="demo-interp-title">A prequel that lets decay speak at the material scale.</div>
+              <div class="demo-interp-body">Before <em>Programming Decay</em> turned into a city-scale decision system, this term-one prototype asks a smaller question: can decay itself be read as a design vocabulary? Pineapple skins, organic biomass and the seasonal cycle are treated as <em>sensors</em> and <em>actuators</em>; the facade stops being cladding and becomes a living interface that switches between HIBERNATION and RESPIRATION. The five views — Scan / Decode / Build / Twin / Atlas — walk you from a single material residue up to a full bio-cybernetic envelope.</div>
+            </div>
+            <div class="demo-interp-col">
+              <div class="demo-interp-lang">— 中文 / ZH</div>
+              <div class="demo-interp-title cn">让"衰变"先在材料尺度上说话。</div>
+              <div class="demo-interp-body">在 <em>Programming Decay</em> 走向城市尺度的决策系统之前，这个第一学期的原型问了一个更小的问题：能否把"衰变"本身读作一种设计语言？菠萝皮、有机生物质与季节循环被当作<em>传感器</em>与<em>执行器</em>，立面不再是覆盖物，而是会在 HIBERNATION 与 RESPIRATION 之间切换的活体界面。五个视图（扫描 / 转译 / 构件 / 孪生 / 图集）把你从一片材料残留带到一整套生物—赛博的建筑表皮。</div>
+            </div>
+          </div>
+          <div class="demo-interp-flow">Residue <span class="arr">→</span> Sensor <span class="arr">→</span> Module <span class="arr">→</span> Facade <span class="arr">→</span> Twin　·　残料 <span class="arr">→</span> 信号 <span class="arr">→</span> 构件 <span class="arr">→</span> 立面 <span class="arr">→</span> 孪生</div>
+        </div>
       </div>
     </a>
   </div>
@@ -166,7 +285,7 @@ footer a{color:var(--dim-light);text-decoration:none;transition:color .3s}footer
   <div class="section-header reveal">
     <div class="section-number">03 — Technical Experiments</div>
     <h2 class="section-title">技术实验<span class="en">Tools & Explorations</span></h2>
-    <p class="section-desc">独立技术测试 — UE5 Niagara 粒子、Blender 场景、n8n 自动化与交互数据地图。</p>
+    <p class="section-desc">独立技术测试 — UE5 Niagara 粒子与 Blender 场景渲染。</p>
   </div>
   <div class="projects-grid">
     <a href="niagara.html" class="project-card reveal">
@@ -189,17 +308,6 @@ footer a{color:var(--dim-light);text-decoration:none;transition:color .3s}footer
         <h3>花海地铁 <span class="en">Metro Flower Field</span></h3>
         <p>Blender 场景 Demo — 一座被花海淹没的超现实地铁站。探索 PBR 材质、光照与氛围渲染。</p>
         <div class="card-meta"><span>技术测试 — 2026</span><div class="card-arrow">→</div></div>
-      </div>
-    </a>
-    <a href="entropy-atlas.html" class="project-card reveal">
-      <div class="card-img">
-        <img src="https://img.youtube.com/vi/XA8W4Zhc5Ek/maxresdefault.jpg" alt="Entropy Atlas">
-        <div class="overlay"><span class="tag tag--cyan">n8n</span><span class="tag tag--green">Leaflet.js</span></div>
-      </div>
-      <div class="card-body">
-        <h3>熵图集 <span class="en">Entropy Atlas</span></h3>
-        <p>东伦敦约 1,000 个后工业场地交互地图，n8n 自动化 + Overpass API + Google Places 情绪数据。AA VIBE AI Workshop 闭幕展示。</p>
-        <div class="card-meta"><span>n8n 产出 — 2026</span><div class="card-arrow">→</div></div>
       </div>
     </a>
   </div>
