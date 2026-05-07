@@ -3,339 +3,867 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>江佳佳 — 作品集</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Jiajia Jiang / 江佳佳 — Selected Product Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#050508;--bg-elevated:#0a0a10;--panel:rgba(8,8,14,0.88);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.15);--cyan:#00f0ff;--green:#00ff94;--magenta:#ff00e5;--yellow:#ffe600;--white:#e8e8e8;--dim:#555;--dim-light:#888;--font-cn:'Noto Sans SC','Microsoft YaHei','SimHei',sans-serif;--font-mono:'JetBrains Mono',monospace;--font-serif:'Instrument Serif',serif}
+/* ───── HOMEPAGE — LANDING PLATE + ARCHIVE INDEX ───── */
+.home-nav-right{display:flex;gap:28px;align-items:center}
+.home-nav-right .cv{color:var(--signal)}
+
+/* 00 / LANDING PLATE */
+.landing{
+  padding:var(--s-12) var(--pad-tablet) var(--s-10);
+  border-bottom:1px solid var(--rule);
+  max-width:var(--grid-max);
+  margin:0 auto;
+}
+.landing-eyebrow{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:var(--s-6);
+  display:flex;justify-content:space-between;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:var(--s-2);
+}
+.landing-eyebrow .num{color:var(--signal)}
+.landing-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  gap:var(--s-8);
+  align-items:center;
+}
+.landing-card{align-self:center !important}
+.lc-list li:not(.div){cursor:pointer}
+.lc-list li.row-link{transition:background var(--t-hover) var(--ease)}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:var(--font-cn);overflow-x:hidden;cursor:crosshair}
-::selection{background:var(--cyan);color:var(--bg)}
-.cursor-dot{position:fixed;width:6px;height:6px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:transform .1s}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:10000;opacity:.4}
-body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9999}
-nav{position:fixed;top:0;left:0;right:0;z-index:5000;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(180deg,rgba(5,5,8,.95) 0%,transparent 100%);backdrop-filter:blur(10px)}
-.nav-logo{font-family:var(--font-serif);font-style:italic;font-size:1.2rem;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-size:.72rem;letter-spacing:1px;color:var(--dim);text-decoration:none;transition:color .3s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
-.nav-links a:hover{color:var(--white)}.nav-links a:hover::after{width:100%}
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 80px;position:relative;overflow:hidden}
-.hero-grid{position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px;animation:gridPulse 8s ease-in-out infinite}
-@keyframes gridPulse{0%,100%{opacity:.3}50%{opacity:.8}}
-.hero-accent{position:absolute;width:500px;height:500px;border-radius:50%;filter:blur(120px);opacity:.15;animation:af 12s ease-in-out infinite}
-.hero-accent-1{background:var(--cyan);top:10%;right:15%}.hero-accent-2{background:var(--magenta);bottom:20%;left:10%;animation-delay:-4s}
-@keyframes af{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.1)}66%{transform:translate(-20px,15px) scale(.9)}}
-.hero-label{font-family:var(--font-mono);font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;opacity:0;animation:fu .8s ease forwards .3s}
-.hero-title{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:clamp(2.5rem,7vw,5.5rem);line-height:1.1;letter-spacing:-1px;color:#fff;opacity:0;animation:fu .8s ease forwards .5s}
-.hero-title span{display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:.78rem;color:var(--dim-light);margin-top:28px;max-width:550px;line-height:1.9;opacity:0;animation:fu .8s ease forwards .7s}
-.hero-meta{position:absolute;bottom:40px;left:80px;right:80px;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--font-mono);font-size:.6rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;opacity:0;animation:fu .8s ease forwards 1s}
-.scroll-indicator{display:flex;flex-direction:column;align-items:center;gap:8px}
-.scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--cyan),transparent);animation:sp 2s ease-in-out infinite}
-@keyframes sp{0%,100%{opacity:.3;height:40px}50%{opacity:1;height:60px}}
-@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.section-header{padding:120px 80px 60px}
-.section-number{font-family:var(--font-mono);font-size:.6rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase}
-.section-title{font-weight:700;font-size:clamp(1.8rem,4vw,3rem);color:#fff;margin-top:12px}
-.section-title .en{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:.65em;color:var(--dim-light);display:block;margin-top:4px}
-.section-desc{font-size:.72rem;color:var(--dim-light);margin-top:16px;max-width:600px;line-height:1.9}
-.projects-grid{padding:0 80px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:24px}
-.featured-row{padding:0 80px 24px;display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:stretch}
-.featured-side-stack{display:grid;grid-template-rows:1fr 1fr;gap:24px;min-width:0}
-.featured-side-stack .project-card{display:flex;flex-direction:column;min-height:0}
-.featured-side-stack .card-img{aspect-ratio:auto;flex:1 1 auto;min-height:120px}
-.featured-side-stack .card-body{padding:18px 20px;flex:0 0 auto}
-.featured-side-stack .card-body h3{font-size:1rem;margin-bottom:6px}
-.featured-side-stack .card-body h3 .en{font-size:.7em}
-.featured-side-stack .card-body p{font-size:.62rem;line-height:1.7;margin-bottom:12px}
-.featured-side-stack .card-meta{font-size:.55rem;padding-top:12px}
-.project-card.featured{border:1px solid rgba(0,240,255,.4);box-shadow:0 0 60px rgba(0,240,255,.05);position:relative}
-.project-card.featured::before{content:'PRIMARY DEMO';position:absolute;top:16px;right:16px;font-family:var(--font-mono);font-size:.55rem;letter-spacing:2px;color:var(--cyan);background:rgba(0,0,0,.7);backdrop-filter:blur(8px);padding:4px 10px;border:1px solid rgba(0,240,255,.4);z-index:3}
-.project-card.featured .card-img{aspect-ratio:16/9}
-.project-card.featured:hover{border-color:var(--cyan);box-shadow:0 20px 60px rgba(0,240,255,.18)}
-.project-card.featured .card-body{padding:32px}
-.project-card.featured .card-body h3{font-size:1.5rem}
-.demo-cta{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--font-mono);font-size:.7rem;letter-spacing:1.5px;color:var(--cyan);padding:10px 20px;border:1px solid rgba(0,240,255,.4);transition:all .3s;text-transform:uppercase}
-.project-card.featured:hover .demo-cta{background:rgba(0,240,255,.1);border-color:var(--cyan);transform:translateX(4px)}
-.subhero-cta{display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:1.5px;color:var(--dim-light);padding:6px 14px;border:1px solid var(--border);transition:all .3s;text-transform:uppercase}
-.project-card:hover .subhero-cta{color:var(--cyan);border-color:rgba(0,240,255,.3)}
-.project-card{position:relative;border:1px solid var(--border);background:var(--bg-elevated);overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;text-decoration:none;color:inherit;display:block}
-.project-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,240,255,.05)}
-.card-img{width:100%;aspect-ratio:16/9;background:var(--bg);position:relative;overflow:hidden}
-.card-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.8);transition:all .5s}
-.project-card:hover .card-img img{filter:saturate(1) brightness(1);transform:scale(1.03)}
-.card-img .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--dim);letter-spacing:1px;background:linear-gradient(135deg,var(--bg),var(--bg-elevated));padding:20px;text-align:center}
-.card-img .overlay{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
-.tag{font-family:var(--font-mono);font-size:.55rem;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid var(--border);color:var(--dim-light)}
-.tag--cyan{border-color:rgba(0,240,255,.3);color:var(--cyan)}.tag--magenta{border-color:rgba(255,0,229,.3);color:var(--magenta)}.tag--green{border-color:rgba(0,255,148,.3);color:var(--green)}.tag--yellow{border-color:rgba(255,230,0,.3);color:var(--yellow)}
-.card-body{padding:24px}
-.card-body h3{font-weight:700;font-size:1.2rem;color:#fff;margin-bottom:4px}
-.card-body h3 .en{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:.75em;color:var(--dim-light)}
-.card-body p{font-size:.67rem;color:var(--dim-light);line-height:1.8;margin-bottom:16px}
-.card-meta{display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--dim);padding-top:16px;border-top:1px solid var(--border)}
-.card-arrow{width:24px;height:24px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--dim);transition:all .3s}
-.project-card:hover .card-arrow{border-color:var(--cyan);color:var(--cyan);transform:translateX(4px)}
-/* video thumbnail card */
-.card-img .yt-thumb{position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:none}
-.about-section{padding:120px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;border-top:1px solid var(--border)}
-.about-text{font-size:.75rem;color:var(--dim-light);line-height:2}
-.about-right{display:flex;flex-direction:column;gap:20px}
-.skill-block{padding:20px;border:1px solid var(--border);transition:border-color .3s}
-.skill-block:hover{border-color:var(--border-hover)}
-.skill-block-title{font-family:var(--font-mono);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
-.skill-block-content{font-size:.67rem;color:var(--dim-light);line-height:1.8}
-footer{padding:40px 80px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--dim)}
-footer a{color:var(--dim-light);text-decoration:none;transition:color .3s}footer a:hover{color:var(--cyan)}
-.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.reveal.visible{opacity:1;transform:translateY(0)}
-.demo-interpretation{margin-top:22px;padding:22px 24px;border:1px solid var(--border);border-left:2px solid var(--cyan);background:linear-gradient(135deg,rgba(0,240,255,.04),rgba(255,0,229,.02));position:relative;overflow:hidden}
-.demo-interpretation::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at top right,rgba(0,240,255,.1),transparent 70%);pointer-events:none}
-.demo-interp-eyebrow{font-family:var(--font-mono);font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.demo-interp-eyebrow .diamond{color:var(--cyan);font-size:.55rem}
-.demo-interp-eyebrow .rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(0,240,255,.35),transparent)}
-.demo-interp-eyebrow .ix{font-family:var(--font-serif);font-style:italic;font-size:.7rem;color:var(--dim-light);letter-spacing:1px;text-transform:none}
-.demo-interp-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
-.demo-interp-col{position:relative}
-.demo-interp-col + .demo-interp-col{padding-left:22px;border-left:1px solid var(--border)}
-.demo-interp-lang{font-family:var(--font-mono);font-size:.5rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
-.demo-interp-title{font-family:var(--font-serif);font-style:italic;font-size:.95rem;color:#fff;margin-bottom:10px;line-height:1.35}
-.demo-interp-title.cn{font-family:var(--font-cn);font-style:normal;font-weight:500;font-size:.88rem;letter-spacing:.2px}
-.demo-interp-body{font-size:.66rem;line-height:1.95;color:var(--dim-light)}
-.demo-interp-body em{font-family:var(--font-mono);font-style:normal;color:var(--cyan);font-size:.92em;letter-spacing:.5px}
-.demo-interp-flow{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.08);font-family:var(--font-mono);font-size:.55rem;letter-spacing:1.5px;color:var(--dim-light);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.demo-interp-flow .arr{color:var(--cyan);opacity:.7}
-.featured-row.full{grid-template-columns:1fr}
-.project-card.featured.prequel{display:grid;grid-template-columns:1fr 2fr;grid-template-rows:auto 1fr;gap:0;align-items:stretch;border-color:rgba(255,0,229,.4);box-shadow:0 0 60px rgba(255,0,229,.05)}
-.project-card.featured.prequel .card-img{grid-column:2;grid-row:1;aspect-ratio:16/9;height:auto;align-self:start}
-.project-card.featured.prequel .card-title-below{grid-column:2;grid-row:2;padding:32px 36px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:32px;align-items:center;border-top:1px solid var(--border)}
-.project-card.featured.prequel .card-title-below h3{font-size:1.85rem;color:#fff;margin:0;line-height:1.15;letter-spacing:-.4px;font-weight:700}
-.project-card.featured.prequel .card-title-below h3 .en{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:.5em;color:var(--dim-light);display:block;margin-top:10px;letter-spacing:0}
-.project-card.featured.prequel .card-title-below .lede{font-size:.7rem;color:var(--dim-light);line-height:1.85;margin:0;padding-left:24px;border-left:1px solid var(--border)}
-.project-card.featured.prequel .card-body{grid-column:1;grid-row:1/span 2;padding:32px;display:flex;flex-direction:column;border-right:1px solid var(--border)}
-.project-card.featured.prequel .card-body p{font-size:.65rem;line-height:1.85}
-.project-card.featured.prequel .demo-interp-grid{grid-template-columns:1fr;gap:18px}
-.project-card.featured.prequel .demo-interp-col + .demo-interp-col{padding-left:0;padding-top:18px;border-left:none;border-top:1px solid var(--border)}
-.project-card.featured.prequel::before{content:'PREQUEL DEMO';color:var(--magenta);border-color:rgba(255,0,229,.4)}
-.project-card.featured.prequel:hover{border-color:var(--magenta);box-shadow:0 20px 60px rgba(255,0,229,.18)}
-.project-card.featured.prequel .demo-cta{color:var(--magenta);border-color:rgba(255,0,229,.4)}
-.project-card.featured.prequel:hover .demo-cta{background:rgba(255,0,229,.1);border-color:var(--magenta)}
-.project-card.featured.prequel .demo-interpretation{border-left-color:var(--magenta);background:linear-gradient(135deg,rgba(255,0,229,.04),rgba(255,230,0,.02))}
-.project-card.featured.prequel .demo-interpretation::before{background:radial-gradient(circle at top right,rgba(255,0,229,.1),transparent 70%)}
-.project-card.featured.prequel .demo-interp-eyebrow,.project-card.featured.prequel .demo-interp-eyebrow .diamond{color:var(--magenta)}
-.project-card.featured.prequel .demo-interp-eyebrow .rule{background:linear-gradient(90deg,rgba(255,0,229,.35),transparent)}
-.project-card.featured.prequel .demo-interp-body em{color:var(--magenta)}
-.project-card.featured.prequel .demo-interp-flow .arr{color:var(--magenta)}
-@media(max-width:900px){.featured-row{grid-template-columns:1fr;padding:0 24px 24px}.project-card.featured .card-body{padding:24px}.project-card.featured .card-body h3{font-size:1.2rem}.featured-side-stack{grid-template-rows:auto auto}.featured-side-stack .card-img{aspect-ratio:16/9}.demo-interp-grid{grid-template-columns:1fr;gap:18px}.demo-interp-col + .demo-interp-col{padding-left:0;padding-top:18px;border-left:none;border-top:1px solid var(--border)}.project-card.featured.prequel{grid-template-columns:1fr;grid-template-rows:auto auto auto}.project-card.featured.prequel .card-img{grid-column:1;grid-row:1}.project-card.featured.prequel .card-title-below{grid-column:1;grid-row:2;padding:24px;grid-template-columns:1fr;gap:18px}.project-card.featured.prequel .card-title-below h3{font-size:1.4rem}.project-card.featured.prequel .card-title-below .lede{padding-left:0;padding-top:14px;border-left:none;border-top:1px solid var(--border)}.project-card.featured.prequel .card-body{grid-column:1;grid-row:3;border-right:none;border-top:1px solid var(--border)}}
-@media(max-width:768px){.hero{padding:0 24px}.hero-meta{left:24px;right:24px}.section-header{padding:80px 24px 40px}.projects-grid{padding:0 24px 60px;grid-template-columns:1fr}.about-section{padding:80px 24px;grid-template-columns:1fr;gap:40px}nav{padding:16px 24px}.nav-links{gap:16px}footer{padding:24px;flex-direction:column;gap:12px}}
+.landing-name{
+  font-family:var(--font-sans);
+  font-weight:500;
+  font-size:var(--display-xl);
+  line-height:.95;
+  letter-spacing:-.025em;
+  color:var(--ink);
+  margin:0 0 var(--s-3);
+}
+.landing-name .cn{
+  display:block;
+  font-family:var(--font-cjk);
+  font-weight:400;
+  font-size:.32em;
+  letter-spacing:.04em;
+  color:var(--muted);
+  margin-top:var(--s-2);
+}
+.landing-role{
+  font-family:var(--font-sans);
+  font-weight:500;
+  font-size:clamp(1.4rem,2.2vw,2rem);
+  line-height:1.2;
+  color:var(--ink);
+  margin:var(--s-4) 0 var(--s-3);
+  max-width:22ch;
+}
+.landing-role .arrow{color:var(--signal);font-family:var(--font-mono);font-weight:400}
+.landing-pos{
+  font-size:var(--body-l);
+  line-height:1.55;
+  color:var(--ink);
+  max-width:48ch;
+  margin-bottom:var(--s-4);
+}
+.landing-pos .cn{display:block;color:var(--muted);font-size:var(--body-m);margin-top:var(--s-2)}
+.keywords{
+  display:flex;flex-wrap:wrap;gap:0;
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin:var(--s-3) 0 var(--s-4);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:10px 0;
+}
+.keywords span{padding:0 14px;border-right:1px solid var(--rule)}
+.keywords span:first-child{padding-left:0}
+.keywords span:last-child{border-right:none}
+.landing-links{
+  display:flex;flex-wrap:wrap;gap:var(--s-3) var(--s-4);
+  font-family:var(--font-mono);
+  font-size:var(--caption);
+  letter-spacing:.04em;
+  margin-top:var(--s-3);
+}
+.landing-links a{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease)}
+.landing-links a:hover{color:var(--signal);border-bottom-color:var(--signal)}
+/* Landing card — editorial index plate (replaces image) */
+.landing-card{
+  background:var(--paper-soft);
+  border:1px solid var(--ink);
+  display:flex;flex-direction:column;
+  align-self:start;
+  font-family:var(--font-mono);
+}
+.lc-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:12px 14px;
+  border-bottom:1px solid var(--ink);
+  font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;
+}
+.lc-head .lc-num{color:var(--signal);font-weight:500}
+.lc-head .lc-id{color:var(--muted)}
+.lc-list{
+  list-style:none;margin:0;padding:0;
+  font-size:var(--caption);
+}
+.lc-list li{
+  display:grid;
+  grid-template-columns:36px 1fr 60px;
+  gap:10px;align-items:baseline;
+  padding:11px 14px;
+  border-bottom:1px solid var(--rule);
+  letter-spacing:.04em;
+  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.lc-list li:hover:not(.div){background:var(--ink);color:var(--paper)}
+.lc-list li:hover:not(.div) .k{color:var(--signal)}
+.lc-list .k{color:var(--signal);font-weight:500}
+.lc-list .t{
+  font-family:var(--font-sans);
+  font-size:.78rem;
+  color:var(--ink);
+  letter-spacing:0;
+  line-height:1.3;
+}
+.lc-list li:hover:not(.div) .t{color:var(--paper)}
+.lc-list .y{
+  text-align:right;color:var(--muted);
+  font-size:var(--mono-s);letter-spacing:.14em;
+}
+.lc-list li.div{
+  background:var(--paper);
+  border-bottom:1px solid var(--ink);
+  border-top:1px solid var(--ink);
+  padding:7px 14px;
+}
+.lc-list .dv{
+  text-align:center;
+  font-size:var(--mono-s);letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink);font-weight:500;
+}
+.lc-foot{
+  display:flex;justify-content:space-between;
+  padding:11px 14px;
+  font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+  border-top:1px solid var(--ink);
+}
+
+/* Section header (numbered) */
+.sect-head{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:var(--s-12) var(--pad-tablet) var(--s-3);
+  border-top:1px solid var(--ink);
+}
+.sect-head-num{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:var(--s-3);
+}
+.sect-head-num .n{color:var(--signal)}
+.sect-head-title{
+  font-family:var(--font-sans);
+  font-weight:500;
+  font-size:var(--display-m);
+  line-height:1.05;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin-bottom:var(--s-2);
+  max-width:24ch;
+}
+.sect-head-title .cn{
+  font-family:var(--font-cjk);
+  font-weight:400;
+  font-size:.55em;color:var(--muted);
+  display:block;margin-top:6px;
+}
+.sect-head-desc{
+  font-size:var(--body-m);line-height:1.55;color:var(--muted);
+  max-width:64ch;
+}
+
+/* INDEX ROWS — horizontal archive entries */
+.index{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:0 var(--pad-tablet) var(--s-10);
+  border-top:1px solid var(--rule);
+}
+.row{
+  display:grid;
+  grid-template-columns:64px minmax(0,1.4fr) minmax(0,1.6fr) 80px 24px;
+  gap:var(--s-3);
+  align-items:start;
+  padding:var(--s-4) 0;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+  position:relative;
+  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.row:hover{background:var(--off-black);color:var(--paper)}
+.row:hover .row-num{color:var(--signal)}
+.row:hover .row-meta dt{color:#9c9c9c}
+.row:hover .row-arrow{color:var(--signal)}
+.row:hover .row-rule{border-color:#3a3a3c}
+.row > *{padding-left:14px;padding-right:14px}
+.row > *:first-child{padding-left:14px}
+.row-num{
+  font-family:var(--font-mono);
+  font-size:1.1rem;
+  font-weight:500;
+  color:var(--signal);
+  letter-spacing:.04em;
+}
+.row-title{}
+.row-title h3{
+  font-family:var(--font-sans);
+  font-weight:500;
+  font-size:1.6rem;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin:0 0 6px;
+}
+.row-title h3 .cn{
+  display:block;
+  font-family:var(--font-cjk);
+  font-weight:400;
+  font-size:.7em;
+  color:var(--muted);
+  margin-top:3px;
+}
+.row:hover .row-title h3 .cn{color:#aaa}
+.row-sub{
+  font-size:var(--caption);
+  line-height:1.55;
+  color:inherit;
+  opacity:.78;
+  max-width:48ch;
+  margin-top:8px;
+}
+.row-meta{
+  display:grid;
+  grid-template-columns:max-content 1fr;
+  gap:6px var(--s-2);
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  line-height:1.5;
+}
+.row-meta dt{
+  color:var(--muted);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.row-meta dd{color:inherit;letter-spacing:.02em}
+.row-year{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.16em;
+  color:inherit;opacity:.78;
+  text-align:right;
+  white-space:nowrap;
+}
+.row-arrow{
+  font-family:var(--font-mono);
+  font-size:1rem;color:var(--muted);
+  text-align:right;line-height:1;
+  transition:transform var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.row:hover .row-arrow{transform:translateX(4px)}
+.row-tags{
+  margin-top:var(--s-2);
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.row-tag{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  border:1px solid var(--rule);
+  padding:3px 8px;
+}
+.row:hover .row-tag{border-color:#3a3a3c;color:#aaa}
+.row.placeholder{opacity:.55;cursor:default;pointer-events:none}
+.row.placeholder:hover{background:transparent;color:var(--ink)}
+.row.placeholder .row-num{color:var(--muted)}
+.row.placeholder .row-title h3::after{
+  content:" / IN PROGRESS";
+  font-family:var(--font-mono);
+  font-size:.55em;
+  letter-spacing:.18em;
+  color:var(--signal);
+  font-weight:400;
+  margin-left:10px;
+  vertical-align:middle;
+}
+
+/* DEMO EMBED — Programming Decay V3 inline */
+.demo-embed-wrap{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:var(--s-8) var(--pad-tablet) var(--s-12);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.demo-embed-head{
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  gap:var(--s-3);
+  align-items:baseline;
+  padding-bottom:var(--s-3);
+  border-bottom:1px solid var(--ink);
+  margin-bottom:var(--s-4);
+}
+.demo-embed-head .num{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--signal);
+}
+.demo-embed-head .lbl{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+  margin:0;
+}
+.demo-embed-head h3{
+  font-family:var(--font-sans);font-weight:500;
+  font-size:1.3rem;line-height:1.2;
+  margin:6px 0 0;
+}
+.demo-embed-head a.open{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);border-bottom:1px solid var(--ink);
+  padding-bottom:3px;white-space:nowrap;
+  transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease);
+}
+.demo-embed-head a.open:hover{color:var(--signal);border-bottom-color:var(--signal)}
+.demo-embed-frame{
+  width:100%;
+  height:78vh;min-height:560px;
+  border:1px solid var(--rule);
+  background:var(--paper-soft);
+  overflow:hidden;
+}
+.demo-embed-frame iframe{width:100%;height:100%;border:none;display:block}
+.demo-reading{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:var(--s-6);margin-top:var(--s-4);
+}
+.demo-reading-col{font-size:var(--body-m);line-height:1.6;color:var(--ink)}
+.demo-reading-col .lang{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:var(--s-2);display:block;
+}
+.demo-reading-col em{font-style:normal;border-bottom:1px solid var(--rule)}
+.demo-flow{
+  margin-top:var(--s-4);
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+  border-top:1px solid var(--rule);
+  padding-top:var(--s-2);
+}
+.demo-flow .arr{color:var(--signal);margin:0 6px}
+
+/* About */
+.about{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:var(--s-12) var(--pad-tablet);
+  border-top:1px solid var(--ink);
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  gap:var(--s-8);
+  align-items:start;
+}
+.about-text{
+  font-size:var(--body-l);
+  line-height:1.65;color:var(--ink);
+  max-width:60ch;
+}
+.about-text p{margin-bottom:var(--s-3)}
+/* About: stack EN above, CN below */
+.about-text .bi{
+  display:block;
+  border-top:none;
+  padding-top:0;
+}
+.about-text .bi .en{margin-bottom:var(--s-4)}
+.about-text .bi .cn{
+  font-family:var(--font-cjk);
+  font-size:.9rem;
+  line-height:1.75;
+  color:var(--muted);
+  padding-top:var(--s-3);
+  border-top:1px solid var(--rule);
+}
+.skills-table{
+  display:grid;
+  grid-template-columns:140px 1fr;
+  grid-auto-rows:1fr;
+  gap:var(--s-4) var(--s-4);
+  padding-top:.55rem;
+  font-family:var(--font-mono);
+  font-size:var(--caption);line-height:1.7;
+  align-self:stretch;
+  height:100%;
+}
+.skills-table dt{
+  letter-spacing:.18em;text-transform:uppercase;color:var(--signal);
+  align-self:start;
+}
+.skills-table dd{color:var(--ink);align-self:start}
+
+/* Contact */
+.contact{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:var(--s-10) var(--pad-tablet) var(--s-8);
+  border-top:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--s-3);
+}
+.contact dl{display:flex;flex-direction:column;gap:8px}
+.contact dt{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+.contact dd{
+  font-family:var(--font-mono);font-size:var(--caption);
+  letter-spacing:.02em;color:var(--ink);
+}
+.contact dd a{border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease)}
+.contact dd a:hover{color:var(--signal);border-bottom-color:var(--signal)}
+
+@media(max-width:900px){
+  .landing-grid{grid-template-columns:1fr;gap:var(--s-4)}
+  .demo-reading{grid-template-columns:1fr;gap:var(--s-3)}
+  .about{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr 1fr}
+  .row{grid-template-columns:48px 1fr 60px;grid-template-rows:auto auto;gap:var(--s-2)}
+  .row-meta{grid-column:1 / -1;padding-left:14px}
+  .row-year{grid-column:3;grid-row:1}
+  .row-arrow{display:none}
+  .demo-embed-head{grid-template-columns:48px 1fr;gap:var(--s-2)}
+  .demo-embed-head a.open{grid-column:1 / -1;margin-top:var(--s-2)}
+  .keywords{font-size:.55rem}
+  .keywords span{padding:0 8px}
+}
 </style>
 </head>
 <body>
-<div class="cursor-dot" id="cursor"></div>
 <nav>
-  <a href="index.html" class="nav-logo">JJ.</a>
-  <ul class="nav-links">
-    <li><a href="#interactive">交互与系统</a></li>
-    <li><a href="#spatial">空间设计</a></li>
-    <li><a href="#experiments">技术实验</a></li>
-    <li><a href="#about">关于</a></li>
+  <a href="index.html" class="nav-logo">JIAJIA JIANG<span class="cn">/ 江佳佳</span></a>
+  <ul class="nav-links home-nav-right">
+    <li><a href="#systems">Systems</a></li>
+    <li><a href="#foundation">Foundation</a></li>
+    <li><a href="#workflows">Workflows</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-accent hero-accent-1"></div>
-  <div class="hero-accent hero-accent-2"></div>
-  <div class="hero-label">Portfolio 2024–2026</div>
-  <h1 class="hero-title">Jiajia Jiang<br><span>Designing with Decay</span></h1>
-  <p class="hero-sub">UCL Bartlett 建筑学院 RC18 城市设计硕士在读。<br>以后工业景观为研究场域，探索空间模拟、交互系统与 AI 驱动的设计智能。</p>
-  <div class="hero-meta">
-    <span>UCL Bartlett — RC18 — 2025/26</span>
-    <div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
-    <span>London / Shanghai</span>
+<!-- 00 / LANDING PLATE ────────────────────────────────────────── -->
+<section class="landing">
+  <div class="landing-eyebrow">
+    <span><span class="num">00</span> &nbsp; LANDING PLATE</span>
+    <span>PORTFOLIO 2024 — 2026 · LONDON / SHANGHAI</span>
+  </div>
+
+  <div class="landing-grid">
+    <div>
+      <h1 class="landing-name">Jiajia Jiang<span class="cn">江佳佳</span></h1>
+      <p class="landing-role">Urban Designer&nbsp;<span class="arrow">→</span>&nbsp;AI Product Manager / AI Product Designer</p>
+      <p class="landing-pos">I translate spatial complexity into product systems, designing AI-assisted workflows from input data to user-facing decisions — bringing architecture-trained systems thinking to product strategy and prototype development.<span class="cn">把空间复杂度翻译成产品系统：从数据输入到用户决策的 AI 工作流，把建筑训练的系统思维带入产品策略与原型开发。</span></p>
+
+      <div class="keywords">
+        <span>Spatial Intelligence</span>
+        <span>Decision Systems</span>
+        <span>Geospatial Interfaces</span>
+        <span>Human-AI Workflows</span>
+      </div>
+
+      <div class="landing-links">
+        <a href="/cdn-cgi/l/email-protection#573d3e363d3e36793d3e3639307965621722343b79363479223c"><span class="__cf_email__" data-cfemail="adc7c4ccc7c4cc83c7c4ccc3ca839f98edd8cec183ccce83d8c6">[email&#160;protected]</span></a>
+        <a href="#systems">↓ Selected Product Systems</a>
+        <a href="#about">↓ Trajectory</a>
+      </div>
+    </div>
+
+    <aside class="landing-card" aria-label="Portfolio index card">
+      <header class="lc-head">
+        <span class="lc-num">P / 01</span>
+        <span class="lc-id">PORTFOLIO V2 · 2026</span>
+      </header>
+      <ol class="lc-list">
+        <li onclick="document.getElementById('row-01').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">01</span><span class="t">Programming Decay — Decision Intelligence V3</span><span class="y">25 — 26</span></li>
+        <li onclick="document.getElementById('row-02').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">02</span><span class="t">Programming Decay — Research Booklet</span><span class="y">25 — 26</span></li>
+        <li onclick="document.getElementById('systems').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">03</span><span class="t">Case Study — Forthcoming</span><span class="y">26</span></li>
+        <li onclick="document.getElementById('row-04').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">04</span><span class="t">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="y">25</span></li>
+        <li class="div"><span></span><span class="dv">Spatial Foundation</span><span></span></li>
+        <li onclick="document.getElementById('row-05').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">05</span><span class="t">Liquid Legacy</span><span class="y">24</span></li>
+        <li onclick="document.getElementById('row-06').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">06</span><span class="t">Nantou Cyber-Village</span><span class="y">24</span></li>
+        <li class="div"><span></span><span class="dv">AI + Product Workflows</span><span></span></li>
+        <li onclick="document.getElementById('row-07').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">07</span><span class="t">Niagara Particle Test</span><span class="y">26.02</span></li>
+        <li onclick="document.getElementById('row-08').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">08</span><span class="t">Metro Flower Field</span><span class="y">26</span></li>
+      </ol>
+      <footer class="lc-foot">
+        <span>10 ENTRIES</span>
+        <span>4 SYSTEMS · 2 SPATIAL · 2 EXP</span>
+      </footer>
+    </aside>
   </div>
 </section>
 
-<div id="interactive">
-  <div class="section-header reveal">
-    <div class="section-number">01 — Interactive Systems</div>
-    <h2 class="section-title">交互与系统<span class="en">Simulation & Intelligence</span></h2>
-    <p class="section-desc">运用 Neural CA、Pix2Pix、n8n 自动化与游戏引擎构建的网络物理决策系统。</p>
+<!-- 01 / SELECTED PRODUCT SYSTEMS ───────────────────────────── -->
+<header class="sect-head" id="systems">
+  <div class="sect-head-num">
+    <span><span class="n">01</span> &nbsp; SELECTED PRODUCT SYSTEMS</span>
+    <span>04 ENTRIES · DECISION SYSTEMS / GEOSPATIAL / HUMAN-AI WORKFLOW</span>
+  </div>
+  <h2 class="sect-head-title">Selected Product Systems<span class="cn">入选产品系统</span></h2>
+  <p class="sect-head-desc">Projects rebuilt as decision systems, geospatial interfaces, and human-AI workflows. Each row links to a case study; the primary thesis Demo is embedded directly below the index.</p>
+</header>
+
+<section class="index reveal">
+
+  <a href="archive/programming-decay-v3.1/index.html" class="row" id="row-01">
+    <div class="row-num">01</div>
+    <div class="row-title">
+      <h3>Programming Decay — Decision Intelligence V3<span class="cn">毕设产品 Demo / 决策智能原型</span></h3>
+      <p class="row-sub">A multi-scalar decision system that compresses the thesis — from planetary cement metabolism down to an 8×8 cell at Dagenham Dock — into clickable product logic. The black box is unfolded into evidence → site → strategy → generation → feedback.</p>
+      <div class="row-tags">
+        <span class="row-tag">Decision System</span>
+        <span class="row-tag">Geospatial</span>
+        <span class="row-tag">Human–AI Workflow</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd>Remediation planners, urban researchers</dd>
+      <dt>Input</dt><dd>GIS layers · Overpass · Google Places sentiment</dd>
+      <dt>Method</dt><dd>K-Means · Pix2Pix · Neural CA · n8n pipeline</dd>
+      <dt>Output</dt><dd>Operable decision UI · 4-strategy zoning</dd>
+      <dt>Status</dt><dd>Primary thesis demo · embedded below</dd>
+    </dl>
+    <div class="row-year">2025 — 26</div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="programming-decay.html" class="row" id="row-02">
+    <div class="row-num">02</div>
+    <div class="row-title">
+      <h3>Programming Decay — Research Booklet<span class="cn">研究文档 56p</span></h3>
+      <p class="row-sub">Six-chapter research archive grounding the V3 demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition.</p>
+      <div class="row-tags">
+        <span class="row-tag">Research Archive</span>
+        <span class="row-tag">Spatial Intelligence</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>Role</dt><dd>Sole author · UCL Bartlett RC18 thesis</dd>
+      <dt>Input</dt><dd>Global energy / GHG / cement clinker datasets</dd>
+      <dt>Method</dt><dd>GIS reasoning · multi-scalar mapping · 4-strategy framework</dd>
+      <dt>Output</dt><dd>56-page atlas · system schema · spatial OS</dd>
+      <dt>Status</dt><dd>Submitted · 2025–26</dd>
+    </dl>
+    <div class="row-year">2025 — 26</div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="#" class="row placeholder" aria-disabled="true">
+    <div class="row-num">03</div>
+    <div class="row-title">
+      <h3>Case Study — Forthcoming<span class="cn">案例研究 · 待发布</span></h3>
+      <p class="row-sub">Reserved slot for a stand-alone PM-shaped case study: problem framing, user research, MVP scope, validation plan, and what I would ship next. Currently in draft.</p>
+      <div class="row-tags">
+        <span class="row-tag">Product Lens</span>
+        <span class="row-tag">Decision System</span>
+        <span class="row-tag">TBD</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd>— TBD</dd>
+      <dt>Input</dt><dd>— TBD</dd>
+      <dt>Method</dt><dd>— TBD</dd>
+      <dt>Output</dt><dd>— TBD</dd>
+      <dt>Status</dt><dd>Drafting · placeholder</dd>
+    </dl>
+    <div class="row-year">2026</div>
+    <div class="row-arrow">·</div>
+  </a>
+
+  <a href="archive/BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-04">
+    <div class="row-num">04</div>
+    <div class="row-title">
+      <h3>Before Programming Decay — Bio-Cybernetic Prototype<span class="cn">衰变前传 / 课设原型</span></h3>
+      <p class="row-sub">Term-1 prequel that lets decay speak at the material scale. Pineapple skins, organic biomass and seasonal cycles read as sensors and actuators; the facade switches between Hibernation and Respiration. Five views — Scan / Decode / Build / Twin / Atlas.</p>
+      <div class="row-tags">
+        <span class="row-tag">Prototype</span>
+        <span class="row-tag">Material System</span>
+        <span class="row-tag">Digital Twin</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd>Researchers / studio reviewers</dd>
+      <dt>Input</dt><dd>Five domestic decay materials · ComfyUI</dd>
+      <dt>Method</dt><dd>Material decoding · facade state machine</dd>
+      <dt>Output</dt><dd>Interactive 5-view prototype + atlas</dd>
+      <dt>Status</dt><dd>UCL Term 1 · 2025</dd>
+    </dl>
+    <div class="row-year">2025</div>
+    <div class="row-arrow">→</div>
+  </a>
+</section>
+
+<!-- DEMO EMBED — Programming Decay V3 ─────────────────────── -->
+<section class="demo-embed-wrap reveal" id="demo">
+  <div class="demo-embed-head">
+    <span class="num">01.A</span>
+    <div>
+      <span class="lbl">Embedded Demo · Programming Decay V3 · Entropy Atlas included</span>
+      <h3>Operating the decision machine in place</h3>
+    </div>
+    <a class="open" href="archive/programming-decay-v3.1/index.html" target="_blank">Open standalone ↗</a>
   </div>
 
-  <div class="featured-row">
-    <a href="programming-decay-v3/index.html" class="project-card featured reveal">
-      <div class="card-img">
-        <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_48.jpg" alt="Programming Decay — Sky Bridge Condition at the Planetary Intelligence Hub">
-        <div class="overlay"><span class="tag tag--cyan">交互式产品原型</span><span class="tag tag--magenta">Decision Intelligence</span><span class="tag tag--green">UCL 毕设</span></div>
-      </div>
-      <div class="card-body">
-        <h3>Programming Decay — 产品 Demo <span class="en">Decision Intelligence Prototype</span></h3>
-        <p>将毕设研究包装为产品化决策系统原型 — 从污染数据采集、GIS 图谱、K-Means 聚类选址、四色策略 OS 到 ML 生成与反馈闭环。</p>
-        <div class="card-meta"><span>UCL 毕设 V3 — 2026</span><span class="demo-cta">▶ 查看交互 Demo →</span></div>
-        <div class="demo-interpretation">
-          <div class="demo-interp-eyebrow"><span class="diamond">◆</span><span>Demo Interpretation</span><span class="rule"></span><span class="ix">解读 / a reading</span></div>
-          <div class="demo-interp-grid">
-            <div class="demo-interp-col">
-              <div class="demo-interp-lang">— EN</div>
-              <div class="demo-interp-title">Not a finished proposal — a decision machine you can operate.</div>
-              <div class="demo-interp-body">From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into explainable steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</div>
-            </div>
-            <div class="demo-interp-col">
-              <div class="demo-interp-lang">— 中文 / ZH</div>
-              <div class="demo-interp-title cn">这不是一份已完成的提案，而是一台可被操作的决策机器。</div>
-              <div class="demo-interp-body">从全球水泥代谢，到 Dagenham Dock 上的某一格 8×8 网格，毕设研究被压缩成可点击的产品逻辑。每一次滚动、每一次切换图层、每一次跑推理，都是对同一片污染场地的一次再判断。黑箱被翻译成可被解释的步骤；观者被邀请放下<em>看作品</em>的姿态，进入<em>用系统</em>的姿态——决策不再属于设计师一个人，而是人与机器协同的结果。</div>
-            </div>
-          </div>
-          <div class="demo-interp-flow">Evidence <span class="arr">→</span> Site <span class="arr">→</span> Strategy <span class="arr">→</span> Generation <span class="arr">→</span> Feedback　·　证据 <span class="arr">→</span> 选址 <span class="arr">→</span> 策略 <span class="arr">→</span> 生成 <span class="arr">→</span> 反馈</div>
-        </div>
-      </div>
-    </a>
-    <div class="featured-side-stack">
-      <a href="programming-decay.html" class="project-card reveal">
-        <div class="card-img">
-          <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_04.jpg" alt="Programming Decay Research Booklet">
-          <div class="overlay"><span class="tag tag--yellow">研究图集</span><span class="tag tag--cyan">UCL 毕设</span></div>
-        </div>
-        <div class="card-body">
-          <h3>Programming Decay — 研究文档 <span class="en">Research Booklet (56p)</span></h3>
-          <p>56 页完整研究文档 — 全球水泥追踪、英国污染分析、Dagenham Dock 场地选择、四色策略框架。</p>
-          <div class="card-meta"><span>UCL 毕设 — 2025/26</span><span class="subhero-cta">浏览图集 →</span></div>
-        </div>
-      </a>
-      <a href="entropy-atlas.html" class="project-card reveal">
-        <div class="card-img">
-          <img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_29.jpg" alt="Entropy Atlas — Digital Phenomenology of 137 Resident Narratives">
-          <div class="overlay"><span class="tag tag--cyan">n8n</span><span class="tag tag--green">Leaflet.js</span></div>
-        </div>
-        <div class="card-body">
-          <h3>熵图集 <span class="en">Entropy Atlas</span></h3>
-          <p>东伦敦约 1,000 个后工业场地交互地图，n8n + Overpass + Google Places 情绪数据 — Programming Decay 的场地证据层。</p>
-          <div class="card-meta"><span>n8n 产出 — 2026</span><span class="subhero-cta">浏览地图 →</span></div>
-        </div>
-      </a>
+  <div class="demo-embed-frame">
+    <iframe src="archive/programming-decay-v3.1/index.html" title="Programming Decay V3 — embedded demo" loading="lazy"></iframe>
+  </div>
+
+  <div class="bi">
+    <div class="en">
+      <p>From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into <em>explainable</em> steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</p>
+      <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this demo as the site-evidence layer.</p>
+    </div>
+    <div class="cn">
+      <p>从全球水泥代谢，到 Dagenham Dock 上的某一格 8×8 网格，毕设研究被压缩成可点击的产品逻辑。每一次滚动、每一次切换图层、每一次跑推理，都是对同一片污染场地的一次再判断。黑箱被翻译成<em>可被解释</em>的步骤；观者被邀请放下<em>看作品</em>的姿态，进入<em>用系统</em>的姿态——决策不再属于设计师一个人，而是人与机器协同的结果。</p>
+      <p style="margin-top:10px">熵图集（Entropy Atlas）—— 由 n8n 自动化采集的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>场地证据</em>嵌入在该 Demo 内部。</p>
     </div>
   </div>
 
-  <div class="featured-row full" style="padding-bottom:80px">
-    <a href="demo_BEFORE_PROGRAMMING_DECAY/index.html" class="project-card featured prequel reveal">
-      <div class="card-img">
-        <img src="demo_BEFORE_PROGRAMMING_DECAY/assets/page33.jpg" alt="衰变前传 — Scaling Metabolism: From Unit to Urban Fabric">
-        <div class="overlay"><span class="tag tag--magenta">课设原型</span><span class="tag tag--yellow">Bio-Cybernetic</span><span class="tag tag--cyan">UCL Term 1</span></div>
-      </div>
-      <div class="card-title-below">
-        <h3>衰变前传 — 可编程衰变原型 <span class="en">Programmable Decay — Bio-Cybernetic Prototype</span></h3>
-        <p class="lede">UCL Bartlett RC18 第一学期课设 — 把"衰变"还原到材料的尺度：菠萝皮、有机残料与季节循环被读作传感器和执行器，组合成会"呼吸"的立面与数字孪生闭环。</p>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>UCL 课设 — 2025</span><span class="demo-cta">▶ 查看交互 Demo →</span></div>
-        <div class="demo-interpretation">
-          <div class="demo-interp-eyebrow"><span class="diamond">◆</span><span>Demo Interpretation</span><span class="rule"></span><span class="ix">解读 / a reading</span></div>
-          <div class="demo-interp-grid">
-            <div class="demo-interp-col">
-              <div class="demo-interp-lang">— EN</div>
-              <div class="demo-interp-title">A prequel that lets decay speak at the material scale.</div>
-              <div class="demo-interp-body">Before <em>Programming Decay</em> turned into a city-scale decision system, this term-one prototype asks a smaller question: can decay itself be read as a design vocabulary? Pineapple skins, organic biomass and the seasonal cycle are treated as <em>sensors</em> and <em>actuators</em>; the facade stops being cladding and becomes a living interface that switches between HIBERNATION and RESPIRATION. The five views — Scan / Decode / Build / Twin / Atlas — walk you from a single material residue up to a full bio-cybernetic envelope.</div>
-            </div>
-            <div class="demo-interp-col">
-              <div class="demo-interp-lang">— 中文 / ZH</div>
-              <div class="demo-interp-title cn">让"衰变"先在材料尺度上说话。</div>
-              <div class="demo-interp-body">在 <em>Programming Decay</em> 走向城市尺度的决策系统之前，这个第一学期的原型问了一个更小的问题：能否把"衰变"本身读作一种设计语言？菠萝皮、有机生物质与季节循环被当作<em>传感器</em>与<em>执行器</em>，立面不再是覆盖物，而是会在 HIBERNATION 与 RESPIRATION 之间切换的活体界面。五个视图（扫描 / 转译 / 构件 / 孪生 / 图集）把你从一片材料残留带到一整套生物—赛博的建筑表皮。</div>
-            </div>
-          </div>
-          <div class="demo-interp-flow">Residue <span class="arr">→</span> Sensor <span class="arr">→</span> Module <span class="arr">→</span> Facade <span class="arr">→</span> Twin　·　残料 <span class="arr">→</span> 信号 <span class="arr">→</span> 构件 <span class="arr">→</span> 立面 <span class="arr">→</span> 孪生</div>
-        </div>
-      </div>
-    </a>
-  </div>
-</div>
-
-<div id="spatial">
-  <div class="section-header reveal">
-    <div class="section-number">02 — Spatial Design</div>
-    <h2 class="section-title">空间设计<span class="en">Landscapes & Environments</span></h2>
-    <p class="section-desc">基于场地回应的空间设计实践 — 从后工业污染修复到高密度城中村。</p>
-  </div>
-  <div class="projects-grid">
-    <a href="liquid-legacy.html" class="project-card reveal">
-      <div class="card-img">
-        <img src="images_liquid_legacy/liquid_legacy_1.jpg" alt="Liquid Legacy">
-        <div class="overlay"><span class="tag tag--cyan">景观设计</span><span class="tag tag--green">AR + LBS</span></div>
-      </div>
-      <div class="card-body">
-        <h3>水的遗产 <span class="en">Liquid Legacy</span></h3>
-        <p>基于上海复兴岛工业船厂遗址的 LBS+AR 探索游戏原型。将污水处理系统与 AR 科普互动、游戏化公众参与及 App UI 设计相结合。</p>
-        <div class="card-meta"><span>本科毕业设计 — 2024</span><div class="card-arrow">→</div></div>
-      </div>
-    </a>
-    <a href="nantou.html" class="project-card reveal">
-      <div class="card-img">
-        <img src="images_nantou_cyber_village/Nantou _Cyber-Village_1.jpg" alt="Nantou">
-        <div class="overlay"><span class="tag tag--yellow">城市设计</span><span class="tag tag--cyan">共享居住</span></div>
-      </div>
-      <div class="card-body">
-        <h3>南头赛博村 <span class="en">Nantou Cyber-Village</span></h3>
-        <p>深圳南头古城城中村共享居住改造提案。打破单一宅基地模式，提出融合传统建筑语言与当代密度的新居住类型，配套共享空间预约 App。</p>
-        <div class="card-meta"><span>课程设计 — 2024</span><div class="card-arrow">→</div></div>
-      </div>
-    </a>
-  </div>
-</div>
-
-<div id="experiments">
-  <div class="section-header reveal">
-    <div class="section-number">03 — Technical Experiments</div>
-    <h2 class="section-title">技术实验<span class="en">Tools & Explorations</span></h2>
-    <p class="section-desc">独立技术测试 — UE5 Niagara 粒子与 Blender 场景渲染。</p>
-  </div>
-  <div class="projects-grid">
-    <a href="niagara.html" class="project-card reveal">
-      <div class="card-img">
-        <img src="https://img.youtube.com/vi/NLf3PwMtNc4/maxresdefault.jpg" alt="Niagara Test">
-        <div class="overlay"><span class="tag tag--green">UE5 Niagara</span></div>
-      </div>
-      <div class="card-body">
-        <h3>Niagara 粒子测试</h3>
-        <p>Unreal Engine 5 Niagara 粒子系统实验 — 探索实时 VFX 在环境模拟中的应用。</p>
-        <div class="card-meta"><span>技术测试 — 2026.02</span><div class="card-arrow">→</div></div>
-      </div>
-    </a>
-    <a href="blender-metro.html" class="project-card reveal">
-      <div class="card-img">
-        <img src="https://img.youtube.com/vi/jz2RiRPtswY/maxresdefault.jpg" alt="花海地铁">
-        <div class="overlay"><span class="tag tag--magenta">Blender</span><span class="tag tag--yellow">场景设计</span></div>
-      </div>
-      <div class="card-body">
-        <h3>花海地铁 <span class="en">Metro Flower Field</span></h3>
-        <p>Blender 场景 Demo — 一座被花海淹没的超现实地铁站。探索 PBR 材质、光照与氛围渲染。</p>
-        <div class="card-meta"><span>技术测试 — 2026</span><div class="card-arrow">→</div></div>
-      </div>
-    </a>
-  </div>
-</div>
-
-<section class="about-section" id="about">
-  <div class="about-left reveal">
-    <div class="section-number">04 — About</div>
-    <h2 class="section-title">江佳佳</h2>
-    <p class="about-text">UCL Bartlett 建筑学院城市设计硕士在读（RC18），本科毕业于浙江万里学院风景园林专业。<br><br>研究方向位于空间设计、计算思维与交互系统的交叉地带 — 使用游戏引擎、AI 模型与数据驱动的工作流介入真实的后工业景观。<br><br>目前正在推进毕设 "Programming Decay"，研究东伦敦 Dagenham Dock 受污染混凝土的真菌生物修复。</p>
-  </div>
-  <div class="about-right reveal">
-    <div class="skill-block"><div class="skill-block-title">游戏引擎 & 3D</div><div class="skill-block-content">Unreal Engine 5（Niagara · 材质 · 场景搭建）<br>Rhino + Grasshopper · Blender（PBR / 渲染）</div></div>
-    <div class="skill-block"><div class="skill-block-title">AI & 生成式工具</div><div class="skill-block-content">ComfyUI（SD 潜空间插值）· Midjourney · n8n 自动化 · LLM Prompt Engineering</div></div>
-    <div class="skill-block"><div class="skill-block-title">GIS & 数据</div><div class="skill-block-content">ArcGIS Pro · QGIS</div></div>
-    <div class="skill-block"><div class="skill-block-title">视觉设计</div><div class="skill-block-content">Adobe Creative Suite（Ps · Ai · Id · Pr）</div></div>
-    <div class="skill-block"><div class="skill-block-title">技术理解（有实验经验，非熟练开发）</div><div class="skill-block-content">Python 基础 · Neural CA 实验 · Pix2Pix 训练（Google Colab）</div></div>
-    <div class="skill-block"><div class="skill-block-title">联系方式</div><div class="skill-block-content">jiajia.jiang.25@ucl.ac.uk<br>jiangjiajia0520@163.com</div></div>
+  <div class="demo-flow">
+    Evidence <span class="arr">→</span> Site <span class="arr">→</span> Strategy <span class="arr">→</span> Generation <span class="arr">→</span> Feedback &nbsp;·&nbsp; 证据 <span class="arr">→</span> 选址 <span class="arr">→</span> 策略 <span class="arr">→</span> 生成 <span class="arr">→</span> 反馈
   </div>
 </section>
 
-<footer><span>© 2026 江佳佳</span><span>UCL Bartlett RC18</span><a href="mailto:jiajia.jiang.25@ucl.ac.uk">jiajia.jiang.25@ucl.ac.uk</a></footer>
+<!-- 02 / SPATIAL FOUNDATION ────────────────────────────────── -->
+<header class="sect-head" id="foundation">
+  <div class="sect-head-num">
+    <span><span class="n">02</span> &nbsp; SPATIAL FOUNDATION</span>
+    <span>02 ENTRIES · ARCHITECTURE / URBAN DESIGN AS SYSTEMS THINKING</span>
+  </div>
+  <h2 class="sect-head-title">Spatial Foundation<span class="cn">空间基础</span></h2>
+  <p class="sect-head-desc">Architectural and urban projects reframed as decision logic and user systems — the training ground for product reasoning.</p>
+</header>
 
-<script>
-const cursor=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX-3+'px';cursor.style.top=e.clientY-3+'px'});
+<section class="index reveal">
+
+  <a href="liquid-legacy.html" class="row" id="row-05">
+    <div class="row-num">05</div>
+    <div class="row-title">
+      <h3>Liquid Legacy<span class="cn">水的遗产 / 本科毕设</span></h3>
+      <p class="row-sub">An AR + LBS interaction system for inherited urban memory at Fuxing Island, Shanghai. Sewage purification and contaminated industrial heritage are turned into a situated, walkable narrative with a companion booking app.</p>
+      <div class="row-tags">
+        <span class="row-tag">Spatial Interaction</span>
+        <span class="row-tag">AR / LBS</span>
+        <span class="row-tag">App / UI</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd>Local walkers · families · museum visitors</dd>
+      <dt>Input</dt><dd>Site history · water-treatment process · geolocation</dd>
+      <dt>Method</dt><dd>Three-part landscape strategy · AR scenes · UI prototype</dd>
+      <dt>Output</dt><dd>Interaction prototype · master plan · physical model</dd>
+      <dt>Status</dt><dd>Undergraduate thesis · 2024</dd>
+    </dl>
+    <div class="row-year">2024</div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="nantou.html" class="row" id="row-06">
+    <div class="row-num">06</div>
+    <div class="row-title">
+      <h3>Nantou Cyber-Village<span class="cn">南头赛博村</span></h3>
+      <p class="row-sub">An urban-design proposal for Shenzhen's Nantou Ancient Town. A new shared-living typology rewrites the rigid single-household plot as a modular system of private, semi-private, and public spaces, with a shared-space booking app.</p>
+      <div class="row-tags">
+        <span class="row-tag">Urban Design</span>
+        <span class="row-tag">Shared Living</span>
+        <span class="row-tag">App / UI</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd>Residents · visitors · small-business owners</dd>
+      <dt>Input</dt><dd>Crowd / demand analysis · site history · density data</dd>
+      <dt>Method</dt><dd>12-step generative form · 6 shared modules</dd>
+      <dt>Output</dt><dd>Master plan · axonometric · resident-app prototype</dd>
+      <dt>Status</dt><dd>Coursework · 2024</dd>
+    </dl>
+    <div class="row-year">2024</div>
+    <div class="row-arrow">→</div>
+  </a>
+</section>
+
+<!-- 03 / AI + PRODUCT WORKFLOWS ────────────────────────────── -->
+<header class="sect-head" id="workflows">
+  <div class="sect-head-num">
+    <span><span class="n">03</span> &nbsp; AI + PRODUCT WORKFLOWS</span>
+    <span>HONEST FLUENCY · PROFICIENT / WORKING / EXPERIMENTAL</span>
+  </div>
+  <h2 class="sect-head-title">AI + Product Workflows<span class="cn">AI 与产品工作流</span></h2>
+  <p class="sect-head-desc">Tooling grouped by genuine ownership level. Two short technical experiments are listed alongside as honest, scoped tests.</p>
+</header>
+
+<section class="index reveal" style="border-top:1px solid var(--rule)">
+  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+    <div class="row-num" style="color:var(--ink)">PRO</div>
+    <div class="row-title">
+      <h3 style="font-size:1.1rem">Proficient</h3>
+      <p class="row-sub">Spatial analysis · research synthesis · information architecture · GIS-based reasoning · Adobe Creative Suite (Ps · Ai · Id · Pr) · Rhino + Grasshopper.</p>
+    </div>
+    <dl class="row-meta">
+      <dt>Used in</dt><dd>Programming Decay · Liquid Legacy · Nantou</dd>
+      <dt>Confidence</dt><dd>Independent end-to-end delivery</dd>
+    </dl>
+    <div class="row-year"></div><div class="row-arrow"></div>
+  </div>
+  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+    <div class="row-num" style="color:var(--ink)">WRK</div>
+    <div class="row-title">
+      <h3 style="font-size:1.1rem">Working</h3>
+      <p class="row-sub">Python prototyping · ComfyUI workflows · n8n automation · ArcGIS Pro / QGIS · LLM prompt engineering · product requirement framing · Unreal Engine 5 · Blender PBR.</p>
+    </div>
+    <dl class="row-meta">
+      <dt>Used in</dt><dd>Programming Decay V3 · Entropy Atlas · Demo prototypes</dd>
+      <dt>Confidence</dt><dd>Build prototypes, iterate with reference</dd>
+    </dl>
+    <div class="row-year"></div><div class="row-arrow"></div>
+  </div>
+  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+    <div class="row-num" style="color:var(--ink)">EXP</div>
+    <div class="row-title">
+      <h3 style="font-size:1.1rem">Experimental</h3>
+      <p class="row-sub">Pix2Pix training (Google Colab) · Neural Cellular Automata · multimodal AI workflows · WebGL spatial-interface prototypes · model evaluation. Tested, not productionised.</p>
+    </div>
+    <dl class="row-meta">
+      <dt>Used in</dt><dd>Programming Decay Chapter 05 · UE5 / Blender tests</dd>
+      <dt>Confidence</dt><dd>Honest experiments — not production ML</dd>
+    </dl>
+    <div class="row-year"></div><div class="row-arrow"></div>
+  </div>
+
+  <a href="niagara.html" class="row" id="row-07">
+    <div class="row-num">07</div>
+    <div class="row-title">
+      <h3>Niagara Particle Test<span class="cn">UE5 粒子实验</span></h3>
+      <p class="row-sub">A scoped Unreal Engine 5 Niagara experiment exploring real-time VFX for environmental simulation and atmosphere — published as a tooling note, not a product claim.</p>
+      <div class="row-tags"><span class="row-tag">UE5 · Niagara</span><span class="row-tag">Tech Note</span></div>
+    </div>
+    <dl class="row-meta">
+      <dt>Type</dt><dd>Tool fluency test</dd>
+      <dt>Output</dt><dd>Demo video</dd>
+    </dl>
+    <div class="row-year">2026.02</div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="blender-metro.html" class="row" id="row-08">
+    <div class="row-num">08</div>
+    <div class="row-title">
+      <h3>Metro Flower Field<span class="cn">花海地铁</span></h3>
+      <p class="row-sub">A Blender scene experiment — a surreal metro station drowned in flowers — exploring PBR materials, volumetric lighting, and atmospheric rendering.</p>
+      <div class="row-tags"><span class="row-tag">Blender</span><span class="row-tag">PBR</span></div>
+    </div>
+    <dl class="row-meta">
+      <dt>Type</dt><dd>Scene-rendering study</dd>
+      <dt>Output</dt><dd>Video + still render</dd>
+    </dl>
+    <div class="row-year">2026</div>
+    <div class="row-arrow">→</div>
+  </a>
+</section>
+
+<!-- 04 / TRAJECTORY ────────────────────────────────────────── -->
+<header class="sect-head" id="about">
+  <div class="sect-head-num">
+    <span><span class="n">04</span> &nbsp; TRAJECTORY</span>
+    <span>WHY THE TRANSITION IS COHERENT</span>
+  </div>
+  <h2 class="sect-head-title">About<span class="cn">关于</span></h2>
+</header>
+
+<section class="about reveal">
+  <div class="about-text">
+    <div class="bi">
+      <div class="en">
+        <p>I am a Master's student at UCL Bartlett RC18 (Urban Design), with a Landscape Architecture undergraduate degree from Zhejiang Wanli University. My current thesis, <em>Programming Decay</em>, develops a multi-scalar decision framework for fungal bioremediation of contaminated post-industrial concrete at Dagenham Dock, East London.</p>
+        <p style="margin-top:12px">The work I care about sits where spatial intelligence, decision systems, and AI-assisted workflows meet. Architecture trained me to hold input, constraint, stakeholder, and output in the same diagram — the same skill that AI Product Management needs.</p>
+        <p style="margin-top:12px">I am moving into AI Product Management / AI Product Design where this systems thinking can be applied directly to geospatial interfaces, decision-support tools, and human–AI workflows.</p>
+      </div>
+      <div class="cn">
+        <p>UCL Bartlett RC18 城市设计在读硕士，本科为浙江万里学院风景园林。在读毕设《Programming Decay》在伦敦东 Dagenham Dock 建立一套多尺度决策框架，用于污染后工业混凝土的真菌生物修复。</p>
+        <p style="margin-top:10px">关心的工作落在空间智能、决策系统与 AI 辅助工作流的交叉点。建筑训练让我能把输入、约束、相关方与输出收进同一张图——这正是 AI 产品所需要的能力。</p>
+        <p style="margin-top:10px">正在向 AI 产品经理 / AI 产品设计方向转型，把这种系统性思维直接落到地理空间界面、决策辅助工具和人机协作流程上。</p>
+      </div>
+    </div>
+  </div>
+  <dl class="skills-table">
+    <dt>Education</dt>
+    <dd>UCL Bartlett School of Architecture · MArch Urban Design (RC18) · 2025–26<br>Zhejiang Wanli University · BA Landscape Architecture · –2024</dd>
+    <dt>Location</dt>
+    <dd>London, UK / Shanghai, CN</dd>
+    <dt>Availability</dt>
+    <dd>Open to AI PM / AI Product Design roles · 2026 Graduate</dd>
+    <dt>Domains</dt>
+    <dd>Spatial intelligence · decision systems · geospatial UI · human-AI workflows · post-industrial regeneration</dd>
+  </dl>
+</section>
+
+<!-- 05 / CONTACT ───────────────────────────────────────────── -->
+<header class="sect-head" id="contact">
+  <div class="sect-head-num">
+    <span><span class="n">05</span> &nbsp; CONTACT</span>
+    <span>END OF INDEX</span>
+  </div>
+</header>
+
+<section class="contact">
+  <dl><dt>Email · UCL</dt><dd><a href="/cdn-cgi/l/email-protection#03696a62696a622d696a626d642d31364376606f2d62602d7668"><span class="__cf_email__" data-cfemail="9cf6f5fdf6f5fdb2f6f5fdf2fbb2aea9dce9fff0b2fdffb2e9f7">[email&#160;protected]</span></a></dd></dl>
+  <dl><dt>Email · Personal</dt><dd><a href="/cdn-cgi/l/email-protection#7a10131b141d10131b10131b4a4f484a3a4b4c4954191517"><span class="__cf_email__" data-cfemail="18727179767f727179727179282d2a2858292e2b367b7775">[email&#160;protected]</span></a></dd></dl>
+  <dl><dt>Based in</dt><dd>London / Shanghai</dd></dl>
+  <dl><dt>Affiliation</dt><dd>UCL Bartlett RC18 · 2025 — 26</dd></dl>
+</section>
+
+<footer>
+  <span>© 2026 Jiajia Jiang / 江佳佳</span>
+  <span>London / Shanghai · 2025 — 26</span>
+  <a href="/cdn-cgi/l/email-protection#177d7e767d7e76397d7e7679703925225762747b39767439627c" class="no-underline"><span class="__cf_email__" data-cfemail="fb91929a91929ad591929a959cd5c9cebb8e9897d59a98d58e90">[email&#160;protected]</span></a>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const reveals=document.querySelectorAll('.reveal');
-const obs=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting)setTimeout(()=>entry.target.classList.add('visible'),i*100)})},{threshold:.1});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.06});
 reveals.forEach(el=>obs.observe(el));
 document.querySelectorAll('nav a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})});
 </script>
