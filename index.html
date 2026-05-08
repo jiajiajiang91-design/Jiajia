@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jiajia Jiang / 江佳佳 — Selected Product Systems</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
@@ -39,7 +38,7 @@
 .landing-card{align-self:center !important}
 .lc-list li:not(.div){cursor:pointer}
 .lc-list li.row-link{transition:background var(--t-hover) var(--ease)}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 .landing-name{
   font-family:var(--font-sans);
   font-weight:500;
@@ -61,18 +60,21 @@ html{scroll-behavior:smooth}
 .landing-role{
   font-family:var(--font-sans);
   font-weight:500;
-  font-size:clamp(1.4rem,2.2vw,2rem);
+  font-size:clamp(1.15rem,1.7vw,1.55rem);
   line-height:1.2;
   color:var(--ink);
   margin:var(--s-4) 0 var(--s-3);
-  max-width:22ch;
+  white-space:nowrap;
+}
+@media(max-width:700px){
+  .landing-role{white-space:normal}
 }
 .landing-role .arrow{color:var(--signal);font-family:var(--font-mono);font-weight:400}
 .landing-pos{
   font-size:var(--body-l);
   line-height:1.55;
   color:var(--ink);
-  max-width:48ch;
+  max-width:75ch;
   margin-bottom:var(--s-4);
 }
 .landing-pos .cn{display:block;color:var(--muted);font-size:var(--body-m);margin-top:var(--s-2)}
@@ -393,14 +395,14 @@ html{scroll-behavior:smooth}
   padding:var(--s-12) var(--pad-tablet);
   border-top:1px solid var(--ink);
   display:grid;
-  grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
-  gap:var(--s-8);
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:var(--s-4);
   align-items:start;
 }
 .about-text{
   font-size:var(--body-l);
   line-height:1.65;color:var(--ink);
-  max-width:60ch;
+  max-width:70ch;
 }
 .about-text p{margin-bottom:var(--s-3)}
 /* About: stack EN above, CN below */
@@ -420,10 +422,10 @@ html{scroll-behavior:smooth}
 }
 .skills-table{
   display:grid;
-  grid-template-columns:140px 1fr;
+  grid-template-columns:108px minmax(0,1fr);
   grid-auto-rows:1fr;
   gap:var(--s-4) var(--s-4);
-  padding-top:.55rem;
+  padding-top:var(--s-4);
   font-family:var(--font-mono);
   font-size:var(--caption);line-height:1.7;
   align-self:stretch;
@@ -433,7 +435,7 @@ html{scroll-behavior:smooth}
   letter-spacing:.18em;text-transform:uppercase;color:var(--signal);
   align-self:start;
 }
-.skills-table dd{color:var(--ink);align-self:start}
+.skills-table dd{color:var(--ink);align-self:start;margin:0}
 
 /* Contact */
 .contact{
@@ -520,7 +522,7 @@ html{scroll-behavior:smooth}
       <ol class="lc-list">
         <li onclick="document.getElementById('row-01').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">01</span><span class="t">Programming Decay — Decision Intelligence V3</span><span class="y">25 — 26</span></li>
         <li onclick="document.getElementById('row-02').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">02</span><span class="t">Programming Decay — Research Booklet</span><span class="y">25 — 26</span></li>
-        <li onclick="document.getElementById('systems').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">03</span><span class="t">Case Study — Forthcoming</span><span class="y">26</span></li>
+        <li onclick="document.getElementById('row-03').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">03</span><span class="t">Case Study — Forthcoming</span><span class="y">26</span></li>
         <li onclick="document.getElementById('row-04').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">04</span><span class="t">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="y">25</span></li>
         <li class="div"><span></span><span class="dv">Spatial Foundation</span><span></span></li>
         <li onclick="document.getElementById('row-05').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">05</span><span class="t">Liquid Legacy</span><span class="y">24</span></li>
@@ -548,7 +550,6 @@ html{scroll-behavior:smooth}
 </header>
 
 <section class="index reveal">
-
   <a href="programming-decay-v3.1/index.html" class="row" id="row-01">
     <div class="row-num">01</div>
     <div class="row-title">
@@ -592,7 +593,7 @@ html{scroll-behavior:smooth}
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="#" class="row placeholder" aria-disabled="true">
+  <a href="case_study01.html" class="row" id="row-03">
     <div class="row-num">03</div>
     <div class="row-title">
       <h3>Case Study — Forthcoming<span class="cn">案例研究 · 待发布</span></h3>
@@ -611,7 +612,7 @@ html{scroll-behavior:smooth}
       <dt>Status</dt><dd>Drafting · placeholder</dd>
     </dl>
     <div class="row-year">2026</div>
-    <div class="row-arrow">·</div>
+    <div class="row-arrow">→</div>
   </a>
 
   <a href="BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-04">
@@ -679,7 +680,6 @@ html{scroll-behavior:smooth}
 </header>
 
 <section class="index reveal">
-
   <a href="liquid-legacy.html" class="row" id="row-05">
     <div class="row-num">05</div>
     <div class="row-title">

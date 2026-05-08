@@ -3034,3 +3034,304 @@ iframe {
   font-family: var(--font-sans);
   color: var(--muted);
 }
+
+/* ============================================================
+   Bartlett interaction patch — pure black + white hover inversion
+   Append-only. The mood: graphic, binary, crisp.
+   On hover, the element FLIPS to white-on-black inverse.
+   ============================================================ */
+
+:root {
+  --bg: #000000;
+  --bg-deep: #000000;
+  --text: #FFFFFF;
+  --muted: #B5B5B5;
+  --faint: #6F6F6F;
+  --panel-hairline: rgba(255, 255, 255, 0.14);
+  --line: rgba(255, 255, 255, 0.18);
+  --line-bright: rgba(255, 255, 255, 0.45);
+}
+
+body {
+  background: #000;
+  color: var(--text);
+}
+
+/* Snap, don't fade. */
+.brand,
+.brand-mark,
+.brand strong,
+.brand small,
+.stage-nav a,
+.stage-nav a::before,
+.site-tabs button,
+.strategy-tabs button,
+.hub-tabs button,
+.atlas-launch,
+.atlas-launch span,
+.action-button,
+a.linklike,
+.text-btn {
+  transition:
+    background-color 110ms cubic-bezier(0.2, 0, 0, 1),
+    color           110ms cubic-bezier(0.2, 0, 0, 1),
+    border-color    110ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* --- Brand (topbar back-to-portfolio) --- */
+
+.brand {
+  padding: 8px 12px;
+  margin: -8px -12px;
+}
+
+.brand:hover {
+  background: #FFFFFF;
+}
+
+.brand:hover .brand-mark {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+
+.brand:hover strong,
+.brand:hover small {
+  color: #000000;
+}
+
+/* --- Stage nav: full white block flip on hover/active --- */
+
+.stage-nav a {
+  padding: 8px 14px;
+  border-bottom: none;
+  margin: 0 -2px;
+}
+
+.stage-nav a:hover,
+.stage-nav a.is-active {
+  background: #FFFFFF;
+  color: #000000;
+  border-bottom: none;
+}
+
+.stage-nav a:hover::before,
+.stage-nav a.is-active::before {
+  color: #000000;
+}
+
+/* --- Site / strategy / hub tabs: same flip --- */
+
+.site-tabs button:hover,
+.strategy-tabs button:hover,
+.hub-tabs button:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+.site-tabs button.is-active,
+.strategy-tabs button.is-active,
+.hub-tabs button.is-active {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+/* --- Atlas launch / generic mono link buttons --- */
+
+.atlas-launch:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+.atlas-launch:hover .atlas-launch-icon {
+  background: #000000;
+}
+
+/* --- Action button (Run Inference) --- */
+
+.action-button:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
+/* --- Hub-core stamp inside strategy diagram --- */
+
+.hub-core {
+  border-color: #FFFFFF;
+}
+
+.hub-core:hover {
+  background: #FFFFFF;
+}
+
+.hub-core:hover span,
+.hub-core:hover strong {
+  color: #000000;
+}
+
+/* --- Reset image plate frames to pure black --- */
+
+.atlas-map,
+.classification-board,
+.strategy-visual,
+.ml-reference,
+.hub-viewer,
+.haptic-panel {
+  background: #000000;
+}
+
+.atlas-map img,
+.classification-board img,
+.strategy-visual img,
+.ml-reference img,
+.hub-viewer img,
+.pix2pix-page img {
+  background: #000000;
+}
+
+#ca-canvas,
+canvas,
+iframe,
+.entropy-frame {
+  background: #000000;
+}
+
+/* --- Hairline brightness for pure black bg --- */
+
+.section,
+.topbar,
+.eyebrow,
+.label,
+.section-heading,
+.mission-console .metric,
+.brief-card .step,
+.logic-step-num,
+.pipeline,
+.closing-flow,
+.pix2pix-flow,
+.pix2pix-page figcaption,
+.entropy-frame-shell,
+.entropy-frame-toolbar,
+.detail-metrics > div,
+.strategy-detail dl,
+.hub-specs > div,
+.ml-toolbar,
+.ml-stage-copy,
+.range-row,
+.mission-brief,
+.mission-brief .brief-grid,
+.entropy-atlas-panel,
+.entropy-logic-grid,
+.entropy-map-copy,
+.layer-controls > *,
+.feature-bars,
+.feature-row,
+.visual-caption,
+.site-summary,
+.atlas-header {
+  border-color: var(--panel-hairline);
+}
+
+.topbar {
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+.pulse-dot {
+  background: #FFFFFF;
+}
+
+.map-readout,
+.monitor-overlay {
+  background: rgba(0, 0, 0, 0.82);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.map-readout strong,
+.monitor-overlay strong {
+  color: #FFFFFF;
+}
+
+.score-pill {
+  color: #FFFFFF;
+}
+
+.section.product-panel .section-heading::before,
+.brief-card .step,
+.logic-step-num,
+.eyebrow,
+.label {
+  color: var(--accent);
+}
+
+.hero-media::after {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.92) 60%, rgba(0, 0, 0, 0.97)),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.7), transparent 55%);
+}
+
+.hero-media img {
+  opacity: 0.55;
+  filter: grayscale(0.3) contrast(1.05) saturate(0.7);
+}
+
+/* --- Fix: tabular numerics + matched weight for spec rows so
+       multi-digit values (120, 1.08, 4) align cleanly across rows
+       and don't visually fight each other. --- */
+
+.hub-specs strong,
+.detail-metrics strong,
+.mission-console .metric strong,
+.metric strong,
+.metric .value,
+.map-readout strong,
+.monitor-overlay strong,
+.score-pill {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "lnum";
+}
+
+.hub-specs strong,
+.detail-metrics strong {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+
+/* Tighten the label↔value gap so values sit closer to their labels
+   instead of floating at the far right of a wide column. */
+.hub-specs > div,
+.detail-metrics > div {
+  grid-template-columns: max-content 1fr;
+}
+
+.hub-specs strong,
+.detail-metrics strong {
+  text-align: right;
+  justify-self: end;
+}
+
+/* --- Fix: when tab buttons flip to white, force ALL inner text
+       (span, strong, small, p) to black too — otherwise nested
+       elements keep their default white/gray and disappear. --- */
+
+.site-tabs button:hover,
+.site-tabs button:hover *,
+.site-tabs button.is-active,
+.site-tabs button.is-active *,
+.strategy-tabs button:hover,
+.strategy-tabs button:hover *,
+.strategy-tabs button.is-active,
+.strategy-tabs button.is-active *,
+.hub-tabs button:hover,
+.hub-tabs button:hover *,
+.hub-tabs button.is-active,
+.hub-tabs button.is-active * {
+  color: #000000 !important;
+}

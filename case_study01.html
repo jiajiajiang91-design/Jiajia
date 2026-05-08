@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programming Decay — Case Study | Jiajia Jiang</title>
+  <meta name="description" content="面向城市更新规划师与景观设计师的决策伙伴产品 — case study by Jiajia Jiang">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       DESIGN.md § 17 — single source of truth tokens
+       ============================================================ */
+    :root {
+      /* Color */
+      --paper: #F2F0EB;
+      --paper-soft: #F9F9F9;
+      --ink: #0A0A0A;
+      --off-black: #101112;
+      --near-black: #131214;
+      --muted: #6F6F6F;
+      --rule: #C9C5BC;
+      --signal: #C8451F;
+
+      /* Typography */
+      --font-sans: Inter, "Neue Haas Grotesk Text", Arial, Helvetica, sans-serif;
+      --font-mono: "IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      --font-cjk: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+
+      /* Type scale */
+      --display-xl: clamp(4rem, 8vw, 7.5rem);
+      --display-l: clamp(3rem, 6vw, 5.625rem);
+      --display-m: clamp(2rem, 3vw, 2.75rem);
+      --body-l: 1.125rem;
+      --body-m: 1rem;
+      --caption: 0.75rem;
+      --mono-s: 0.6875rem;
+
+      /* Grid */
+      --grid-max: 1660px;
+      --grid-columns: 12;
+      --space-page-mobile: 20px;
+      --space-page-tablet: 40px;
+      --space-page-desktop: 80px;
+      --space-1: 8px;
+      --space-2: 16px;
+      --space-3: 24px;
+      --space-4: 32px;
+      --space-5: 40px;
+      --space-6: 48px;
+      --space-8: 64px;
+      --space-10: 80px;
+      --space-12: 96px;
+
+      /* Motion */
+      --ease-archive: cubic-bezier(0.2, 0, 0, 1);
+      --duration-hover: 160ms;
+      --duration-menu: 320ms;
+      --duration-media: 420ms;
+    }
+
+    /* ============================================================
+       BUILD_SPEC § 2.3 — case-study 自定 token (扩展, 不覆盖)
+       ============================================================ */
+    :root {
+      /* SVG 内部语义色 (DESIGN § 5 允许 high-saturation 出现在 system diagram 内) */
+      --c-coral:  #E07856;
+      --c-teal:   #2A9D8F;
+      --c-amber:  #D4A017;
+      --c-blue:   #4A6FA5;
+      --c-purple: #8B5FBF;
+
+      /* spacing 上限扩展 — Hero 上下 padding */
+      --space-16: 8rem;
+    }
+
+    /* ============================================================
+       Base reset + DESIGN.md § 17 — base CSS
+       (aligned with portfolio shared.css)
+       ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: clamp(96px, 14vh, 144px);
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      /* CJK-first stack: 中文为主体的内容能直接落到 Noto Sans SC, 拉丁回退到 Inter */
+      font-family: var(--font-cjk), var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--ink); color: var(--paper); }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      transition: border-color var(--duration-hover) var(--ease-archive),
+                  color var(--duration-hover) var(--ease-archive);
+    }
+    a:hover, a:focus-visible {
+      border-bottom-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--signal);
+      outline-offset: 2px;
+    }
+
+    /* Hairline divider utility */
+    hr, .cs-rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+    /* ============================================================
+       BUILD_SPEC § 2.5 — page envelope (12-col grid)
+       ============================================================ */
+    .cs-page {
+      max-width: 1280px;                /* Notion-aligned content max */
+      margin-inline: auto;
+      padding-inline: 32px;              /* Notion 32px gutter */
+    }
+    @media (max-width: 1024px) {
+      .cs-page { padding-inline: var(--space-page-tablet); }
+    }
+    @media (max-width: 640px) {
+      .cs-page { padding-inline: var(--space-page-mobile); }
+    }
+
+    /* ============================================================
+       BUILD_SPEC § 6.4 — 通用 section h2 / h3 / p
+       ============================================================ */
+    .cs-section { padding-block: var(--space-12); }
+
+    .cs-section h2 {
+      font-family: var(--font-sans);
+      font-size: var(--display-m);
+      font-weight: 500;                  /* 对齐作品集 (BUILD_SPEC 写 600, 作品集实际 500) */
+      line-height: 1.12;
+      letter-spacing: -0.01em;           /* DESIGN § 6 允许 display Latin 极轻负字距 */
+      margin-block-end: var(--space-5);
+      color: var(--ink);
+      max-width: 24ch;
+    }
+    .cs-section h3 {
+      font-family: var(--font-sans);
+      font-size: 1.5rem;
+      font-weight: 500;                  /* 对齐作品集 */
+      line-height: 1.2;
+      margin-block: var(--space-6) var(--space-2);
+      color: var(--ink);
+    }
+    .cs-section p {
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.6;
+      margin-block-end: var(--space-3);
+      color: var(--ink);
+      max-width: 680px;
+    }
+    .cs-section ul {
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.6;
+      padding-inline-start: var(--space-3);
+      margin-block-end: var(--space-3);
+      max-width: 680px;
+    }
+    .cs-section li { margin-block-end: var(--space-1); }
+    .cs-section strong { font-weight: 600; color: var(--ink); }
+    .cs-section em { font-style: italic; color: var(--ink); }
+
+    .cs-section blockquote {
+      border-inline-start: 2px solid var(--rule);
+      padding-inline-start: var(--space-2);
+      font-style: italic;
+      color: var(--muted);
+      margin-block: var(--space-3);
+      max-width: 680px;
+    }
+
+    .cs-section table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-sans);
+      font-size: var(--caption);
+      margin-block: var(--space-3);
+      max-width: 860px;
+    }
+    .cs-section th, .cs-section td {
+      padding: var(--space-1) var(--space-2);
+      text-align: left;
+      border-block-end: 1px solid var(--rule);
+    }
+    .cs-section th {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      border-block-end: 1px solid var(--ink);
+    }
+
+    /* ============================================================
+       BUILD_SPEC § 6.9 — SVG figure 包装 (hairline, 无圆角无阴影)
+       ============================================================ */
+    .cs-figure {
+      margin-block: var(--space-8);
+      border-block-start: 1px solid var(--rule);
+      border-block-end: 1px solid var(--rule);
+      padding-block: var(--space-3);
+    }
+    .cs-figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 860px;
+      margin-inline: auto;
+    }
+    .cs-figure figcaption {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      color: var(--muted);
+      margin-block-start: var(--space-2);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    /* ============================================================
+       T2.2 — Hero (BUILD_SPEC § 6.3, aligned with portfolio hero)
+       ============================================================ */
+    .cs-section { border-block-end: 1px solid var(--rule); }
+    .cs-section:last-child { border-block-end: none; }
+
+    .cs-section--hero {
+      padding-block: var(--space-16) var(--space-12);
+      text-align: left;
+    }
+    .cs-section--hero h1 {
+      font-family: var(--font-sans);
+      font-size: var(--display-l);
+      font-weight: 500;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin: 0 0 var(--space-3);
+      color: var(--ink);
+      max-width: 18ch;
+    }
+    .cs-hero-tagline {
+      font-family: var(--font-sans);
+      font-size: var(--display-m);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0 0 var(--space-5);
+      max-width: 22ch;
+    }
+    .cs-hero-body {
+      font-family: var(--font-sans);
+      font-size: var(--body-l);
+      line-height: 1.6;
+      color: var(--ink);
+      margin: 0 0 var(--space-3);
+      max-width: 680px;
+    }
+    .cs-hero-callout {
+      font-family: var(--font-sans);
+      font-size: var(--body-l);
+      font-style: italic;
+      color: var(--muted);
+      border-inline-start: 2px solid var(--signal);
+      padding-inline-start: var(--space-2);
+      margin: var(--space-5) 0;
+      max-width: 680px;
+    }
+
+    /* Hero metadata strip — 4-col grid (portfolio .meta-strip pattern) */
+    .cs-meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3) var(--space-4);
+      border-block-start: 1px solid var(--ink);
+      border-block-end: 1px solid var(--rule);
+      padding-block: var(--space-3);
+      margin-block-start: var(--space-6);
+    }
+    .cs-meta-strip > div { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+    .cs-meta-strip dt {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cs-meta-strip dd {
+      font-family: var(--font-sans);
+      font-size: var(--caption);
+      line-height: 1.5;
+      color: var(--ink);
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .cs-meta-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ============================================================
+       T2.2 — step anchor (mono small caps), section sub-label
+       ============================================================ */
+    .cs-step-anchor {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--paper-soft);
+      padding: 2px 8px;
+      margin-inline-start: var(--space-1);
+      vertical-align: middle;
+    }
+    .cs-step-anchor--block {
+      display: block;
+      margin: 0 0 var(--space-3);
+      padding: 0;
+      background: transparent;
+      color: var(--signal);
+      letter-spacing: 0.22em;
+    }
+
+    /* ============================================================
+       T2.2 — Section 4 step list
+       ============================================================ */
+    .cs-steps {
+      list-style: none;
+      padding-inline-start: 0;
+      margin: var(--space-5) 0 var(--space-6);
+      max-width: 680px;
+    }
+    .cs-steps > li {
+      padding-block: var(--space-3);
+      border-block-end: 1px solid var(--rule);
+    }
+    .cs-steps > li:first-child { border-block-start: 1px solid var(--rule); }
+    .cs-steps .cs-step-name {
+      font-family: var(--font-sans);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .cs-steps p {
+      font-size: var(--body-m);
+      line-height: 1.6;
+      color: var(--ink);
+      margin: var(--space-1) 0 0;
+      max-width: 680px;
+    }
+
+    /* ============================================================
+       T2.2 — Product Lens (BUILD_SPEC § 6.6)
+       ============================================================ */
+    .cs-product-lens {
+      border-block: 1px solid var(--rule);
+      background: var(--paper-soft);
+      padding: var(--space-5);
+      margin-block: var(--space-8);
+      max-width: 720px;
+    }
+    .cs-product-lens h3 {
+      font-family: var(--font-sans);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 var(--space-1);
+      color: var(--ink);
+    }
+    .cs-product-lens-meta {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin: 0 0 var(--space-3);
+      max-width: none;
+    }
+    .cs-product-lens p {
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.65;
+      color: var(--ink);
+      margin: 0 0 var(--space-2);
+      max-width: none;
+    }
+
+    /* ============================================================
+       T2.2 — Roadmap stages (BUILD_SPEC § 6.8)
+       ============================================================ */
+    .cs-roadmap-stage { margin-block-end: var(--space-6); }
+    .cs-roadmap-stage h4 {
+      font-family: var(--font-sans);
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 var(--space-2);
+      color: var(--ink);
+    }
+
+    /* ============================================================
+       T2.2 — Generic <ol> in sections (Decisions 等)
+       ============================================================ */
+    .cs-section ol {
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.6;
+      padding-inline-start: var(--space-3);
+      margin: 0 0 var(--space-3);
+      max-width: 680px;
+    }
+    .cs-section ol li { margin-block-end: var(--space-1); }
+
+    /* ============================================================
+       T2.4 — 三出口导航 (BUILD_SPEC § 6.7)
+       ============================================================ */
+    .cs-exits {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      border-block-start: 1px solid var(--rule);
+      padding-block-start: var(--space-6);
+      margin-block-start: var(--space-5);
+      list-style: none;
+      padding-inline-start: 0;
+      max-width: 720px;
+    }
+    .cs-exit-link {
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.4;
+      display: block;
+      padding-block: var(--space-1);
+      border-bottom: none;          /* 覆盖 base a { border-bottom: 1px solid currentColor } */
+      transition: color var(--duration-hover) var(--ease-archive);
+    }
+    .cs-exit-link strong {
+      color: var(--signal);
+      font-weight: 600;
+      margin-inline-end: var(--space-1);
+      transition: text-decoration var(--duration-hover) var(--ease-archive);
+    }
+    .cs-exit-link:hover strong,
+    .cs-exit-link:focus-visible strong {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .cs-exit-link::after {
+      content: "  ↗";
+      font-family: var(--font-mono);
+      color: var(--muted);
+      margin-inline-start: var(--space-1);
+      font-size: var(--caption);
+    }
+
+    /* ============================================================
+       Content revision (post-T2.4): case-study sharpening
+       — sharp Problem statement (page anchor)
+       — honest framing (research prototype / concept validation)
+       — Market judgment list (PM analysis decoder)
+       — Section callout (LLM-out-of-core)
+       ============================================================ */
+
+    /* Hero Problem — page-level anchor block, EN bold + CN muted */
+    .cs-hero-problem {
+      border-block-start: 1px solid var(--ink);
+      border-block-end: 1px solid var(--rule);
+      padding-block: var(--space-4);
+      margin-block: var(--space-3) var(--space-5);
+      max-width: 760px;
+    }
+    .cs-hero-problem-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-block-end: var(--space-2);
+    }
+    .cs-hero-problem-en {
+      font-family: var(--font-sans);
+      font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 0 0 var(--space-2);
+      max-width: none;
+    }
+    .cs-hero-problem-cn {
+      font-family: var(--font-cjk);
+      font-size: var(--body-m);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+      max-width: none;
+    }
+
+    /* Honest case-study framing line */
+    .cs-hero-framing {
+      font-family: var(--font-sans);
+      font-size: var(--caption);
+      line-height: 1.65;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0 0 var(--space-5);
+      max-width: 680px;
+    }
+    .cs-hero-framing span[lang="zh"] {
+      display: block;
+      font-family: var(--font-cjk);
+      font-style: normal;
+      margin-block-start: 4px;
+    }
+
+    /* Market judgment list — PM-style decoder */
+    .cs-market-judgment {
+      list-style: none;
+      padding-inline-start: 0;
+      margin-block: var(--space-5);
+      max-width: 720px;
+      border-block-start: 1px solid var(--ink);
+      border-block-end: 1px solid var(--rule);
+    }
+    .cs-market-judgment li {
+      font-family: var(--font-sans);
+      font-size: var(--body-m);
+      line-height: 1.55;
+      padding-block: var(--space-2);
+      border-block-end: 1px solid var(--rule);
+      color: var(--ink);
+      margin: 0;
+    }
+    .cs-market-judgment li:last-child { border-block-end: none; }
+    .cs-market-judgment strong {
+      font-weight: 600;
+      color: var(--ink);
+      margin-inline-end: var(--space-1);
+    }
+    .cs-market-judgment li:last-child strong { color: var(--signal); }
+    .cs-market-judgment .cs-market-incumbents {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-inline-start: 4px;
+    }
+
+    /* Section callout — signal-bordered prominent statement */
+    .cs-section-callout {
+      font-family: var(--font-sans);
+      font-size: var(--body-l);
+      line-height: 1.5;
+      color: var(--ink);
+      border-inline-start: 2px solid var(--signal);
+      padding-inline-start: var(--space-3);
+      margin-block: var(--space-5);
+      max-width: 680px;
+    }
+    .cs-section-callout strong { font-weight: 600; }
+    .cs-section-callout span[lang="zh"] {
+      display: block;
+      font-family: var(--font-cjk);
+      font-size: var(--body-m);
+      font-weight: 400;
+      color: var(--muted);
+      margin-block-start: 6px;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       T2.5 — Top portfolio nav (BUILD_SPEC § 6.1, aligned with portfolio shared.css)
+       ============================================================ */
+    .cs-topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-block-end: 1px solid var(--rule);
+    }
+    .cs-topnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .cs-topnav-name {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      border-bottom: none;     /* override base a hairline */
+    }
+    .cs-topnav-name .cn {
+      color: var(--muted);
+      margin-inline-start: 8px;
+      font-weight: 400;
+    }
+    .cs-topnav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .cs-topnav-links a {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-bottom: none;
+      transition: color var(--duration-hover) var(--ease-archive);
+    }
+    .cs-topnav-links a:hover,
+    .cs-topnav-links a:focus-visible { color: var(--signal); }
+
+    /* ============================================================
+       T2.5 — Layout (left index zone + article)
+       ============================================================ */
+    .cs-layout {
+      display: grid;
+      /* leftindex (140) + article (1fr) + phantom right (140) → article centered with
+         symmetric L/R breathing room. Notion-style: same gutter on both sides. */
+      grid-template-columns: 140px minmax(0, 1fr) 140px;
+      gap: 32px;                          /* Notion 32px gutter */
+      padding-block: var(--space-6) 0;
+    }
+    @media (max-width: 1024px) {
+      .cs-layout {
+        grid-template-columns: 1fr;
+        padding-block-start: var(--space-3);
+      }
+      .cs-leftindex { display: none; }
+      .cs-topnav-links { gap: 14px; }
+      .cs-topnav-inner { height: 56px; }
+    }
+    @media (max-width: 640px) {
+      .cs-topnav-links a { letter-spacing: 0.12em; }
+    }
+
+    /* ============================================================
+       T2.5 — Left index zone (BUILD_SPEC § 6.2)
+       ============================================================ */
+    .cs-leftindex {
+      font-family: var(--font-mono);
+      font-size: var(--mono-s);
+      color: var(--muted);
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      padding-block-start: var(--space-3);
+    }
+    .cs-leftindex-num {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--signal);
+      line-height: 1;
+      margin-block-end: var(--space-3);
+      letter-spacing: 0;
+    }
+    .cs-leftindex-meta > div {
+      margin-block-end: var(--space-1);
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+    }
+    .cs-leftindex-progress {
+      margin-block-start: var(--space-5);
+      padding-block-start: var(--space-3);
+      border-block-start: 1px solid var(--rule);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .cs-progress-num { color: var(--ink); font-weight: 500; }
+    .cs-progress-name {
+      display: block;
+      margin-block-start: 6px;
+      color: var(--ink);
+      letter-spacing: 0.22em;
+    }
+
+    /* ============================================================
+       Visual rhythm — 12-col archive grid (DESIGN § 7), Bartlett-style
+       article goes edge-to-edge within cs-page; section children fill
+       full article width by default, with text capped at 60rem (~960px)
+       so they read comfortably without leaving 400+px right-empty.
+       ============================================================ */
+    .cs-article {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--space-3);
+    }
+
+    .cs-section {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: subgrid;
+      row-gap: 0;
+    }
+
+    /* Default child placement: full article width (cols 1-12) */
+    .cs-section > * {
+      grid-column: 1 / -1;
+    }
+
+    /* Text-heavy elements: cap at ~60rem ≈ 80ch CJK-mixed, fills cols 1-9
+       on wide viewports / fills full width on tablet (left-aligned 顶格) */
+    .cs-section p,
+    .cs-section ul,
+    .cs-section ol,
+    .cs-section blockquote,
+    .cs-hero-body,
+    .cs-hero-callout,
+    .cs-hero-framing,
+    .cs-section-callout,
+    .cs-steps,
+    .cs-steps p {
+      max-width: 60rem;
+    }
+
+    /* Wider blocks: width:100% with their own caps (left-aligned, no auto centering) */
+    .cs-section > figure,
+    .cs-section > .cs-figure,
+    .cs-section > table,
+    .cs-section > .cs-meta-strip,
+    .cs-section > .cs-product-lens,
+    .cs-section > .cs-market-judgment,
+    .cs-section > .cs-hero-problem {
+      max-width: none;
+      width: 100%;
+    }
+
+    /* Soft caps on big visual blocks — prevent infinite stretch on ultrawide,
+       but on typical 1280-1660 viewports they fill comfortably */
+    .cs-section > .cs-figure svg { max-width: 80rem; margin-inline: 0; }   /* SVG left-aligned, cap 1280px */
+    .cs-section > table { max-width: 64rem; }                              /* table cap 1024px */
+    .cs-section > .cs-product-lens { max-width: 64rem; }                   /* product-lens cap 1024px */
+    .cs-section > .cs-market-judgment { max-width: 64rem; }                /* market-judgment cap 1024px */
+    .cs-section > .cs-hero-problem { max-width: 70rem; }                   /* hero PROBLEM banner 1120px */
+    .cs-section > .cs-meta-strip { max-width: none; }                      /* meta-strip fills article */
+
+  </style>
+</head>
+<body>
+
+  <!-- ──────────────────────────────────────────────────────
+       Top portfolio nav (DESIGN § 11)
+       Logo links to portfolio homepage; section anchors map
+       to the actual ../index.html anchors that exist in the
+       portfolio (Systems / Foundation / Workflows / About / Contact).
+       ────────────────────────────────────────────────────── -->
+  <header class="cs-topnav">
+    <div class="cs-topnav-inner cs-page">
+      <a href="index.html" class="cs-topnav-name">JIAJIA JIANG <span class="cn">/ 江佳佳</span></a>
+      <nav class="cs-topnav-links" aria-label="Portfolio navigation">
+        <a href="index.html#systems">Systems</a>
+        <a href="index.html#foundation">Foundation</a>
+        <a href="index.html#workflows">Workflows</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="cs-page">
+    <div class="cs-layout">
+
+      <!-- Left index zone (desktop only — mobile collapses, see media query)
+           Project number 03 = the "Case Study — Forthcoming" slot in portfolio.
+           Progress is static at 01 / 07 · HERO in v0.2; v0.3 will add scroll JS. -->
+      <aside class="cs-leftindex" aria-label="Project index">
+        <div class="cs-leftindex-num">03</div>
+        <div class="cs-leftindex-meta">
+          <div>2026</div>
+          <div>Solo Founder / Designer</div>
+          <div>v0.2 Research Prototype</div>
+        </div>
+        <div class="cs-leftindex-progress" data-progress-target>
+          <span class="cs-progress-num">01</span> / 07
+          <span class="cs-progress-name">HERO</span>
+        </div>
+      </aside>
+
+      <article class="cs-article">
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 1 · Hero
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--hero" id="hero">
+        <h1>Programming Decay</h1>
+
+        <!-- Problem statement — page anchor (sharp, EN-led, CN below) -->
+        <div class="cs-hero-problem">
+          <span class="cs-hero-problem-label">Problem</span>
+          <p class="cs-hero-problem-en">Urban designers do not lack drawing tools. They lack a reusable, explainable decision chain between site data, strategy selection, spatial generation, and post-occupancy monitoring.</p>
+          <p class="cs-hero-problem-cn">城市更新设计师真正缺的不是出图工具,而是一个能把"数据证据 — 策略选择 — 空间生成 — 后期监测"串起来的可复用决策链。</p>
+        </div>
+
+        <!-- Project's response to the problem -->
+        <p class="cs-hero-tagline">让设计师从"画策略"变成"选策略"——把出图工具变成决策伙伴。</p>
+
+        <!-- Honest framing: this is an AI product hypothesis, not a finished product -->
+        <p class="cs-hero-framing">
+          This case study documents how I reframed a thesis system into an AI product hypothesis. Current status: research prototype / concept validation stage.
+          <span lang="zh">本 case study 记录我如何把毕设系统重构成一个 AI 产品假说;当前状态:研究原型 / 概念验证阶段,尚无真实付费用户。</span>
+        </p>
+
+        <p class="cs-hero-body">面向城市更新规划师和景观设计师, 打通"多源数据证据 → 场地特定的策略组合 → ML 空间生成 → 持续监测反馈"的决策链路。</p>
+        <p class="cs-hero-callout">每一个空间方案都能反向追溯到具体的 GIS 特征值。</p>
+
+        <!-- BUILD_SPEC § 4.1.1 metadata strip — 4-col grid per portfolio convention -->
+        <dl class="cs-meta-strip" aria-label="Project metadata">
+          <div><dt>Year</dt><dd>2026</dd></div>
+          <div><dt>Role</dt><dd>Solo Founder / Designer</dd></div>
+          <div><dt>Domain</dt><dd>Urban Decision Systems</dd></div>
+          <div><dt>Users</dt><dd>Urban Renewal Planners + Landscape Designers</dd></div>
+          <div><dt>Input</dt><dd>GIS + Community Sentiment + Thesis Archive</dd></div>
+          <div><dt>Method</dt><dd>K-Means + Pix2Pix + NCA + Rule-based Monitoring</dd></div>
+          <div><dt>Output</dt><dd>Strategy Composition + Spatial Generation + Decision Audit Trail</dd></div>
+          <div><dt>Tools</dt><dd>Python + ComfyUI + n8n</dd></div>
+          <div><dt>Status</dt><dd>v0.2 Research Prototype</dd></div>
+        </dl>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 2 · Why I reframed it
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--why" id="why">
+        <h2>Why I reframed it</h2>
+        <p>做毕设时我反复推翻早期判断 ——"数据从哪来 / 策略选哪几个 / 选完怎么落地"这些前期决策每次都从零开始, 没有可以复用的工具。加上之前在上海设计事务所实习时观察到的共性: 资深设计师做这些决策靠经验、缺量化辩护, 常成为投标失败的原因。</p>
+        <p>这让我把项目换了一个视角: 传统设计 brief 把决策链路当黑箱, AI 工具应该把它当 first-class citizen —— 每一步都可复用、可追溯、可优化。</p>
+
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 280" role="img" aria-label="传统设计 brief 三层 gap 与把它当产品看的对照" xmlns="http://www.w3.org/2000/svg">
+            <!-- center divider -->
+            <line x1="310" y1="10" x2="310" y2="270" stroke="var(--rule)" stroke-width="0.5"/>
+
+            <!-- LEFT title -->
+            <text x="24" y="28" font-family="IBM Plex Mono" font-size="11" font-weight="500" fill="var(--muted)" letter-spacing="1">传统设计 brief 的三层 gap</text>
+            <!-- LEFT 3 rows (row 1 wraps to 2 lines so it doesn't cross center divider) -->
+            <circle cx="32" cy="76" r="3" fill="var(--c-coral)"/>
+            <text x="44" y="80" font-family="Inter" font-size="14" fill="var(--ink)">数据层 │ 多个 GIS 数据源人工拼接,</text>
+            <text x="44" y="98" font-family="Inter" font-size="14" fill="var(--ink)">工时主要消耗</text>
+            <circle cx="32" cy="138" r="3" fill="var(--c-coral)"/>
+            <text x="44" y="142" font-family="Inter" font-size="14" fill="var(--ink)">策略层 │ 凭经验拍板, 缺量化辩护</text>
+            <circle cx="32" cy="186" r="3" fill="var(--c-coral)"/>
+            <text x="44" y="190" font-family="Inter" font-size="14" fill="var(--ink)">空间层 │ 策略到图纸没有自动化桥接</text>
+            <!-- LEFT subtitle -->
+            <text x="24" y="255" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)">行业现状</text>
+
+            <!-- RIGHT title -->
+            <text x="324" y="28" font-family="IBM Plex Mono" font-size="11" font-weight="500" fill="var(--muted)" letter-spacing="1">把它当产品看</text>
+            <!-- RIGHT 4 rows -->
+            <circle cx="332" cy="76" r="3" fill="var(--c-teal)"/>
+            <text x="344" y="80" font-family="Inter" font-size="14" fill="var(--ink)">数据 │ 自动聚合 + K-Means 客观选址</text>
+            <circle cx="332" cy="116" r="3" fill="var(--c-teal)"/>
+            <text x="344" y="120" font-family="Inter" font-size="14" fill="var(--ink)">策略 │ 算法推导, 场地特定的可解释组合</text>
+            <circle cx="332" cy="156" r="3" fill="var(--c-teal)"/>
+            <text x="344" y="160" font-family="Inter" font-size="14" fill="var(--ink)">空间 │ Pix2Pix / NCA 流水线生成</text>
+            <circle cx="332" cy="196" r="3" fill="var(--c-teal)"/>
+            <text x="344" y="200" font-family="Inter" font-size="14" fill="var(--ink)">反馈 │ 持续监测, 闭环替代一次性</text>
+            <!-- RIGHT subtitle -->
+            <text x="324" y="255" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)">我的产品视角</text>
+          </svg>
+          <figcaption>Fig. 01 — 传统 brief 的三层 gap (左) vs 把它当产品看 (右)</figcaption>
+        </figure>
+
+        <p>所以这不是更快的出图工具 —— 是把决策链路从黑箱打开。</p>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 2.5 · Market Landscape
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--market" id="market">
+        <h2>市场定位 — 为什么是这个空白象限</h2>
+
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 380" role="img" aria-label="AI / 设计工具市场 2×2 矩阵, Programming Decay 落在右上空白象限" xmlns="http://www.w3.org/2000/svg">
+            <!-- horizontal axis with right arrow -->
+            <line x1="40" y1="190" x2="580" y2="190" stroke="var(--rule)" stroke-width="0.5"/>
+            <path d="M 580 190 L 574 187 M 580 190 L 574 193" stroke="var(--rule)" stroke-width="0.5" fill="none"/>
+
+            <!-- vertical axis with up arrow -->
+            <line x1="310" y1="340" x2="310" y2="40" stroke="var(--rule)" stroke-width="0.5"/>
+            <path d="M 310 40 L 307 46 M 310 40 L 313 46" stroke="var(--rule)" stroke-width="0.5" fill="none"/>
+
+            <!-- quadrant labels (mono small caps) -->
+            <text x="60" y="60" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)" letter-spacing="0.8">(no incumbent)</text>
+            <text x="60" y="360" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">SINGLE TOOL</text>
+            <text x="560" y="360" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" letter-spacing="1.5" text-anchor="end">DECISION PARTNER</text>
+
+            <!-- axis labels (sans, muted) -->
+            <text x="50" y="205" font-family="Inter" font-size="12" fill="var(--muted)">Creative Generation</text>
+            <text x="590" y="205" font-family="Inter" font-size="12" fill="var(--muted)" text-anchor="end">Data / Decision Analysis</text>
+            <text x="315" y="35" font-family="Inter" font-size="12" fill="var(--muted)">Complete Chain</text>
+            <text x="315" y="355" font-family="Inter" font-size="12" fill="var(--muted)">Single Output</text>
+
+            <!-- Bottom-left: creative + single -->
+            <circle cx="130" cy="250" r="4" fill="var(--muted)"/>
+            <text x="142" y="254" font-family="Inter" font-size="14" fill="var(--ink)">Midjourney</text>
+            <circle cx="130" cy="280" r="4" fill="var(--muted)"/>
+            <text x="142" y="284" font-family="Inter" font-size="14" fill="var(--ink)">即梦 Jimeng</text>
+            <circle cx="130" cy="310" r="4" fill="var(--muted)"/>
+            <text x="142" y="314" font-family="Inter" font-size="14" fill="var(--ink)">Maket</text>
+            <circle cx="130" cy="340" r="4" fill="var(--muted)"/>
+            <text x="142" y="344" font-family="Inter" font-size="14" fill="var(--ink)">LookX</text>
+
+            <!-- Bottom-right: data + single -->
+            <circle cx="370" cy="280" r="4" fill="var(--muted)"/>
+            <text x="382" y="284" font-family="Inter" font-size="14" fill="var(--ink)">ArcGIS Insights</text>
+            <circle cx="370" cy="320" r="4" fill="var(--muted)"/>
+            <text x="382" y="324" font-family="Inter" font-size="14" fill="var(--ink)">Esri Site Suitability</text>
+
+            <!-- Top-right: PD highlight (★ + bold + sub-label) -->
+            <text x="490" y="115" font-family="Inter" font-size="32" fill="var(--signal)" text-anchor="middle">★</text>
+            <text x="490" y="148" font-family="Inter" font-size="16" font-weight="600" fill="var(--signal)" text-anchor="middle">Programming Decay</text>
+            <text x="490" y="166" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)" text-anchor="middle">data + chain + explainable</text>
+          </svg>
+          <figcaption>Fig. 02 — AI / 设计工具市场地图, PD 落在右上空白象限</figcaption>
+        </figure>
+
+        <!-- 3-line PM judgment: what each quadrant actually does, what it doesn't -->
+        <ul class="cs-market-judgment" aria-label="市场象限判断">
+          <li><strong>AIGC tools</strong> — strong visual generation, weak evidence traceability <span class="cs-market-incumbents">Midjourney · 即梦 · Maket · LookX</span></li>
+          <li><strong>GIS tools</strong> — strong data analysis, weak design generation <span class="cs-market-incumbents">ArcGIS Insights · Esri Site Suitability</span></li>
+          <li><strong>Programming Decay</strong> — connects evidence, strategy, generation, and monitoring</li>
+        </ul>
+
+        <p>把现有 AI / 设计工具按两个维度切: 横轴是「创意生成 ←→ 决策分析」, 纵轴是「单点工具 ←→ 完整链路」。</p>
+        <p>格局清晰: 左下半区被 Midjourney / 即梦 / Maket / LookX 占满 (创意生成 + 单点工具); 右下角是 ArcGIS / Esri Site Suitability 这种传统 GIS 决策工具 (数据分析, 但只做选址或图层叠加)。<strong>右上角"数据 + 完整链路"基本空白</strong> —— 这正是 Programming Decay 的产品定位。</p>
+        <p>这不是巧合。"完整链路"是工程上昂贵的承诺: 垂直 AIGC 公司不擅长后端数据链路, 传统 GIS 公司不会 ML 生成。能站在右上角的产品, 必须从第一天就按"决策伙伴"而不是"出图工具"来设计。</p>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 3 · 用户旅程
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--who" id="who">
+        <h2>用户旅程 — 谁用、怎么用</h2>
+        <span class="cs-step-anchor cs-step-anchor--block">USER · INTERACTION</span>
+
+        <p>Programming Decay 服务两类核心用户: <strong>城市更新规划师</strong> (P1, 做前期方案决策) 和 <strong>景观设计师</strong> (P2, 做棕地 / 工业遗址改造)。两者共享前半段决策链路 (数据 → 选址 → 三角验证), 在后半段 (策略偏好 / 输出格式 / 监测重点) 按场景分叉。</p>
+
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 360" role="img" aria-label="P1 规划师 / P2 景观师双泳道工作流, 共享中段三角验证" xmlns="http://www.w3.org/2000/svg">
+            <!-- Top time arrow -->
+            <line x1="20" y1="40" x2="595" y2="40" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 595 40 L 589 37 M 595 40 L 589 43" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+            <text x="540" y="32" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)">时间 →</text>
+
+            <!-- P1 lane background + label -->
+            <rect x="0" y="70" width="620" height="100" fill="var(--c-blue)" fill-opacity="0.06"/>
+            <text x="10" y="62" font-family="Inter" font-size="11" font-weight="500" fill="var(--c-blue)">P1 规划师</text>
+
+            <!-- P2 lane background + label -->
+            <rect x="0" y="200" width="620" height="100" fill="var(--c-amber)" fill-opacity="0.06"/>
+            <text x="10" y="318" font-family="Inter" font-size="11" font-weight="500" fill="var(--c-amber)">P2 景观师</text>
+
+            <!-- Shared verification block (spans both lanes) -->
+            <rect x="240" y="80" width="140" height="210" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="310" y="170" font-family="Inter" font-size="12" font-weight="500" fill="var(--ink)" text-anchor="middle">K-Means</text>
+            <text x="310" y="186" font-family="Inter" font-size="12" fill="var(--muted)" text-anchor="middle">+</text>
+            <text x="310" y="202" font-family="Inter" font-size="12" font-weight="500" fill="var(--ink)" text-anchor="middle">Entropy Atlas</text>
+            <text x="310" y="222" font-family="Inter" font-size="12" fill="var(--ink)" text-anchor="middle">三角验证</text>
+
+            <!-- P1 left boxes -->
+            <rect x="40" y="110" width="80" height="30" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="80" y="129" font-family="Inter" font-size="11" fill="var(--ink)" text-anchor="middle">接 brief</text>
+            <rect x="140" y="110" width="80" height="30" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="180" y="129" font-family="Inter" font-size="11" fill="var(--ink)" text-anchor="middle">上传场地</text>
+            <line x1="120" y1="125" x2="140" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+            <line x1="220" y1="125" x2="240" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+
+            <!-- P2 left boxes -->
+            <rect x="40" y="240" width="80" height="30" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="80" y="259" font-family="Inter" font-size="11" fill="var(--ink)" text-anchor="middle">接 brief</text>
+            <rect x="140" y="240" width="80" height="30" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="180" y="259" font-family="Inter" font-size="11" fill="var(--ink)" text-anchor="middle">上传场地</text>
+            <line x1="120" y1="255" x2="140" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+            <line x1="220" y1="255" x2="240" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+
+            <!-- P1 right boxes (4 steps after triangulation) -->
+            <line x1="380" y1="125" x2="395" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="395" y="105" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="420" y="121" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">调策略</text>
+            <text x="420" y="133" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">组合配比</text>
+            <line x1="445" y1="125" x2="450" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="450" y="105" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="475" y="121" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">看 ML</text>
+            <text x="475" y="133" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">概念图</text>
+            <line x1="500" y1="125" x2="505" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="505" y="105" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="530" y="121" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">投标方案</text>
+            <text x="530" y="133" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">+ 依据</text>
+            <line x1="555" y1="125" x2="560" y2="125" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="560" y="105" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="585" y="121" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">监测</text>
+            <text x="585" y="133" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">反馈数据</text>
+
+            <!-- P2 right boxes -->
+            <line x1="380" y1="255" x2="395" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="395" y="235" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="420" y="251" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">看 NCA</text>
+            <text x="420" y="263" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">矢量分区</text>
+            <line x1="445" y1="255" x2="450" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="450" y="235" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="475" y="251" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">生态指标</text>
+            <text x="475" y="263" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">量化报告</text>
+            <line x1="500" y1="255" x2="505" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+            <!-- DASHED v0.5 box -->
+            <rect x="505" y="235" width="50" height="40" fill="none" stroke="var(--rule)" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <text x="530" y="251" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">Rhino</text>
+            <text x="530" y="263" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">导出</text>
+            <text x="552" y="232" font-family="IBM Plex Mono" font-size="9" fill="var(--muted)" text-anchor="end">v0.5</text>
+            <line x1="555" y1="255" x2="560" y2="255" stroke="var(--rule)" stroke-width="0.5"/>
+            <rect x="560" y="235" width="50" height="40" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="585" y="251" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">长期</text>
+            <text x="585" y="263" font-family="Inter" font-size="9" fill="var(--ink)" text-anchor="middle">生态跟踪</text>
+
+            <!-- Bottom legend -->
+            <text x="20" y="350" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)">实线 = v0.2 已实现概念    虚线 = v0.5 计划态</text>
+          </svg>
+          <figcaption>Fig. 03 — P1 规划师 / P2 景观师双泳道工作流, 共享中段三角验证</figcaption>
+        </figure>
+
+        <p>P1 的工作流以"投标依据"为锚点 —— 他们要的是可解释的策略组合 + 监测反馈 (项目交付后能持续证明方案有效, 是甲方再委托的基础)。P2 的工作流以"生态修复深度"为锚点 —— 他们要的是生态指标量化报告 + Rhino 兼容输出 + 长期生态跟踪。</p>
+        <p>同一产品, 同一条决策链路, 但 P1 看到的是"投标资产", P2 看到的是"生态修复工具" —— <strong>persona-aware 不是为每个用户造一个产品, 而是同一产品在不同阶段提供不同 affordance</strong>。</p>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 4 · How it works (含 Product Lens)
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--how" id="how">
+        <h2>How it works — 4 步产品体验</h2>
+
+        <p>PRD v0.2 完整 6 段链路在 v3.1 demo 里展开。Case Study 这里讲产品级别的 4 步用户体验:</p>
+
+        <ol class="cs-steps">
+          <li>
+            <span class="cs-step-name">1. Sense</span>
+            <span class="cs-step-anchor">INPUT</span>
+            <p>用户上传场地 + 项目目标; 系统从多源开放数据抓取 GIS 图层加权; 输出风险底图 + 优先区清单。</p>
+          </li>
+          <li>
+            <span class="cs-step-name">2. Classify</span>
+            <span class="cs-step-anchor">SYSTEM LOGIC</span>
+            <p>用户可调网格切分; K-Means 聚类 + Entropy Atlas 居民情感双路径验证; 输出 cell 清单 + 三角证据。</p>
+          </li>
+          <li>
+            <span class="cs-step-name">3. Generate</span>
+            <span class="cs-step-anchor">SYSTEM LOGIC</span>
+            <p>基于 cell 特征做策略推导 + Pix2Pix / NCA 流水线; 输出场地特定的策略组合 + 矢量空间方案。</p>
+          </li>
+          <li>
+            <span class="cs-step-name">4. Deploy</span>
+            <span class="cs-step-anchor">OUTPUT</span>
+            <p>ML 输出转化为场地特定的部署系统 (每个场地的具体部署形态由场地特征决定); 输出可部署空间产品 + 监测仪表盘 + 数据回流闭环。</p>
+          </li>
+        </ol>
+
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 240" role="img" aria-label="Sense / Classify / Generate / Deploy 四步流程, LLM 加成位置标注" xmlns="http://www.w3.org/2000/svg">
+            <!-- LLM sticker above Sense (装饰性标签, 允许 rounded) -->
+            <rect x="15" y="20" width="130" height="30" rx="12" fill="var(--c-purple)" fill-opacity="0.15" stroke="var(--c-purple)" stroke-opacity="0.5" stroke-width="0.5"/>
+            <text x="80" y="40" font-family="Inter" font-size="11" fill="var(--c-purple)" text-anchor="middle">对话式 refine 尚未实现</text>
+
+            <!-- LLM sticker above Generate -->
+            <rect x="319" y="20" width="130" height="30" rx="12" fill="var(--c-purple)" fill-opacity="0.15" stroke="var(--c-purple)" stroke-opacity="0.5" stroke-width="0.5"/>
+            <text x="384" y="40" font-family="Inter" font-size="11" fill="var(--c-purple)" text-anchor="middle">策略文字解释 尚未实现</text>
+
+            <!-- Box 1: Sense -->
+            <rect x="20" y="60" width="120" height="120" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="80" y="85" font-family="Inter" font-size="16" font-weight="500" fill="var(--ink)" text-anchor="middle">Sense</text>
+            <text x="80" y="110" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">input ▾</text>
+            <text x="80" y="143" font-family="Inter" font-size="18" fill="var(--muted)" text-anchor="middle">⚙</text>
+            <text x="80" y="167" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">output ▴</text>
+
+            <!-- Arrow Sense → Classify -->
+            <line x1="140" y1="120" x2="170" y2="120" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 172 120 L 166 117 M 172 120 L 166 123" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+
+            <!-- Box 2: Classify -->
+            <rect x="172" y="60" width="120" height="120" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="232" y="85" font-family="Inter" font-size="16" font-weight="500" fill="var(--ink)" text-anchor="middle">Classify</text>
+            <text x="232" y="110" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">input ▾</text>
+            <text x="232" y="143" font-family="Inter" font-size="18" fill="var(--muted)" text-anchor="middle">⚙</text>
+            <text x="232" y="167" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">output ▴</text>
+
+            <!-- Arrow Classify → Generate -->
+            <line x1="292" y1="120" x2="322" y2="120" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 324 120 L 318 117 M 324 120 L 318 123" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+
+            <!-- Box 3: Generate -->
+            <rect x="324" y="60" width="120" height="120" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="384" y="85" font-family="Inter" font-size="16" font-weight="500" fill="var(--ink)" text-anchor="middle">Generate</text>
+            <text x="384" y="110" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">input ▾</text>
+            <text x="384" y="143" font-family="Inter" font-size="18" fill="var(--muted)" text-anchor="middle">⚙</text>
+            <text x="384" y="167" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">output ▴</text>
+
+            <!-- Arrow Generate → Deploy -->
+            <line x1="444" y1="120" x2="474" y2="120" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 476 120 L 470 117 M 476 120 L 470 123" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+
+            <!-- Box 4: Deploy -->
+            <rect x="476" y="60" width="120" height="120" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="536" y="85" font-family="Inter" font-size="16" font-weight="500" fill="var(--ink)" text-anchor="middle">Deploy</text>
+            <text x="536" y="110" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">input ▾</text>
+            <text x="536" y="143" font-family="Inter" font-size="18" fill="var(--muted)" text-anchor="middle">⚙</text>
+            <text x="536" y="167" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" text-anchor="middle">output ▴</text>
+          </svg>
+          <figcaption>Fig. 04 — Sense / Classify / Generate / Deploy 四步, LLM 加成位置标注</figcaption>
+        </figure>
+
+        <blockquote>v0.2 实现状态: Sense + Classify 已跑通 (Dagenham Dock, 6 英国数据源 + 8×8 默认网格); Generate Pix2Pix 跑通 12 epoch / NCA 流水线尚未打通; Deploy 概念已定 / Dagenham Dock 部署形态 (4 塔 + 4 nodes) 仍迭代。</blockquote>
+
+        <h3>AI Decision Chain — 哪一步用什么级别的 AI</h3>
+        <p>不是"什么都扔给最贵的模型"。Programming Decay 各步骤的 AI 边界:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">步骤</th>
+              <th scope="col">v0.2 主导技术</th>
+              <th scope="col">LLM 加成可能位置</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Sense</td><td>Rule-Based API 抓取</td><td>用户对话式 refine (尚未实现)</td></tr>
+            <tr><td>Classify</td><td>经典 ML (K-Means 客观聚类)</td><td>—</td></tr>
+            <tr><td>Generate</td><td>经典深度学习 (Pix2Pix + NCA)</td><td>策略推导文字解释 (尚未实现)</td></tr>
+            <tr><td>Deploy</td><td>Rule-Based 监测规则</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Why LLMs are NOT in the core decision engine in v0.2 -->
+        <p class="cs-section-callout">
+          <strong>I deliberately kept LLMs out of the core decision engine in v0.2</strong>, because the highest-risk task here is not language generation, but explainable spatial decision-making.
+          <span lang="zh">v0.2 我刻意把 LLM 排除在核心决策引擎之外 —— 这里最高风险的任务不是语言生成, 而是可解释的空间决策。</span>
+        </p>
+
+        <p>v0.2 以经典 CV / ML 为主, LLM 加成 (对话层 / 策略解释层) 尚未实现。这一边界对应 PRD 1.3: 这不是"通用 AI 出图", 是"针对场地决策链路的可解释 AI"。</p>
+
+        <!-- Product Lens (BUILD_SPEC § 4.5 末段) -->
+        <aside class="cs-product-lens" aria-labelledby="product-lens-h">
+          <h3 id="product-lens-h">Product Lens</h3>
+          <p class="cs-product-lens-meta">[Claude 草拟首版, Jiajia 审改]</p>
+          <p>这个项目可以读作一个<strong>面向场地决策链路的可解释 AI 产品</strong>——不是出图工具, 是决策伙伴。</p>
+          <p>核心用户是<strong>城市更新规划师与景观设计师</strong> (P1 / P2), 他们需要在前期方案阶段做"数据从哪来 / 策略选哪几个 / 选完怎么落地"三个决策, 并且需要可量化辩护以应对投标场景。</p>
+          <p>我把工作组织成三轴: <strong>数据 / 输入</strong> (多源 GIS + 社区情感双路径)、<strong>系统逻辑</strong> (K-Means 客观聚类 + Entropy Atlas 三角验证 + Pix2Pix / NCA 流水线)、<strong>交互</strong> (persona-aware, 同一产品在不同阶段输出不同 affordance)。</p>
+          <p>MVP 聚焦在 <strong>Sense + Classify 已跑通的链路 + 5-8 位真实用户测试</strong>, 先验证"决策伙伴"定位是否成立。</p>
+          <p>主要产品风险是<strong>规划师不愿意改变工作流</strong>——资深合伙人拍板 vs 算法选址 + 白盒可解释, 是工作流层面的改动而非工具层面的加速。验证方法: 找 5-8 位真实规划师 / 景观师做产品测试, 看至少 3 位能否反馈"愿意继续使用 / 推荐给同事"。</p>
+          <p>下一步 ship 的是 <strong>v0.5 (2026.10)</strong>: 完整 Pix2Pix → NCA 流水线打通 + Hub 设计冻结一个参考实现 + 至少 3 个真实场地跑出过完整流程。</p>
+        </aside>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 5 · Decisions & Trade-offs
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--decisions" id="decisions">
+        <h2>Decisions &amp; Trade-offs</h2>
+
+        <h3>决策 1 — 决策伙伴 vs AI 出图工具</h3>
+        <p>AIGC 出图工具是红海, 决策链路这一层无人接管。Programming Decay 选的是后者。</p>
+        <p>PRD v0.1 写完后通读毕设, 发现框架放在"出图速度"上, 但毕设的真实价值是"证据 → 策略 → 生成 → 部署"四步链路 —— 这两条不属于同一种产品, 整体重写 v0.2。</p>
+        <p>重写时桌面上 3 条路径:</p>
+        <ul>
+          <li>A · ToG 棕地修复 SaaS, 最贴近真实毕设但销售周期长、和 PM 求职主线偏离</li>
+          <li>B · 决策伙伴 (城市更新规划师 / 景观设计师), 保留所有真实技术内核, 用户仍是设计师</li>
+          <li>C · 双线并行, 工作量过大</li>
+        </ul>
+        <p>选 B。验证: 5-8 位真实规划师 / 景观师线上访谈, 看"决策伙伴"这个词他们能否翻译出对应工作流环节。翻译不出来定位就不成立。</p>
+
+        <h3>决策 2 — PRD v0.1 推翻整体重写, 不打补丁</h3>
+        <p>发现框架错了之后, 真正贵的不是重写, 是不重写。</p>
+        <p>打补丁推不下去:"出图速度"和"决策链路"是两套维度, 硬塞同一份文档, 下游所有内容 (Architecture / Case Study / 微交互 spec) 都会在两套语言之间持续换算, 成本沿决策树指数累积。</p>
+        <p>接受沉没成本, 整体重写 v0.2。</p>
+
+        <h3>决策 3 — 熵图集嵌入 v3.1 demo Selection 环节, 不放主站首页</h3>
+        <p>对"算法黑箱"的质疑, 答案不是在叙事里多解释, 是给第二条独立证据链。</p>
+        <p>K-Means 在 v3.1 demo 里给出客观选址。但"算法凭什么排这一块"是任何决策类 AI 产品都要预答的标准质疑。Programming Decay 的回答是熵图集 —— 在 Dagenham Dock 这个 case 里, 137 条本地评论 / 67 个地点 / 44% 标记 Decay &amp; Neglect 的社区情感数据走的是完全不同的方法路径, 两条路径在同一片区域收敛。</p>
+        <p>候选位置 3 个: A 嵌入 case study 当一段静态叙事; B 保持主站首页"03 技术实验"独立卡片; C 拆码合并到 v3.1 主 JS。最终用 iframe 嵌入到 v3.1 Selection 环节、K-Means priority queue 之后, 保留独立交互。理由是三角验证需要"实时打开两张地图对比"的体感: 静态叙事承载不了, 独立卡片失去逻辑关联, 拆码破坏现有结构。</p>
+
+        <h3>决策 4 — 模型置信度低时主动降级, 不强行输出策略</h3>
+        <p>AI 输出边界拉不清, 设计师就会被"看起来像"的方案误导。</p>
+        <p>Generate 步骤依赖 Pix2Pix / NCA 等模型。数据信号弱 / case 偏离训练分布 / cell 特征极端时, 模型输出会不稳。</p>
+        <p>设计选择: 检测到 low confidence, 主动降级 —— 把"自动生成策略组合"切换为"显示该 cell 的 GIS 信号 + 邻近 cell 的策略参考 + 用户手动 override"。</p>
+        <p>考虑过的两条路:</p>
+        <ul>
+          <li>A · 模型在所有情况下都强行输出 (用户体验"流畅"但产品边界不清)</li>
+          <li>B · 常驻 confidence 标签让用户自己判断 (信息密度高但责任推给用户)</li>
+        </ul>
+        <p>选主动降级 + bad case 提示。</p>
+      </section>
+
+      <!-- ──────────────────────────────────────────────────────
+           Section 6 · What's Next
+           ────────────────────────────────────────────────────── -->
+      <section class="cs-section cs-section--next" id="next">
+        <h2>What's Next</h2>
+
+        <h3>路线图</h3>
+        <p>v0.2 不是终点, 是把架构跑通到能拿出来谈。下面是 v0.5 / v1.0 三阶段, 按"必须打通的事"而不是"功能列表"组织。</p>
+
+        <div class="cs-roadmap-stage">
+          <h4>v0.5 (2026.10) · 完整可演示原型</h4>
+          <ul>
+            <li>Pix2Pix → NCA 完整流水线打通 (当前 Pix2Pix 跑通 12 epoch, NCA 完整流水线尚未跑通)</li>
+            <li>Hub 设计冻结一个参考实现 (避免无限迭代)</li>
+            <li>5-8 位真实规划师 / 景观师做产品测试 (不是访谈, 是录像 + 整理反馈)</li>
+            <li>至少 3 个真实场地 (除 Dagenham Dock 外) 跑出过完整流程</li>
+          </ul>
+        </div>
+
+        <div class="cs-roadmap-stage">
+          <h4>v1.0 (2027.06) · 商业化首发</h4>
+          <ul>
+            <li>5-10 家付费团队 (专业版 ¥499/月 或 团队版 ¥3,999/月)</li>
+            <li>至少 1 个企业版定制 (典型 30-80 万/年)</li>
+            <li>MRR ≥ ¥3 万</li>
+          </ul>
+        </div>
+
+        <div class="cs-roadmap-stage">
+          <h4>v2.0 (2028+) · 规模化</h4>
+          <ul>
+            <li>多场地批处理 / 多算法对比</li>
+            <li>多类型平面训练集 (5+ 行业)</li>
+            <li>进军中国一线城市 (上海、深圳) 的城市更新市场</li>
+          </ul>
+        </div>
+
+        <p>LLM 加成位置 (Section 4 标"尚未实现"的 Sense 对话式 refine + Generate 策略文字解释), 等用户访谈数据告诉我哪一处带宽更紧再决定引入时间。</p>
+
+        <h3>北极星指标</h3>
+        <p>每个版本配一个指标, 用来定义"达到没达到"。</p>
+        <p><strong>v0.2 (现状, 求职阶段)</strong> — 5-8 位真实规划师 / 景观师做过产品测试 + 至少 3 位反馈"愿意继续使用 / 推荐给同事" + 至少 1 位主动询问商业化时间表。</p>
+        <p><strong>v0.5 (2026.10)</strong> — 完整 Pix2Pix → NCA 流水线跑通 + 月活 ≥ 50 + 第一笔付费收入。</p>
+        <p><strong>v1.0 (2027.06)</strong> — MRR ≥ ¥3 万 + MAU ≥ 200 + 至少 1 个企业版定制。</p>
+
+        <h3>已知风险 — 我打算怎么验证 / 怎么 fallback</h3>
+        <p>3 条 disconfirming evidence 我已经知道, 不藏:</p>
+        <p><strong>规划师可能不愿意改变工作流。</strong> Programming Decay 把"凭经验 + 资深合伙人拍板"换成"算法选址 + 白盒可解释", 这是工作流层面的改动, 不是工具层面的加速。如果 v0.5 用户测试出现"工具好但我们就是不会用"的反馈, 当前定位需要重做 —— 可能切到"决策辅助"而不是"决策伙伴", 让规划师保留拍板权, 工具只输出证据链。</p>
+        <p><strong>大型设计院倾向自建 AI 工具。</strong> 院内自建路径优势是数据合规 + 内部数据闭环, 我的护城河靠"四策略 OS + Hub 监测反馈"两块研究投入大、复制成本高的部分。如果 v0.5 出现院内自建竞品, 商业化路线必须从"卖给大院"切到"卖给中小事务所 + 政府委托设计单位"。</p>
+        <p><strong>NCA 损失函数可能不收敛。</strong> Pix2Pix → NCA 流水线是 v0.5 工程主路径, 但 NCA 的损失函数 (面积比例 + 空间连续性) 可能训练不收敛。fallback: 降级用基于规则的策略分区系统, 牺牲生成新颖度换可控性。</p>
+
+        <h3>继续看下去</h3>
+        <nav aria-label="Continue exploring">
+          <ul class="cs-exits">
+            <li>
+              <a href="programming-decay-v3.1/index.html" class="cs-exit-link">
+                <strong>v3.1 demo</strong> — 6 段链路可交互 (Mission → GIS → Selection → Strategy → ML → Hub), 含 Entropy Atlas 三角验证模块
+              </a>
+            </li>
+            <li>
+              <a href="programming-decay.html" class="cs-exit-link">
+                <strong>56 页研究图集</strong> — 毕设完整研究档案, 含 K-Means / Pix2Pix / NCA / Delaunay 共识机制 / Hub 设计推导
+              </a>
+            </li>
+            <li>
+              <a href="PRD_ProgrammingDecay_v0.2.md" class="cs-exit-link">
+                <strong>PRD v0.2</strong> — 10 章 + 3 附录, 含商业化模型 / 单位经济 / 对标公司
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      </article>
+
+    </div><!-- /.cs-layout -->
+  </main>
+
+</body>
+</html>

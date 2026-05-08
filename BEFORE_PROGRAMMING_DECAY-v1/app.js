@@ -17,7 +17,7 @@ const materialData = [
     thumbnail: "assets/page10.jpg",
     scanImage: "assets/page11.jpg",
     board: "assets/page12.jpg",
-    color: "#84d184",
+    color: "#A89773",
     chart: {
       labels: ["1", "2", "4", "8", "15"],
       temp: [22.4, 22.7, 22.9, 23.2, 23.3],
@@ -47,7 +47,7 @@ const materialData = [
     thumbnail: "assets/page13.jpg",
     scanImage: "assets/page15.jpg",
     board: "assets/page16.jpg",
-    color: "#f0b545",
+    color: "#C2B47A",
     chart: {
       labels: ["0", "50", "100", "150", "200"],
       temp: [24, 46, 57.5, 69, 89.3],
@@ -77,7 +77,7 @@ const materialData = [
     thumbnail: "assets/page18.jpg",
     scanImage: "assets/page19.jpg",
     board: "assets/page20.jpg",
-    color: "#f4f1e8",
+    color: "#E7E1D2",
     chart: {
       labels: ["0", "1", "2", "4", "6"],
       temp: [35, 49.5, 61, 78.8, 86],
@@ -107,7 +107,7 @@ const materialData = [
     thumbnail: "assets/page21.jpg",
     scanImage: "assets/page22.jpg",
     board: "assets/page23.jpg",
-    color: "#ff725f",
+    color: "#A56556",
     chart: {
       labels: ["1", "5", "10", "15", "20"],
       temp: [23, 20.1, 21.1, 18.2, 13.2],
@@ -137,7 +137,7 @@ const materialData = [
     thumbnail: "assets/page24.jpg",
     scanImage: "assets/page25.jpg",
     board: "assets/page28.jpg",
-    color: "#a896ff",
+    color: "#928AA2",
     chart: {
       labels: ["1", "3", "6", "10", "13"],
       temp: [18.1, 18, 17.9, 18, 18.1],
@@ -282,7 +282,7 @@ function renderScan() {
   drawSeriesChart($("#scanChart"), item.chart, {
     titleA: "Temp",
     titleB: "Humidity",
-    colorA: "#7ed0dc",
+    colorA: "#8B96A0",
     colorB: item.color,
   });
 }
@@ -475,9 +475,9 @@ function renderTwin() {
   const activity = Math.min(99, Math.max(18, Math.round((humidity + bio) / 2 + (state.mode === "respiration" ? 22 : 5))));
   const achievements = Math.min(98, Math.max(12, Math.round(22 + temp + state.tick * 2)));
   const gauges = [
-    ["Exploration", exploration, "#7ed0dc"],
+    ["Exploration", exploration, "#8B96A0"],
     ["Activity", activity, item.color],
-    ["Achievements", achievements, "#f0b545"],
+    ["Achievements", achievements, "#C2B47A"],
   ];
 
   $("#gaugeRow").innerHTML = gauges
@@ -628,7 +628,7 @@ function drawResponseCanvas(canvas, values) {
   });
 
   drawNormalizedLine(ctx, points, values.color, width, height, pad, 3);
-  ctx.fillStyle = "#f4f1e8";
+  ctx.fillStyle = "#E7E1D2";
   ctx.font = `${13 * devicePixelRatio}px ui-sans-serif`;
   ctx.fillText(values.cold ? "Hibernation response" : "Respiration response", pad, 22 * devicePixelRatio);
 
@@ -664,9 +664,9 @@ function drawDashboardChart(canvas, item, values) {
   });
 
   drawNormalizedLine(ctx, sensor, item.color, width, height, pad, 2);
-  drawNormalizedLine(ctx, actuator, "#7ed0dc", width, height, pad, 2);
-  drawNormalizedLine(ctx, temp, "#f0b545", width, height, pad, 2);
-  ctx.fillStyle = "#f4f1e8";
+  drawNormalizedLine(ctx, actuator, "#8B96A0", width, height, pad, 2);
+  drawNormalizedLine(ctx, temp, "#C2B47A", width, height, pad, 2);
+  ctx.fillStyle = "#E7E1D2";
   ctx.font = `${13 * devicePixelRatio}px ui-sans-serif`;
   ctx.fillText("Composite temperature / humidity / actuator trace", pad, 22 * devicePixelRatio);
 }
