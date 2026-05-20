@@ -1,4 +1,5 @@
 .claude/
+debug/
 *.bak
 Thumbs.db
 .DS_Store

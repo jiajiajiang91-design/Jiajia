@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MemoryOS — Case Study | Jiajia Jiang</title>
+<meta name="description" content="跨 AI 的本地工作记忆 — MemoryOS case study by Jiajia Jiang">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ============================================================
+   case_study.html (MemoryOS) — case-study specific additions on
+   top of shared.css. All base tokens (--paper / --ink / --signal /
+   --rule / --muted / --paper-soft / --font-* / --s-*) come from
+   shared.css. ONLY new token: --c-slate (SVG-internal accent for
+   the MemoryOS product surface — Notion 文档色).
+   ============================================================ */
+:root{
+  --c-slate:#525A6B;            /* MemoryOS app UI 实际使用的 Notion 蓝灰, 仅 SVG / 截图边界用 */
+}
+
+html{scroll-padding-top:clamp(96px,14vh,144px)}
+
+/* ---- page envelope (Notion-aligned 1280 max, sits inside shared nav) ---- */
+.cs-page{
+  max-width:1280px;
+  margin-inline:auto;
+  padding-inline:32px;
+}
+@media(max-width:1024px){.cs-page{padding-inline:var(--pad-tablet)}}
+@media(max-width:640px){.cs-page{padding-inline:var(--pad-mobile)}}
+
+/* ---- layout: left index zone + article (Bartlett-archive style) ---- */
+.cs-layout{
+  display:grid;
+  grid-template-columns:140px minmax(0,1fr) 140px;     /* phantom right keeps article visually centered, same as case_study01 */
+  gap:32px;
+  padding-block:var(--s-6) 0;
+}
+@media(max-width:1024px){
+  .cs-layout{grid-template-columns:1fr;padding-block-start:var(--s-3)}
+  .cs-leftindex{display:none}
+}
+
+/* ---- left index zone (sticky) ---- */
+.cs-leftindex{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  color:var(--muted);
+  position:sticky;
+  top:80px;
+  align-self:start;
+  padding-block-start:var(--s-3);
+}
+.cs-leftindex-num{
+  font-family:var(--font-mono);
+  font-size:2rem;
+  font-weight:500;
+  color:var(--signal);
+  line-height:1;
+  margin-block-end:var(--s-3);
+}
+.cs-leftindex-meta > div{
+  margin-block-end:var(--s-1);
+  letter-spacing:.04em;
+  line-height:1.5;
+}
+.cs-leftindex-progress{
+  margin-block-start:var(--s-4);
+  padding-block-start:var(--s-3);
+  border-block-start:1px solid var(--rule);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.cs-progress-num{color:var(--ink);font-weight:500}
+.cs-progress-name{
+  display:block;
+  margin-block-start:6px;
+  color:var(--ink);
+  letter-spacing:.22em;
+}
+
+/* ---- article: 12-col subgrid, sections inherit columns ---- */
+.cs-article{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:var(--s-3);
+}
+.cs-section{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:subgrid;
+  padding-block:var(--s-12);
+  border-block-end:1px solid var(--rule);
+  row-gap:0;
+}
+.cs-section:last-child{border-block-end:none}
+.cs-section > *{grid-column:1 / -1}
+
+/* ---- section headings ---- */
+.cs-section h2{
+  font-family:var(--font-sans);
+  font-size:var(--display-m);
+  font-weight:500;
+  line-height:1.12;
+  letter-spacing:-.01em;
+  margin-block-end:calc(var(--s-3) + var(--s-2));
+  color:var(--ink);
+}
+.cs-section h3{
+  font-family:var(--font-sans);
+  font-size:1.5rem;
+  font-weight:500;
+  line-height:1.2;
+  margin-block:var(--s-6) var(--s-2);
+  color:var(--ink);
+}
+.cs-section h4{
+  font-family:var(--font-sans);
+  font-size:1.125rem;
+  font-weight:600;
+  margin-block:var(--s-4) var(--s-2);
+  color:var(--ink);
+}
+.cs-section p{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-m);
+  line-height:1.75;
+  margin-block-end:var(--s-3);
+  color:var(--ink);
+  max-width:60rem;
+}
+.cs-section ul,
+.cs-section ol{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-m);
+  line-height:1.75;
+  padding-inline-start:var(--s-3);
+  margin-block-end:var(--s-3);
+  max-width:60rem;
+}
+.cs-section li{margin-block-end:var(--s-1)}
+.cs-section strong{font-weight:600;color:var(--ink)}
+.cs-section em{font-style:italic;color:var(--ink);border-bottom:1px solid var(--rule)}
+
+/* ---- table (used in Section 4 AI Decision Chain) ---- */
+.cs-section table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--caption);
+  margin-block:var(--s-3) var(--s-4);
+  max-width:60rem;
+}
+.cs-section th,.cs-section td{
+  padding:var(--s-1) var(--s-2);
+  text-align:left;
+  border-block-end:1px solid var(--rule);
+  vertical-align:top;
+  line-height:1.5;
+}
+.cs-section th{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  font-weight:500;
+  color:var(--muted);
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  border-block-end:1px solid var(--ink);
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.cs-section--hero{padding-block:calc(var(--s-10) + var(--s-3)) var(--s-12)}
+.cs-section--hero h1{
+  font-family:var(--font-sans);
+  font-size:var(--display-l);
+  font-weight:500;
+  line-height:.95;
+  letter-spacing:-.025em;
+  margin:0 0 var(--s-3);
+  color:var(--ink);
+  max-width:14ch;
+}
+.cs-hero-tagline{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:clamp(1.5rem,2.6vw,2rem);
+  font-weight:400;
+  color:var(--muted);
+  line-height:1.3;
+  letter-spacing:-.005em;
+  margin:0 0 var(--s-4);
+  max-width:30ch;
+}
+.cs-hero-body{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-l);
+  line-height:1.7;
+  color:var(--ink);
+  margin:0 0 var(--s-3);
+  max-width:60rem;
+}
+
+/* ---- Hero metadata strip (4-col, mono labels, ink-top / rule-bottom hairline) ---- */
+.cs-meta-strip{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:var(--s-3) var(--s-3);
+  border-block-start:1px solid var(--ink);
+  border-block-end:1px solid var(--rule);
+  padding-block:var(--s-3);
+  margin-block-start:var(--s-6);
+  max-width:none;
+}
+.cs-meta-strip > div{display:flex;flex-direction:column;gap:6px;margin:0}
+.cs-meta-strip dt{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.cs-meta-strip dd{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--caption);
+  line-height:1.5;
+  color:var(--ink);
+  margin:0;
+}
+@media(max-width:900px){.cs-meta-strip{grid-template-columns:repeat(2,1fr)}}
+
+/* ============================================================
+   Inline step anchor — [INPUT] / [SYSTEM LOGIC] / [OUTPUT] /
+   [USER · INTERACTION]. Two modes: inline pill, block heading.
+   ============================================================ */
+.cs-step-anchor{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:var(--paper-soft);
+  padding:2px 8px;
+  margin-inline-start:var(--s-1);
+  vertical-align:middle;
+}
+.cs-step-anchor--block{
+  display:block;
+  margin:0 0 var(--s-3);
+  padding:0;
+  background:transparent;
+  color:var(--signal);
+  letter-spacing:.22em;
+}
+
+/* ============================================================
+   Section 3 — 5-step handoff loop (numbered list)
+   ============================================================ */
+.cs-steps{
+  list-style:none;
+  padding-inline-start:0;
+  margin:var(--s-4) 0 var(--s-6);
+  max-width:60rem;
+  border-block-start:1px solid var(--rule);
+}
+.cs-steps > li{
+  padding-block:var(--s-3);
+  border-block-end:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:var(--s-2);
+  align-items:baseline;
+}
+.cs-step-num{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.18em;
+  color:var(--signal);
+  font-weight:500;
+}
+.cs-step-name{
+  font-family:var(--font-sans);
+  font-size:1.125rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-inline-end:var(--s-1);
+}
+.cs-steps p{
+  font-size:var(--body-m);
+  line-height:1.7;
+  color:var(--ink);
+  margin:var(--s-1) 0 0;
+  max-width:none;
+}
+
+/* ============================================================
+   Section 4 — Architecture layer list (3 layers w/ INPUT/SYSTEM/OUTPUT)
+   ============================================================ */
+.cs-layers{
+  list-style:none;
+  padding-inline-start:0;
+  margin:var(--s-4) 0 var(--s-6);
+  max-width:60rem;
+  border-block-start:1px solid var(--ink);
+}
+.cs-layers > li{
+  padding-block:var(--s-4);
+  border-block-end:1px solid var(--rule);
+}
+.cs-layer-head{
+  display:flex;
+  align-items:baseline;
+  gap:var(--s-2);
+  margin-block-end:var(--s-1);
+  flex-wrap:wrap;
+}
+.cs-layer-name{
+  font-family:var(--font-sans);
+  font-size:1.125rem;
+  font-weight:600;
+  color:var(--ink);
+}
+.cs-layers p{
+  font-size:var(--body-m);
+  line-height:1.75;
+  color:var(--ink);
+  margin:0;
+  max-width:none;
+}
+
+/* ============================================================
+   Product Lens (Section 4 末)
+   ============================================================ */
+.cs-product-lens{
+  border-block:1px solid var(--ink);
+  background:var(--paper-soft);
+  padding:var(--s-4) var(--s-4);
+  margin-block:var(--s-8);
+  max-width:60rem;
+}
+.cs-product-lens-head{
+  display:flex;
+  align-items:baseline;
+  gap:var(--s-2);
+  margin-block-end:var(--s-3);
+  flex-wrap:wrap;
+}
+.cs-product-lens h3{
+  font-family:var(--font-sans);
+  font-size:1.25rem;
+  font-weight:600;
+  margin:0;
+  color:var(--ink);
+}
+.cs-product-lens-meta{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--signal);
+  margin:0;
+}
+.cs-product-lens p{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-m);
+  line-height:1.75;
+  color:var(--ink);
+  margin:0 0 var(--s-2);
+  max-width:none;
+}
+.cs-product-lens p:last-child{margin-bottom:0}
+
+/* ============================================================
+   Section 5 — Decision blocks (4 decisions)
+   ============================================================ */
+.cs-decision{
+  margin-block:var(--s-6) var(--s-8);
+  padding-block-start:var(--s-3);
+  border-block-start:1px solid var(--ink);
+  max-width:60rem;
+}
+.cs-decision h3{
+  margin-block:0 var(--s-3);
+  font-size:1.375rem;
+  font-weight:500;
+  letter-spacing:-.01em;
+}
+.cs-decision-options{
+  margin-block:var(--s-2) var(--s-3);
+  padding:0;
+  list-style:none;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-m);
+  line-height:1.75;
+}
+.cs-decision-options li{
+  padding-inline-start:var(--s-3);
+  margin-block-end:var(--s-1);
+  position:relative;
+}
+.cs-decision-options li::before{
+  content:"·";
+  position:absolute;
+  left:6px;
+  color:var(--muted);
+  font-weight:700;
+}
+.cs-decision-options strong{color:var(--ink)}
+
+/* ============================================================
+   Section 6 — Roadmap stages + north star metrics
+   ============================================================ */
+.cs-roadmap{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s-3);
+  margin-block:var(--s-4) var(--s-8);
+  max-width:none;
+}
+.cs-roadmap-stage{
+  padding:var(--s-3);
+  border:1px solid var(--rule);
+  background:var(--paper-soft);
+}
+.cs-roadmap-stage h4{
+  margin:0 0 var(--s-2);
+  font-family:var(--font-sans);
+  font-size:1rem;
+  font-weight:600;
+  color:var(--ink);
+}
+.cs-roadmap-stage .cs-roadmap-when{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--signal);
+  margin-block-end:var(--s-1);
+}
+.cs-roadmap-stage ul{
+  list-style:disc;
+  padding-inline-start:var(--s-2);
+  margin:0;
+  font-size:var(--caption);
+  line-height:1.6;
+  color:var(--ink);
+  max-width:none;
+}
+.cs-roadmap-stage li{margin-block-end:6px}
+@media(max-width:900px){.cs-roadmap{grid-template-columns:1fr}}
+
+.cs-northstar{
+  list-style:none;
+  padding-inline-start:0;
+  margin:var(--s-3) 0 var(--s-8);
+  max-width:60rem;
+  border-block-start:1px solid var(--ink);
+}
+.cs-northstar > li{
+  padding-block:var(--s-3);
+  border-block-end:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:var(--s-3);
+  align-items:baseline;
+}
+.cs-northstar-when{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--signal);
+  font-weight:500;
+}
+@media(max-width:700px){
+  .cs-northstar > li{grid-template-columns:1fr;gap:6px}
+}
+
+.cs-risks{
+  margin-block:var(--s-3) var(--s-8);
+  max-width:60rem;
+}
+.cs-risks > div{
+  padding-block:var(--s-3);
+  border-block-start:1px solid var(--rule);
+}
+.cs-risks > div:last-child{border-block-end:1px solid var(--rule)}
+.cs-risks h4{
+  margin:0 0 var(--s-1);
+  font-family:var(--font-sans);
+  font-size:1.0625rem;
+  font-weight:600;
+  color:var(--ink);
+}
+.cs-risks p{
+  font-size:var(--body-m);
+  line-height:1.75;
+  color:var(--ink);
+  margin:0;
+  max-width:none;
+}
+
+/* ============================================================
+   Figures (SVG + PNG screenshots)
+   ============================================================ */
+.cs-figure{
+  margin-block:var(--s-8);
+  border-block-start:1px solid var(--rule);
+  border-block-end:1px solid var(--rule);
+  padding-block:var(--s-3);
+  max-width:none;
+}
+.cs-figure svg{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:860px;
+  margin-inline:auto;
+}
+.cs-figure figcaption{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  color:var(--muted);
+  margin-block-start:var(--s-2);
+  letter-spacing:.04em;
+  text-align:center;
+}
+
+.cs-screenshot{
+  margin-block:var(--s-8);
+  border-block-start:1px solid var(--rule);
+  border-block-end:1px solid var(--rule);
+  padding-block:var(--s-3);
+  max-width:none;
+}
+.cs-screenshot img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:960px;
+  margin-inline:auto;
+  border:1px solid var(--rule);
+}
+.cs-screenshot figcaption{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  color:var(--muted);
+  margin-block-start:var(--s-2);
+  letter-spacing:.04em;
+  text-align:center;
+}
+
+/* ============================================================
+   Section 6 — 三出口 (BUILD_SPEC § 6.2)
+   ============================================================ */
+.cs-exits{
+  display:flex;
+  flex-direction:column;
+  gap:var(--s-2);
+  border-block-start:1px solid var(--ink);
+  padding-block-start:var(--s-4);
+  margin-block-start:var(--s-6);
+  list-style:none;
+  padding-inline-start:0;
+  max-width:60rem;
+}
+.cs-exit-link{
+  color:var(--ink);
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-m);
+  line-height:1.5;
+  display:block;
+  padding-block:var(--s-2);
+  border-bottom:1px solid var(--rule);
+  transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease);
+}
+.cs-exits li:last-child .cs-exit-link{border-bottom:none}
+.cs-exit-link strong{
+  color:var(--signal);
+  font-weight:600;
+  margin-inline-end:var(--s-1);
+}
+.cs-exit-link:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.cs-exit-link:hover strong{text-decoration:underline;text-underline-offset:3px}
+.cs-exit-link--external strong::after{
+  content:" ↗";
+  color:var(--muted);
+  font-weight:400;
+}
+
+/* Quick CTA — exposed early (after Hero, before Section 2) so readers can act before reading the long-form case study */
+.cs-quick-cta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--s-2);
+  margin:var(--s-6) 0 var(--s-2);
+  max-width:60rem;
+}
+.cs-quick-cta-card{
+  display:flex;flex-direction:column;gap:6px;
+  padding:var(--s-3);
+  border:1px solid var(--ink);
+  background:var(--paper);
+  text-decoration:none;
+  color:var(--ink);
+  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.cs-quick-cta-card:hover{background:var(--ink);color:var(--paper)}
+.cs-quick-cta-lbl{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--signal);
+}
+.cs-quick-cta-name{
+  font-family:var(--font-mono);
+  font-size:.95rem;
+  font-weight:500;
+  letter-spacing:.02em;
+  color:inherit;
+  margin-top:2px;
+}
+.cs-quick-cta-sub{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.04em;
+  color:var(--muted);
+  line-height:1.4;
+}
+.cs-quick-cta-card:hover .cs-quick-cta-sub{color:#aaa}
+@media(max-width:700px){.cs-quick-cta{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ───── Top portfolio nav (reuses shared.css <nav> from index.html) ───── -->
+<nav>
+  <a href="index.html" class="nav-logo">JIAJIA JIANG<span class="cn">/ 江佳佳</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#product">Product</a></li>
+    <li><a href="index.html#systems">Systems</a></li>
+    <li><a href="index.html#foundation">Foundation</a></li>
+    <li><a href="index.html#workflows">Workflows</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main class="cs-page">
+  <div class="cs-layout">
+
+    <!-- ───── Left index zone (sticky, desktop only) ───── -->
+    <aside class="cs-leftindex" aria-label="Project index">
+      <div class="cs-leftindex-num">01</div>
+      <div class="cs-leftindex-meta">
+        <div>2026</div>
+        <div>Solo Founder / PM / Engineer</div>
+        <div>v0.1.1 Shipped · Dogfooding</div>
+      </div>
+      <div class="cs-leftindex-progress" data-progress-target>
+        <span class="cs-progress-num">01</span> / 07
+        <span class="cs-progress-name">HERO</span>
+      </div>
+    </aside>
+
+    <article class="cs-article">
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 1 · Hero
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--hero" id="hero">
+        <h1>MemoryOS</h1>
+        <p class="cs-hero-tagline">跨 AI 的本地工作记忆 —— 一份上下文, 接续所有 AI 工作流。</p>
+
+        <p class="cs-hero-body">我用一套 Markdown 文件夹在 ChatGPT、Claude、Cursor、Gemini 之间手动同步上下文 3 个月。每次开新对话都要重新告诉 AI 我是谁、上次到哪了, 复制粘贴自己是谁三个月之后会想砸键盘。</p>
+
+        <p class="cs-hero-body">ChatGPT Memory 只对 ChatGPT 生效, Claude Projects 只对 Claude 生效, Notion AI 把记忆锁在它自己的工作区。<strong>这一层之上需要一个 AI-agnostic 的本地记忆层</strong> —— 我把它做成了一个 1.7 MB 的桌面 app。</p>
+
+        <dl class="cs-meta-strip" aria-label="Project metadata">
+          <div><dt>Year</dt><dd>2026</dd></div>
+          <div><dt>Role</dt><dd>Solo Founder / PM / Engineer</dd></div>
+          <div><dt>Domain</dt><dd>Cross-AI Memory Layer</dd></div>
+          <div><dt>Users</dt><dd>AI Power Users (Researchers / Designers / PMs)</dd></div>
+          <div><dt>Input</dt><dd>Local Markdown Files + Clipboard Bridge</dd></div>
+          <div><dt>Tools</dt><dd>Tauri + React + TS + Rust trash crate</dd></div>
+          <div><dt>Output</dt><dd>Cross-AI Handoff Sessions + Risk-Tiered Writes</dd></div>
+          <div><dt>License</dt><dd>MIT Licensed Open Source</dd></div>
+          <div><dt>Status</dt><dd>v0.1.1 Shipped</dd></div>
+          <div><dt>Footprint</dt><dd>~1.7 MB Windows Binary</dd></div>
+        </dl>
+
+        <!-- ───── Quick CTA · GitHub repo + Download —— act before reading ───── -->
+        <aside class="cs-quick-cta" aria-label="Try MemoryOS or read its source">
+          <a href="https://github.com/jiajiajiang91-design/memoryos" class="cs-quick-cta-card" target="_blank" rel="noopener">
+            <span class="cs-quick-cta-lbl">GitHub repo ↗</span>
+            <span class="cs-quick-cta-name">jiajiajiang91-design / memoryos</span>
+            <span class="cs-quick-cta-sub">MIT 开源代码 · README · Issue tracker</span>
+          </a>
+          <a href="https://github.com/jiajiajiang91-design/memoryos/releases" class="cs-quick-cta-card" target="_blank" rel="noopener">
+            <span class="cs-quick-cta-lbl">Download v0.1.1 ↗</span>
+            <span class="cs-quick-cta-name">Windows .exe / .msi</span>
+            <span class="cs-quick-cta-sub">~1.7 MB 安装包 · Windows 10+</span>
+          </a>
+        </aside>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 2 · Why I built it from a personal pain
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--why" id="why">
+        <h2>Why I built it from a personal pain</h2>
+
+        <p>3 个月里我每天在 4 个 AI 之间切换工作 —— ChatGPT 做长文、Claude 做深度推理、Cursor 做代码、Gemini 做信息检索。我维护了一个 Markdown 文件夹手动同步上下文, 但每次开新对话 (一天 5-10 次) 都要先粘 200 行"我是谁 / 我现在做什么 / 上次到哪了"。</p>
+
+        <!-- ───── Fig. 01 — SVG 1: Pain vs Solution 对照 ───── -->
+        <figure class="cs-figure">
+          <svg viewBox="0 0 720 280" role="img" aria-label="切换 AI 时上下文如何丢失 (左) vs MemoryOS 工作记忆层介入 (右)" xmlns="http://www.w3.org/2000/svg">
+            <!-- center divider (with comfortable gutter — 30px each side) -->
+            <line x1="360" y1="20" x2="360" y2="260" stroke="var(--rule)" stroke-width="0.5"/>
+
+            <!-- LEFT: 切换 AI 时 (muted dots, 表"现状/丢失") — col x: 24-330, text width 286px -->
+            <text x="24" y="28" font-family="IBM Plex Mono" font-size="11" font-weight="500" fill="var(--muted)" letter-spacing="1.2">切换 AI 时</text>
+            <circle cx="32" cy="70" r="3" fill="var(--muted)"/>
+            <text x="44" y="74" font-family="Inter" font-size="13" fill="var(--ink)">ChatGPT 关掉 → 它忘掉你 (Memory 是它自己的)</text>
+            <circle cx="32" cy="110" r="3" fill="var(--muted)"/>
+            <text x="44" y="114" font-family="Inter" font-size="13" fill="var(--ink)">切到 Claude → 你重新粘 200 行身份</text>
+            <circle cx="32" cy="150" r="3" fill="var(--muted)"/>
+            <text x="44" y="154" font-family="Inter" font-size="13" fill="var(--ink)">切到 Cursor → 再粘一次</text>
+            <circle cx="32" cy="190" r="3" fill="var(--muted)"/>
+            <text x="44" y="194" font-family="Inter" font-size="13" fill="var(--ink)">复制粘贴自己是谁 × 一天 5-10 次</text>
+            <text x="24" y="248" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)">复制粘贴 × N</text>
+
+            <!-- RIGHT: MemoryOS 介入后 (signal dots, 表"产品介入") — col x: 390-700, text width 286px -->
+            <text x="390" y="28" font-family="IBM Plex Mono" font-size="11" font-weight="500" fill="var(--muted)" letter-spacing="1.2">MemoryOS 介入后</text>
+            <circle cx="398" cy="70" r="3" fill="var(--signal)"/>
+            <text x="410" y="74" font-family="Inter" font-size="13" fill="var(--ink)">一份 about_me + projects 文件夹 (本地)</text>
+            <circle cx="398" cy="110" r="3" fill="var(--signal)"/>
+            <text x="410" y="114" font-family="Inter" font-size="13" fill="var(--ink)">Start 指令把上下文打包到剪贴板</text>
+            <circle cx="398" cy="150" r="3" fill="var(--signal)"/>
+            <text x="410" y="154" font-family="Inter" font-size="13" fill="var(--ink)">粘到任意 AI → 30 秒续上</text>
+            <circle cx="398" cy="190" r="3" fill="var(--signal)"/>
+            <text x="410" y="194" font-family="Inter" font-size="13" fill="var(--ink)">End 指令让 AI 写总结, 用户勾选保存</text>
+            <text x="390" y="248" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--signal)">一份上下文 × 所有 AI</text>
+          </svg>
+          <figcaption>Fig. 01 — 切换 AI 时上下文如何丢失 (左) vs MemoryOS 工作记忆层介入 (右)</figcaption>
+        </figure>
+
+        <p>更深的痛: 不是粘贴慢, 是粘贴让我<strong>无法信任 AI 的连续性</strong>。每次都从零开始, 我得在 prompt 里反复声明边界 ("不是新手, 不要从头解释"), 因为模型记不住。结果是大量心智被花在"教 AI 我是谁"上, 而不是真正的工作。</p>
+
+        <p>ChatGPT Memory 不解决这个问题 —— 它只在 ChatGPT 里生效, 我离开 ChatGPT 那一刻所有记忆消失。Notion AI、Claude Projects 同理。<strong>这些产品的记忆都是封闭花园, 跟着各家自己的产品锁。</strong></p>
+
+        <p>把记忆层抽出来、独立于任何 AI 厂商、放在用户自己电脑里 —— 这件事没人做。所以我做了。</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 2.5 · Market Landscape
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--market" id="market">
+        <h2>市场定位 — 为什么是这个空白象限</h2>
+
+        <!-- ───── Fig. 02 — SVG 2: 2x2 矩阵 ───── -->
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 380" role="img" aria-label="AI 记忆 / 个人知识管理工具市场地图, MemoryOS 落在右上 (Cross-AI + Local)" xmlns="http://www.w3.org/2000/svg">
+            <!-- horizontal axis with right arrow -->
+            <line x1="40" y1="190" x2="580" y2="190" stroke="var(--rule)" stroke-width="0.5"/>
+            <path d="M 580 190 L 574 187 M 580 190 L 574 193" stroke="var(--rule)" stroke-width="0.5" fill="none"/>
+            <!-- vertical axis with up arrow -->
+            <line x1="310" y1="340" x2="310" y2="40" stroke="var(--rule)" stroke-width="0.5"/>
+            <path d="M 310 40 L 307 46 M 310 40 L 313 46" stroke="var(--rule)" stroke-width="0.5" fill="none"/>
+
+            <!-- quadrant corner labels -->
+            <text x="60" y="60" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">SINGLE-AI · LOCAL</text>
+            <text x="60" y="360" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" letter-spacing="1.5">SINGLE-AI · CLOUD</text>
+            <text x="560" y="360" font-family="IBM Plex Mono" font-size="11" fill="var(--muted)" letter-spacing="1.5" text-anchor="end">CROSS-AI · CLOUD</text>
+            <text x="560" y="60" font-family="IBM Plex Mono" font-size="11" fill="var(--signal)" letter-spacing="1.5" text-anchor="end">CROSS-AI · LOCAL</text>
+
+            <!-- axis labels -->
+            <text x="50" y="205" font-family="Inter" font-size="12" fill="var(--muted)">Single AI Vendor</text>
+            <text x="590" y="205" font-family="Inter" font-size="12" fill="var(--muted)" text-anchor="end">AI-Agnostic</text>
+            <text x="315" y="35" font-family="Inter" font-size="12" fill="var(--muted)">Local-First</text>
+            <text x="315" y="355" font-family="Inter" font-size="12" fill="var(--muted)">Cloud-Hosted</text>
+
+            <!-- Bottom-left: Single-AI · Cloud (incumbents 占满) -->
+            <circle cx="140" cy="270" r="4" fill="var(--muted)"/>
+            <text x="152" y="274" font-family="Inter" font-size="13" fill="var(--ink)">ChatGPT Memory</text>
+            <circle cx="140" cy="300" r="4" fill="var(--muted)"/>
+            <text x="152" y="304" font-family="Inter" font-size="13" fill="var(--ink)">Claude Projects</text>
+            <circle cx="140" cy="330" r="4" fill="var(--muted)"/>
+            <text x="152" y="334" font-family="Inter" font-size="13" fill="var(--ink)">Gemini Gems</text>
+
+            <!-- Bottom-right: Cross-AI · Cloud -->
+            <circle cx="430" cy="270" r="4" fill="var(--muted)"/>
+            <text x="442" y="274" font-family="Inter" font-size="13" fill="var(--ink)">Notion AI</text>
+            <circle cx="430" cy="300" r="4" fill="var(--muted)"/>
+            <text x="442" y="304" font-family="Inter" font-size="13" fill="var(--ink)">Mem.ai</text>
+            <circle cx="430" cy="330" r="4" fill="var(--muted)"/>
+            <text x="442" y="334" font-family="Inter" font-size="13" fill="var(--ink)">Obsidian + AI plugins</text>
+
+            <!-- Top-left: Single-AI · Local (empty) -->
+            <text x="140" y="100" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)">(no incumbent)</text>
+
+            <!-- Top-right: MemoryOS highlight -->
+            <text x="475" y="120" font-family="Inter" font-size="32" fill="var(--signal)" text-anchor="middle">★</text>
+            <text x="475" y="152" font-family="Inter" font-size="16" font-weight="600" fill="var(--signal)" text-anchor="middle">MemoryOS</text>
+            <text x="475" y="170" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--c-slate)" text-anchor="middle">local markdown + clipboard bridge</text>
+          </svg>
+          <figcaption>Fig. 02 — AI 记忆 / 个人知识管理工具市场地图, MemoryOS 落在右上 (Cross-AI + Local)</figcaption>
+        </figure>
+
+        <p>把现有"AI 记忆 / 个人知识管理"工具按两个维度切: 横轴是「单一 AI 厂商 ←→ AI-agnostic」, 纵轴是「云托管 ←→ 本地优先」。</p>
+
+        <p>左下半区 (单一 AI · 云托管) 被 <strong>ChatGPT Memory / Claude Projects / Gemini Gems</strong> 占满。它们都是各 AI 厂商的"留客"功能, 离开产品记忆即失效。</p>
+
+        <p>左上 (单一 AI · 本地) 几乎为空 —— 因为单一 AI 厂商没动力让用户把记忆带走。</p>
+
+        <p>右下 (AI-agnostic · 云托管) 是 <strong>Notion AI / Mem.ai / Obsidian + AI 插件</strong> 这一带, 它们把记忆放在自己的 SaaS 里, 跨 AI 但绑定平台。</p>
+
+        <p><strong>右上角 (AI-agnostic + 本地优先) 是真正的空白。</strong> MemoryOS 落在这里 —— 不绑定任何 AI 厂商、不绑定任何 SaaS 平台、所有数据是用户电脑上的 Markdown 文件。</p>
+
+        <p>这不是巧合。"本地 + 跨 AI" 是工程上简单、商业上昂贵的承诺: 不能锁用户 = 不能持续收订阅费 = VC 不投。我接受这个 trade-off, 因为本产品的求职目标是证明"敢做和大厂相反方向的产品决策", 而不是 ARR。</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 3 · 用户旅程
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--who" id="who">
+        <h2>用户旅程 — 谁用、怎么用</h2>
+        <span class="cs-step-anchor cs-step-anchor--block">USER · INTERACTION</span>
+
+        <p>MemoryOS 服务一类核心用户: <strong>重度多 AI 切换的知识工作者</strong> —— 研究者 / 设计师 / PM / 工程师, 每天在 3+ 个 AI 之间切换, 已经感到"复制粘贴自己是谁"的真实痛感, 但还没到自建 RAG / 自己写 prompt template 的工程门槛。</p>
+
+        <!-- ───── Fig. 03 — SVG 3: Handoff Loop (5-step linear flow + loop-back) ───── -->
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 280" role="img" aria-label="Start → Work → End → AI Summarize → Review & Save 五步 handoff 闭环" xmlns="http://www.w3.org/2000/svg">
+            <!-- Loop-back arrow at top: step 5 → step 1 (user re-enters the loop) -->
+            <path d="M 550 70 L 550 30 L 70 30 L 70 70" fill="none" stroke="var(--signal)" stroke-width="0.5"/>
+            <path d="M 70 70 L 66 64 M 70 70 L 74 64" stroke="var(--signal)" stroke-width="0.5" fill="none"/>
+            <text x="310" y="22" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" text-anchor="middle" letter-spacing="1.5">↺ 用户主动驱动 · 重复</text>
+
+            <!-- Step 1: Start (x 16–124) -->
+            <rect x="16" y="70" width="108" height="130" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="24" y="92" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" letter-spacing="1.2">1 · START</text>
+            <text x="24" y="120" font-family="Inter" font-size="14" font-weight="600" fill="var(--ink)">Start</text>
+            <text x="24" y="148" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">复制开始指令</text>
+            <text x="24" y="164" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">粘到任意 AI</text>
+            <text x="24" y="188" font-family="IBM Plex Mono" font-size="9" font-style="italic" fill="var(--c-slate)">30 秒续上</text>
+
+            <!-- Arrow 1 → 2 -->
+            <line x1="124" y1="135" x2="134" y2="135" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 136 135 L 130 132 M 136 135 L 130 138" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+
+            <!-- Step 2: Work (x 136–244) -->
+            <rect x="136" y="70" width="108" height="130" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="144" y="92" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" letter-spacing="1.2">2 · WORK</text>
+            <text x="144" y="120" font-family="Inter" font-size="14" font-weight="600" fill="var(--ink)">Work</text>
+            <text x="144" y="148" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">正常和 AI 对话</text>
+            <text x="144" y="164" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">MemoryOS 不参与</text>
+
+            <!-- Arrow 2 → 3 -->
+            <line x1="244" y1="135" x2="254" y2="135" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 256 135 L 250 132 M 256 135 L 250 138" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+
+            <!-- Step 3: End (x 256–364) -->
+            <rect x="256" y="70" width="108" height="130" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="264" y="92" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" letter-spacing="1.2">3 · END</text>
+            <text x="264" y="120" font-family="Inter" font-size="14" font-weight="600" fill="var(--ink)">End</text>
+            <text x="264" y="148" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">复制结束指令</text>
+            <text x="264" y="164" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">粘到当前 AI</text>
+            <text x="264" y="188" font-family="IBM Plex Mono" font-size="9" font-style="italic" fill="var(--c-slate)">选目标 AI</text>
+
+            <!-- Arrow 3 → 4 (dashed, crosses MemoryOS boundary) -->
+            <line x1="364" y1="135" x2="374" y2="135" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <path d="M 376 135 L 370 132 M 376 135 L 370 138" stroke="var(--c-slate)" stroke-width="0.5" fill="none"/>
+
+            <!-- Step 4: AI Summarize (x 376–484, DASHED = external) -->
+            <rect x="376" y="70" width="108" height="130" fill="var(--paper-soft)" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <text x="384" y="92" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)" letter-spacing="1.2">4 · SUMMARIZE</text>
+            <text x="384" y="120" font-family="Inter" font-size="14" font-weight="600" fill="var(--ink)">AI Summarize</text>
+            <text x="384" y="148" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">AI 按模板</text>
+            <text x="384" y="164" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">输出结构化总结</text>
+            <text x="384" y="188" font-family="IBM Plex Mono" font-size="9" font-style="italic" fill="var(--c-slate)">在外部 AI 里跑</text>
+
+            <!-- Arrow 4 → 5 (dashed, re-crosses boundary back to MemoryOS) -->
+            <line x1="484" y1="135" x2="494" y2="135" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <path d="M 496 135 L 490 132 M 496 135 L 490 138" stroke="var(--c-slate)" stroke-width="0.5" fill="none"/>
+
+            <!-- Step 5: Review & Save (x 496–604) -->
+            <rect x="496" y="70" width="108" height="130" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="504" y="92" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" letter-spacing="1.2">5 · REVIEW</text>
+            <text x="504" y="120" font-family="Inter" font-size="14" font-weight="600" fill="var(--ink)">Review &amp; Save</text>
+            <text x="504" y="148" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">勾选风险等级</text>
+            <text x="504" y="164" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">用户决定写入</text>
+            <text x="504" y="188" font-family="IBM Plex Mono" font-size="9" font-style="italic" fill="var(--c-slate)">→ Markdown 文件</text>
+
+            <!-- Legend -->
+            <line x1="16" y1="245" x2="44" y2="245" stroke="var(--muted)" stroke-width="0.5"/>
+            <text x="52" y="249" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">实线 = MemoryOS 内部步骤</text>
+            <line x1="290" y1="245" x2="318" y2="245" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <text x="326" y="249" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">虚线 = 用户在外部 AI 里执行</text>
+          </svg>
+          <figcaption>Fig. 03 — Start → Work → End → AI Summarize → Review &amp; Save 五步 handoff 闭环</figcaption>
+        </figure>
+
+        <p>工作流是一个<strong>用户主动驱动的 5 步循环</strong>:</p>
+
+        <ol class="cs-steps">
+          <li>
+            <span class="cs-step-num">01</span>
+            <div>
+              <span class="cs-step-name">Start</span>
+              <p>在 MemoryOS 选当前项目 → 点【复制开始对话指令】→ 粘到任意 AI。AI 读取上下文, 30 秒续上。</p>
+            </div>
+          </li>
+          <li>
+            <span class="cs-step-num">02</span>
+            <div>
+              <span class="cs-step-name">Work</span>
+              <p>正常和 AI 工作, MemoryOS 不参与。</p>
+            </div>
+          </li>
+          <li>
+            <span class="cs-step-num">03</span>
+            <div>
+              <span class="cs-step-name">End</span>
+              <p>工作差不多了 → 在 MemoryOS 点【复制结束对话指令】→ 选当前在用的 AI (ChatGPT / Claude / Gemini / Grok / Cursor / Codex / DeepSeek / Kimi 或自定义) → 粘到 AI。</p>
+            </div>
+          </li>
+          <li>
+            <span class="cs-step-num">04</span>
+            <div>
+              <span class="cs-step-name">AI 总结</span>
+              <p>AI 按 MemoryOS 提供的标准化模板, 输出一份结构化对话总结 (固定 Markdown 格式)。</p>
+            </div>
+          </li>
+          <li>
+            <span class="cs-step-num">05</span>
+            <div>
+              <span class="cs-step-name">Review → Save</span>
+              <p>用户把总结复制回 MemoryOS, 点【+ 导入对话总结】, 按风险分级勾选要写入的内容, Save。</p>
+            </div>
+          </li>
+        </ol>
+
+        <!-- ───── Fig. 04 — Dashboard screenshot ───── -->
+        <figure class="cs-screenshot">
+          <img src="images_memoryos/02_dashboard.png" alt="MemoryOS 主界面: 左栏项目列表, 中间当前目标 + 最近对话, 右栏项目元数据" loading="lazy"/>
+          <figcaption>Fig. 04 — Dashboard 主界面: 左栏项目列表 / 中间当前目标 + 最近对话 / 右栏项目元数据</figcaption>
+        </figure>
+
+        <p>注意第 5 步的设计选择: <strong>不是 AI 直接写文件, 是用户勾选 checkbox 确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场 —— AI 总结、用户确认。下一节展开。</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 4 · How it works
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--how" id="how">
+        <h2>How it works — 系统架构与产品边界</h2>
+
+        <!-- ───── Fig. 05 — SVG 4: System Architecture ───── -->
+        <figure class="cs-figure">
+          <svg viewBox="0 0 620 340" role="img" aria-label="三层架构: Storage 文件系统 / App Tauri 内核 / Bridge 剪贴板桥接" xmlns="http://www.w3.org/2000/svg">
+            <!-- MemoryOS 边界 (dashed signal) -->
+            <rect x="170" y="50" width="280" height="240" fill="none" stroke="var(--signal)" stroke-width="0.5" stroke-dasharray="4,4"/>
+            <text x="170" y="42" font-family="IBM Plex Mono" font-size="10" fill="var(--signal)" letter-spacing="1.2">MEMORYOS 边界</text>
+
+            <!-- Layer 3: Bridge -->
+            <rect x="180" y="60" width="260" height="50" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="194" y="78" font-family="Inter" font-size="13" font-weight="600" fill="var(--ink)">Bridge Layer · 剪贴板桥接</text>
+            <text x="194" y="96" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">no API call, no scrape</text>
+
+            <!-- Layer 2: App -->
+            <rect x="180" y="130" width="260" height="90" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="194" y="148" font-family="Inter" font-size="13" font-weight="600" fill="var(--ink)">App Layer · Tauri + React + TS</text>
+            <text x="194" y="166" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">Rust 内核 / 1.7 MB Windows binary</text>
+            <text x="194" y="184" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">i18n / 风险分级 / 系统回收站</text>
+            <text x="194" y="202" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">MemoryOS 主体, ~3000 行 TS + ~500 行 Rust</text>
+
+            <!-- Layer 1: Storage -->
+            <rect x="180" y="240" width="260" height="50" fill="var(--paper-soft)" stroke="var(--rule)" stroke-width="0.5"/>
+            <text x="194" y="258" font-family="Inter" font-size="13" font-weight="600" fill="var(--ink)">Storage Layer · Markdown 文件系统</text>
+            <text x="194" y="276" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">~/Documents/MemoryOS/ · 任何编辑器可打开</text>
+
+            <!-- LEFT: User -->
+            <text x="40" y="175" font-family="Inter" font-size="14" fill="var(--ink)" font-weight="500">User</text>
+            <text x="40" y="194" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">重度多 AI 切换的</text>
+            <text x="40" y="208" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">知识工作者</text>
+
+            <!-- RIGHT: 任意 AI -->
+            <text x="582" y="175" font-family="Inter" font-size="14" fill="var(--ink)" font-weight="500" text-anchor="end">任意 AI</text>
+            <text x="582" y="194" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)" text-anchor="end">ChatGPT / Claude /</text>
+            <text x="582" y="208" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)" text-anchor="end">Gemini / Grok / etc.</text>
+
+            <!-- Arrows: User → App -->
+            <line x1="90" y1="175" x2="178" y2="175" stroke="var(--muted)" stroke-width="0.5"/>
+            <path d="M 178 175 L 172 172 M 178 175 L 172 178" stroke="var(--muted)" stroke-width="0.5" fill="none"/>
+            <text x="100" y="170" font-family="IBM Plex Mono" font-size="9" fill="var(--muted)">点击操作</text>
+
+            <!-- Arrows: Bridge ↔ AI (双向虚线, --c-slate) -->
+            <line x1="442" y1="85" x2="530" y2="170" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="4,3"/>
+            <path d="M 530 170 L 524 168 M 530 170 L 527 165" stroke="var(--c-slate)" stroke-width="0.5" fill="none"/>
+            <line x1="530" y1="180" x2="442" y2="265" stroke="var(--c-slate)" stroke-width="0.5" stroke-dasharray="4,3"/>
+            <path d="M 442 265 L 448 263 M 442 265 L 445 260" stroke="var(--c-slate)" stroke-width="0.5" fill="none"/>
+            <text x="470" y="172" font-family="IBM Plex Mono" font-size="10" fill="var(--c-slate)">剪贴板</text>
+
+            <!-- Key callout (right bottom) -->
+            <text x="600" y="320" font-family="IBM Plex Mono" font-size="11" font-style="italic" fill="var(--muted)" text-anchor="end">AI 调用永远发生在边界之外</text>
+          </svg>
+          <figcaption>Fig. 05 — 三层架构: Storage 文件系统 / App Tauri 内核 / Bridge 剪贴板桥接</figcaption>
+        </figure>
+
+        <p>技术栈三层架构, 全部本地:</p>
+
+        <ol class="cs-layers">
+          <li>
+            <div class="cs-layer-head">
+              <span class="cs-layer-name">1. Storage Layer</span>
+              <span class="cs-step-anchor">INPUT</span>
+            </div>
+            <p>用户主目录下的 Markdown 文件 (默认 <code>~/Documents/MemoryOS/</code>), 包含 <code>about_me.md</code> (长期身份偏好) + <code>projects/&lt;项目名&gt;/{project.json, 00_context.md, decisions.md, sessions/}</code>。任何编辑器都能打开, 整个文件夹拷贝就是完整备份。<strong>这一层不是数据库, 是文件系统。</strong> 故意的。</p>
+          </li>
+          <li>
+            <div class="cs-layer-head">
+              <span class="cs-layer-name">2. App Layer</span>
+              <span class="cs-step-anchor">SYSTEM LOGIC</span>
+            </div>
+            <p>Tauri 1.5 框架, Rust 内核 + React 18 + TypeScript UI。负责: 项目管理 (CRUD) / 上下文打包 / 剪贴板写入 / 风险分级导入 / 系统回收站删除 + Undo / 完整中英双语 i18n。打包后单个 Windows 安装包 ~1.7 MB (比 Electron 同类小 50 倍)。</p>
+          </li>
+          <li>
+            <div class="cs-layer-head">
+              <span class="cs-layer-name">3. Bridge Layer</span>
+              <span class="cs-step-anchor">OUTPUT</span>
+            </div>
+            <p>不是 API 集成, 是<strong>剪贴板桥接</strong>。MemoryOS 把上下文 / 标准化指令写进剪贴板, 用户粘到任意 AI; AI 输出复制回 MemoryOS, 用户勾选保存。这层故意没用 OpenAI API / Claude API —— 保证 AI-agnostic, 同时保证 MemoryOS 永远不读 AI 对话内容 (handoff 必须由用户主动粘贴)。</p>
+          </li>
+        </ol>
+
+        <!-- ───── Fig. 06 — End Prompt screenshot ───── -->
+        <figure class="cs-screenshot">
+          <img src="images_memoryos/03_end_prompt.png" alt="复制结束对话指令: 选附带哪些上下文 / 选目标 AI / 预览指令" loading="lazy"/>
+          <figcaption>Fig. 06 — 复制结束对话指令: 选附带哪些上下文 / 选目标 AI / 预览指令</figcaption>
+        </figure>
+
+        <h3>AI Decision Chain — 哪一步用什么级别的 AI, 哪一步根本不用</h3>
+        <p>MemoryOS 是"用 AI 做记忆层", 不是"在产品内套 AI"。AI 调用的边界:</p>
+
+        <table>
+          <thead>
+            <tr><th>步骤</th><th>v0.1.1 主导技术</th><th>AI 的位置</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Storage</td><td>文件系统</td><td>—</td></tr>
+            <tr><td>Start prompt</td><td>模板拼接 (Rust 字符串)</td><td>—</td></tr>
+            <tr><td>End prompt</td><td>模板拼接</td><td>—</td></tr>
+            <tr><td>对话总结生成</td><td><strong>AI 在用户的 AI 工具里跑</strong></td><td>第 3 方 AI (ChatGPT/Claude/etc) — 不是 MemoryOS 调用</td></tr>
+            <tr><td>Review &amp; Save</td><td>用户勾选</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>唯一的 AI 调用发生在用户的浏览器里, 不在 MemoryOS 内</strong>。这是产品立场: MemoryOS 不与 AI 厂商竞争, 也不依赖任何 AI 厂商的 API。Storage / App / Bridge 三层都可以离线工作 —— 只在用户把 prompt 粘到 AI 那一刻才需要网络。</p>
+
+        <!-- ───── Product Lens ───── -->
+        <div class="cs-product-lens">
+          <div class="cs-product-lens-head">
+            <h3>Product Lens</h3>
+            <span class="cs-product-lens-meta">Claude 草拟首版, Jiajia 审改</span>
+          </div>
+
+          <p>MemoryOS 是一个<strong>面向重度多 AI 用户的本地工作记忆层</strong>——不是 ChatGPT Memory 的开源版, 是它上面缺的那一层。</p>
+
+          <p>核心用户是<strong>每天在 3+ 个 AI 之间切换的知识工作者</strong>, 他们已经感到"复制粘贴自己是谁"的真实痛感, 同时拒绝把记忆托管给单一 AI 厂商。</p>
+
+          <p>我把工作组织成三个产品立场: <strong>本地优先</strong> (所有数据是用户电脑上的 Markdown, 不上传, 不登录), <strong>AI-agnostic</strong> (用剪贴板桥接而不是 API 集成, 支持 8 个预置 AI + 自定义), <strong>用户最终决策权</strong> (AI 总结后用户勾选保存, 永远不自动写)。</p>
+
+          <p>MVP 聚焦在 <strong>Windows v0.1.1 闭环 + 用我自己 dogfood + 10 个种子用户访谈</strong>, 先验证"本地记忆层"这个产品形态是否成立。</p>
+
+          <p>主要产品风险是<strong>用户不愿意手动 handoff</strong>——自动抓取 AI 对话技术上完全可行 (浏览器插件 / API 监听), 但会破坏"不读对话内容"这条产品红线。验证方法: 找 10 个种子用户用 1 个月, 看至少 6 个能否反馈"复制粘贴 handoff 不是负担, 反而是控制感"。如果反馈反过来, 当前定位需要重做。</p>
+
+          <p>下一步 ship 的是 <strong>v0.2 (2026.08)</strong>: 多 workspace 切换 + 设置面板 + 深色模式; 同步打 Mac build。v1.0 之前不做 App 内 Markdown 编辑 (避免和 Obsidian / VS Code 重合)。</p>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 5 · Decisions & Trade-offs
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--decisions" id="decisions">
+        <h2>Decisions &amp; Trade-offs</h2>
+
+        <!-- Decision 1 -->
+        <div class="cs-decision">
+          <h3>决策 1 — 本地优先 vs 云同步</h3>
+          <p>云同步是大厂的本能选择, 也是 MemoryOS 唯一不做的事。</p>
+          <p>云同步意味着: 我得做账号系统、后端服务、数据加密、合规审计。任何一项做轻了, "我的 AI 记忆"就成了"另一个厂商的副本"。最差情况, 我变成又一个 Notion-style SaaS, 用户记忆从 ChatGPT 锁里转移到 MemoryOS 锁里 —— 这是把问题换了个壳, 不是解决。</p>
+          <p>桌面上 3 条路径:</p>
+          <ul class="cs-decision-options">
+            <li><strong>A · 云优先</strong> (账号 + 后端 + 跨端同步), 商业化路径清晰但产品立场死亡</li>
+            <li><strong>B · 本地优先</strong> (用户文件夹 + 无账号), 产品立场清晰但放弃了跨端同步</li>
+            <li><strong>C · 本地为主 + 可选 E2EE 云</strong> (类似 1Password), 工程量翻倍但能"以后再说"</li>
+          </ul>
+          <p>选 B。理由是: v0.1 阶段如果我连本地优先都立不住, 加 E2EE 也没意义。验证: 10 个种子用户测试时如果 ≥6 个主动问"什么时候有云同步", 说明定位本身有问题; 如果他们反过来说"我就是冲着本地存才用", 则定位成立。</p>
+        </div>
+
+        <!-- Decision 2 -->
+        <div class="cs-decision">
+          <h3>决策 2 — 剪贴板桥接 vs 自动抓取 AI 对话</h3>
+          <p>技术上完全可行, 我故意不做。</p>
+          <p>浏览器插件可以实时读 ChatGPT 网页对话; OpenAI / Anthropic API 可以拿到完整对话 JSON。两条路都能让 MemoryOS"自动"生成 handoff, 用户不用做任何事。</p>
+          <p>我没做的原因是: 一旦 MemoryOS 能自动读对话, 它就<strong>有能力</strong>做用户没授权的事 (聚合到第三方分析、跨账号关联画像、商业化数据)。即使我承诺不做, 用户没法验证。<strong>剪贴板桥接是技术性承诺, 不是政策性承诺</strong> —— MemoryOS 在代码层面就没有读 AI 对话的能力, 这条限制反过来变成产品立场最锋利的部分。</p>
+          <p>考虑过的两条路:</p>
+          <ul class="cs-decision-options">
+            <li><strong>A · 浏览器插件 + 自动抓取</strong> (用户体验"流畅"但产品立场死亡)</li>
+            <li><strong>B · API 集成 + 用户授权 token</strong> (技术上 B 比 A 干净, 但仍引入"MemoryOS 持有用户 AI 凭证"这个新攻击面)</li>
+          </ul>
+          <p>选剪贴板。代价: 用户每次 handoff 多 3 次点击。收益: 红线明确, 案例陈述简单 ("我们不读你和 AI 的对话, 也读不到")。</p>
+        </div>
+
+        <!-- Decision 3 -->
+        <div class="cs-decision">
+          <h3>决策 3 — Markdown 纯文本 vs 专有数据库 / 加密格式</h3>
+          <p>如果用户随时能脱离 MemoryOS, 那 MemoryOS 必须值得继续用。</p>
+          <p>很多 PKM 产品 (Notion / Obsidian / Roam) 在数据存储上有不同程度的锁定: SQLite + 内部 schema, 或加密私有格式, 或必须用自家客户端打开。这给了厂商安全感, 但反过来让用户每次想搬家都得 export + 数据丢失。</p>
+          <p>MemoryOS 的 Markdown 决策: <strong>用户随时可以删掉 MemoryOS, 用 Obsidian / VS Code / 记事本继续编辑同一个文件夹, 我不会知道也不会管</strong>。这意味着 MemoryOS 必须靠"持续提供更好的 handoff 体验"留住用户, 而不是靠"你迁不走"留住用户。</p>
+          <p>考虑过的两条路:</p>
+          <ul class="cs-decision-options">
+            <li><strong>A · SQLite + 内部 schema</strong> (更易做搜索、加密、跨设备同步, 但锁定用户)</li>
+            <li><strong>B · JSON / YAML 结构化文件</strong> (中等锁定, 不如 Markdown 友好)</li>
+          </ul>
+          <p>选纯 Markdown + <code>project.json</code> 元数据。代价: 全文搜索 / 跨项目引用等高级功能更难做。收益: 用户拿走文件夹就是完整备份, 不存在"数据被锁"焦虑。</p>
+        </div>
+
+        <!-- Decision 4 -->
+        <div class="cs-decision">
+          <h3>决策 4 — 风险分级导入 + 用户勾选, 不做自动写</h3>
+          <p>AI 写的东西默认不能直接进文件。</p>
+          <p>v0.1 早期版本设计是"AI 输出总结 → MemoryOS 自动保存"。第一次 dogfood 时 AI 给我的"关于我"总结里加了一条"用户对 ChatGPT 工作流极度熟练" —— 听起来无害, 但下次任何 AI 读到都会假设我是高水平用户, 砍掉基础解释。两周后我发现这个偏差时, 已经被这条假设误导 3 次。</p>
+          <p>所以 v0.1.1 改成风险分级 + 用户勾选:</p>
+          <ul class="cs-decision-options">
+            <li><strong>对话总结</strong> (低风险) — 默认勾选, 写到 <code>sessions/session_yyyy-mm-dd.md</code></li>
+            <li><strong>项目说明 / 决策日志</strong> (中风险) — 默认勾选但 review 提示</li>
+            <li><strong>关于我</strong> (高风险) — <strong>默认不勾</strong>, 配警告 "这会影响所有 AI 对你的判断"</li>
+          </ul>
+          <p>考虑过的两条路:</p>
+          <ul class="cs-decision-options">
+            <li><strong>A · 全自动</strong> (体验流畅, 但 hidden state 风险)</li>
+            <li><strong>B · 单一确认页</strong> (所有内容一起 review, 但用户疲劳忽略)</li>
+          </ul>
+          <p>选风险分级。代价: review 步骤增加摩擦。收益: hidden state 不再悄悄累积。</p>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           Section 6 · What's Next
+           ═══════════════════════════════════════════════════════ -->
+      <section class="cs-section cs-section--next" id="next">
+        <h2>What's Next</h2>
+
+        <h3>路线图</h3>
+        <p>MemoryOS v0.1.1 已经 ship, 但只是第一个能用的版本。下面是 v0.2 / v0.3 / v1.0 三阶段, 按"必须打通的事"组织, 不是功能列表。</p>
+
+        <div class="cs-roadmap">
+          <div class="cs-roadmap-stage">
+            <span class="cs-roadmap-when">v0.2 · 2026.08</span>
+            <h4>多 workspace 切换 + 设置面板</h4>
+            <ul>
+              <li>多 workspace 支持 (在公司 / 个人 / 写作不同 workspace 之间切换, 不是项目)</li>
+              <li>设置面板 (语言 / 默认 AI / 默认存储路径)</li>
+              <li>深色模式</li>
+              <li>完成 10 个种子用户访谈 + 整理反馈</li>
+            </ul>
+          </div>
+          <div class="cs-roadmap-stage">
+            <span class="cs-roadmap-when">v0.3 · 2026.10</span>
+            <h4>跨平台 + 代码签名</h4>
+            <ul>
+              <li>Mac (Intel + Apple Silicon) build</li>
+              <li>Linux build (Ubuntu / Fedora)</li>
+              <li>Windows 代码签名 (消除"未知发行者"警告)</li>
+              <li>第一篇用户写的中文 / 英文文章自然引流 (即刻 / 小红书 / HN)</li>
+            </ul>
+          </div>
+          <div class="cs-roadmap-stage">
+            <span class="cs-roadmap-when">v1.0 · 2027.Q1</span>
+            <h4>App 内 Markdown 编辑 + 社区</h4>
+            <ul>
+              <li>App 内 Markdown 编辑 (不只是 viewer, 不重做 Obsidian 但足以小修小补)</li>
+              <li>prompt template 社区分享 (用户互相分享 about_me 模板 / 项目说明模板)</li>
+              <li>开源贡献者文档 + Issue triage 流程</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>北极星指标</h3>
+        <p>每个版本配一个指标, 用来定义"达到没达到"。</p>
+
+        <ul class="cs-northstar">
+          <li>
+            <span class="cs-northstar-when">v0.1.1 现状</span>
+            <span>我自己 dogfood ≥ 1 个月不脱离 + 10 个种子用户安装上 + 至少 3 个走完 1 次完整 Start → Save loop。</span>
+          </li>
+          <li>
+            <span class="cs-northstar-when">v0.2 · 2026.08</span>
+            <span>月活 ≥ 30 + 至少 5 位主动反馈一个具体痛点 (而不是"挺好用的") + GitHub stars ≥ 50。</span>
+          </li>
+          <li>
+            <span class="cs-northstar-when">v0.3 · 2026.10</span>
+            <span>Mac build 下载量 ≥ Windows 的 30% + 至少 1 篇用户写的真实使用文章 + GitHub stars ≥ 200。</span>
+          </li>
+          <li>
+            <span class="cs-northstar-when">v1.0 · 2027.Q1</span>
+            <span>MAU ≥ 200 + 至少 5 个用户提了 PR + Issue 回复中位数 &lt; 48 小时。</span>
+          </li>
+        </ul>
+
+        <h3>已知风险 — 我打算怎么验证 / 怎么 fallback</h3>
+        <p>3 条 disconfirming evidence 我已经知道, 不藏:</p>
+
+        <div class="cs-risks">
+          <div>
+            <h4>用户可能不愿意手动 handoff。</h4>
+            <p>第 3.2 决策的核心权衡是用户体验摩擦 vs 产品立场。如果 10 个种子用户里 ≥ 6 个反馈"复制粘贴太烦, 能不能自动", 当前红线需要重判 —— 可能切到"浏览器插件只读模式 + 用户每次确认", 而不是完全自动抓取。</p>
+          </div>
+          <div>
+            <h4>ChatGPT / Claude 可能开放跨 AI 记忆 API。</h4>
+            <p>如果 OpenAI / Anthropic 推出官方"记忆迁移"协议 (类似 MCP 但跨厂商), MemoryOS 的差异化基础消失。fallback: 切到"记忆审计 + 隐私可视化"赛道 —— 即使有官方 API, 用户也需要一个本地工具看"AI 现在记着我什么", 这是相邻空间。</p>
+          </div>
+          <div>
+            <h4>单一开发者带宽不够。</h4>
+            <p>v0.3 的 Mac/Linux build + 代码签名需要时间和钱 (Apple Developer $99/年 + DigiCert 代码签名证书 ¥1500+/年)。如果到 2026.10 我的求职还没有结果, MemoryOS 会被降级到"维护模式", 等 v1.0 时机重启。fallback: MemoryOS 的代码 MIT 开源, 维护模式期间社区可以接手。</p>
+          </div>
+        </div>
+
+        <h3>继续看下去</h3>
+        <ul class="cs-exits">
+          <li>
+            <a href="index.html#systems" class="cs-exit-link">
+              <strong>Decision Systems</strong> — 回到主页继续浏览 Programming Decay / Barking Reach / Bio-Cybernetic 等其他研究系统
+            </a>
+          </li>
+        </ul>
+        <p style="margin-top:var(--s-3);font-family:var(--font-mono);font-size:var(--mono-s);letter-spacing:.04em;color:var(--muted);max-width:60rem">GitHub repo &amp; Download 链接见页面顶部 —— Hero 区下方。</p>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Jiajia Jiang / 江佳佳</span>
+  <span>London / Shanghai · 2025 — 26</span>
+  <a href="mailto:ucbv512@ucl.ac.uk" class="no-underline">ucbv512@ucl.ac.uk</a>
+</footer>
+
+</body>
+</html>

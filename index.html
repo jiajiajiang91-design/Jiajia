@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jiajia Jiang / 江佳佳 — Selected Product Systems</title>
+<title>Jiajia Jiang / 江佳佳 — Independent Product + Decision Systems</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
@@ -63,13 +63,62 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   font-size:clamp(1.15rem,1.7vw,1.55rem);
   line-height:1.2;
   color:var(--ink);
-  margin:var(--s-4) 0 var(--s-3);
+  margin:var(--s-4) 0 var(--s-2);
   white-space:nowrap;
 }
-@media(max-width:700px){
-  .landing-role{white-space:normal}
-}
+@media(max-width:700px){.landing-role{white-space:normal}}
 .landing-role .arrow{color:var(--signal);font-family:var(--font-mono);font-weight:400}
+
+/* Trajectory anchor — narrative tagline below role line.
+   Single voice that captures "I ship AI tools because I need them myself" —
+   the second half of the urban-designer → AI-PM transition. */
+.landing-anchor{
+  font-family:var(--font-sans);
+  font-size:clamp(1rem,1.2vw,1.15rem);
+  font-weight:400;
+  line-height:1.5;
+  color:var(--ink);
+  margin:0 0 var(--s-3);
+}
+.landing-anchor .cn{
+  display:block;
+  font-family:var(--font-cjk);
+  font-size:.92rem;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.65;
+}
+
+/* "Now shipping" pointer — direct link to chapter 01 */
+.landing-now{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 var(--s-3);
+  padding:10px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.landing-now .now-lbl{color:var(--signal);margin-right:10px;letter-spacing:.22em}
+.landing-now a{
+  color:var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding-bottom:1px;
+  font-weight:600;
+  transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease);
+}
+.landing-now a:hover{color:var(--signal);border-bottom-color:var(--signal)}
+.landing-now .meta{color:var(--muted);margin-left:6px;letter-spacing:.08em}
+.landing-now .cn{
+  font-family:var(--font-cjk);
+  text-transform:none;
+  letter-spacing:.04em;
+  color:var(--muted);
+  margin-left:10px;
+}
+
 .landing-pos{
   font-size:var(--body-l);
   line-height:1.55;
@@ -102,7 +151,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 }
 .landing-links a{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease)}
 .landing-links a:hover{color:var(--signal);border-bottom-color:var(--signal)}
-/* Landing card — editorial index plate (replaces image) */
+
+/* Landing card — editorial index plate */
 .landing-card{
   background:var(--paper-soft);
   border:1px solid var(--ink);
@@ -119,18 +169,22 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 }
 .lc-head .lc-num{color:var(--signal);font-weight:500}
 .lc-head .lc-id{color:var(--muted)}
-.lc-list{
-  list-style:none;margin:0;padding:0;
-  font-size:var(--caption);
-}
+.lc-list{list-style:none;margin:0;padding:0;font-size:var(--caption)}
+/* Shared row layout — applied to dividers (li.div) directly, and to the
+   clickable rows via their inner <a> so the whole row is a real link
+   (keyboard / middle-click / open-in-new-tab all work). */
 .lc-list li{
+  border-bottom:1px solid var(--rule);
+  letter-spacing:.04em;
+  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.lc-list li > a,
+.lc-list li.div{
   display:grid;
   grid-template-columns:36px 1fr 60px;
   gap:10px;align-items:baseline;
   padding:11px 14px;
-  border-bottom:1px solid var(--rule);
-  letter-spacing:.04em;
-  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+  color:inherit;
 }
 .lc-list li:hover:not(.div){background:var(--ink);color:var(--paper)}
 .lc-list li:hover:not(.div) .k{color:var(--signal)}
@@ -201,7 +255,6 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 }
 .sect-head-desc{
   font-size:var(--body-m);line-height:1.55;color:var(--muted);
-  max-width:64ch;
 }
 
 /* INDEX ROWS — horizontal archive entries */
@@ -226,9 +279,9 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 .row:hover .row-num{color:var(--signal)}
 .row:hover .row-meta dt{color:#9c9c9c}
 .row:hover .row-arrow{color:var(--signal)}
-.row:hover .row-rule{border-color:#3a3a3c}
 .row > *{padding-left:14px;padding-right:14px}
 .row > *:first-child{padding-left:14px}
+.row > .row-meta{padding-left:64px;align-self:center}
 .row-num{
   font-family:var(--font-mono);
   font-size:1.1rem;
@@ -236,7 +289,6 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   color:var(--signal);
   letter-spacing:.04em;
 }
-.row-title{}
 .row-title h3{
   font-family:var(--font-sans);
   font-weight:500;
@@ -255,11 +307,11 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 }
 .row:hover .row-title h3 .cn{color:#aaa}
 .row-sub{
+  font-family:var(--font-cjk);
   font-size:var(--caption);
-  line-height:1.55;
+  line-height:1.7;
   color:inherit;
   opacity:.78;
-  max-width:48ch;
   margin-top:8px;
 }
 .row-meta{
@@ -305,21 +357,143 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   padding:3px 8px;
 }
 .row:hover .row-tag{border-color:#3a3a3c;color:#aaa}
-.row.placeholder{opacity:.55;cursor:default;pointer-events:none}
-.row.placeholder:hover{background:transparent;color:var(--ink)}
-.row.placeholder .row-num{color:var(--muted)}
-.row.placeholder .row-title h3::after{
-  content:" / IN PROGRESS";
+
+/* Row sub-link bar — sibling page hanging under a primary row (e.g. Entropy Atlas under row-02) */
+.row-sublink-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px 10px 78px;
+  border-bottom:1px solid var(--rule);
   font-family:var(--font-mono);
-  font-size:.55em;
-  letter-spacing:.18em;
+  font-size:var(--mono-s);
+  letter-spacing:.04em;
+  color:var(--muted);
+}
+.row-sublink-bar .lbl{
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+.row-sublink-bar a.row-sublink{
+  color:var(--ink);
+  border-bottom:1px dashed var(--rule);
+  padding-bottom:1px;
+  transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease);
+}
+.row-sublink-bar a.row-sublink:hover{
   color:var(--signal);
-  font-weight:400;
-  margin-left:10px;
-  vertical-align:middle;
+  border-bottom-color:var(--signal);
+  border-bottom-style:solid;
+}
+@media(max-width:900px){
+  .row-sublink-bar{padding-left:14px}
 }
 
-/* DEMO EMBED — Programming Decay V3 inline */
+/* SHIP EMBED — Independent Product 01.A
+   Distinct from .demo-embed-wrap: this is product-shipped, not demo-running.
+   4 screenshots, EN/CN reading, 2 CTA cards, workflow strip. */
+.ship-embed-wrap{
+  max-width:var(--grid-max);
+  margin:0 auto;
+  padding:var(--s-8) var(--pad-tablet) var(--s-12);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.ship-embed-head{
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  gap:var(--s-3);
+  align-items:baseline;
+  padding-bottom:var(--s-3);
+  border-bottom:1px solid var(--ink);
+  margin-bottom:var(--s-4);
+}
+.ship-embed-head .num{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--signal);
+}
+.ship-embed-head .lbl{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+.ship-embed-head h3{
+  font-family:var(--font-sans);font-weight:500;
+  font-size:1.3rem;line-height:1.2;
+  margin:6px 0 0;
+}
+.ship-embed-head a.open{
+  font-family:var(--font-mono);font-size:var(--mono-s);
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);border-bottom:1px solid var(--ink);
+  padding-bottom:3px;white-space:nowrap;
+  transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease);
+}
+.ship-embed-head a.open:hover{color:var(--signal);border-bottom-color:var(--signal)}
+
+.ship-screens{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--s-2);
+  margin-bottom:var(--s-4);
+}
+.ship-screens figure{margin:0;display:flex;flex-direction:column}
+.ship-screens img{
+  width:100%;height:auto;display:block;
+  border:1px solid var(--rule);
+  background:var(--paper-soft);
+}
+.ship-screens figcaption{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.04em;
+  color:var(--muted);
+  margin-top:8px;
+  line-height:1.5;
+}
+.ship-screens figcaption .n{color:var(--signal);margin-right:6px;letter-spacing:.2em;font-weight:500}
+@media(max-width:1024px){.ship-screens{grid-template-columns:repeat(2,1fr)}}
+
+.ship-ctas{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--s-2);
+  margin-top:var(--s-4);
+}
+.ship-cta{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:var(--s-3);
+  border:1px solid var(--ink);
+  background:var(--paper);
+  text-decoration:none;
+  color:var(--ink);
+  transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+}
+.ship-cta:hover{background:var(--off-black);color:var(--paper)}
+.ship-cta .cta-lbl{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--signal);
+}
+.ship-cta .cta-name{
+  font-family:var(--font-mono);
+  font-size:.95rem;
+  font-weight:500;
+  letter-spacing:.02em;
+  color:inherit;
+  margin-top:2px;
+}
+.ship-cta .cta-sub{
+  font-family:var(--font-mono);
+  font-size:var(--mono-s);
+  letter-spacing:.04em;
+  color:var(--muted);
+  line-height:1.4;
+}
+.ship-cta:hover .cta-sub{color:#aaa}
+@media(max-width:700px){.ship-ctas{grid-template-columns:1fr}}
+
+/* DEMO EMBED — Programming Decay V3 inline (02.A in new numbering) */
 .demo-embed-wrap{
   max-width:var(--grid-max);
   margin:0 auto;
@@ -366,17 +540,46 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   overflow:hidden;
 }
 .demo-embed-frame iframe{width:100%;height:100%;border:none;display:block}
-.demo-reading{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:var(--s-6);margin-top:var(--s-4);
+/* Mobile fallback — replaces the iframe with a non-scroll-trapping CTA card.
+   The V3 demo embeds a 3D viewer / pannable map, which on touch devices would
+   swallow vertical scroll gestures and freeze the surrounding page. */
+.demo-embed-mobile{display:none}
+@media(max-width:900px){
+  .demo-embed-frame{display:none}
+  .demo-embed-mobile{
+    display:flex;flex-direction:column;gap:var(--s-2);
+    padding:var(--s-6) var(--s-4);
+    border:1px solid var(--rule);
+    background:var(--paper-soft);
+    text-align:center;
+  }
+  .demo-embed-mobile .lbl{
+    font-family:var(--font-mono);
+    font-size:var(--mono-s);
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--signal);
+  }
+  .demo-embed-mobile p{
+    font-size:var(--caption);
+    line-height:1.6;
+    color:var(--muted);
+    margin:0 auto;max-width:46ch;
+  }
+  .demo-embed-mobile a.cta{
+    display:inline-block;margin-top:var(--s-2);
+    padding:10px 18px;
+    border:1px solid var(--ink);
+    font-family:var(--font-mono);
+    font-size:var(--mono-s);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink);
+    align-self:center;
+    transition:background var(--t-hover) var(--ease),color var(--t-hover) var(--ease);
+  }
+  .demo-embed-mobile a.cta:hover{background:var(--ink);color:var(--paper)}
 }
-.demo-reading-col{font-size:var(--body-m);line-height:1.6;color:var(--ink)}
-.demo-reading-col .lang{
-  font-family:var(--font-mono);font-size:var(--mono-s);
-  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:var(--s-2);display:block;
-}
-.demo-reading-col em{font-style:normal;border-bottom:1px solid var(--rule)}
 .demo-flow{
   margin-top:var(--s-4);
   font-family:var(--font-mono);
@@ -403,23 +606,9 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   font-size:var(--body-l);
   line-height:1.65;color:var(--ink);
   max-width:70ch;
+  padding-top:var(--s-4);
 }
 .about-text p{margin-bottom:var(--s-3)}
-/* About: stack EN above, CN below */
-.about-text .bi{
-  display:block;
-  border-top:none;
-  padding-top:0;
-}
-.about-text .bi .en{margin-bottom:var(--s-4)}
-.about-text .bi .cn{
-  font-family:var(--font-cjk);
-  font-size:.9rem;
-  line-height:1.75;
-  color:var(--muted);
-  padding-top:var(--s-3);
-  border-top:1px solid var(--rule);
-}
 .skills-table{
   display:grid;
   grid-template-columns:108px minmax(0,1fr);
@@ -431,10 +620,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   align-self:stretch;
   height:100%;
 }
-.skills-table dt{
-  letter-spacing:.18em;text-transform:uppercase;color:var(--signal);
-  align-self:start;
-}
+.skills-table dt{letter-spacing:.18em;text-transform:uppercase;color:var(--signal);align-self:start}
 .skills-table dd{color:var(--ink);align-self:start;margin:0}
 
 /* Contact */
@@ -444,8 +630,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   padding:var(--s-10) var(--pad-tablet) var(--s-8);
   border-top:1px solid var(--rule);
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:var(--s-3);
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--s-4) var(--s-3);
 }
 .contact dl{display:flex;flex-direction:column;gap:8px}
 .contact dt{
@@ -461,100 +647,259 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 
 @media(max-width:900px){
   .landing-grid{grid-template-columns:1fr;gap:var(--s-4)}
-  .demo-reading{grid-template-columns:1fr;gap:var(--s-3)}
   .about{grid-template-columns:1fr}
   .contact{grid-template-columns:1fr 1fr}
   .row{grid-template-columns:48px 1fr 60px;grid-template-rows:auto auto;gap:var(--s-2)}
-  .row-meta{grid-column:1 / -1;padding-left:14px}
+  .row > .row-meta{grid-column:1 / -1;padding-left:14px}
   .row-year{grid-column:3;grid-row:1}
   .row-arrow{display:none}
-  .demo-embed-head{grid-template-columns:48px 1fr;gap:var(--s-2)}
-  .demo-embed-head a.open{grid-column:1 / -1;margin-top:var(--s-2)}
+  .demo-embed-head,.ship-embed-head{grid-template-columns:48px 1fr;gap:var(--s-2)}
+  .demo-embed-head a.open,.ship-embed-head a.open{grid-column:1 / -1;margin-top:var(--s-2)}
   .keywords{font-size:.55rem}
   .keywords span{padding:0 8px}
+  .landing-now{font-size:.55rem;letter-spacing:.14em}
+  .landing-now .cn{display:block;margin-left:0;margin-top:6px}
 }
 </style>
 </head>
-<body>
+<body data-lang="en">
 <nav>
-  <a href="index.html" class="nav-logo">JIAJIA JIANG<span class="cn">/ 江佳佳</span></a>
+  <a href="index.html" class="nav-logo"><span class="lang-en">JIAJIA JIANG</span><span class="lang-cn">江佳佳</span></a>
   <ul class="nav-links home-nav-right">
-    <li><a href="#systems">Systems</a></li>
-    <li><a href="#foundation">Foundation</a></li>
-    <li><a href="#workflows">Workflows</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#product"><span class="lang-en">Product</span><span class="lang-cn">产品</span></a></li>
+    <li><a href="#systems"><span class="lang-en">Systems</span><span class="lang-cn">系统</span></a></li>
+    <li><a href="#foundation"><span class="lang-en">Foundation</span><span class="lang-cn">基础</span></a></li>
+    <li><a href="#workflows"><span class="lang-en">Workflows</span><span class="lang-cn">工作流</span></a></li>
+    <li><a href="#about"><span class="lang-en">About</span><span class="lang-cn">关于</span></a></li>
+    <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-cn">联系</span></a></li>
   </ul>
+  <div class="lang-switch" role="group" aria-label="Language switcher">
+    <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+    <span class="sep">/</span>
+    <button type="button" data-lang-set="cn" aria-pressed="false">中</button>
+  </div>
 </nav>
 
 <!-- 00 / LANDING PLATE ────────────────────────────────────────── -->
 <section class="landing">
   <div class="landing-eyebrow">
-    <span><span class="num">00</span> &nbsp; LANDING PLATE</span>
+    <span><span class="num">00</span> &nbsp; <span class="lang-en">LANDING PLATE</span><span class="lang-cn">封面</span></span>
     <span>PORTFOLIO 2024 — 2026 · LONDON / SHANGHAI</span>
   </div>
 
   <div class="landing-grid">
     <div>
-      <h1 class="landing-name">Jiajia Jiang<span class="cn">江佳佳</span></h1>
-      <p class="landing-role">Urban Designer&nbsp;<span class="arrow">→</span>&nbsp;AI Product Manager / AI Product Designer</p>
-      <p class="landing-pos">I translate spatial complexity into product systems, designing AI-assisted workflows from input data to user-facing decisions — bringing architecture-trained systems thinking to product strategy and prototype development.<span class="cn">把空间复杂度翻译成产品系统：从数据输入到用户决策的 AI 工作流，把建筑训练的系统思维带入产品策略与原型开发。</span></p>
+      <h1 class="landing-name"><span class="lang-en">Jiajia Jiang</span><span class="lang-cn">江佳佳</span></h1>
+      <p class="landing-role">
+        <span class="lang-en">Urban Designer&nbsp;<span class="arrow">→</span>&nbsp;AI Product Manager / AI Product Designer</span>
+        <span class="lang-cn">城市设计师&nbsp;<span class="arrow">→</span>&nbsp;AI 产品经理 / AI 产品设计师</span>
+      </p>
+
+      <p class="landing-now">
+        <span class="now-lbl"><span class="lang-en">Now shipping</span><span class="lang-cn">正在交付</span></span>
+        <a href="case_study.html">MemoryOS v0.1.1</a>
+        <span class="meta lang-en">· 1.7 MB cross-AI memory layer · MIT open source</span>
+        <span class="meta lang-cn">· 1.7 MB 跨 AI 工作记忆层 · MIT 开源</span>
+      </p>
+
+      <p class="landing-pos">
+        <span class="lang-en">Shanghai-based, currently in London for my MArch at UCL Bartlett, graduating 2026. End-to-end AI product practice — user research, MVP delivery, iteration — turning spatial complexity into product systems.</span>
+        <span class="lang-cn">常驻上海，目前在伦敦 UCL Bartlett 读城市设计硕士，2026 毕业。专注 AI 产品端到端实践——用户调研、MVP 落地、持续迭代，把复杂的空间数据翻译成可用产品。</span>
+      </p>
 
       <div class="keywords">
-        <span>Spatial Intelligence</span>
-        <span>Decision Systems</span>
-        <span>Geospatial Interfaces</span>
-        <span>Human-AI Workflows</span>
+        <span><span class="lang-en">Cross-AI Memory</span><span class="lang-cn">跨 AI 记忆</span></span>
+        <span><span class="lang-en">Decision Systems</span><span class="lang-cn">决策系统</span></span>
+        <span><span class="lang-en">Geospatial Interfaces</span><span class="lang-cn">地理空间界面</span></span>
+        <span><span class="lang-en">Human-AI Workflows</span><span class="lang-cn">人机协作工作流</span></span>
       </div>
 
       <div class="landing-links">
-        <a href="mailto:jiajia.jiang.25@ucl.ac.uk">jiajia.jiang.25@ucl.ac.uk</a>
-        <a href="#systems">↓ Selected Product Systems</a>
-        <a href="#about">↓ Trajectory</a>
+        <a href="mailto:ucbv512@ucl.ac.uk">ucbv512@ucl.ac.uk</a>
+        <a href="#product"><span class="lang-en">↓ Independent Product</span><span class="lang-cn">↓ 独立产品</span></a>
+        <a href="#systems"><span class="lang-en">↓ Decision Systems</span><span class="lang-cn">↓ 决策系统</span></a>
+        <a href="#about"><span class="lang-en">↓ Trajectory</span><span class="lang-cn">↓ 履历</span></a>
       </div>
     </div>
 
     <aside class="landing-card" aria-label="Portfolio index card">
       <header class="lc-head">
-        <span class="lc-num">P / 01</span>
-        <span class="lc-id">PORTFOLIO V2 · 2026</span>
+        <span class="lc-num">INDEX</span>
+        <span class="lc-id">9 WORKS · 2024 — 26</span>
       </header>
       <ol class="lc-list">
-        <li onclick="document.getElementById('row-01').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">01</span><span class="t">Programming Decay — Decision Intelligence V3</span><span class="y">25 — 26</span></li>
-        <li onclick="document.getElementById('row-02').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">02</span><span class="t">Barking Reach — Site Timeline 3D</span><span class="y">25 — 26</span></li>
-        <li onclick="document.getElementById('row-03').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">03</span><span class="t">Programming Decay — Research Booklet</span><span class="y">25 — 26</span></li>
-        <li onclick="document.getElementById('row-04').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">04</span><span class="t">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="y">25</span></li>
-        <li class="div"><span></span><span class="dv">Spatial Foundation</span><span></span></li>
-        <li onclick="document.getElementById('row-05').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">05</span><span class="t">Liquid Legacy</span><span class="y">24</span></li>
-        <li onclick="document.getElementById('row-06').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">06</span><span class="t">Nantou Cyber-Village</span><span class="y">24</span></li>
-        <li class="div"><span></span><span class="dv">AI + Product Workflows</span><span></span></li>
-        <li onclick="document.getElementById('row-07').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">07</span><span class="t">Niagara Particle Test</span><span class="y">26.02</span></li>
-        <li onclick="document.getElementById('row-08').scrollIntoView({behavior:'smooth',block:'start'})"><span class="k">08</span><span class="t">Metro Flower Field</span><span class="y">26</span></li>
+        <li class="div"><span></span><span class="dv"><span class="lang-en">Independent Product</span><span class="lang-cn">独立产品</span></span><span></span></li>
+        <li><a href="#row-01"><span class="k">01</span><span class="t"><span class="lang-en">MemoryOS — Cross-AI Memory Layer</span><span class="lang-cn">MemoryOS — 跨 AI 工作记忆层</span></span><span class="y">26</span></a></li>
+        <li class="div"><span></span><span class="dv"><span class="lang-en">Decision Systems</span><span class="lang-cn">决策系统</span></span><span></span></li>
+        <li><a href="#row-02"><span class="k">02</span><span class="t"><span class="lang-en">Programming Decay — Decision Intelligence V3</span><span class="lang-cn">Programming Decay — 决策智能 V3</span></span><span class="y">25 — 26</span></a></li>
+        <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Barking Reach — Site Timeline 3D</span><span class="lang-cn">Barking Reach — 场地时间线 3D</span></span><span class="y">25 — 26</span></a></li>
+        <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Programming Decay — Research Booklet</span><span class="lang-cn">Programming Decay — 研究文档</span></span><span class="y">25 — 26</span></a></li>
+        <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
+        <li class="div"><span></span><span class="dv"><span class="lang-en">Spatial Foundation</span><span class="lang-cn">空间基础</span></span><span></span></li>
+        <li><a href="#row-06"><span class="k">06</span><span class="t"><span class="lang-en">Liquid Legacy</span><span class="lang-cn">水的遗产</span></span><span class="y">24</span></a></li>
+        <li><a href="#row-07"><span class="k">07</span><span class="t"><span class="lang-en">Nantou Cyber-Village</span><span class="lang-cn">南头赛博村</span></span><span class="y">24</span></a></li>
+        <li class="div"><span></span><span class="dv"><span class="lang-en">AI + Product Workflows</span><span class="lang-cn">AI + 产品工作流</span></span><span></span></li>
+        <li><a href="#row-08"><span class="k">08</span><span class="t"><span class="lang-en">Niagara Particle Test</span><span class="lang-cn">Niagara 粒子实验</span></span><span class="y">26.02</span></a></li>
+        <li><a href="#row-09"><span class="k">09</span><span class="t"><span class="lang-en">Metro Flower Field</span><span class="lang-cn">花海地铁</span></span><span class="y">26</span></a></li>
       </ol>
       <footer class="lc-foot">
-        <span>10 ENTRIES</span>
-        <span>4 SYSTEMS · 2 SPATIAL · 2 EXP</span>
+        <span><span class="lang-en">9 ENTRIES</span><span class="lang-cn">9 个项目</span></span>
+        <span><span class="lang-en">1 PRODUCT · 4 DECISION · 2 SPATIAL · 2 EXP</span><span class="lang-cn">1 产品 · 4 决策 · 2 空间 · 2 实验</span></span>
       </footer>
     </aside>
   </div>
 </section>
 
-<!-- 01 / SELECTED PRODUCT SYSTEMS ───────────────────────────── -->
-<header class="sect-head" id="systems">
+<!-- 01 / INDEPENDENT PRODUCT ───────────────────────────────── -->
+<header class="sect-head" id="product">
   <div class="sect-head-num">
-    <span><span class="n">01</span> &nbsp; SELECTED PRODUCT SYSTEMS</span>
-    <span>04 ENTRIES · DECISION SYSTEMS / GEOSPATIAL / HUMAN-AI WORKFLOW</span>
+    <span><span class="n">01</span> &nbsp; <span class="lang-en">INDEPENDENT PRODUCT</span><span class="lang-cn">独立产品</span></span>
+    <span><span class="lang-en">1 ENTRY · SHIPPED · DOGFOODING · v0.1.1</span><span class="lang-cn">1 个项目 · 已交付 · 自用迭代中 · v0.1.1</span></span>
   </div>
-  <h2 class="sect-head-title">Selected Product Systems<span class="cn">入选产品系统</span></h2>
-  <p class="sect-head-desc">Projects rebuilt as decision systems, geospatial interfaces, and human-AI workflows. Each row links to a case study; the primary thesis Demo is embedded directly below the index.</p>
+  <h2 class="sect-head-title">
+    <span class="lang-en">Independent Product</span>
+    <span class="lang-cn">独立产品</span>
+  </h2>
+  <p class="sect-head-desc">
+    <span class="lang-en">A live, dogfooded product built end-to-end as solo founder / PM / engineer. Not a thesis spinoff — a separate product hypothesis that I needed for my own work and shipped to validate the form.</span>
+    <span class="lang-cn">一款已上线、我自己每天在用的产品——以独立创始人 / PM / 工程师身份端到端交付。不是毕设的衍生品，而是为了解决我自己的高频痛点而立项的产品假设，发布出来用真实使用反馈验证产品形态。</span>
+  </p>
 </header>
 
 <section class="index reveal">
-  <a href="programming-decay-v3.1/index.html" class="row" id="row-01">
+  <a href="case_study.html" class="row" id="row-01">
     <div class="row-num">01</div>
     <div class="row-title">
-      <h3>Programming Decay — Decision Intelligence V3<span class="cn">毕设产品 Demo / 决策智能原型</span></h3>
-      <p class="row-sub">A multi-scalar decision system that compresses the thesis — from planetary cement metabolism down to an 8×8 cell at Dagenham Dock — into clickable product logic. The black box is unfolded into evidence → site → strategy → generation → feedback.</p>
+      <h3>
+        <span class="lang-en">MemoryOS — Cross-AI Memory Layer<span class="cn">跨 AI 的本地工作记忆 / 桌面 app</span></span>
+        <span class="lang-cn">MemoryOS — 跨 AI 工作记忆层<span class="cn">本地优先的桌面 app</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">A local-first desktop app that carries one working memory across ChatGPT, Claude, Cursor, Gemini and any other AI tool. Clipboard handoff sidesteps per-call API costs and keeps user data on-device — a privacy-first trust contract. Risk-tiered confirmation: AI drafts, user approves writes. MIT open-source, ~1.7 MB Windows binary, shipped solo as founder / PM / engineer.</span>
+        <span class="lang-cn">一款本地优先的桌面 app，让一份工作记忆在 ChatGPT、Claude、Cursor、Gemini 等所有 AI 工具之间复用。用剪贴板传递取代 API 调用——既绕开商业模型的高额接口成本，又把用户数据留在本地，建立"隐私优先"的信任契约。写操作按风险分级：AI 起草、用户确认后再写入。MIT 开源，1.7 MB Windows 安装包，独立创始人 / PM / 工程师身份一个人交付。</span>
+      </p>
+      <div class="row-tags">
+        <span class="row-tag">Cross-AI Memory</span>
+        <span class="row-tag">Local-First</span>
+        <span class="row-tag">Tauri · Rust · React</span>
+      </div>
+    </div>
+    <dl class="row-meta">
+      <dt>User</dt><dd><span class="lang-en">AI power users — researchers / designers / PMs</span><span class="lang-cn">AI 重度用户 — 研究者 / 设计师 / 产品经理</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Local Markdown files + clipboard bridge</span><span class="lang-cn">本地 Markdown 文件 + 剪贴板桥接</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">Zero-API cost routing · Privacy-first trust logic · Low-friction session handoff</span><span class="lang-cn">零 API 成本路由 · 隐私优先信任逻辑 · 低摩擦会话交接</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Cross-AI handoff sessions + user-confirmed writes</span><span class="lang-cn">跨 AI 工具的会话交接 + 用户确认后的写入</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">v0.1.1 shipped · dogfooding · MIT open source</span><span class="lang-cn">v0.1.1 已发布 · 自用迭代中 · MIT 开源</span></dd>
+    </dl>
+    <div class="row-year">2026</div>
+    <div class="row-arrow">→</div>
+  </a>
+</section>
+
+<!-- 01.A SHIP EMBED — MemoryOS product surface + CTA cards ───── -->
+<section class="ship-embed-wrap reveal" id="ship-demo">
+  <div class="ship-embed-head">
+    <span class="num">01.A</span>
+    <div>
+      <span class="lbl">
+        <span class="lang-en">Shipped Product · MemoryOS V1 · v0.1.1 Windows Binary</span>
+        <span class="lang-cn">已交付产品 · MemoryOS V1 · v0.1.1 Windows 安装包</span>
+      </span>
+      <h3>
+        <span class="lang-en">One working memory, across every AI tool</span>
+        <span class="lang-cn">一份工作记忆，贯穿每一个 AI 工具</span>
+      </h3>
+    </div>
+    <a class="open" href="case_study.html"><span class="lang-en">Read case study ↗</span><span class="lang-cn">阅读 Case Study ↗</span></a>
+  </div>
+
+  <div class="ship-screens">
+    <figure>
+      <img src="images_memoryos/01_welcome.png" alt="MemoryOS welcome — pick a project to continue" loading="lazy"/>
+      <figcaption>
+        <span class="lang-en"><span class="n">01</span> Welcome — pick a project to continue</span>
+        <span class="lang-cn"><span class="n">01</span> 欢迎 — 选一个项目继续</span>
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="images_memoryos/02_dashboard.png" alt="MemoryOS dashboard — current goal, recent sessions, project metadata" loading="lazy"/>
+      <figcaption>
+        <span class="lang-en"><span class="n">02</span> Dashboard — goal · sessions · metadata</span>
+        <span class="lang-cn"><span class="n">02</span> 工作台 — 目标 · 对话 · 元数据</span>
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="images_memoryos/03_end_prompt.png" alt="MemoryOS end-session prompt builder — pick context, pick target AI" loading="lazy"/>
+      <figcaption>
+        <span class="lang-en"><span class="n">03</span> End prompt — pick context · pick target AI</span>
+        <span class="lang-cn"><span class="n">03</span> 结束指令 — 选上下文 · 选目标 AI</span>
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="images_memoryos/04_help.png" alt="MemoryOS help drawer — how the handoff loop works" loading="lazy"/>
+      <figcaption>
+        <span class="lang-en"><span class="n">04</span> Help — how the handoff loop works</span>
+        <span class="lang-cn"><span class="n">04</span> 帮助 — handoff 循环如何工作</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="lang-en">
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">MemoryOS is a local-first desktop app that lets you carry a single working memory across ChatGPT, Claude, Cursor, Gemini and any other AI tool. The user keeps a folder of Markdown files; MemoryOS produces a standardised <em>End Session Prompt</em> the user pastes into the AI, then parses the AI's structured handoff back into updates the user reviews and saves.</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">No API integration. No clipboard scraping. AI suggests — user confirms. Built end-to-end as solo founder / PM / engineer; the case study unpacks the five product decisions and what would disprove them.</p>
+  </div>
+  <div class="lang-cn">
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">MemoryOS 是一款本地优先的桌面 app，让用户的一份工作记忆在 ChatGPT、Claude、Cursor、Gemini 之间复用。用户保留一个 Markdown 文件夹；MemoryOS 自动生成一份标准化<em>结束对话指令</em>，粘贴进 AI 后，再把 AI 返回的结构化 handoff 解析成更新项，用户勾选确认后写入本地。</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">不调用任何 AI 厂商的 API，也不监听剪贴板——AI 起草、用户拍板。从 PM、设计到工程，一个人端到端交付。Case Study 详细拆解 5 个核心产品决策，并写明哪种用户反馈会推翻当前判断。</p>
+  </div>
+
+  <div class="ship-ctas">
+    <a class="ship-cta" href="https://github.com/jiajiajiang91-design/memoryos" target="_blank" rel="noopener">
+      <span class="cta-lbl">GitHub repo ↗</span>
+      <span class="cta-name">jiajiajiang91-design / memoryos</span>
+      <span class="cta-sub"><span class="lang-en">MIT open source · README · Issue tracker</span><span class="lang-cn">MIT 开源 · README · Issue tracker</span></span>
+    </a>
+    <a class="ship-cta" href="https://github.com/jiajiajiang91-design/memoryos/releases" target="_blank" rel="noopener">
+      <span class="cta-lbl">Download v0.1.1 ↗</span>
+      <span class="cta-name">Windows .exe / .msi</span>
+      <span class="cta-sub"><span class="lang-en">~1.7 MB binary · Windows 10+</span><span class="lang-cn">~1.7 MB 安装包 · Windows 10+</span></span>
+    </a>
+  </div>
+
+  <div class="demo-flow">
+    <span class="lang-en">Start <span class="arr">→</span> Work <span class="arr">→</span> End <span class="arr">→</span> AI Summarize <span class="arr">→</span> Review &amp; Save</span>
+    <span class="lang-cn">开始 <span class="arr">→</span> 工作 <span class="arr">→</span> 结束 <span class="arr">→</span> AI 总结 <span class="arr">→</span> 审核保存</span>
+  </div>
+</section>
+
+<!-- 02 / DECISION SYSTEMS ──────────────────────────────────── -->
+<header class="sect-head" id="systems">
+  <div class="sect-head-num">
+    <span><span class="n">02</span> &nbsp; <span class="lang-en">DECISION SYSTEMS</span><span class="lang-cn">决策系统</span></span>
+    <span><span class="lang-en">04 ENTRIES · THESIS-ANCHORED · SPATIAL INTELLIGENCE</span><span class="lang-cn">4 个项目 · 毕设承载 · 空间智能</span></span>
+  </div>
+  <h2 class="sect-head-title">
+    <span class="lang-en">Decision Systems</span>
+    <span class="lang-cn">决策系统</span>
+  </h2>
+  <p class="sect-head-desc">
+    <span class="lang-en">UCL Bartlett RC18 thesis <em>Programming Decay</em>, rebuilt as decision logic and human–AI workflows. Each row links to a case study or live demo; the primary V3 demo is embedded directly below the index.</span>
+    <span class="lang-cn">把 UCL Bartlett 毕设《Programming Decay》拆解、重构成可被用户操作的决策逻辑与人机协作工作流。每个项目都是一个独立的 Case Study 或可运行 Demo；主 Demo（V3）直接嵌在下方。</span>
+  </p>
+</header>
+
+<section class="index reveal">
+  <a href="programming-decay-v3.1/index.html" class="row" id="row-02">
+    <div class="row-num">02</div>
+    <div class="row-title">
+      <h3>
+        <span class="lang-en">Programming Decay — Decision Intelligence V3<span class="cn">毕设产品 Demo / 决策智能原型</span></span>
+        <span class="lang-cn">Programming Decay — 决策智能 V3<span class="cn">毕设产品 Demo / 决策智能原型</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">A multi-scalar decision system that compresses the thesis — from planetary cement metabolism down to an 8×8 cell at Dagenham Dock — into clickable product logic. The black box is unfolded into evidence → site → strategy → generation → feedback.</span>
+        <span class="lang-cn">把跨国供应链数据与微观地理空间多模态数据，整合成一套可量化、可解释的决策后台产品。核心交互是一条"证据 → 选址 → 策略 → 生成 → 反馈"五步路径，让原本黑箱式的多源决策过程在用户界面里逐步展开。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Decision System</span>
         <span class="row-tag">Geospatial</span>
@@ -562,21 +907,38 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </div>
     </div>
     <dl class="row-meta">
-      <dt>User</dt><dd>Remediation planners, urban researchers</dd>
-      <dt>Input</dt><dd>GIS layers · Overpass · Google Places sentiment</dd>
-      <dt>Method</dt><dd>K-Means · Pix2Pix · Neural CA · n8n pipeline</dd>
-      <dt>Output</dt><dd>Operable decision UI · 4-strategy zoning</dd>
-      <dt>Status</dt><dd>Primary thesis demo · embedded below</dd>
+      <dt>User</dt><dd><span class="lang-en">Remediation planners, urban researchers</span><span class="lang-cn">规划决策者、城市研究者</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">GIS layers · Overpass · Google Places sentiment</span><span class="lang-cn">GIS 图层 · Overpass API · Google Places 情感数据</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">K-Means · Pix2Pix · Neural CA · n8n pipeline</span><span class="lang-cn">K-Means 聚类 · Pix2Pix 模型 · Neural CA · n8n 自动化管道</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Operable decision UI · 4-strategy zoning</span><span class="lang-cn">可操作的决策界面 · 4 策略分区方案</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Primary thesis demo · embedded below</span><span class="lang-cn">毕设主 Demo · 嵌入于下方</span></dd>
     </dl>
     <div class="row-year">2025 — 26</div>
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="programming-decay-timeline/Barking Reach Timeline 3D.html" class="row" id="row-02">
-    <div class="row-num">02</div>
+  <div class="row-sublink-bar" aria-label="Related sub-page of row 02">
+    <span class="lbl">
+      <span class="lang-en">↳ 02 · Evidence layer</span>
+      <span class="lang-cn">↳ 02 · 证据层</span>
+    </span>
+    <a class="row-sublink" href="entropy-atlas.html">
+      <span class="lang-en">↗ Entropy Atlas standalone — n8n workflow + East-London post-industrial evidence map</span>
+      <span class="lang-cn">↗ Entropy Atlas 独立页 — n8n 工作流 + 东伦敦后工业证据地图</span>
+    </a>
+  </div>
+
+  <a href="programming-decay-timeline/Barking Reach Timeline 3D.html" class="row" id="row-03">
+    <div class="row-num">03</div>
     <div class="row-title">
-      <h3>Barking Reach — Site Timeline 3D<span class="cn">Barking Reach 场地时间线 / 现状 3D 切片</span></h3>
-      <p class="row-sub">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. Plate 02.5 of the Programming Decay thesis.</p>
+      <h3>
+        <span class="lang-en">Barking Reach — Site Timeline 3D<span class="cn">Barking Reach 场地时间线 / 现状 3D 切片</span></span>
+        <span class="lang-cn">Barking Reach — 场地时间线 3D<span class="cn">现状 3D 切片</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. Plate 02.5 of the Programming Decay thesis.</span>
+        <span class="lang-cn">一个可拖动的 30 年时间轴交互页面，记录 Dagenham / Barking Reach 发电站场地从 1995 投产到 2025 清空的全过程。NOW 一帧切换为已清空场地的 Google 3D Tiles 三维模型——多源资料 + 实时三维数据在浏览器里直接可视化。Programming Decay 毕设第 02.5 张图版。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Site Timeline</span>
         <span class="row-tag">WebGL · three.js</span>
@@ -584,42 +946,54 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </div>
     </div>
     <dl class="row-meta">
-      <dt>Role</dt><dd>Sole author · UCL Bartlett RC18 thesis plate</dd>
-      <dt>Input</dt><dd>Archival photographs 1995 – 2025 · drone footage · Google 3D Tiles via Blender</dd>
-      <dt>Method</dt><dd>Drag-to-scrub timeline · three.js GLTFLoader · KHR_mesh_quantization</dd>
-      <dt>Output</dt><dd>Browser 3D plate · 44.5 MB optimised GLB</dd>
-      <dt>Status</dt><dd>Published · 2025–26</dd>
+      <dt>Role</dt><dd><span class="lang-en">Sole author · UCL Bartlett RC18 thesis plate</span><span class="lang-cn">独立作者 · UCL Bartlett 毕设图版</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Archival photographs 1995 – 2025 · drone footage · Google 3D Tiles via Blender</span><span class="lang-cn">1995-2025 历史档案照片 · 无人机航拍 · 通过 Blender 接入的 Google 3D Tiles</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">Drag-to-scrub timeline · three.js GLTFLoader · KHR_mesh_quantization</span><span class="lang-cn">拖动式时间轴 · three.js GLTFLoader · KHR_mesh_quantization 压缩</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Browser 3D plate · 44.5 MB optimised GLB</span><span class="lang-cn">浏览器 3D 交互页 · 44.5 MB 优化后 GLB</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Published · 2025–26</span><span class="lang-cn">已发布 · 2025–26</span></dd>
     </dl>
     <div class="row-year">2025 — 26</div>
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="programming-decay.html" class="row" id="row-03">
-    <div class="row-num">03</div>
+  <a href="programming-decay.html" class="row" id="row-04">
+    <div class="row-num">04</div>
     <div class="row-title">
-      <h3>Programming Decay — Research Booklet<span class="cn">研究文档 56p</span></h3>
-      <p class="row-sub">Six-chapter research archive grounding the V3 demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition.</p>
+      <h3>
+        <span class="lang-en">Programming Decay — Research Booklet<span class="cn">研究文档 56p</span></span>
+        <span class="lang-cn">Programming Decay — 研究文档<span class="cn">56 页</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">Six-chapter research archive grounding the V3 demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition.</span>
+        <span class="lang-cn">支撑 V3 Demo 的六章用户研究与数据档案：全球行业供应链分析、英国本土污染数据梳理、材料状态分析、基于算法的选址逻辑、机器学习实验，以及最终的产品愿景。等同于一份完整的 PRD + 调研报告。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Research Archive</span>
         <span class="row-tag">Spatial Intelligence</span>
       </div>
     </div>
     <dl class="row-meta">
-      <dt>Role</dt><dd>Sole author · UCL Bartlett RC18 thesis</dd>
-      <dt>Input</dt><dd>Global energy / GHG / cement clinker datasets</dd>
-      <dt>Method</dt><dd>GIS reasoning · multi-scalar mapping · 4-strategy framework</dd>
-      <dt>Output</dt><dd>56-page atlas · system schema · spatial OS</dd>
-      <dt>Status</dt><dd>Submitted · 2025–26</dd>
+      <dt>Role</dt><dd><span class="lang-en">Sole author · UCL Bartlett RC18 thesis</span><span class="lang-cn">独立作者 · UCL Bartlett 毕设</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Global energy / GHG / cement clinker datasets</span><span class="lang-cn">全球能源 / 温室气体 / 水泥熟料数据集</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">GIS reasoning · multi-scalar mapping · 4-strategy framework</span><span class="lang-cn">GIS 推理 · 多尺度数据可视化 · 4 策略框架</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">56-page atlas · system schema · spatial OS</span><span class="lang-cn">56 页图集 · 系统架构图 · 空间决策 OS</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Submitted · 2025–26</span><span class="lang-cn">已提交 · 2025–26</span></dd>
     </dl>
     <div class="row-year">2025 — 26</div>
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-04">
-    <div class="row-num">04</div>
+  <a href="BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-05">
+    <div class="row-num">05</div>
     <div class="row-title">
-      <h3>Before Programming Decay — Bio-Cybernetic Prototype<span class="cn">衰变前传 / 课设原型</span></h3>
-      <p class="row-sub">Term-1 prequel that lets decay speak at the material scale. Pineapple skins, organic biomass and seasonal cycles read as sensors and actuators; the facade switches between Hibernation and Respiration. Five views — Scan / Decode / Build / Twin / Atlas.</p>
+      <h3>
+        <span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype<span class="cn">衰变前传 / 课设原型</span></span>
+        <span class="lang-cn">Before Programming Decay — 生物控制论原型<span class="cn">衰变前传 / 课设原型</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">Term-1 prequel that lets decay speak at the material scale. Pineapple skins, organic biomass and seasonal cycles read as sensors and actuators; the facade switches between Hibernation and Respiration. Five views — Scan / Decode / Build / Twin / Atlas.</span>
+        <span class="lang-cn">Term-1 前传项目。把菠萝皮、有机生物质、季节循环等"日常衰变现象"重新读成传感器与执行器；建筑立面在 Hibernation 与 Respiration 两种状态间切换。完整设计五个用户交互视图——Scan / Decode / Build / Twin / Atlas，对应一条从材料感知到数字孪生的完整原型链路。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Prototype</span>
         <span class="row-tag">Material System</span>
@@ -627,64 +1001,93 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </div>
     </div>
     <dl class="row-meta">
-      <dt>User</dt><dd>Researchers / studio reviewers</dd>
-      <dt>Input</dt><dd>Five domestic decay materials · ComfyUI</dd>
-      <dt>Method</dt><dd>Material decoding · facade state machine</dd>
-      <dt>Output</dt><dd>Interactive 5-view prototype + atlas</dd>
-      <dt>Status</dt><dd>UCL Term 1 · 2025</dd>
+      <dt>User</dt><dd><span class="lang-en">Researchers / studio reviewers</span><span class="lang-cn">研究者 / 评审导师</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Five domestic decay materials · ComfyUI</span><span class="lang-cn">5 种家用衰变材料 · ComfyUI 工作流</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">Material decoding · facade state machine</span><span class="lang-cn">材料行为解码 · 立面状态机</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Interactive 5-view prototype + atlas</span><span class="lang-cn">5 视图交互原型 + 图集</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">UCL Term 1 · 2025</span><span class="lang-cn">UCL Term 1 · 2025</span></dd>
     </dl>
     <div class="row-year">2025</div>
     <div class="row-arrow">→</div>
   </a>
 </section>
 
-<!-- DEMO EMBED — Programming Decay V3 ─────────────────────── -->
+<!-- 02.A DEMO EMBED — Programming Decay V3 ─────────────────── -->
 <section class="demo-embed-wrap reveal" id="demo">
   <div class="demo-embed-head">
-    <span class="num">01.A</span>
+    <span class="num">02.A</span>
     <div>
-      <span class="lbl">Embedded Demo · Programming Decay V3 · Entropy Atlas included</span>
-      <h3>Operating the decision machine in place</h3>
+      <span class="lbl">
+        <span class="lang-en">Embedded Demo · Programming Decay V3 · Entropy Atlas built-in</span>
+        <span class="lang-cn">嵌入 Demo · Programming Decay V3 · 内含 Entropy Atlas 证据层</span>
+      </span>
+      <h3>
+        <span class="lang-en">Click through the whole decision pipeline — evidence to feedback</span>
+        <span class="lang-cn">一个可点击的决策系统：从证据到反馈</span>
+      </h3>
     </div>
-    <a class="open" href="programming-decay-v3.1/index.html" target="_blank">Open standalone ↗</a>
+    <a class="open" href="programming-decay-v3.1/index.html" target="_blank"><span class="lang-en">Open standalone ↗</span><span class="lang-cn">独立打开 ↗</span></a>
   </div>
 
   <div class="demo-embed-frame">
     <iframe src="programming-decay-v3.1/index.html" title="Programming Decay V3 — embedded demo" loading="lazy"></iframe>
   </div>
 
-  <div class="bi">
-    <div class="en">
-      <p>From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into <em>explainable</em> steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</p>
-      <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this demo as the site-evidence layer.</p>
-    </div>
-    <div class="cn">
-      <p>从全球水泥代谢，到 Dagenham Dock 上的某一格 8×8 网格，毕设研究被压缩成可点击的产品逻辑。每一次滚动、每一次切换图层、每一次跑推理，都是对同一片污染场地的一次再判断。黑箱被翻译成<em>可被解释</em>的步骤；观者被邀请放下<em>看作品</em>的姿态，进入<em>用系统</em>的姿态——决策不再属于设计师一个人，而是人与机器协同的结果。</p>
-      <p style="margin-top:10px">熵图集（Entropy Atlas）—— 由 n8n 自动化采集的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>场地证据</em>嵌入在该 Demo 内部。</p>
-    </div>
+  <!-- Mobile fallback — iframe-free CTA so 3D / map gestures don't trap scroll -->
+  <div class="demo-embed-mobile">
+    <span class="lbl"><span class="lang-en">Demo · best viewed on desktop</span><span class="lang-cn">Demo · 桌面端体验更佳</span></span>
+    <p>
+      <span class="lang-en">The V3 demo contains a 3D viewer and pannable layers that conflict with touch-scroll. Open it in a new tab to use it on mobile.</span>
+      <span class="lang-cn">该 Demo 含有 3D 视窗与可拖动图层，与移动端触摸滑动冲突——请在新标签页中打开使用。</span>
+    </p>
+    <a class="cta" href="programming-decay-v3.1/index.html" target="_blank" rel="noopener">
+      <span class="lang-en">Open standalone ↗</span><span class="lang-cn">独立打开 ↗</span>
+    </a>
+  </div>
+
+  <div class="lang-en">
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into <em>explainable</em> steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this demo as the site-evidence layer.</p>
+  </div>
+  <div class="lang-cn">
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">从跨国行业数据，到 Dagenham Dock 上一格 8×8 网格的微观决策，毕设被打包成一套可点击的决策后台。每一次滚动、每一次切换图层、每一次推理调用，都是对同一片场地的一次再判断。原本封闭的黑箱被翻译成<em>可被解释</em>的步骤；用户被引导从"看作品"的姿态，切换到"操作一个系统"的姿态——最终的决策不再属于设计师一个人，而是用户与算法协同的产物。</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Entropy Atlas（熵图集）—— 由 n8n 自动化抓取的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>证据数据源</em>嵌入在该 Demo 内部。</p>
   </div>
 
   <div class="demo-flow">
-    Evidence <span class="arr">→</span> Site <span class="arr">→</span> Strategy <span class="arr">→</span> Generation <span class="arr">→</span> Feedback &nbsp;·&nbsp; 证据 <span class="arr">→</span> 选址 <span class="arr">→</span> 策略 <span class="arr">→</span> 生成 <span class="arr">→</span> 反馈
+    <span class="lang-en">Evidence <span class="arr">→</span> Site <span class="arr">→</span> Strategy <span class="arr">→</span> Generation <span class="arr">→</span> Feedback</span>
+    <span class="lang-cn">证据 <span class="arr">→</span> 选址 <span class="arr">→</span> 策略 <span class="arr">→</span> 生成 <span class="arr">→</span> 反馈</span>
   </div>
 </section>
 
-<!-- 02 / SPATIAL FOUNDATION ────────────────────────────────── -->
+<!-- 03 / SPATIAL FOUNDATION ────────────────────────────────── -->
 <header class="sect-head" id="foundation">
   <div class="sect-head-num">
-    <span><span class="n">02</span> &nbsp; SPATIAL FOUNDATION</span>
-    <span>02 ENTRIES · ARCHITECTURE / URBAN DESIGN AS SYSTEMS THINKING</span>
+    <span><span class="n">03</span> &nbsp; <span class="lang-en">SPATIAL FOUNDATION</span><span class="lang-cn">空间基础</span></span>
+    <span><span class="lang-en">02 ENTRIES · ARCHITECTURE / URBAN DESIGN AS SYSTEMS THINKING</span><span class="lang-cn">2 个项目 · 建筑 / 城市设计作为系统思维训练</span></span>
   </div>
-  <h2 class="sect-head-title">Spatial Foundation<span class="cn">空间基础</span></h2>
-  <p class="sect-head-desc">Architectural and urban projects reframed as decision logic and user systems — the training ground for product reasoning.</p>
+  <h2 class="sect-head-title">
+    <span class="lang-en">Spatial Foundation</span>
+    <span class="lang-cn">空间基础</span>
+  </h2>
+  <p class="sect-head-desc">
+    <span class="lang-en">Architectural and urban projects reframed as decision logic and user systems — the training ground for product reasoning.</span>
+    <span class="lang-cn">建筑与城市设计项目，被重新框定为决策逻辑和用户系统——产品思维的早期训练场。</span>
+  </p>
 </header>
 
 <section class="index reveal">
-  <a href="liquid-legacy.html" class="row" id="row-05">
-    <div class="row-num">05</div>
+  <a href="liquid-legacy.html" class="row" id="row-06">
+    <div class="row-num">06</div>
     <div class="row-title">
-      <h3>Liquid Legacy<span class="cn">水的遗产 / 本科毕设</span></h3>
-      <p class="row-sub">An AR + LBS interaction system for inherited urban memory at Fuxing Island, Shanghai. Sewage purification and contaminated industrial heritage are turned into a situated, walkable narrative with a companion booking app.</p>
+      <h3>
+        <span class="lang-en">Liquid Legacy<span class="cn">水的遗产 / 本科毕设</span></span>
+        <span class="lang-cn">水的遗产<span class="cn">本科毕设</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">An AR + LBS interaction system for inherited urban memory at Fuxing Island, Shanghai. Sewage purification and contaminated industrial heritage are turned into a situated, walkable narrative with a companion booking app.</span>
+        <span class="lang-cn">上海复兴岛的 AR + LBS 交互系统设计，主题是承继中的城市记忆。把污水处理流程与污染工业遗产，转译成一条可在场地行走、感知的叙事链路，并配套一个完整的预约 APP 用户流程。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Spatial Interaction</span>
         <span class="row-tag">AR / LBS</span>
@@ -692,21 +1095,27 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </div>
     </div>
     <dl class="row-meta">
-      <dt>User</dt><dd>Local walkers · families · museum visitors</dd>
-      <dt>Input</dt><dd>Site history · water-treatment process · geolocation</dd>
-      <dt>Method</dt><dd>Three-part landscape strategy · AR scenes · UI prototype</dd>
-      <dt>Output</dt><dd>Interaction prototype · master plan · physical model</dd>
-      <dt>Status</dt><dd>Undergraduate thesis · 2024</dd>
+      <dt>User</dt><dd><span class="lang-en">Local walkers · families · museum visitors</span><span class="lang-cn">本地散步者 · 家庭游客 · 博物馆参观者</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Site history · water-treatment process · geolocation</span><span class="lang-cn">场地史 · 水处理工艺 · 地理位置</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">Three-part landscape strategy · AR scenes · UI prototype</span><span class="lang-cn">三段式景观策略 · AR 场景 · UI 原型</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Interaction prototype · master plan · physical model</span><span class="lang-cn">交互原型 · 总平面 · 实体模型</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Undergraduate thesis · 2024</span><span class="lang-cn">本科毕设 · 2024</span></dd>
     </dl>
     <div class="row-year">2024</div>
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="nantou.html" class="row" id="row-06">
-    <div class="row-num">06</div>
+  <a href="nantou.html" class="row" id="row-07">
+    <div class="row-num">07</div>
     <div class="row-title">
-      <h3>Nantou Cyber-Village<span class="cn">南头赛博村</span></h3>
-      <p class="row-sub">An urban-design proposal for Shenzhen's Nantou Ancient Town. A new shared-living typology rewrites the rigid single-household plot as a modular system of private, semi-private, and public spaces, with a shared-space booking app.</p>
+      <h3>
+        <span class="lang-en">Nantou Cyber-Village<span class="cn">南头赛博村</span></span>
+        <span class="lang-cn">南头赛博村<span class="cn">城市设计课程作业</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">An urban-design proposal for Shenzhen's Nantou Ancient Town. A new shared-living typology rewrites the rigid single-household plot as a modular system of private, semi-private, and public spaces, with a shared-space booking app.</span>
+        <span class="lang-cn">深圳南头古城的城市设计方案。用一种新的共享居住类型，把硬性的单户宅地重构成"私密 / 半公共 / 公共"三层模块化空间系统，并配套一个共享空间预约 APP。</span>
+      </p>
       <div class="row-tags">
         <span class="row-tag">Urban Design</span>
         <span class="row-tag">Shared Living</span>
@@ -714,151 +1123,208 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </div>
     </div>
     <dl class="row-meta">
-      <dt>User</dt><dd>Residents · visitors · small-business owners</dd>
-      <dt>Input</dt><dd>Crowd / demand analysis · site history · density data</dd>
-      <dt>Method</dt><dd>12-step generative form · 6 shared modules</dd>
-      <dt>Output</dt><dd>Master plan · axonometric · resident-app prototype</dd>
-      <dt>Status</dt><dd>Coursework · 2024</dd>
+      <dt>User</dt><dd><span class="lang-en">Residents · visitors · small-business owners</span><span class="lang-cn">居民 · 游客 · 小店店主</span></dd>
+      <dt>Input</dt><dd><span class="lang-en">Crowd / demand analysis · site history · density data</span><span class="lang-cn">人流 / 需求分析 · 场地史 · 密度数据</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">12-step generative form · 6 shared modules</span><span class="lang-cn">12 步生成式形态 · 6 类共享模块</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Master plan · axonometric · resident-app prototype</span><span class="lang-cn">总平面 · 轴测图 · 居民端 APP 原型</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Coursework · 2024</span><span class="lang-cn">课程作业 · 2024</span></dd>
     </dl>
     <div class="row-year">2024</div>
     <div class="row-arrow">→</div>
   </a>
 </section>
 
-<!-- 03 / AI + PRODUCT WORKFLOWS ────────────────────────────── -->
+<!-- 04 / AI + PRODUCT WORKFLOWS ────────────────────────────── -->
 <header class="sect-head" id="workflows">
   <div class="sect-head-num">
-    <span><span class="n">03</span> &nbsp; AI + PRODUCT WORKFLOWS</span>
-    <span>HONEST FLUENCY · PROFICIENT / WORKING / EXPERIMENTAL</span>
+    <span><span class="n">04</span> &nbsp; <span class="lang-en">AI + PRODUCT WORKFLOWS</span><span class="lang-cn">AI + 产品工作流</span></span>
+    <span><span class="lang-en">HONEST FLUENCY · PROFICIENT / WORKING / EXPERIMENTAL</span><span class="lang-cn">诚实标记熟练度 · 熟练 / 在用 / 实验中</span></span>
   </div>
-  <h2 class="sect-head-title">AI + Product Workflows<span class="cn">AI 与产品工作流</span></h2>
-  <p class="sect-head-desc">Tooling grouped by genuine ownership level. Two short technical experiments are listed alongside as honest, scoped tests.</p>
+  <h2 class="sect-head-title">
+    <span class="lang-en">AI + Product Workflows</span>
+    <span class="lang-cn">AI + 产品工作流</span>
+  </h2>
+  <p class="sect-head-desc">
+    <span class="lang-en">Tooling grouped by genuine ownership level. Two short technical experiments are listed alongside as honest, scoped tests.</span>
+    <span class="lang-cn">按真实掌握程度分组的工具栈。下方两个短实验项目，以"诚实标记的小范围测试"形式并列展示，不夸大。</span>
+  </p>
 </header>
 
 <section class="index reveal" style="border-top:1px solid var(--rule)">
-  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+  <div class="row" style="cursor:default">
     <div class="row-num" style="color:var(--ink)">PRO</div>
     <div class="row-title">
-      <h3 style="font-size:1.1rem">Proficient</h3>
-      <p class="row-sub">Spatial analysis · research synthesis · information architecture · GIS-based reasoning · Adobe Creative Suite (Ps · Ai · Id · Pr) · Rhino + Grasshopper.</p>
+      <h3 style="font-size:1.1rem">
+        <span class="lang-en">Proficient</span>
+        <span class="lang-cn">熟练</span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">Spatial analysis · research synthesis · information architecture · GIS-based reasoning · Adobe Creative Suite (Ps · Ai · Id · Pr) · Rhino + Grasshopper.</span>
+        <span class="lang-cn">空间分析 · 用户研究综合 · 信息架构 · GIS 推理 · Adobe 全家桶（Ps · Ai · Id · Pr）· Rhino + Grasshopper</span>
+      </p>
     </div>
     <dl class="row-meta">
-      <dt>Used in</dt><dd>Programming Decay · Liquid Legacy · Nantou</dd>
-      <dt>Confidence</dt><dd>Independent end-to-end delivery</dd>
+      <dt>Used in</dt><dd><span class="lang-en">Programming Decay · Liquid Legacy · Nantou</span><span class="lang-cn">Programming Decay · 水的遗产 · 南头</span></dd>
+      <dt>Confidence</dt><dd><span class="lang-en">Independent end-to-end delivery</span><span class="lang-cn">可独立端到端交付</span></dd>
     </dl>
     <div class="row-year"></div><div class="row-arrow"></div>
   </div>
-  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+  <div class="row" style="cursor:default">
     <div class="row-num" style="color:var(--ink)">WRK</div>
     <div class="row-title">
-      <h3 style="font-size:1.1rem">Working</h3>
-      <p class="row-sub">Python prototyping · ComfyUI workflows · n8n automation · ArcGIS Pro / QGIS · LLM prompt engineering · product requirement framing · Unreal Engine 5 · Blender PBR.</p>
+      <h3 style="font-size:1.1rem">
+        <span class="lang-en">Working</span>
+        <span class="lang-cn">在用</span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">Python prototyping · ComfyUI workflows · n8n automation · ArcGIS Pro / QGIS · LLM prompt engineering · product requirement framing · Unreal Engine 5 · Blender PBR · Tauri + React + TS (MemoryOS).</span>
+        <span class="lang-cn">Python 原型 · ComfyUI 工作流 · n8n 自动化 · ArcGIS Pro / QGIS · LLM 提示工程 · 产品需求框架 · Unreal Engine 5 · Blender PBR · Tauri + React + TS（MemoryOS）</span>
+      </p>
     </div>
     <dl class="row-meta">
-      <dt>Used in</dt><dd>Programming Decay V3 · Entropy Atlas · Demo prototypes</dd>
-      <dt>Confidence</dt><dd>Build prototypes, iterate with reference</dd>
+      <dt>Used in</dt><dd><span class="lang-en">MemoryOS · Programming Decay V3 · Entropy Atlas · Demo prototypes</span><span class="lang-cn">MemoryOS · Programming Decay V3 · Entropy Atlas · 各类 Demo 原型</span></dd>
+      <dt>Confidence</dt><dd><span class="lang-en">Build prototypes, iterate with reference</span><span class="lang-cn">能搭原型并配合文档持续迭代</span></dd>
     </dl>
     <div class="row-year"></div><div class="row-arrow"></div>
   </div>
-  <div class="row" style="cursor:default" onclick="event.preventDefault()">
+  <div class="row" style="cursor:default">
     <div class="row-num" style="color:var(--ink)">EXP</div>
     <div class="row-title">
-      <h3 style="font-size:1.1rem">Experimental</h3>
-      <p class="row-sub">Pix2Pix training (Google Colab) · Neural Cellular Automata · multimodal AI workflows · WebGL spatial-interface prototypes · model evaluation. Tested, not productionised.</p>
+      <h3 style="font-size:1.1rem">
+        <span class="lang-en">Experimental</span>
+        <span class="lang-cn">实验中</span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">Pix2Pix training (Google Colab) · Neural Cellular Automata · multimodal AI workflows · WebGL spatial-interface prototypes · model evaluation. Tested, not productionised.</span>
+        <span class="lang-cn">Pix2Pix 训练（Google Colab）· Neural CA · 多模态 AI 工作流 · WebGL 空间界面原型 · 模型评估。属于实验阶段，未走到生产环境。</span>
+      </p>
     </div>
     <dl class="row-meta">
-      <dt>Used in</dt><dd>Programming Decay Chapter 05 · UE5 / Blender tests</dd>
-      <dt>Confidence</dt><dd>Honest experiments — not production ML</dd>
+      <dt>Used in</dt><dd><span class="lang-en">Programming Decay Chapter 05 · UE5 / Blender tests</span><span class="lang-cn">Programming Decay 第 05 章 · UE5 / Blender 测试</span></dd>
+      <dt>Confidence</dt><dd><span class="lang-en">Honest experiments — not production ML</span><span class="lang-cn">诚实标记的实验——不是生产级 ML</span></dd>
     </dl>
     <div class="row-year"></div><div class="row-arrow"></div>
   </div>
 
-  <a href="niagara.html" class="row" id="row-07">
-    <div class="row-num">07</div>
+  <a href="niagara.html" class="row" id="row-08">
+    <div class="row-num">08</div>
     <div class="row-title">
-      <h3>Niagara Particle Test<span class="cn">UE5 粒子实验</span></h3>
-      <p class="row-sub">A scoped Unreal Engine 5 Niagara experiment exploring real-time VFX for environmental simulation and atmosphere — published as a tooling note, not a product claim.</p>
+      <h3>
+        <span class="lang-en">Niagara Particle Test<span class="cn">UE5 粒子实验</span></span>
+        <span class="lang-cn">Niagara 粒子实验<span class="cn">UE5 实时 VFX 测试</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">A scoped Unreal Engine 5 Niagara experiment exploring real-time VFX for environmental simulation and atmosphere — published as a tooling note, not a product claim.</span>
+        <span class="lang-cn">一个范围明确的 UE5 Niagara 实时 VFX 实验，探索环境模拟与氛围渲染——以"工具笔记"的形式发布，不作为产品宣告。</span>
+      </p>
       <div class="row-tags"><span class="row-tag">UE5 · Niagara</span><span class="row-tag">Tech Note</span></div>
     </div>
     <dl class="row-meta">
-      <dt>Type</dt><dd>Tool fluency test</dd>
-      <dt>Output</dt><dd>Demo video</dd>
+      <dt>Type</dt><dd><span class="lang-en">Tool fluency test</span><span class="lang-cn">工具熟练度测试</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Demo video</span><span class="lang-cn">Demo 视频</span></dd>
     </dl>
     <div class="row-year">2026.02</div>
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="blender-metro.html" class="row" id="row-08">
-    <div class="row-num">08</div>
+  <a href="blender-metro.html" class="row" id="row-09">
+    <div class="row-num">09</div>
     <div class="row-title">
-      <h3>Metro Flower Field<span class="cn">花海地铁</span></h3>
-      <p class="row-sub">A Blender scene experiment — a surreal metro station drowned in flowers — exploring PBR materials, volumetric lighting, and atmospheric rendering.</p>
+      <h3>
+        <span class="lang-en">Metro Flower Field<span class="cn">花海地铁</span></span>
+        <span class="lang-cn">花海地铁<span class="cn">Blender 场景实验</span></span>
+      </h3>
+      <p class="row-sub">
+        <span class="lang-en">A Blender scene experiment — a surreal metro station drowned in flowers — exploring PBR materials, volumetric lighting, and atmospheric rendering.</span>
+        <span class="lang-cn">一个 Blender 场景实验——一座被花海淹没的超现实地铁站——探索 PBR 材质、体积光与氛围渲染。</span>
+      </p>
       <div class="row-tags"><span class="row-tag">Blender</span><span class="row-tag">PBR</span></div>
     </div>
     <dl class="row-meta">
-      <dt>Type</dt><dd>Scene-rendering study</dd>
-      <dt>Output</dt><dd>Video + still render</dd>
+      <dt>Type</dt><dd><span class="lang-en">Scene-rendering study</span><span class="lang-cn">场景渲染研究</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Video + still render</span><span class="lang-cn">视频 + 静帧渲染</span></dd>
     </dl>
     <div class="row-year">2026</div>
     <div class="row-arrow">→</div>
   </a>
 </section>
 
-<!-- 04 / TRAJECTORY ────────────────────────────────────────── -->
+<!-- 05 / TRAJECTORY ────────────────────────────────────────── -->
 <header class="sect-head" id="about">
   <div class="sect-head-num">
-    <span><span class="n">04</span> &nbsp; TRAJECTORY</span>
-    <span>WHY THE TRANSITION IS COHERENT</span>
+    <span><span class="n">05</span> &nbsp; <span class="lang-en">TRAJECTORY</span><span class="lang-cn">履历</span></span>
+    <span><span class="lang-en">WHY THE TRANSITION IS COHERENT</span><span class="lang-cn">为什么这次转型不是断裂</span></span>
   </div>
-  <h2 class="sect-head-title">About<span class="cn">关于</span></h2>
+  <h2 class="sect-head-title">
+    <span class="lang-en">About</span>
+    <span class="lang-cn">关于</span>
+  </h2>
 </header>
 
 <section class="about reveal">
   <div class="about-text">
-    <div class="bi">
-      <div class="en">
-        <p>I am a Master's student at UCL Bartlett RC18 (Urban Design), with a Landscape Architecture undergraduate degree from Zhejiang Wanli University. My current thesis, <em>Programming Decay</em>, develops a multi-scalar decision framework for fungal bioremediation of contaminated post-industrial concrete at Dagenham Dock, East London.</p>
-        <p style="margin-top:12px">The work I care about sits where spatial intelligence, decision systems, and AI-assisted workflows meet. Architecture trained me to hold input, constraint, stakeholder, and output in the same diagram — the same skill that AI Product Management needs.</p>
-        <p style="margin-top:12px">I am moving into AI Product Management / AI Product Design where this systems thinking can be applied directly to geospatial interfaces, decision-support tools, and human–AI workflows.</p>
-      </div>
-      <div class="cn">
-        <p>UCL Bartlett RC18 城市设计在读硕士，本科为浙江万里学院风景园林。在读毕设《Programming Decay》在伦敦东 Dagenham Dock 建立一套多尺度决策框架，用于污染后工业混凝土的真菌生物修复。</p>
-        <p style="margin-top:10px">关心的工作落在空间智能、决策系统与 AI 辅助工作流的交叉点。建筑训练让我能把输入、约束、相关方与输出收进同一张图——这正是 AI 产品所需要的能力。</p>
-        <p style="margin-top:10px">正在向 AI 产品经理 / AI 产品设计方向转型，把这种系统性思维直接落到地理空间界面、决策辅助工具和人机协作流程上。</p>
-      </div>
+    <div class="lang-en">
+      <p>UCL MArch in Urban Design, graduating September 2026. Landscape Architecture undergrad from Zhejiang Wanli University.</p>
+      <p style="margin-top:12px">On one side, AI product practice — vibe-coding prototypes, user research and need-finding, MVP delivery, continuous iteration. On the other, AI-driven spatial decision systems and product prototypes, working with algorithms like K-Means clustering and Cellular Automata.</p>
+      <p style="margin-top:12px">The architecture background is the entry point — exploring what it can unlock in AI product work.</p>
+    </div>
+    <div class="lang-cn">
+      <p>UCL 城市设计硕士在读，预计 2026 年 9 月毕业。本科毕业于浙江万里学院风景园林专业。</p>
+      <p style="margin-top:12px">一方面做 AI 产品方向的实践——快速 vibe coding 出原型，深入用户调研挖真需求，跑 MVP，持续迭代。另一方面做 AI 驱动的空间决策系统与产品原型，熟练运用 K-Means 聚类、Cellular Automata 等多种算法。</p>
+      <p style="margin-top:12px">建筑学科的系统思维是切入点——把"输入、约束、相关方、输出"统一进同一张图——正在探索它在 AI 产品里能跑出哪些新可能。</p>
     </div>
   </div>
   <dl class="skills-table">
-    <dt>Education</dt>
-    <dd>UCL Bartlett School of Architecture · MArch Urban Design (RC18) · 2025–26<br>Zhejiang Wanli University · BA Landscape Architecture · –2024</dd>
-    <dt>Location</dt>
-    <dd>London, UK / Shanghai, CN</dd>
-    <dt>Availability</dt>
-    <dd>Open to AI PM / AI Product Design roles · 2026 Graduate</dd>
-    <dt>Domains</dt>
-    <dd>Spatial intelligence · decision systems · geospatial UI · human-AI workflows · post-industrial regeneration</dd>
+    <dt><span class="lang-en">Education</span><span class="lang-cn">教育</span></dt>
+    <dd><span class="lang-en">UCL Bartlett School of Architecture · MArch Urban Design (RC18) · 2025–26<br>Zhejiang Wanli University · BA Landscape Architecture · 2021–2025</span><span class="lang-cn">UCL 巴特莱特建筑学院 · 城市设计硕士（RC18）· 2025–26<br>浙江万里学院 · 风景园林学士 · 2021–2025</span></dd>
+    <dt><span class="lang-en">Location</span><span class="lang-cn">位置</span></dt>
+    <dd><span class="lang-en">London, UK / Shanghai, CN</span><span class="lang-cn">伦敦 / 上海</span></dd>
+    <dt><span class="lang-en">Availability</span><span class="lang-cn">求职状态</span></dt>
+    <dd><span class="lang-en">Open to AI PM / AI Product Design roles · 2026 Graduate</span><span class="lang-cn">寻求 AI 产品经理 / AI 产品设计岗位 · 2026 应届</span></dd>
+    <dt><span class="lang-en">Domains</span><span class="lang-cn">擅长方向</span></dt>
+    <dd><span class="lang-en">Cross-AI tooling · spatial intelligence · decision systems · geospatial UI · human-AI workflows · post-industrial regeneration</span><span class="lang-cn">跨 AI 工具 · 空间智能 · 决策系统 · 地理空间 UI · 人机协作工作流 · 后工业再生</span></dd>
   </dl>
 </section>
 
-<!-- 05 / CONTACT ───────────────────────────────────────────── -->
+<!-- 06 / CONTACT ───────────────────────────────────────────── -->
 <header class="sect-head" id="contact">
   <div class="sect-head-num">
-    <span><span class="n">05</span> &nbsp; CONTACT</span>
-    <span>END OF INDEX</span>
+    <span><span class="n">06</span> &nbsp; <span class="lang-en">CONTACT</span><span class="lang-cn">联系</span></span>
+    <span><span class="lang-en">END OF INDEX</span><span class="lang-cn">索引结束</span></span>
   </div>
 </header>
 
 <section class="contact">
-  <dl><dt>Email · UCL</dt><dd><a href="mailto:jiajia.jiang.25@ucl.ac.uk">jiajia.jiang.25@ucl.ac.uk</a></dd></dl>
-  <dl><dt>Email · Personal</dt><dd><a href="mailto:jiangjiajia0520@163.com">jiangjiajia0520@163.com</a></dd></dl>
-  <dl><dt>Based in</dt><dd>London / Shanghai</dd></dl>
-  <dl><dt>Affiliation</dt><dd>UCL Bartlett RC18 · 2025 — 26</dd></dl>
+  <dl>
+    <dt><span class="lang-en">Email · UCL</span><span class="lang-cn">邮箱 · UCL</span></dt>
+    <dd><a href="mailto:ucbv512@ucl.ac.uk">ucbv512@ucl.ac.uk</a></dd>
+  </dl>
+  <dl>
+    <dt><span class="lang-en">Email · Personal</span><span class="lang-cn">邮箱 · 个人</span></dt>
+    <dd><a href="mailto:jiangjiajia0520@163.com">jiangjiajia0520@163.com</a></dd>
+  </dl>
+  <dl>
+    <dt>GitHub</dt>
+    <dd><a href="https://github.com/jiajiajiang91-design" target="_blank" rel="noopener">github.com/jiajiajiang91-design ↗</a></dd>
+  </dl>
+  <dl>
+    <dt>LinkedIn</dt>
+    <dd><a href="https://www.linkedin.com/in/jiajia-jiang-179231390" target="_blank" rel="noopener">linkedin.com/in/jiajia-jiang-179231390 ↗</a></dd>
+  </dl>
+  <dl>
+    <dt><span class="lang-en">Based in</span><span class="lang-cn">位置</span></dt>
+    <dd><span class="lang-en">London / Shanghai</span><span class="lang-cn">伦敦 / 上海</span></dd>
+  </dl>
+  <dl>
+    <dt><span class="lang-en">Xiaohongshu</span><span class="lang-cn">小红书</span></dt>
+    <dd><a href="https://xhslink.com/m/7Qpx0ixpMTS" target="_blank" rel="noopener"><span class="lang-en">@江喷瓜 · 20.5K likes &amp; saves ↗</span><span class="lang-cn">@江喷瓜 · 20.5K 赞与收藏 ↗</span></a></dd>
+  </dl>
 </section>
 
 <footer>
-  <span>© 2026 Jiajia Jiang / 江佳佳</span>
+  <span><span class="lang-en">© 2026 Jiajia Jiang / 江佳佳</span><span class="lang-cn">© 2026 江佳佳 / Jiajia Jiang</span></span>
   <span>London / Shanghai · 2025 — 26</span>
-  <a href="mailto:jiajia.jiang.25@ucl.ac.uk" class="no-underline">jiajia.jiang.25@ucl.ac.uk</a>
+  <a href="mailto:ucbv512@ucl.ac.uk" class="no-underline">ucbv512@ucl.ac.uk</a>
 </footer>
 
 <script>
@@ -866,6 +1332,22 @@ const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.06});
 reveals.forEach(el=>obs.observe(el));
 document.querySelectorAll('nav a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})});
+
+/* Bilingual toggle — persists across sessions */
+(function(){
+  const saved=localStorage.getItem('jj-lang')||'en';
+  setLang(saved);
+  document.querySelectorAll('.lang-switch button').forEach(btn=>{
+    btn.addEventListener('click',()=>setLang(btn.dataset.langSet));
+  });
+  function setLang(l){
+    document.body.dataset.lang=l;
+    localStorage.setItem('jj-lang',l);
+    document.querySelectorAll('.lang-switch button').forEach(b=>{
+      b.setAttribute('aria-pressed',b.dataset.langSet===l?'true':'false');
+    });
+  }
+})();
 </script>
 </body>
 </html>
