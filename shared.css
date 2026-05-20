@@ -45,7 +45,10 @@ html{scroll-behavior:smooth}
 /* ─── BILINGUAL TOGGLE ─────────────────────────────────────────────
    Default state: EN visible, CN hidden. Toggling body[data-lang="cn"]
    reverses it. Tech / mono / numeric labels stay language-neutral. */
-body[data-lang="en"] .lang-cn{display:none}
+/* Default behavior treats every page as EN unless body[data-lang="cn"] is set.
+   This means subpages without an explicit data-lang attribute still hide any
+   .lang-cn siblings, so the two language tracks never stack on the same page. */
+body:not([data-lang="cn"]) .lang-cn{display:none}
 body[data-lang="cn"] .lang-en{display:none}
 /* CN text always uses CJK-first font stack so Han characters render cleanly,
    even inside containers that set font-family to a Latin-only sans. */
