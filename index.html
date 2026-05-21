@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jiajia Jiang / 江佳佳 — Independent Product + Decision Systems</title>
+<title>Jiajia Jiang / 江佳佳 — Spatial Designer → AI Product</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
@@ -660,6 +660,27 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   .landing-now{font-size:.55rem;letter-spacing:.14em}
   .landing-now .cn{display:block;margin-left:0;margin-top:6px}
 }
+
+/* CN-mode line-breaking — Chinese has no spaces between characters, so the
+   browser's default rule breaks a line at any character boundary. The result
+   is awkward 2-3 char lines on tight columns. word-break:keep-all tells the
+   browser to keep Chinese phrases together and only break at ASCII spaces or
+   punctuation. EN mode is left untouched (English needs default wrapping).
+   !important is defensive against more-specific rules in shared.css. */
+body[data-lang="cn"] h1,
+body[data-lang="cn"] h2,
+body[data-lang="cn"] h3,
+body[data-lang="cn"] h4,
+body[data-lang="cn"] p,
+body[data-lang="cn"] dt,
+body[data-lang="cn"] dd,
+body[data-lang="cn"] span,
+body[data-lang="cn"] a,
+body[data-lang="cn"] .lang-cn{
+  overflow-wrap:normal !important;
+  word-break:keep-all !important;
+  line-break:strict !important;
+}
 </style>
 </head>
 <body data-lang="en">
@@ -667,7 +688,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   <a href="index.html" class="nav-logo"><span class="lang-en">JIAJIA JIANG</span><span class="lang-cn">江佳佳</span></a>
   <ul class="nav-links home-nav-right">
     <li><a href="#product"><span class="lang-en">Product</span><span class="lang-cn">产品</span></a></li>
-    <li><a href="#systems"><span class="lang-en">Systems</span><span class="lang-cn">系统</span></a></li>
+    <li><a href="#systems"><span class="lang-en">Thesis</span><span class="lang-cn">毕设</span></a></li>
     <li><a href="#foundation"><span class="lang-en">Foundation</span><span class="lang-cn">基础</span></a></li>
     <li><a href="#workflows"><span class="lang-en">Workflows</span><span class="lang-cn">工作流</span></a></li>
     <li><a href="#about"><span class="lang-en">About</span><span class="lang-cn">关于</span></a></li>
@@ -703,13 +724,13 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </p>
 
       <p class="landing-pos">
-        <span class="lang-en">Shanghai-based, currently in London for my MArch at UCL Bartlett, graduating 2026. End-to-end AI product practice — user research, MVP delivery, iteration — turning spatial complexity into product systems.</span>
-        <span class="lang-cn">常驻上海，目前在伦敦 UCL Bartlett 读城市设计硕士，2026 毕业。专注 AI 产品端到端实践——用户调研、MVP 落地、持续迭代，把复杂的空间数据翻译成可用产品。</span>
+        <span class="lang-en">Shanghai-based, currently at UCL Bartlett (MArch Urban Design), graduating 2026. I build AI products (MemoryOS, shipped and self-used) and use algorithms to turn messy spatial problems into explainable decision logic.</span>
+        <span class="lang-cn">常驻上海，现于伦敦 UCL Bartlett 读城市设计硕士，2026 毕业。独立做 AI 产品（MemoryOS，已上线自用），也用算法把复杂的空间问题拆解成可解释的判断逻辑。</span>
       </p>
 
       <div class="keywords">
         <span><span class="lang-en">Cross-AI Memory</span><span class="lang-cn">跨 AI 记忆</span></span>
-        <span><span class="lang-en">Decision Systems</span><span class="lang-cn">决策系统</span></span>
+        <span><span class="lang-en">Spatial Intelligence</span><span class="lang-cn">空间智能</span></span>
         <span><span class="lang-en">Geospatial Interfaces</span><span class="lang-cn">地理空间界面</span></span>
         <span><span class="lang-en">Human-AI Workflows</span><span class="lang-cn">人机协作工作流</span></span>
       </div>
@@ -717,7 +738,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       <div class="landing-links">
         <a href="mailto:ucbv512@ucl.ac.uk">ucbv512@ucl.ac.uk</a>
         <a href="#product"><span class="lang-en">↓ Independent Product</span><span class="lang-cn">↓ 独立产品</span></a>
-        <a href="#systems"><span class="lang-en">↓ Decision Systems</span><span class="lang-cn">↓ 决策系统</span></a>
+        <a href="#systems"><span class="lang-en">↓ MArch Thesis</span><span class="lang-cn">↓ 硕士毕设</span></a>
         <a href="#about"><span class="lang-en">↓ Trajectory</span><span class="lang-cn">↓ 履历</span></a>
       </div>
     </div>
@@ -730,8 +751,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       <ol class="lc-list">
         <li class="div"><span></span><span class="dv"><span class="lang-en">Independent Product</span><span class="lang-cn">独立产品</span></span><span></span></li>
         <li><a href="#row-01"><span class="k">01</span><span class="t"><span class="lang-en">MemoryOS — Cross-AI Memory Layer</span><span class="lang-cn">MemoryOS — 跨 AI 工作记忆层</span></span><span class="y">26</span></a></li>
-        <li class="div"><span></span><span class="dv"><span class="lang-en">Decision Systems</span><span class="lang-cn">决策系统</span></span><span></span></li>
-        <li><a href="#row-02"><span class="k">02</span><span class="t"><span class="lang-en">Programming Decay — Decision Intelligence V3</span><span class="lang-cn">Programming Decay — 决策智能 V3</span></span><span class="y">25 — 26</span></a></li>
+        <li class="div"><span></span><span class="dv"><span class="lang-en">MArch Thesis</span><span class="lang-cn">硕士毕设</span></span><span></span></li>
+        <li><a href="#row-02"><span class="k">02</span><span class="t"><span class="lang-en">Programming Decay — Decision Demo</span><span class="lang-cn">Programming Decay — 决策 Demo</span></span><span class="y">25 — 26</span></a></li>
         <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Barking Reach — Site Timeline 3D</span><span class="lang-cn">Barking Reach — 场地时间线 3D</span></span><span class="y">25 — 26</span></a></li>
         <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Programming Decay — Research Booklet</span><span class="lang-cn">Programming Decay — 研究文档</span></span><span class="y">25 — 26</span></a></li>
         <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
@@ -744,7 +765,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </ol>
       <footer class="lc-foot">
         <span><span class="lang-en">9 ENTRIES</span><span class="lang-cn">9 个项目</span></span>
-        <span><span class="lang-en">1 PRODUCT · 4 DECISION · 2 SPATIAL · 2 EXP</span><span class="lang-cn">1 产品 · 4 决策 · 2 空间 · 2 实验</span></span>
+        <span><span class="lang-en">1 PRODUCT · 4 THESIS · 2 SPATIAL · 2 EXP</span><span class="lang-cn">1 产品 · 4 毕设 · 2 空间 · 2 实验</span></span>
       </footer>
     </aside>
   </div>
@@ -761,8 +782,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <span class="lang-cn">独立产品</span>
   </h2>
   <p class="sect-head-desc">
-    <span class="lang-en">A live, dogfooded product built end-to-end as solo founder / PM / engineer. Not a thesis spinoff — a separate product hypothesis that I needed for my own work and shipped to validate the form.</span>
-    <span class="lang-cn">一款已上线、我自己每天在用的产品——以独立创始人 / PM / 工程师身份端到端交付。不是毕设的衍生品，而是为了解决我自己的高频痛点而立项的产品假设，发布出来用真实使用反馈验证产品形态。</span>
+    <span class="lang-en">An independent product I defined, built and shipped myself — to solve a problem I kept hitting in my own work. One person making every call, from "is this worth building" to "is anyone actually using it."</span>
+    <span class="lang-cn">我自己定义、自己开发、自己上线的一款产品——为了解决我每天工作中真在遇到的问题。"该不该做这个东西""有人在用吗"这些判断，都是一个人在做。</span>
   </p>
 </header>
 
@@ -775,8 +796,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
         <span class="lang-cn">MemoryOS — 跨 AI 工作记忆层<span class="cn">本地优先的桌面 app</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">A local-first desktop app that carries one working memory across ChatGPT, Claude, Cursor, Gemini and any other AI tool. Clipboard handoff sidesteps per-call API costs and keeps user data on-device — a privacy-first trust contract. Risk-tiered confirmation: AI drafts, user approves writes. MIT open-source, ~1.7 MB Windows binary, shipped solo as founder / PM / engineer.</span>
-        <span class="lang-cn">一款本地优先的桌面 app，让一份工作记忆在 ChatGPT、Claude、Cursor、Gemini 等所有 AI 工具之间复用。用剪贴板传递取代 API 调用——既绕开商业模型的高额接口成本，又把用户数据留在本地，建立"隐私优先"的信任契约。写操作按风险分级：AI 起草、用户确认后再写入。MIT 开源，1.7 MB Windows 安装包，独立创始人 / PM / 工程师身份一个人交付。</span>
+        <span class="lang-en">Knowledge work increasingly runs across several AIs at once — each one stronger at something. The real problem is making them collaborate, and today they can't: no AI remembers another's context. There are several ways to attack this (unified front-ends, API bridges, cloud sync); MemoryOS takes the memory-layer route, and deliberately keeps it local, cross-vendor and user-controlled — because the existing options either lock memory inside one vendor (ChatGPT Memory) or host it in yet another cloud (Notion AI). Defined, built and shipped solo.</span>
+        <span class="lang-cn">知识工作越来越同时跑在多个 AI 上——因为每个 AI 各有所长。真正要解决的是"让它们协作"，而当下做不到：AI 之间互不记得彼此的上下文。解决方向有好几条（统一入口、API 打通、云端同步），MemoryOS 选择从记忆层切入，并刻意做成本地、跨厂商、用户掌控——因为现有方案要么把记忆锁死在单一厂商（ChatGPT Memory），要么托管到又一个云（Notion AI）。从定义、开发到上线由一人完成。</span>
       </p>
       <div class="row-tags">
         <span class="row-tag">Cross-AI Memory</span>
@@ -802,8 +823,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <span class="num">01.A</span>
     <div>
       <span class="lbl">
-        <span class="lang-en">Shipped Product · MemoryOS V1 · v0.1.1 Windows Binary</span>
-        <span class="lang-cn">已交付产品 · MemoryOS V1 · v0.1.1 Windows 安装包</span>
+        <span class="lang-en">Shipped Product · MemoryOS · v0.1.1 Windows Binary</span>
+        <span class="lang-cn">已交付产品 · MemoryOS · v0.1.1 Windows 安装包</span>
       </span>
       <h3>
         <span class="lang-en">One working memory, across every AI tool</span>
@@ -824,33 +845,33 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <figure>
       <img src="images_memoryos/02_dashboard.png" alt="MemoryOS dashboard — current goal, recent sessions, project metadata" loading="lazy"/>
       <figcaption>
-        <span class="lang-en"><span class="n">02</span> Dashboard — goal · sessions · metadata</span>
-        <span class="lang-cn"><span class="n">02</span> 工作台 — 目标 · 对话 · 元数据</span>
+        <span class="lang-en"><span class="n">02</span> Dashboard — your current goal and recent sessions</span>
+        <span class="lang-cn"><span class="n">02</span> 工作台 — 当前目标和最近的对话</span>
       </figcaption>
     </figure>
     <figure>
       <img src="images_memoryos/03_end_prompt.png" alt="MemoryOS end-session prompt builder — pick context, pick target AI" loading="lazy"/>
       <figcaption>
-        <span class="lang-en"><span class="n">03</span> End prompt — pick context · pick target AI</span>
-        <span class="lang-cn"><span class="n">03</span> 结束指令 — 选上下文 · 选目标 AI</span>
+        <span class="lang-en"><span class="n">03</span> End a session — pick what to carry, pick the next AI</span>
+        <span class="lang-cn"><span class="n">03</span> 结束对话 — 选要带走的内容，选下一个 AI</span>
       </figcaption>
     </figure>
     <figure>
       <img src="images_memoryos/04_help.png" alt="MemoryOS help drawer — how the handoff loop works" loading="lazy"/>
       <figcaption>
-        <span class="lang-en"><span class="n">04</span> Help — how the handoff loop works</span>
-        <span class="lang-cn"><span class="n">04</span> 帮助 — handoff 循环如何工作</span>
+        <span class="lang-en"><span class="n">04</span> Help — how the handoff between tools works</span>
+        <span class="lang-cn"><span class="n">04</span> 帮助 — 工具之间的"接力"怎么运作</span>
       </figcaption>
     </figure>
   </div>
 
   <div class="lang-en">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">MemoryOS is a local-first desktop app that lets you carry a single working memory across ChatGPT, Claude, Cursor, Gemini and any other AI tool. The user keeps a folder of Markdown files; MemoryOS produces a standardised <em>End Session Prompt</em> the user pastes into the AI, then parses the AI's structured handoff back into updates the user reviews and saves.</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">No API integration. No clipboard scraping. AI suggests — user confirms. Built end-to-end as solo founder / PM / engineer; the case study unpacks the five product decisions and what would disprove them.</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">The real problem sits one level above the tool-switch annoyance: people now rely on multiple AIs precisely because each is good at different things, but those AIs share no memory, so the collaboration never compounds. Several routes could close this gap — unified clients, API integrations, cloud sync. MemoryOS takes one of them: a shared memory layer that ends a session by writing down the key points, and carries them into the next session in any tool. The bet is on which route, not just the feature.</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Once the memory-layer route was chosen, two decisions defined its shape: (1) the memory file lives on the user's own machine, not in any vendor account — nobody wants their notes scattered across different companies' servers; (2) the AI drafts updates but the user approves every single write — trust collapses the moment an AI silently edits your notes. Designed, built and shipped end-to-end by one person; the case study unpacks all five decisions and what kind of user feedback would disprove them.</p>
   </div>
   <div class="lang-cn">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">MemoryOS 是一款本地优先的桌面 app，让用户的一份工作记忆在 ChatGPT、Claude、Cursor、Gemini 之间复用。用户保留一个 Markdown 文件夹；MemoryOS 自动生成一份标准化<em>结束对话指令</em>，粘贴进 AI 后，再把 AI 返回的结构化 handoff 解析成更新项，用户勾选确认后写入本地。</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">不调用任何 AI 厂商的 API，也不监听剪贴板——AI 起草、用户拍板。从 PM、设计到工程，一个人端到端交付。Case Study 详细拆解 5 个核心产品决策，并写明哪种用户反馈会推翻当前判断。</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">真正的问题在"换工具麻烦"之上一层：人们之所以依赖多个 AI，正是因为它们各有所长，但这些 AI 之间没有共享记忆，协作因此无法累积。弥补这个断层有好几条路——统一客户端、API 集成、云端同步。MemoryOS 选了其中一条：一个共享记忆层，结束对话时把要点写下来，下一段对话无论在哪个 AI 里都能带回去。赌的是"选哪条路"，不只是某个功能。</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">选定记忆层这条路之后，两个关键决策定义了它的形态：(1) 记忆文件存在用户自己的电脑里，不在任何厂商的云账户上——没人愿意自己的笔记散落在不同公司的服务器；(2) AI 起草更新但每一次写入都由用户确认——AI 一旦悄悄改了你的笔记，信任就崩了。整套产品定义、设计、工程都是一个人完成的；Case Study 完整拆解 5 个核心决策，以及"什么样的用户反馈会推翻这些判断"。</p>
   </div>
 
   <div class="ship-ctas">
@@ -872,19 +893,19 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   </div>
 </section>
 
-<!-- 02 / DECISION SYSTEMS ──────────────────────────────────── -->
+<!-- 02 / MARCH THESIS · PROGRAMMING DECAY ──────────────────── -->
 <header class="sect-head" id="systems">
   <div class="sect-head-num">
-    <span><span class="n">02</span> &nbsp; <span class="lang-en">DECISION SYSTEMS</span><span class="lang-cn">决策系统</span></span>
-    <span><span class="lang-en">04 ENTRIES · THESIS-ANCHORED · SPATIAL INTELLIGENCE</span><span class="lang-cn">4 个项目 · 毕设承载 · 空间智能</span></span>
+    <span><span class="n">02</span> &nbsp; <span class="lang-en">MARCH THESIS · PROGRAMMING DECAY</span><span class="lang-cn">硕士毕设 · PROGRAMMING DECAY</span></span>
+    <span><span class="lang-en">4 OUTPUTS · ONE THESIS · MULTIPLE MEDIA</span><span class="lang-cn">4 个输出 · 一个毕设 · 多种媒介</span></span>
   </div>
   <h2 class="sect-head-title">
-    <span class="lang-en">Decision Systems</span>
-    <span class="lang-cn">决策系统</span>
+    <span class="lang-en">Programming Decay</span>
+    <span class="lang-cn">Programming Decay<span class="cn">硕士毕设</span></span>
   </h2>
   <p class="sect-head-desc">
-    <span class="lang-en">UCL Bartlett RC18 thesis <em>Programming Decay</em>, rebuilt as decision logic and human–AI workflows. Each row links to a case study or live demo; the primary V3 demo is embedded directly below the index.</span>
-    <span class="lang-cn">把 UCL Bartlett 毕设《Programming Decay》拆解、重构成可被用户操作的决策逻辑与人机协作工作流。每个项目都是一个独立的 Case Study 或可运行 Demo；主 Demo（V3）直接嵌在下方。</span>
+    <span class="lang-en">Four outputs from one MArch thesis (UCL Bartlett RC18) — an interactive demo, a 3D site timeline, a 56-page research booklet, and a Term-1 prequel studio. Each row links to a standalone case study or live demo; the main interactive demo is embedded directly below the index.</span>
+    <span class="lang-cn">同一个硕士毕设（UCL Bartlett RC18）的多个输出切面——交互演示页、场地 3D 时间线、56 页研究图集、Term-1 前传课设。每一行通向一份独立的 Case Study 或可运行 Demo；主 Demo 直接嵌在下方。</span>
   </p>
 </header>
 
@@ -893,21 +914,21 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <div class="row-num">02</div>
     <div class="row-title">
       <h3>
-        <span class="lang-en">Programming Decay — Decision Intelligence V3<span class="cn">毕设产品 Demo / 决策智能原型</span></span>
-        <span class="lang-cn">Programming Decay — 决策智能 V3<span class="cn">毕设产品 Demo / 决策智能原型</span></span>
+        <span class="lang-en">Programming Decay — Decision Demo<span class="cn">毕设交互 Demo / 决策过程可视化</span></span>
+        <span class="lang-cn">Programming Decay — 决策 Demo<span class="cn">毕设交互 Demo / 决策过程可视化</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">A multi-scalar decision system that compresses the thesis — from planetary cement metabolism down to an 8×8 cell at Dagenham Dock — into clickable product logic. The black box is unfolded into evidence → site → strategy → generation → feedback.</span>
-        <span class="lang-cn">把跨国供应链数据与微观地理空间多模态数据，整合成一套可量化、可解释的决策后台产品。核心交互是一条"证据 → 选址 → 策略 → 生成 → 反馈"五步路径，让原本黑箱式的多源决策过程在用户界面里逐步展开。</span>
+        <span class="lang-en">My MArch thesis, structured as a decision chain — from the global pollution footprint of cement down to one specific site at Dagenham Dock. A five-step path (evidence → site → strategy → generation → feedback) opens up a process that is usually opaque, exposing the reasoning behind each step.</span>
+        <span class="lang-cn">硕士毕设，把一个跨度极大的问题整理成一条可逐步展开的判断链：从全球水泥生产的污染足迹，一路追到东伦敦 Dagenham Dock 的一块具体场地。一条"证据 → 选址 → 策略 → 生成 → 反馈"的五步路径，将原本看不透的决策过程逐层展开，每一步的判断依据清晰可查。</span>
       </p>
       <div class="row-tags">
-        <span class="row-tag">Decision System</span>
+        <span class="row-tag">Decision Chain</span>
         <span class="row-tag">Geospatial</span>
         <span class="row-tag">Human–AI Workflow</span>
       </div>
     </div>
     <dl class="row-meta">
-      <dt>User</dt><dd><span class="lang-en">Remediation planners, urban researchers</span><span class="lang-cn">规划决策者、城市研究者</span></dd>
+      <dt><span class="lang-en">Context</span><span class="lang-cn">面向场景</span></dt><dd><span class="lang-en">Site remediation planning — choosing between sites and strategies with traceable evidence</span><span class="lang-cn">污染土地的修复规划——需要在多地块、多策略间做有依据的取舍</span></dd>
       <dt>Input</dt><dd><span class="lang-en">GIS layers · Overpass · Google Places sentiment</span><span class="lang-cn">GIS 图层 · Overpass API · Google Places 情感数据</span></dd>
       <dt>Method</dt><dd><span class="lang-en">K-Means · Pix2Pix · Neural CA · n8n pipeline</span><span class="lang-cn">K-Means 聚类 · Pix2Pix 模型 · Neural CA · n8n 自动化管道</span></dd>
       <dt>Output</dt><dd><span class="lang-en">Operable decision UI · 4-strategy zoning</span><span class="lang-cn">可操作的决策界面 · 4 策略分区方案</span></dd>
@@ -936,13 +957,13 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
         <span class="lang-cn">Barking Reach — 场地时间线 3D<span class="cn">现状 3D 切片</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. Plate 02.5 of the Programming Decay thesis.</span>
-        <span class="lang-cn">一个可拖动的 30 年时间轴交互页面，记录 Dagenham / Barking Reach 发电站场地从 1995 投产到 2025 清空的全过程。NOW 一帧切换为已清空场地的 Google 3D Tiles 三维模型——多源资料 + 实时三维数据在浏览器里直接可视化。Programming Decay 毕设第 02.5 张图版。</span>
+        <span class="lang-en">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. A site-study plate from the Programming Decay thesis.</span>
+        <span class="lang-cn">一个可拖动的 30 年时间轴交互页面，记录 Dagenham / Barking Reach 发电站场地从 1995 投产到 2025 清空的全过程。NOW 一帧切换为已清空场地的 Google 3D Tiles 三维模型——多源资料 + 实时三维数据在浏览器里直接可视化。Programming Decay 毕设场地研究图版之一。</span>
       </p>
       <div class="row-tags">
         <span class="row-tag">Site Timeline</span>
         <span class="row-tag">WebGL · three.js</span>
-        <span class="row-tag">Plate 02.5</span>
+        <span class="row-tag">Site Study</span>
       </div>
     </div>
     <dl class="row-meta">
@@ -964,8 +985,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
         <span class="lang-cn">Programming Decay — 研究文档<span class="cn">56 页</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">Six-chapter research archive grounding the V3 demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition.</span>
-        <span class="lang-cn">支撑 V3 Demo 的六章用户研究与数据档案：全球行业供应链分析、英国本土污染数据梳理、材料状态分析、基于算法的选址逻辑、机器学习实验，以及最终的产品愿景。等同于一份完整的 PRD + 调研报告。</span>
+        <span class="lang-en">Six-chapter research archive grounding the interactive demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition — the full research and data record behind every judgement in the demo above.</span>
+        <span class="lang-cn">支撑 Demo 的六章用户研究与数据档案：全球行业供应链分析、英国本土污染数据梳理、材料状态分析、基于算法的选址逻辑、机器学习实验，以及最终的建筑设想——上面 Demo 的所有判断逻辑都来自这里。</span>
       </p>
       <div class="row-tags">
         <span class="row-tag">Research Archive</span>
@@ -975,8 +996,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <dl class="row-meta">
       <dt>Role</dt><dd><span class="lang-en">Sole author · UCL Bartlett RC18 thesis</span><span class="lang-cn">独立作者 · UCL Bartlett 毕设</span></dd>
       <dt>Input</dt><dd><span class="lang-en">Global energy / GHG / cement clinker datasets</span><span class="lang-cn">全球能源 / 温室气体 / 水泥熟料数据集</span></dd>
-      <dt>Method</dt><dd><span class="lang-en">GIS reasoning · multi-scalar mapping · 4-strategy framework</span><span class="lang-cn">GIS 推理 · 多尺度数据可视化 · 4 策略框架</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">56-page atlas · system schema · spatial OS</span><span class="lang-cn">56 页图集 · 系统架构图 · 空间决策 OS</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">GIS reasoning · layered analysis from regional to site scale · four-strategy framework</span><span class="lang-cn">GIS 推理 · 从大范围到具体地块的分层分析 · 四策略框架</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">56-page atlas + four-strategy framework</span><span class="lang-cn">56 页图集 + 四策略框架</span></dd>
       <dt>Status</dt><dd><span class="lang-en">Submitted · 2025–26</span><span class="lang-cn">已提交 · 2025–26</span></dd>
     </dl>
     <div class="row-year">2025 — 26</div>
@@ -1018,26 +1039,26 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <span class="num">02.A</span>
     <div>
       <span class="lbl">
-        <span class="lang-en">Embedded Demo · Programming Decay V3 · Entropy Atlas built-in</span>
-        <span class="lang-cn">嵌入 Demo · Programming Decay V3 · 内含 Entropy Atlas 证据层</span>
+        <span class="lang-en">Embedded Demo · Programming Decay · Entropy Atlas built-in</span>
+        <span class="lang-cn">嵌入 Demo · Programming Decay · 内含 Entropy Atlas 证据层</span>
       </span>
       <h3>
-        <span class="lang-en">Click through the whole decision pipeline — evidence to feedback</span>
-        <span class="lang-cn">一个可点击的决策系统：从证据到反馈</span>
+        <span class="lang-en">A clickable decision process — from evidence to feedback</span>
+        <span class="lang-cn">一个可点击的决策过程：从证据到反馈</span>
       </h3>
     </div>
     <a class="open" href="programming-decay-v3.1/index.html" target="_blank"><span class="lang-en">Open standalone ↗</span><span class="lang-cn">独立打开 ↗</span></a>
   </div>
 
   <div class="demo-embed-frame">
-    <iframe src="programming-decay-v3.1/index.html" title="Programming Decay V3 — embedded demo" loading="lazy"></iframe>
+    <iframe src="programming-decay-v3.1/index.html" title="Programming Decay — embedded interactive demo" loading="lazy"></iframe>
   </div>
 
   <!-- Mobile fallback — iframe-free CTA so 3D / map gestures don't trap scroll -->
   <div class="demo-embed-mobile">
     <span class="lbl"><span class="lang-en">Demo · best viewed on desktop</span><span class="lang-cn">Demo · 桌面端体验更佳</span></span>
     <p>
-      <span class="lang-en">The V3 demo contains a 3D viewer and pannable layers that conflict with touch-scroll. Open it in a new tab to use it on mobile.</span>
+      <span class="lang-en">The embedded demo contains a 3D viewer and pannable layers that conflict with touch-scroll. Open it in a new tab to use it on mobile.</span>
       <span class="lang-cn">该 Demo 含有 3D 视窗与可拖动图层，与移动端触摸滑动冲突——请在新标签页中打开使用。</span>
     </p>
     <a class="cta" href="programming-decay-v3.1/index.html" target="_blank" rel="noopener">
@@ -1046,11 +1067,11 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   </div>
 
   <div class="lang-en">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is compressed into clickable product logic. Every scroll, every layer toggle, every inference call is one round of reasoning over the same contaminated ground. The black box is unfolded into <em>explainable</em> steps; the viewer is asked to drop the <em>looking-at-a-project</em> posture and enter an <em>operating-a-system</em> posture, where the decision is no longer the designer's alone but a result of human–machine collaboration.</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">From global industrial data down to a single 8×8 cell at Dagenham Dock, the thesis is laid out as one explorable interface. Every scroll, every layer toggle, every inference call is another round of reasoning over the same ground. What used to be an opaque process is broken down into legible steps — less <em>looking at a project</em>, more <em>operating a reasoning tool</em>: the final judgement comes from human and algorithm together, not the designer alone.</p>
     <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this demo as the site-evidence layer.</p>
   </div>
   <div class="lang-cn">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">从跨国行业数据，到 Dagenham Dock 上一格 8×8 网格的微观决策，毕设被打包成一套可点击的决策后台。每一次滚动、每一次切换图层、每一次推理调用，都是对同一片场地的一次再判断。原本封闭的黑箱被翻译成<em>可被解释</em>的步骤；用户被引导从"看作品"的姿态，切换到"操作一个系统"的姿态——最终的决策不再属于设计师一个人，而是用户与算法协同的产物。</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">从全球尺度的行业数据，到 Dagenham Dock 上一格 8×8 网格的具体判断，整个毕设被整理成一个可逐步操作的界面。每一次滚动、每一次图层切换、每一次分析调用，都是对同一片场地的一次重新判断。原本看不透的决策过程被拆解成逐层可读的步骤——与其说是浏览一个项目，不如说是操作一套判断工具：最终结论由人与算法共同完成，而非设计师单方决定。</p>
     <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Entropy Atlas（熵图集）—— 由 n8n 自动化抓取的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>证据数据源</em>嵌入在该 Demo 内部。</p>
   </div>
 
@@ -1182,7 +1203,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
       </p>
     </div>
     <dl class="row-meta">
-      <dt>Used in</dt><dd><span class="lang-en">MemoryOS · Programming Decay V3 · Entropy Atlas · Demo prototypes</span><span class="lang-cn">MemoryOS · Programming Decay V3 · Entropy Atlas · 各类 Demo 原型</span></dd>
+      <dt>Used in</dt><dd><span class="lang-en">MemoryOS · Programming Decay Demo · Entropy Atlas · Demo prototypes</span><span class="lang-cn">MemoryOS · Programming Decay Demo · Entropy Atlas · 各类 Demo 原型</span></dd>
       <dt>Confidence</dt><dd><span class="lang-en">Build prototypes, iterate with reference</span><span class="lang-cn">能搭原型并配合文档持续迭代</span></dd>
     </dl>
     <div class="row-year"></div><div class="row-arrow"></div>
@@ -1265,12 +1286,12 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   <div class="about-text">
     <div class="lang-en">
       <p>UCL MArch in Urban Design, graduating September 2026. Landscape Architecture undergrad from Zhejiang Wanli University.</p>
-      <p style="margin-top:12px">On one side, AI product practice — vibe-coding prototypes, user research and need-finding, MVP delivery, continuous iteration. On the other, AI-driven spatial decision systems and product prototypes, working with algorithms like K-Means clustering and Cellular Automata.</p>
+      <p style="margin-top:12px">One track: independent AI product work — solo vibe-coded prototypes, shipped to real users, iterated on real usage feedback (MemoryOS). Another track: using algorithms to break complex spatial problems down into explainable reasoning, with tools like K-Means clustering and Cellular Automata.</p>
       <p style="margin-top:12px">The architecture background is the entry point — exploring what it can unlock in AI product work.</p>
     </div>
     <div class="lang-cn">
       <p>UCL 城市设计硕士在读，预计 2026 年 9 月毕业。本科毕业于浙江万里学院风景园林专业。</p>
-      <p style="margin-top:12px">一方面做 AI 产品方向的实践——快速 vibe coding 出原型，深入用户调研挖真需求，跑 MVP，持续迭代。另一方面做 AI 驱动的空间决策系统与产品原型，熟练运用 K-Means 聚类、Cellular Automata 等多种算法。</p>
+      <p style="margin-top:12px">一方面独立做 AI 产品——自己 vibe coding 出原型、上线、靠真实使用反馈迭代（MemoryOS）。另一方面用算法把复杂的空间问题拆解成可解释的判断逻辑，常用工具包括 K-Means 聚类、Cellular Automata 等。</p>
       <p style="margin-top:12px">建筑学科的系统思维是切入点——把"输入、约束、相关方、输出"统一进同一张图——正在探索它在 AI 产品里能跑出哪些新可能。</p>
     </div>
   </div>
@@ -1282,7 +1303,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
     <dt><span class="lang-en">Availability</span><span class="lang-cn">求职状态</span></dt>
     <dd><span class="lang-en">Open to AI PM / AI Product Design roles · 2026 Graduate</span><span class="lang-cn">寻求 AI 产品经理 / AI 产品设计岗位 · 2026 应届</span></dd>
     <dt><span class="lang-en">Domains</span><span class="lang-cn">擅长方向</span></dt>
-    <dd><span class="lang-en">Cross-AI tooling · spatial intelligence · decision systems · geospatial UI · human-AI workflows · post-industrial regeneration</span><span class="lang-cn">跨 AI 工具 · 空间智能 · 决策系统 · 地理空间 UI · 人机协作工作流 · 后工业再生</span></dd>
+    <dd><span class="lang-en">Cross-AI tooling · spatial intelligence · geospatial UI · human-AI workflows · post-industrial regeneration</span><span class="lang-cn">跨 AI 工具 · 空间智能 · 地理空间 UI · 人机协作工作流 · 后工业再生</span></dd>
   </dl>
 </section>
 

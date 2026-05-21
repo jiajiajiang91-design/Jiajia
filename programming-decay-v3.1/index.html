@@ -3,30 +3,126 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Programming Decay Product Demo V3 Offline</title>
+    <title>Programming Decay — Interactive Demo</title>
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* Bilingual toggle — main pattern: English <p>/<span> get .en-only;
+         every Chinese counterpart already has .zh-note (used in body copy).
+         Topbar / labels use the lighter .lang-en / .lang-cn pair so they
+         don't inherit .zh-note's body-text spacing & color.
+         EN mode: show .en-only / .lang-en, hide .zh-note / .lang-cn.
+         CN mode: opposite. */
+      body[data-lang="cn"] .en-only,
+      body[data-lang="cn"] .lang-en{display:none}
+      body:not([data-lang="cn"]) .zh-note,
+      body:not([data-lang="cn"]) .lang-cn{display:none}
+
+      /* CN-mode line-breaking — styles.css L202 sets overflow-wrap:anywhere
+         globally on h1/h2/h3/p. That rule is correct for English but in CJK
+         lets the browser break between any two Chinese characters, producing
+         "把 Da / genham / Dock 的 / 污染、水 / 文..." style breakage. We force
+         normal wrapping + keep-all so phrases stay intact and a line only
+         breaks at ASCII spaces, punctuation, or container edge. !important
+         is needed because styles.css L202's specificity (h1,h2,h3,p) ties
+         with ours and loses on order — but only when ours is in same sheet.
+         Belt-and-braces with !important. */
+      body[data-lang="cn"] h1,
+      body[data-lang="cn"] h2,
+      body[data-lang="cn"] h3,
+      body[data-lang="cn"] h4,
+      body[data-lang="cn"] p,
+      body[data-lang="cn"] .eyebrow,
+      body[data-lang="cn"] .label,
+      body[data-lang="cn"] .logic-step-kicker,
+      body[data-lang="cn"] .logic-sub,
+      body[data-lang="cn"] .hero-lede,
+      body[data-lang="cn"] .zh-note,
+      body[data-lang="cn"] .lang-cn,
+      body[data-lang="cn"] .visual-caption,
+      body[data-lang="cn"] .site-copy,
+      body[data-lang="cn"] #atlas-recommendation,
+      body[data-lang="cn"] #atlas-rationale,
+      body[data-lang="cn"] #site-copy,
+      body[data-lang="cn"] #strategy-role,
+      body[data-lang="cn"] #hub-view-copy,
+      body[data-lang="cn"] #ml-stage-description,
+      body[data-lang="cn"] .brief-card p,
+      body[data-lang="cn"] .entropy-logic-step p,
+      body[data-lang="cn"] .entropy-map-copy p,
+      body[data-lang="cn"] .pix2pix-page figcaption span,
+      body[data-lang="cn"] .section-heading p,
+      body[data-lang="cn"] .ml-stage-copy p,
+      body[data-lang="cn"] dt,
+      body[data-lang="cn"] dd{
+        overflow-wrap:normal !important;
+        word-break:keep-all !important;
+        line-break:strict !important;
+      }
+      body[data-lang="cn"] .pipeline span,
+      body[data-lang="cn"] .closing-flow span,
+      body[data-lang="cn"] .stage-nav a,
+      body[data-lang="cn"] .metric span,
+      body[data-lang="cn"] .hub-specs span,
+      body[data-lang="cn"] .detail-metrics span,
+      body[data-lang="cn"] .topbar-end span{
+        white-space:nowrap;
+      }
+
+      /* Top-bar right cluster: keeps run-status and lang-switch in the
+         topbar's third grid cell so the lang switcher never wraps to a
+         new line, regardless of viewport width. */
+      .topbar-end{
+        justify-self:end;
+        display:inline-flex;align-items:center;gap:16px;
+        white-space:nowrap;
+      }
+      /* Lang switch — dark-mode skin matching topbar */
+      .lang-switch{
+        display:inline-flex;align-items:center;gap:4px;
+        font-family:'IBM Plex Mono',monospace;
+        font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+      }
+      .lang-switch button{
+        background:transparent;border:1px solid rgba(255,255,255,0.22);
+        color:var(--muted);
+        padding:5px 9px;cursor:pointer;
+        transition:color .2s ease, border-color .2s ease, background .2s ease;
+      }
+      .lang-switch button:hover{color:var(--text);border-color:rgba(255,255,255,0.45)}
+      .lang-switch button[aria-pressed="true"]{
+        color:#020305;background:var(--cyan);border-color:var(--cyan);
+      }
+      .lang-switch .sep{color:var(--faint);margin:0 2px}
+    </style>
   </head>
-  <body>
+  <body data-lang="en">
     <div class="scanline" aria-hidden="true"></div>
     <header class="topbar" data-testid="topbar">
       <a class="brand" href="../index.html" aria-label="Back to portfolio">
         <span class="brand-mark">PD</span>
         <span>
           <strong>Programming Decay</strong>
-          <small>Decision Intelligence Demo V3 Offline</small>
+          <small><span class="lang-en">Interactive Decision Demo</span><span class="lang-cn">交互式决策 Demo</span></small>
         </span>
       </a>
       <nav class="stage-nav" aria-label="Product stages">
-        <a href="#mission">Mission</a>
-        <a href="#gis">GIS</a>
-        <a href="#selection">Selection</a>
-        <a href="#strategy">Strategy</a>
-        <a href="#ml">ML</a>
-        <a href="#hub">Hub</a>
+        <a href="#mission"><span class="lang-en">Mission</span><span class="lang-cn">方法</span></a>
+        <a href="#gis"><span class="lang-en">GIS</span><span class="lang-cn">GIS 证据</span></a>
+        <a href="#selection"><span class="lang-en">Selection</span><span class="lang-cn">选址</span></a>
+        <a href="#strategy"><span class="lang-en">Strategy</span><span class="lang-cn">策略</span></a>
+        <a href="#ml"><span class="lang-en">ML</span><span class="lang-cn">机器学习</span></a>
+        <a href="#hub"><span class="lang-en">Hub</span><span class="lang-cn">Hub</span></a>
       </nav>
-      <div class="run-status">
-        <span class="pulse-dot"></span>
-        <span>Simulation live</span>
+      <div class="topbar-end">
+        <div class="run-status">
+          <span class="pulse-dot"></span>
+          <span><span class="lang-en">Simulation live</span><span class="lang-cn">演示运行中</span></span>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+          <span class="sep">/</span>
+          <button type="button" data-lang-set="cn" aria-pressed="false">中</button>
+        </div>
       </div>
     </header>
 
@@ -36,69 +132,69 @@
           <img src="./assets/pdf/cover.png" alt="" />
         </div>
         <div class="hero-copy">
-          <p class="eyebrow">PRD prototype / post-industrial remediation intelligence</p>
+          <p class="eyebrow"><span class="lang-en">Interactive thesis demo / post-industrial remediation</span><span class="lang-cn">毕设交互 Demo / 后工业修复</span></p>
           <h1>Programming Decay</h1>
-          <p class="hero-lede">
-            A productized decision system that turns pollution legacies into an explainable path from territorial evidence to architectural deployment.
+          <p class="hero-lede en-only">
+            An interactive demo that turns the thesis into an explainable path — from territorial evidence to architectural deployment.
           </p>
-          <p class="zh-note">把污染遗留转译成从场地证据到建筑部署的可解释决策路径，展示项目如何从叙事变成产品逻辑。</p>
+          <p class="zh-note">将毕设整理成一个可逐步操作的交互页：从场地证据到建筑落地，每一步的判断依据清晰可查。</p>
           <div class="pipeline" aria-label="Product flow">
-            <span>Pollution data</span>
-            <span>GIS atlas</span>
-            <span>K-Means cells</span>
-            <span>Strategy OS</span>
-            <span>ML generation</span>
-            <span>Hub feedback</span>
+            <span><span class="lang-en">Pollution data</span><span class="lang-cn">污染数据</span></span>
+            <span><span class="lang-en">GIS atlas</span><span class="lang-cn">GIS 图集</span></span>
+            <span><span class="lang-en">K-Means cells</span><span class="lang-cn">K-Means 分区</span></span>
+            <span><span class="lang-en">Strategy</span><span class="lang-cn">策略</span></span>
+            <span><span class="lang-en">ML generation</span><span class="lang-cn">机器学习生成</span></span>
+            <span><span class="lang-en">Hub feedback</span><span class="lang-cn">Hub 反馈</span></span>
           </div>
         </div>
         <aside class="mission-console" aria-label="Mission status">
           <div class="metric">
-            <span>Project site</span>
+            <span><span class="lang-en">Project site</span><span class="lang-cn">项目场地</span></span>
             <strong>Dagenham Dock</strong>
           </div>
           <div class="metric">
-            <span>Priority cluster</span>
+            <span><span class="lang-en">Priority cluster</span><span class="lang-cn">优先分区</span></span>
             <strong>Cluster 0</strong>
           </div>
           <div class="metric">
-            <span>Strategy modes</span>
+            <span><span class="lang-en">Strategy modes</span><span class="lang-cn">策略数</span></span>
             <strong>4</strong>
           </div>
           <div class="metric">
-            <span>Demo mode</span>
-            <strong>Explainable simulation</strong>
+            <span><span class="lang-en">Demo mode</span><span class="lang-cn">演示模式</span></span>
+            <strong><span class="lang-en">Explainable simulation</span><span class="lang-cn">可解释模拟</span></strong>
           </div>
         </aside>
       </section>
 
       <section class="section mission-brief section-observe" aria-labelledby="brief-title">
         <div class="section-heading">
-          <p class="eyebrow">Product thesis</p>
-          <h2 id="brief-title">From design narrative to operating logic</h2>
+          <p class="eyebrow"><span class="lang-en">Approach</span><span class="lang-cn">方法</span></p>
+          <h2 id="brief-title"><span class="lang-en">From design narrative to a traceable decision chain</span><span class="lang-cn">从设计叙事到一条可追溯的判断链</span></h2>
         </div>
         <div class="brief-grid">
           <article class="brief-card">
             <span class="step">01</span>
-            <h3>Read contamination</h3>
-            <p>Fuse brownfield, waste, flood, population, building, and ecological indicators into a territorial risk picture.</p>
+            <h3><span class="lang-en">Read contamination</span><span class="lang-cn">读取污染状况</span></h3>
+            <p class="en-only">Fuse brownfield, waste, flood, population, building, and ecological indicators into a territorial risk picture.</p>
             <p class="zh-note">将棕地、废弃物、洪水、人口、建筑和生态敏感性合成为一张风险底图。</p>
           </article>
           <article class="brief-card">
             <span class="step">02</span>
-            <h3>Prioritize intervention</h3>
-            <p>Explain why specific cells move to the front of the queue, and show the evidence behind each recommendation.</p>
+            <h3><span class="lang-en">Prioritize intervention</span><span class="lang-cn">排出干预优先级</span></h3>
+            <p class="en-only">Explain why specific cells move to the front of the queue, and show the evidence behind each recommendation.</p>
             <p class="zh-note">说明为什么某些网格被优先处理，并把推荐背后的证据展开给评审看。</p>
           </article>
           <article class="brief-card">
             <span class="step">03</span>
-            <h3>Deploy spatial programs</h3>
-            <p>Translate evidence into Decay, Reuse, Rewild, and Dismantle programs, each with physical and digital workstreams.</p>
+            <h3><span class="lang-en">Deploy spatial programs</span><span class="lang-cn">部署空间策略</span></h3>
+            <p class="en-only">Translate evidence into Decay, Reuse, Rewild, and Dismantle programs, each with physical and digital workstreams.</p>
             <p class="zh-note">把数据判断转译为四种空间策略，每种策略都有实体场地和数字界面。</p>
           </article>
           <article class="brief-card">
             <span class="step">04</span>
-            <h3>Close the feedback loop</h3>
-            <p>Use ML generation, field sensing, and the Hub architecture to keep remediation adaptive over time.</p>
+            <h3><span class="lang-en">Close the feedback loop</span><span class="lang-cn">闭合反馈回路</span></h3>
+            <p class="en-only">Use ML generation, field sensing, and the Hub architecture to keep remediation adaptive over time.</p>
             <p class="zh-note">通过机器学习、现场感测和 Hub 建筑形成持续更新的修复反馈回路。</p>
           </article>
         </div>
@@ -106,9 +202,9 @@
 
       <section id="gis" class="section product-panel section-observe" aria-labelledby="gis-title">
         <div class="section-heading">
-          <p class="eyebrow">GIS Risk Atlas</p>
-          <h2 id="gis-title">Layered evidence for a contaminated urban field</h2>
-          <p>The GIS atlas turns Dagenham Dock's pollution, hydrology, waste, population, building, and ecology layers into an evidence board for site prioritisation.</p>
+          <p class="eyebrow"><span class="lang-en">GIS Risk Atlas</span><span class="lang-cn">GIS 风险图集</span></p>
+          <h2 id="gis-title"><span class="lang-en">Layered evidence for a contaminated urban field</span><span class="lang-cn">污染场地的分层证据</span></h2>
+          <p class="en-only">The GIS atlas turns Dagenham Dock's pollution, hydrology, waste, population, building, and ecology layers into an evidence board for site prioritisation.</p>
           <p class="zh-note">把 Dagenham Dock 的污染、水文、废弃物、人口、建筑与生态条件转成场地证据板，用于判断 SITE 修复优先级。</p>
         </div>
         <div class="atlas-layout">
@@ -125,19 +221,22 @@
             </div>
             <div class="map-readout">
               <strong id="atlas-score">84</strong>
-              <span>Composite risk index</span>
+              <span><span class="lang-en">Composite risk index</span><span class="lang-cn">综合风险指数</span></span>
             </div>
           </div>
+          <p class="visual-caption en-only">
+            Dagenham Dock GIS base layer: an 8×8 analysis grid overlays brownfield, waste, hydrological risk, population density, building footprint, and ecological sensitivity — used to identify which site cells should enter the remediation queue first.
+          </p>
           <p class="visual-caption zh-note">
             Dagenham Dock 的 GIS 证据底图：8×8 分析网格叠加棕地、废弃物、水文风险、人口密度、建筑覆盖与生态敏感性，用来判断哪些场地单元应优先进入修复队列。
           </p>
           <div class="control-stack">
             <div>
-              <p class="label">Active evidence layers</p>
+              <p class="label"><span class="lang-en">Active evidence layers</span><span class="lang-cn">已激活证据图层</span></p>
               <div id="layer-controls" class="layer-controls" data-testid="layer-controls"></div>
             </div>
             <div class="recommendation">
-              <p class="label">Atlas recommendation</p>
+              <p class="label"><span class="lang-en">Atlas recommendation</span><span class="lang-cn">图集推荐</span></p>
               <h3 id="atlas-recommendation">Cluster 0 remains the highest intervention priority.</h3>
               <p id="atlas-rationale">Flood exposure, waste infrastructure, and population density keep the site in a high urgency band.</p>
             </div>
@@ -148,9 +247,9 @@
 
       <section id="selection" class="section product-panel section-observe" aria-labelledby="selection-title">
         <div class="section-heading">
-          <p class="eyebrow">Algorithmic Site Selection</p>
-          <h2 id="selection-title">K-Means as an explainable priority queue</h2>
-          <p>Each SITE is treated as a comparable candidate, exposing the feature mix behind the priority queue.</p>
+          <p class="eyebrow"><span class="lang-en">Algorithmic Site Selection</span><span class="lang-cn">算法选址</span></p>
+          <h2 id="selection-title"><span class="lang-en">K-Means as an explainable priority queue</span><span class="lang-cn">K-Means 作为一条可解释的优先队列</span></h2>
+          <p class="en-only">Each SITE is treated as a comparable candidate, exposing the feature mix behind the priority queue.</p>
           <p class="zh-note">把每个 SITE 当成可比较的候选单元，直接展示特征组合，而不是把聚类结果藏在黑箱里。</p>
         </div>
         <div class="selection-layout">
@@ -162,7 +261,7 @@
             <div id="site-tabs" class="site-tabs" data-testid="site-tabs"></div>
             <div class="site-summary">
               <div>
-                <p class="label">Selected cell</p>
+                <p class="label"><span class="lang-en">Selected cell</span><span class="lang-cn">当前网格</span></p>
                 <h3 id="site-title">Site 38</h3>
               </div>
               <strong id="site-score" class="score-pill">92</strong>
@@ -173,46 +272,46 @@
         </div>
         <div class="entropy-atlas-panel" aria-labelledby="entropy-logic-title">
           <div class="entropy-logic-heading">
-            <p class="eyebrow">Product Logic</p>
-            <h3 id="entropy-logic-title">From field evidence to decision evidence</h3>
-            <p class="logic-sub">Entropy Atlas as the evidence layer of Programming Decay</p>
+            <p class="eyebrow"><span class="lang-en">Evidence Layer</span><span class="lang-cn">证据层</span></p>
+            <h3 id="entropy-logic-title"><span class="lang-en">From field evidence to decision evidence</span><span class="lang-cn">从场地证据到决策证据</span></h3>
+            <p class="logic-sub"><span class="lang-en">Entropy Atlas as the evidence layer of Programming Decay</span><span class="lang-cn">Entropy Atlas 作为 Programming Decay 的证据层</span></p>
           </div>
           <div class="entropy-logic-grid">
             <article class="entropy-logic-step">
               <div class="logic-step-num">01</div>
-              <p class="logic-step-kicker">Problem · 问题</p>
-              <h4>Evidence gap</h4>
-              <p>Traditional remediation decisions often depend on expert intuition and scattered drawings, so the evidence behind site selection is difficult to compare or defend.</p>
+              <p class="logic-step-kicker"><span class="lang-en">Problem</span><span class="lang-cn">问题</span></p>
+              <h4><span class="lang-en">Evidence gap</span><span class="lang-cn">证据缺口</span></h4>
+              <p class="en-only">Traditional remediation decisions often depend on expert intuition and scattered drawings, so the evidence behind site selection is difficult to compare or defend.</p>
               <p class="zh-note">传统场地修复决策依赖专家直觉，缺少可量化、可追溯的证据基础；客观污染数据与社区主观感知长期割裂。</p>
             </article>
             <article class="entropy-logic-step">
               <div class="logic-step-num">02</div>
-              <p class="logic-step-kicker">Data · 数据采集</p>
-              <h4>Objective + subjective sources</h4>
-              <p>Overpass API captures industrial-site points across East London, while Google Places comments add residents' perception and sentiment signals.</p>
+              <p class="logic-step-kicker"><span class="lang-en">Data</span><span class="lang-cn">数据采集</span></p>
+              <h4><span class="lang-en">Objective + subjective sources</span><span class="lang-cn">客观 + 主观数据源</span></h4>
+              <p class="en-only">Overpass API captures industrial-site points across East London, while Google Places comments add residents' perception and sentiment signals.</p>
               <p class="zh-note">通过 Overpass API 抓取东伦敦工业遗址点位，同时调用 Google Places 评论与情绪评分，把地理证据和社区感知放到同一张图上。</p>
             </article>
             <article class="entropy-logic-step">
               <div class="logic-step-num">03</div>
-              <p class="logic-step-kicker">Processing · 自动化处理</p>
-              <h4>n8n workflow orchestration</h4>
-              <p>The n8n pipeline merges, deduplicates, and analyses the two data streams, turning collection, cleaning, and sentiment analysis into a repeatable workflow.</p>
+              <p class="logic-step-kicker"><span class="lang-en">Processing</span><span class="lang-cn">自动化处理</span></p>
+              <h4><span class="lang-en">n8n workflow orchestration</span><span class="lang-cn">n8n 工作流编排</span></h4>
+              <p class="en-only">The n8n pipeline merges, deduplicates, and analyses the two data streams, turning collection, cleaning, and sentiment analysis into a repeatable workflow.</p>
               <p class="zh-note">n8n 工作流编排两类数据的合并、去重与情感分析，让「数据采集 → 清洗 → 分析」不再依赖手工整理。</p>
             </article>
             <article class="entropy-logic-step">
               <div class="logic-step-num">04</div>
-              <p class="logic-step-kicker">Output · 可视化与接入</p>
-              <h4>Interactive map + decision input</h4>
-              <p>The Leaflet map makes evidence inspectable, then feeds the Programming Decay loop from site prioritisation to strategy generation and hub feedback.</p>
+              <p class="logic-step-kicker"><span class="lang-en">Output</span><span class="lang-cn">可视化与接入</span></p>
+              <h4><span class="lang-en">Interactive map + decision input</span><span class="lang-cn">交互地图 + 决策输入</span></h4>
+              <p class="en-only">The Leaflet map makes evidence inspectable, then feeds the Programming Decay loop from site prioritisation to strategy generation and hub feedback.</p>
               <p class="zh-note">Leaflet 交互地图让证据可以被检查，并把结果接入「场地证据 → 算法选址 → 策略生成 → Hub 反馈」的完整闭环。</p>
             </article>
           </div>
           <div class="entropy-frame-shell">
             <div class="entropy-frame-toolbar">
-              <span>Independent evidence layer</span>
+              <span><span class="lang-en">Independent evidence layer</span><span class="lang-cn">独立证据层</span></span>
               <a class="atlas-launch" href="./N8N_OUTPUT_entropy_atlas.html" target="_blank" rel="noopener">
                 <span class="atlas-launch-icon" aria-hidden="true"></span>
-                <span>查看交互地图</span>
+                <span class="lang-en">Open interactive map</span><span class="lang-cn">查看交互地图</span>
                 <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -224,8 +323,8 @@
             ></iframe>
           </div>
           <div class="entropy-map-copy">
-            <p class="eyebrow">Community Sentiment Triangulation</p>
-            <p>
+            <p class="eyebrow"><span class="lang-en">Community Sentiment Triangulation</span><span class="lang-cn">社区情绪三角验证</span></p>
+            <p class="en-only">
               K-Means ranks cells with environmental features; Entropy Atlas cross-checks the priority queue through local comments and mapped places.
             </p>
             <p class="zh-note">
@@ -237,46 +336,46 @@
 
       <section id="strategy" class="section product-panel section-observe" aria-labelledby="strategy-title">
         <div class="section-heading">
-          <p class="eyebrow">Strategy Operating System</p>
-          <h2 id="strategy-title">Four remediation modes as deployable product modules</h2>
-          <p>Each strategy couples a physical territory with a digital interface, turning the thesis into a legible operating system.</p>
-          <p class="zh-note">四种策略既是空间干预，也是可部署的产品模块，用来说明修复系统如何运行。</p>
+          <p class="eyebrow"><span class="lang-en">Four Strategies</span><span class="lang-cn">四种策略</span></p>
+          <h2 id="strategy-title"><span class="lang-en">Four remediation modes across the site</span><span class="lang-cn">分布在场地上的四种修复策略</span></h2>
+          <p class="en-only">Each strategy couples a physical territory with a digital readout.</p>
+          <p class="zh-note">四种修复策略，每一种都对应一片实际场地和一个数字界面。</p>
         </div>
         <div class="strategy-layout" style="--strategy-accent: #00e6d2">
           <div class="strategy-tabs" id="strategy-tabs" data-testid="strategy-tabs"></div>
           <div class="strategy-visual">
             <img src="./assets/pdf/strategy-os.png" alt="Strategy operating system diagram from the PDF" />
             <div class="hub-core">
-              <span>Planetary</span>
-              <strong>Intelligence Hub</strong>
+              <span><span class="lang-en">Planetary</span><span class="lang-cn">行星</span></span>
+              <strong><span class="lang-en">Intelligence Hub</span><span class="lang-cn">智能中枢</span></strong>
             </div>
             <div class="signal-line signal-a"></div>
             <div class="signal-line signal-b"></div>
           </div>
           <aside class="strategy-detail">
-            <p class="label">Active module</p>
+            <p class="label"><span class="lang-en">Active module</span><span class="lang-cn">当前策略</span></p>
             <h3 id="strategy-name">Decay</h3>
             <div class="detail-metrics">
               <div>
-                <span>Area</span>
+                <span><span class="lang-en">Area</span><span class="lang-cn">占地比例</span></span>
                 <strong id="strategy-area">19.6%</strong>
               </div>
               <div>
-                <span>Timescale</span>
+                <span><span class="lang-en">Timescale</span><span class="lang-cn">时间尺度</span></span>
                 <strong id="strategy-time">5-20 years</strong>
               </div>
             </div>
             <dl>
               <div>
-                <dt>Physical</dt>
+                <dt><span class="lang-en">Physical</span><span class="lang-cn">实体场地</span></dt>
                 <dd id="strategy-physical">Mycological field</dd>
               </div>
               <div>
-                <dt>Digital</dt>
+                <dt><span class="lang-en">Digital</span><span class="lang-cn">数字界面</span></dt>
                 <dd id="strategy-digital">Decay-tracking dashboard</dd>
               </div>
               <div>
-                <dt>Deployment role</dt>
+                <dt><span class="lang-en">Deployment role</span><span class="lang-cn">部署角色</span></dt>
                 <dd id="strategy-role">Long-cycle remediation of contaminated ground through biological sensing and visible decay metrics.</dd>
               </div>
             </dl>
@@ -286,16 +385,16 @@
 
       <section id="ml" class="section product-panel section-observe" aria-labelledby="ml-title">
         <div class="section-heading">
-          <p class="eyebrow">ML Design Engine</p>
-          <h2 id="ml-title">Pix2Pix and Neural CA as a design reasoning loop</h2>
-          <p>The ML layer becomes a traceable loop: input labels, generated strategy field, cellular evolution, and decision readout.</p>
+          <p class="eyebrow"><span class="lang-en">ML Design Engine</span><span class="lang-cn">机器学习设计引擎</span></p>
+          <h2 id="ml-title"><span class="lang-en">Pix2Pix and Neural CA as a design reasoning loop</span><span class="lang-cn">Pix2Pix 与 Neural CA 作为设计推理回路</span></h2>
+          <p class="en-only">The ML layer becomes a traceable loop: input labels, generated strategy field, cellular evolution, and decision readout.</p>
           <p class="zh-note">机器学习层被整理为可追溯闭环：输入标签、策略生成、细胞自动机演化与决策读数。</p>
         </div>
         <div class="pix2pix-flow" aria-label="Pix2Pix evidence sequence">
           <article class="pix2pix-intro">
-            <p class="eyebrow">Pix2Pix Evidence Chain / 图纸证据链</p>
-            <h3>From typology database to spatial checkpoint</h3>
-            <p>
+            <p class="eyebrow"><span class="lang-en">Pix2Pix Evidence Chain</span><span class="lang-cn">Pix2Pix 图纸证据链</span></p>
+            <h3><span class="lang-en">From typology database to spatial checkpoint</span><span class="lang-cn">从类型数据库到空间检查点</span></h3>
+            <p class="en-only">
               Pages 38-41 make Pix2Pix traceable: typology samples, paired labels, inference, epoch comparison, Delaunay reading, and area ratio.
             </p>
             <p class="zh-note">
@@ -314,32 +413,32 @@
             <figure class="pix2pix-page">
               <img src="./assets/pdf/pix2pix-source.png" alt="PDF page 38 showing recycling factory plan-to-pattern database for Pix2Pix" />
               <figcaption>
-                <strong>01 Training database: recycling factories</strong>
-                <span>The first database converts real recycling factory plans into paired samples: architectural outline and functional color zoning.</span>
+                <strong><span class="lang-en">01 Training database: recycling factories</span><span class="lang-cn">01 训练数据库：回收工厂</span></strong>
+                <span class="en-only">The first database converts real recycling factory plans into paired samples: architectural outline and functional color zoning.</span>
                 <span class="zh-note">第一组数据库把真实回收工厂平面转成配对样本：建筑轮廓对应功能色块，让模型学习工业功能如何组织。</span>
               </figcaption>
             </figure>
             <figure class="pix2pix-page">
               <img src="./assets/pdf/pix2pix-setup.png" alt="PDF page 39 showing experience center plan-to-pattern database for Pix2Pix" />
               <figcaption>
-                <strong>02 Typology expansion: experience centers</strong>
-                <span>The second typology adds exhibition, interactive lab, simulation, and leisure patterns so the generator can negotiate public and cultural programs.</span>
+                <strong><span class="lang-en">02 Typology expansion: experience centers</span><span class="lang-cn">02 类型扩展：体验中心</span></strong>
+                <span class="en-only">The second typology adds exhibition, interactive lab, simulation, and leisure patterns so the generator can negotiate public and cultural programs.</span>
                 <span class="zh-note">第二组经验中心样本补入展示、互动实验、影响模拟与休闲功能，使生成逻辑不仅处理工厂效率，也能处理公共体验。</span>
               </figcaption>
             </figure>
             <figure class="pix2pix-page">
               <img src="./assets/pdf/pix2pix-training.png" alt="PDF page 40 showing architecture plan test and Pix2Pix training checkpoints" />
               <figcaption>
-                <strong>03 Inference test: Ford Stamping Plant outline</strong>
-                <span>The trained generator is tested on the former Ford Stamping Plant outline. Early outputs are diffuse; later checkpoints begin to form repeatable program centers, storage edges, and service bands.</span>
+                <strong><span class="lang-en">03 Inference test: Ford Stamping Plant outline</span><span class="lang-cn">03 推理测试：Ford Stamping Plant 轮廓</span></strong>
+                <span class="en-only">The trained generator is tested on the former Ford Stamping Plant outline. Early outputs are diffuse; later checkpoints begin to form repeatable program centers, storage edges, and service bands.</span>
                 <span class="zh-note">测试阶段把训练好的生成器应用到 Ford Stamping Plant 的轮廓上：早期结果较松散，后期逐渐形成中心程序、边缘仓储与服务带。</span>
               </figcaption>
             </figure>
             <figure class="pix2pix-page">
               <img src="./assets/pdf/pix2pix-epochs.png" alt="PDF page 41 showing Pix2Pix epoch comparison, Delaunay spatial reading, and space ratio analysis" />
               <figcaption>
-                <strong>04 Checkpoint judgement: epoch, Delaunay, ratio</strong>
-                <span>The comparison turns ML output into design evidence. The lowest loss is not automatically the best architecture; boundary coherence and usable spatial anchors matter more for deployment.</span>
+                <strong><span class="lang-en">04 Checkpoint judgement: epoch, Delaunay, ratio</span><span class="lang-cn">04 检查点判断：epoch、Delaunay、比例</span></strong>
+                <span class="en-only">The comparison turns ML output into design evidence. The lowest loss is not automatically the best architecture; boundary coherence and usable spatial anchors matter more for deployment.</span>
                 <span class="zh-note">Epoch 对比让模型输出变成可解释的设计证据：最低损失不等于最佳建筑判断，边界清晰度和可部署的空间锚点更关键。</span>
               </figcaption>
             </figure>
@@ -349,15 +448,16 @@
           <div class="ml-reference">
             <img src="./assets/pdf/nca-bridge.png" alt="NCA bridge overview from the PDF" />
             <div class="visual-caption">
-              <strong>Extracted ML reading</strong>
-              <p>The six small maps show the Pix2Pix to NCA bridge: raw generated field, cleaned strategy zones, boundary repair, and final area readout.</p>
+              <strong><span class="lang-en">Extracted ML reading</span><span class="lang-cn">提取的机器学习读图</span></strong>
+              <p class="en-only">The six small maps show the Pix2Pix to NCA bridge: raw generated field, cleaned strategy zones, boundary repair, and final area readout.</p>
+              <p class="zh-note">六张小图展示 Pix2Pix 到 NCA 的衔接过程：原始生成场、清理后的策略分区、边界修复，以及最终面积读数。</p>
             </div>
           </div>
           <div class="ml-console">
             <div class="ml-toolbar">
-              <button id="run-inference" class="action-button" type="button" data-testid="run-inference">Run inference</button>
+              <button id="run-inference" class="action-button" type="button" data-testid="run-inference"><span class="lang-en">Run inference</span><span class="lang-cn">运行推理</span></button>
               <label class="range-field">
-                <span>Evolution step</span>
+                <span><span class="lang-en">Evolution step</span><span class="lang-cn">演化步</span></span>
                 <input id="ml-step" type="range" min="0" max="4" value="2" />
               </label>
             </div>
@@ -373,29 +473,29 @@
 
       <section id="hub" class="section product-panel section-observe" aria-labelledby="hub-title">
         <div class="section-heading">
-          <p class="eyebrow">Planetary Intelligence Hub</p>
-          <h2 id="hub-title">Architecture as the interface for live remediation</h2>
-          <p>The Hub turns the operating system into a spatial interface: four towers, field nodes, public routes, labs, and live monitoring.</p>
+          <p class="eyebrow"><span class="lang-en">Planetary Intelligence Hub</span><span class="lang-cn">Planetary Intelligence Hub</span></p>
+          <h2 id="hub-title"><span class="lang-en">Architecture as the interface for live remediation</span><span class="lang-cn">建筑作为实时修复的交互界面</span></h2>
+          <p class="en-only">The Hub turns the operating system into a spatial interface: four towers, field nodes, public routes, labs, and live monitoring.</p>
           <p class="zh-note">Hub 是整个系统的实体界面，把四塔、现场节点、公共路径、实验室和实时监测连接起来。</p>
         </div>
         <div class="hub-layout">
           <div class="hub-viewer">
             <img id="hub-image" src="./assets/pdf/site-plan.png" alt="Site plan from the PDF" data-testid="hub-image" />
             <div class="monitor-overlay" id="monitor-overlay" aria-hidden="true">
-              <div><strong>92%</strong><span>Inerting efficiency</span></div>
-              <div><strong>418</strong><span>NCA iterations</span></div>
-              <div><strong>37.8</strong><span>Bio-cycle flow</span></div>
+              <div><strong>92%</strong><span><span class="lang-en">Inerting efficiency</span><span class="lang-cn">惰化效率</span></span></div>
+              <div><strong>418</strong><span><span class="lang-en">NCA iterations</span><span class="lang-cn">NCA 迭代次数</span></span></div>
+              <div><strong>37.8</strong><span><span class="lang-en">Bio-cycle flow</span><span class="lang-cn">生物循环流</span></span></div>
             </div>
           </div>
           <div class="hub-inspector">
             <div id="hub-tabs" class="hub-tabs" data-testid="hub-tabs"></div>
-            <p class="label">Current view</p>
+            <p class="label"><span class="lang-en">Current view</span><span class="lang-cn">当前视图</span></p>
             <h3 id="hub-view-title">Site Strategy: Hub and Field Network</h3>
             <p id="hub-view-copy">The site plan connects remediation plots, sensing nodes, circulation, and the four-tower Hub into one deployable interface. / 总平面把修复地块、感测节点、公共动线和四塔 Hub 连接成一个可部署界面。</p>
             <div class="hub-specs">
-              <div><span>Footprint</span><strong>120 × 90 m</strong></div>
-              <div><span>Towers</span><strong>4</strong></div>
-              <div><span>Ground released</span><strong>1.08 ha</strong></div>
+              <div><span><span class="lang-en">Footprint</span><span class="lang-cn">占地面积</span></span><strong>120 × 90 m</strong></div>
+              <div><span><span class="lang-en">Towers</span><span class="lang-cn">塔数</span></span><strong>4</strong></div>
+              <div><span><span class="lang-en">Ground released</span><span class="lang-cn">释放地表</span></span><strong>1.08 ha</strong></div>
             </div>
           </div>
         </div>
@@ -403,21 +503,38 @@
 
       <section class="section closing section-observe" aria-labelledby="closing-title">
         <div class="section-heading">
-          <p class="eyebrow">Product demo close</p>
-          <h2 id="closing-title">A complete loop, not a static proposal</h2>
+          <p class="eyebrow"><span class="lang-en">Close</span><span class="lang-cn">收束</span></p>
+          <h2 id="closing-title"><span class="lang-en">A complete loop, not a static proposal</span><span class="lang-cn">一个完整闭环，而不是静态方案</span></h2>
         </div>
         <div class="closing-flow">
-          <span>Sense</span>
-          <span>Classify</span>
-          <span>Generate</span>
-          <span>Deploy</span>
-          <span>Monitor</span>
-          <span>Learn</span>
+          <span><span class="lang-en">Sense</span><span class="lang-cn">感知</span></span>
+          <span><span class="lang-en">Classify</span><span class="lang-cn">分类</span></span>
+          <span><span class="lang-en">Generate</span><span class="lang-cn">生成</span></span>
+          <span><span class="lang-en">Deploy</span><span class="lang-cn">部署</span></span>
+          <span><span class="lang-en">Monitor</span><span class="lang-cn">监测</span></span>
+          <span><span class="lang-en">Learn</span><span class="lang-cn">学习</span></span>
         </div>
       </section>
     </main>
 
     <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
     <script src="./app.js"></script>
+    <script>
+      /* Bilingual toggle — persists across sessions, shared key with main portfolio */
+      (function(){
+        const saved=localStorage.getItem('jj-lang')||'en';
+        setLang(saved);
+        document.querySelectorAll('.lang-switch button').forEach(btn=>{
+          btn.addEventListener('click',()=>setLang(btn.dataset.langSet));
+        });
+        function setLang(l){
+          document.body.dataset.lang=l;
+          localStorage.setItem('jj-lang',l);
+          document.querySelectorAll('.lang-switch button').forEach(b=>{
+            b.setAttribute('aria-pressed',b.dataset.langSet===l?'true':'false');
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

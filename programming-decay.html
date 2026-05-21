@@ -45,12 +45,68 @@
 .fig-row span{line-height:1.5}
 .fig-row span::before{content:"Fig. "}
 @media(max-width:900px){.fig-row{grid-template-columns:1fr}}
+
+/* Bilingual toggle — legacy .bi/.en/.cn markup on this page.
+   shared.css handles .lang-en/.lang-cn separately; these rules cover the
+   research-booklet's .en/.cn classes inside .bi blocks and meta-strip <dt>. */
+body:not([data-lang="cn"]) .bi .cn{display:none}
+body[data-lang="cn"] .bi .en{display:none}
+body:not([data-lang="cn"]) .meta-strip dt .cn{display:none}
+body[data-lang="cn"] .meta-strip dt .en{display:none}
+
+/* In single-language mode, .bi collapses from 2-column (EN main + CN margin
+   note) to a single full-width column with body-text styling — so the
+   visible language reads as primary copy, not a sidebar annotation. */
+body[data-lang] .bi{grid-template-columns:1fr;gap:0}
+body[data-lang] .bi .cn{
+  font-family:var(--font-cjk);
+  font-size:var(--body-m);
+  line-height:1.75;
+  color:var(--ink);
+  padding-left:0;
+  border-left:none;
+  letter-spacing:0;
+}
+
+/* CN mode — hide English subtitles attached to <h1>/<h2> so the headline
+   isn't visually fractured by an unrelated English line below the title.
+   fig-row image captions stay visible in both modes — they're already
+   typeset as muted small-text figure notes, not body copy. */
+body[data-lang="cn"] .hero h1 .en,
+body[data-lang="cn"] .sect h2 .en{display:none}
+
+/* CN-mode line-breaking — prevent Chinese from breaking between every
+   adjacent character. word-break:keep-all keeps phrases intact so headings
+   and copy read as a single line wherever the container width allows.
+   !important is defensive: even if a more-specific rule from another
+   stylesheet wins on cascade, we want CN wrapping behaviour. */
+body[data-lang="cn"] h1,
+body[data-lang="cn"] h2,
+body[data-lang="cn"] h3,
+body[data-lang="cn"] h4,
+body[data-lang="cn"] p,
+body[data-lang="cn"] dt,
+body[data-lang="cn"] dd,
+body[data-lang="cn"] span,
+body[data-lang="cn"] .bi .cn,
+body[data-lang="cn"] .lbl,
+body[data-lang="cn"] .status,
+body[data-lang="cn"] .lang-cn{
+  overflow-wrap:normal !important;
+  word-break:keep-all !important;
+  line-break:strict !important;
+}
 </style>
 </head>
-<body>
+<body data-lang="en">
 <nav>
-  <a href="index.html" class="nav-logo">JIAJIA JIANG<span class="cn">/ 江佳佳</span></a>
-  <a href="index.html" class="nav-back">← Back / 返回</a>
+  <a href="index.html" class="nav-logo"><span class="lang-en">JIAJIA JIANG</span><span class="lang-cn">江佳佳</span></a>
+  <a href="index.html" class="nav-back"><span class="lang-en">← Back</span><span class="lang-cn">← 返回</span></a>
+  <div class="lang-switch" role="group" aria-label="Language switcher">
+    <button type="button" data-lang-set="en" aria-pressed="true">EN</button>
+    <span class="sep">/</span>
+    <button type="button" data-lang-set="cn" aria-pressed="false">中</button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -74,19 +130,20 @@
 
     <a href="programming-decay-v3.1/index.html" class="demo-cta-hero">
       <span class="arr">▶</span>
-      <span>View Decision Intelligence V3 Demo · 查看交互式产品 Demo</span>
+      <span class="lang-en">View Interactive Demo</span>
+      <span class="lang-cn">查看交互 Demo</span>
     </a>
   </div>
 
   <dl class="meta-strip" style="margin-top:48px">
-    <dl><dt>Year</dt><dd>2025 — 26</dd></dl>
-    <dl><dt>Role</dt><dd>Sole author · UCL Bartlett RC18</dd></dl>
-    <dl><dt>Site</dt><dd>Dagenham Dock, East London</dd></dl>
-    <dl><dt>User</dt><dd>Remediation planners · urban researchers</dd></dl>
-    <dl><dt>Input</dt><dd>GIS · Overpass API · Google Places sentiment · cement clinker datasets</dd></dl>
-    <dl><dt>Method</dt><dd>K-Means · Pix2Pix · Neural CA · n8n · ArcGIS</dd></dl>
-    <dl><dt>Output</dt><dd>56-page atlas · decision UI · 4-strategy spatial OS</dd></dl>
-    <dl><dt>Status</dt><dd>Submitted · 2025–26</dd></dl>
+    <dl><dt><span class="lang-en">Year</span><span class="lang-cn">年份</span></dt><dd>2025 — 26</dd></dl>
+    <dl><dt><span class="lang-en">Role</span><span class="lang-cn">身份</span></dt><dd>Sole author · UCL Bartlett RC18</dd></dl>
+    <dl><dt><span class="lang-en">Site</span><span class="lang-cn">场地</span></dt><dd>Dagenham Dock, East London</dd></dl>
+    <dl><dt><span class="lang-en">Context</span><span class="lang-cn">面向场景</span></dt><dd>Remediation planners · urban researchers</dd></dl>
+    <dl><dt><span class="lang-en">Input</span><span class="lang-cn">输入</span></dt><dd>GIS · Overpass API · Google Places sentiment · cement clinker datasets</dd></dl>
+    <dl><dt><span class="lang-en">Method</span><span class="lang-cn">方法</span></dt><dd>K-Means · Pix2Pix · Neural CA · n8n · ArcGIS</dd></dl>
+    <dl><dt><span class="lang-en">Output</span><span class="lang-cn">输出</span></dt><dd>56-page atlas · four-strategy framework</dd></dl>
+    <dl><dt><span class="lang-en">Status</span><span class="lang-cn">状态</span></dt><dd>Submitted · 2025–26</dd></dl>
   </dl>
 </section>
 
@@ -314,12 +371,28 @@
 </section>
 
 <footer>
-  <a href="index.html">← Back to Index</a>
+  <a href="index.html"><span class="lang-en">← Back to Index</span><span class="lang-cn">← 返回首页</span></a>
   <span>Programming Decay — UCL Bartlett RC18 / 2025–26</span>
-  <a href="programming-decay-v3.1/index.html">Next: Decision Intelligence Demo →</a>
+  <a href="programming-decay-v3.1/index.html"><span class="lang-en">Next: Interactive Demo →</span><span class="lang-cn">下一站：交互 Demo →</span></a>
 </footer>
 <script>
 document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0,rootMargin:'0px 0px -10% 0px'}).observe(el));
+
+/* Bilingual toggle — persists across sessions */
+(function(){
+  const saved=localStorage.getItem('jj-lang')||'en';
+  setLang(saved);
+  document.querySelectorAll('.lang-switch button').forEach(btn=>{
+    btn.addEventListener('click',()=>setLang(btn.dataset.langSet));
+  });
+  function setLang(l){
+    document.body.dataset.lang=l;
+    localStorage.setItem('jj-lang',l);
+    document.querySelectorAll('.lang-switch button').forEach(b=>{
+      b.setAttribute('aria-pressed',b.dataset.langSet===l?'true':'false');
+    });
+  }
+})();
 </script>
 </body>
 </html>
