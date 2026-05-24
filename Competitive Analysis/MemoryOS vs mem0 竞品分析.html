@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="../shared.css">
 <style>
 /* prevent shared.css nav from affecting topbar inner nav */
@@ -841,6 +842,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       <a href="#market">市场</a>
       <a href="#profiles">产品</a>
       <a href="#jtbd">问题</a>
+      <a href="#users">用户</a>
       <a href="#axes">差异</a>
       <a href="#hands-on">体验</a>
       <a href="#matrix">对比</a>
@@ -855,19 +857,20 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
   <aside class="toc" id="toc" aria-label="目录">
     <div class="toc-head">
       <span><span class="num">00</span>&nbsp;&nbsp;CONTENTS</span>
-      <span>10 / 10</span>
+      <span>11 / 11</span>
     </div>
     <ol>
       <li><a href="#findings"><span class="k">00</span><span>核心结论</span></a></li>
       <li><a href="#market"><span class="k">01</span><span>市场结构</span></a></li>
       <li><a href="#profiles"><span class="k">02</span><span>产品画像</span></a></li>
       <li><a href="#jtbd"><span class="k">03</span><span>解决的问题</span></a></li>
-      <li><a href="#axes"><span class="k">04</span><span>四条关键差异</span></a></li>
-      <li><a href="#hands-on"><span class="k">05</span><span>亲手体验</span></a></li>
-      <li><a href="#matrix"><span class="k">06</span><span>功能对比</span></a></li>
-      <li><a href="#surprises"><span class="k">07</span><span>意外发现</span></a></li>
-      <li><a href="#strategy"><span class="k">08</span><span>战略建议</span></a></li>
-      <li><a href="#summary"><span class="k">09</span><span>总结对照表</span></a></li>
+      <li><a href="#users"><span class="k">04</span><span>谁在用这两个产品</span></a></li>
+      <li><a href="#axes"><span class="k">05</span><span>四条关键差异</span></a></li>
+      <li><a href="#hands-on"><span class="k">06</span><span>亲手体验</span></a></li>
+      <li><a href="#matrix"><span class="k">07</span><span>功能对比</span></a></li>
+      <li><a href="#surprises"><span class="k">08</span><span>意外发现</span></a></li>
+      <li><a href="#strategy"><span class="k">09</span><span>战略建议</span></a></li>
+      <li><a href="#summary"><span class="k">10</span><span>总结对照表</span></a></li>
     </ol>
     <div class="toc-foot">
       <strong>JIAJIA JIANG</strong>
@@ -1040,11 +1043,11 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
       <div class="jtbd-side us">
         <div class="who">MemoryOS</div>
-        <h3>“每次开新对话，<br>上次做到哪了 / 为什么这么决定的，<em>全忘了</em>。”</h3></h3>
+        <h3>”每次开新对话，<br>上次做到哪了 / 为什么这么决定的，<em>全忘了</em>。”</h3>
         <dl>
           <dt>记什么</dt><dd>你在某个项目里的工作进展和关键决定</dd>
           <dt>比方</dt><dd>像一本工作日志，记录每个项目的来龙去脉</dd>
-          <dt>用户角色</dt><dd>主动 — 你来决定哪些内容值得记录</dd>
+          <dt>用户角色</dt><dd>主动 — 你来决定记什么，代价是每次都要手动操作</dd>
         </dl>
       </div>
     </div>
@@ -1061,10 +1064,49 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
   </div>
 </section>
 
-<!-- ═══════════════════ 4 / FOUR AXES ═══════════════════ -->
-<section class="section alt" id="axes" data-screen-label="06 Axes">
+<!-- ═══════════════════ 4 / USER SEGMENTS ═══════════════════ -->
+<section class="section" id="users" data-screen-label="06 Users">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">4</span><span>四个关键产品差异</span></div>
+    <div class="eyebrow"><span class="num">4</span><span>谁在用这两个产品</span></div>
+    <h2>用户不一样，结论才成立<span class="sub">两个产品服务的人群不同，所以前面说的所有差异不是"谁更好"，而是在哪些方面有优势。</span></h2>
+
+    <div class="jtbd">
+      <div class="jtbd-side">
+        <div class="who">他们的主要用户</div>
+        <h3>日常 AI 使用者<br>+ 应用开发者</h3>
+        <dl>
+          <dt>典型场景</dt><dd>希望 ChatGPT 记住"我养了一只叫布丁的猫""我写代码偏好用 Tailwind""给我的邮件用正式语气"。不需要复杂的项目管理，只想每个 AI 都认识自己。mem0 用户评价里最常见的赞美就是"终于不用反复自我介绍了"，有用户报告每周省下 2–3 小时重复输入上下文的时间。</dd>
+          <dt>使用频率</dt><dd>每天和 AI 聊几句到几十句，话题零散，不需要追溯上周聊了什么。</dd>
+          <dt>对摩擦的容忍度</dt><dd>极低。多一步操作就会卸载。所以 mem0 选择"全自动、装上就忘"是对的 — 这群用户不会也不该手动整理记忆。（有趣的是，即便 mem0 已经做到了高度自动化，Chrome 商店评分也只有 3.7/5 — 部分用户仍然觉得记忆管理不够省心。）</dd>
+        </dl>
+      </div>
+      <div class="jtbd-side us">
+        <div class="who">我们的目标用户</div>
+        <h3>管着复杂项目的<br><em>重度知识工作者</em></h3>
+        <dl>
+          <dt>典型场景</dt><dd>一个研究生连续三周用 Claude 和 ChatGPT 推进论文，每次开新对话都要花 10 分钟重述上次做到哪了；一个产品经理跨五个 AI 工具管着三个并行项目，决策记录散落在各处。</dd>
+          <dt>使用频率</dt><dd>每天在 AI 上深度工作数小时，同一个项目跨越数周甚至数月，上下文连续性是刚需。</dd>
+          <dt>对摩擦的容忍度</dt><dd>较高。他们愿意花 30 秒确认一次记录，换来的是下次开对话不用重述 10 分钟背景。对他们来说，手动确认不是负担，是"确保 AI 记对了"的安全感。</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="jtbd-bridge">
+      这份报告的所有实测用的是重度知识工作场景（论文研究 + 竞品分析）。<br>
+      这不是因为日常场景不重要，而是因为 MemoryOS 本来就不是给日常聊天设计的 —<br>
+      <em>在日常场景下，mem0 的"装上就忘"体验确实更好。</em>
+    </div>
+
+    <p style="font-size:15px;line-height:1.7;color:var(--ink-2);margin:24px auto 0;text-align:center;max-width:760px;text-wrap:pretty">
+      这个分层决定了后面所有对比的阅读方式：两者都是在某个维度上占据优势，没有脱离用户群体的绝对优劣。
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ 5 / FOUR AXES ═══════════════════ -->
+<section class="section alt" id="axes" data-screen-label="07 Axes">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">5</span><span>四个关键产品差异</span></div>
     <h2>产品特性与差异拆解<span class="sub">"记 人" vs "记 事"，直接决定了在四个方面做出相反的选择。</span></h2>
 
     <div class="axis headrow">
@@ -1081,7 +1123,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       <div class="col">
         <h4>MemoryOS 怎么做的</h4>
         <div class="verdict">AI 生成总结后，<em>用户逐条确认要保存哪些</em></div>
-        <div class="reason">工作决策需要判断，比起"自动抓得多"，"抓得准 + 用户确认"更重要。</div>
+        <div class="reason">工作决策需要判断，自动提取容易抓偏。但诚实地说，当前的"手动复制粘贴"操作成本太高 — 如果用户每天和 AI 对话十几次，这个流程会变成负担。未来需要在"用户确认"和"降低操作步骤"之间找到平衡，比如做成<em>一键确认</em>而不是手动复制。</div>
       </div>
     </div>
 
@@ -1146,9 +1188,9 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 </section>
 
 <!-- ═══════════════════ 5 / HANDS-ON ═══════════════════ -->
-<section class="section" id="hands-on" data-screen-label="07 Hands-on">
+<section class="section" id="hands-on" data-screen-label="08 Hands-on">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">5</span><span>亲手使用产品的体验记录</span></div>
+    <div class="eyebrow"><span class="num">6</span><span>亲手使用产品的体验记录</span></div>
     <h2>用真实工作内容测试 mem0<span class="sub">围绕三个使用场景，每个场景检验 mem0 一个核心宣传点是否兑现。</span></h2>
 
     <!-- ── SCENARIO A ── -->
@@ -1157,7 +1199,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <div class="scn-n">场景 A</div>
         <div>
           <h3 class="scn-title">在不同 AI 之间延续对话</h3>
-          <p class="scn-task">先在 <em>ChatGPT</em> 里聊我论文的研究方法（Neural Cellular Automata + Pix2Pix 对照），聊几轮。然后关掉 ChatGPT，打开 <em>Claude</em>，问"我论文的基准比较方法是什么"。检验 mem0 宣传的"跨 AI 对话连续性"。</p>
+          <p class="scn-task">先在 <em>ChatGPT</em> 里聊我论文的研究方法（Neural Cellular Automata + Pix2Pix 对照），聊几轮。然后关掉 ChatGPT，打开 <em>Claude</em>，问"我论文的基准比较方法是什么"。检验 mem0 宣传的"跨 AI 对话连续性"。<br><br><em style="color:var(--muted);font-style:normal">（说明：这个测试用的是学术研究场景，属于重度知识工作。对于日常聊天场景，mem0 的自动记忆在颗粒度上可能完全够用。）</em></p>
         </div>
       </div>
       <div class="scn-body">
@@ -1332,9 +1374,9 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 </section>
 
 <!-- ═══════════════════ 6 / FEATURE MATRIX ═══════════════════ -->
-<section class="section alt" id="matrix" data-screen-label="08 Matrix">
+<section class="section alt" id="matrix" data-screen-label="09 Matrix">
   <div class="wrap wrap--wide">
-    <div class="eyebrow"><span class="num">6</span><span>功能对比</span></div>
+    <div class="eyebrow"><span class="num">7</span><span>功能对比</span></div>
     <h2>产品功能对比分析</h2>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:56px">
@@ -1377,7 +1419,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <div class="feat">自动记忆捕获</div>
         <div class="col them"><div class="v" style="--w:95%"></div><div class="t">对话自动抓</div></div>
         <div class="col us"><div class="v" style="--w:20%"></div><div class="t">需手动粘贴</div></div>
-        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 在聊天时后台自动提取；MemoryOS 必须对话结束后手动复制粘贴。省力 vs 控制权的取舍。</span></div>
+        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 自动提取、零操作；MemoryOS 需要手动复制粘贴，操作成本高。对日常用户来说 mem0 的方式明显更好；只有管着复杂项目、需要确保记录准确的用户，才愿意承受这个摩擦。</span></div>
       </div>
 
       <div class="score-row">
@@ -1440,9 +1482,9 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 </section>
 
 <!-- ═══════════════════ 7 / SURPRISES ═══════════════════ -->
-<section class="section" id="surprises" data-screen-label="09 Surprises">
+<section class="section" id="surprises" data-screen-label="10 Surprises">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">7</span><span>意外发现</span></div>
+    <div class="eyebrow"><span class="num">8</span><span>意外发现</span></div>
     <h2>体验前没有预判到的意外发现<span class="sub">这些是真实使用后才知道的事情。</span></h2>
 
     <div class="spr">
@@ -1452,6 +1494,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <p>我在 mem0 的在线测试区讨论 "<em>mem0 vs MemoryOS</em>" 的竞品对比策略时，讨论内容被 mem0 <em>自动保存成了记忆</em> — 包括"MemoryOS 的定位是什么""mem0 哪里有风险"这些分析笔记。</p>
         <p>我的竞争分析笔记，<em>直接存在了我正在分析的那家公司的服务器上</em>。</p>
         <p>这个问题的根源是"自动记录、不经用户确认"的设计选择。在日常聊天中这可能只是不方便，但在敏感场景下（商业讨论、竞争分析、法律咨询），就变成了实际的安全隐患。</p>
+        <p style="margin-top:14px;padding-left:14px;border-left:2px solid var(--signal);color:var(--ink)"><em style="color:var(--muted);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:6px">补充</em>独立评测机构对 mem0 浏览器插件的隐私评分为 <em style="color:var(--signal);font-weight:600">2/5</em>，指出其宣传的 "local-first" 与实际的云端数据传输不符。这不是个案，是产品级的隐私设计问题。</p>
         <div class="spr-fig">
           <a href="assets/playground测试4.png" data-zoom="assets/playground测试4.png" data-cap="Fig.06 — Playground 中的竞品分析讨论被自动保存为记忆。"><img src="assets/playground测试4.png" alt="竞品分析被记忆"></a>
           <div class="cap"><span class="fig-num">Fig. 06</span>Playground 中的竞品分析讨论被自动保存为记忆。</div>
@@ -1496,9 +1539,9 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 </section>
 
 <!-- ═══════════════════ 8 / RECOMMENDATIONS ═══════════════════ -->
-<section class="section alt" id="strategy" data-screen-label="10 Strategy">
+<section class="section alt" id="strategy" data-screen-label="11 Strategy">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">8</span><span>MemoryOS 接下来做什么</span></div>
+    <div class="eyebrow"><span class="num">9</span><span>MemoryOS 接下来做什么</span></div>
     <h2>定位调整 · 资源优先级 · 不打的仗<span class="sub">建议从"跨 AI 记忆"调整为"跨 AI 工作记录"。</span></h2>
 
     <div class="rec-grid">
@@ -1513,6 +1556,25 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <p class="reason">"工作记录"更准确描述独特价值 — 不是记住你是谁，是记录事情怎么一步步走到这里的。用户一看就知道两个产品有什么不同。</p>
       </div>
     </div>
+
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin:64px 0 20px">商业模式 · 靠什么活下去</div>
+
+    <div class="rec-grid">
+      <div>
+        <div class="lbl">mem0 的收入来源</div>
+        <div class="verdict">卖 API 调用量<br><em style="color:var(--ink);font-weight:500">给开发者</em></div>
+        <p class="reason">核心生意是底层记忆接口 — 开发者在自己的应用里嵌入 mem0 的记忆能力，按调用次数付费。定价四档：免费版（10,000 条记忆 / 1,000 次检索）、<em>$19/月</em>、<em>$79/月</em>、<em>$249/月</em>（解锁关系图谱和高级分析）。2025 年 10 月完成 <em>$24M</em> 融资（Series A，YC / Peak XV / Basis Set 领投），API 调用量同年从 Q1 的 3500 万次增长到 Q3 的 <em>1.86 亿次</em>。浏览器插件是免费的，作用是吸引开发者来用付费接口 — 插件本身不赚钱。</p>
+      </div>
+      <div>
+        <div class="lbl us">MemoryOS 的现状</div>
+        <div class="verdict"><em>目前没有收入</em></div>
+        <p class="reason">免费开源，数据存在用户本地，没有云端服务也就没有按量收费的基础。这是一个需要诚实面对的问题：纯本地、零成本对用户是好事，但产品要长期活下去，需要找到不依赖云端数据的收入方式 — 比如<em>付费的高级功能</em>、<em>团队版</em>、或者针对特定行业的定制服务。目前还没有答案。</p>
+      </div>
+    </div>
+
+    <p style="margin:-32px 0 0;font-size:15.5px;line-height:1.7;color:var(--ink-2);text-wrap:pretty">
+      这个差距是真实的：mem0 拿了 <em style="color:var(--ink);font-weight:500">$24M</em> 融资、API 季度调用量 <em style="color:var(--ink);font-weight:500">1.86 亿次</em>，MemoryOS 目前是一个人自制的 demo。但反过来看，mem0 的收入来自开发者接口，不来自浏览器插件 — 它在"<em style="color:var(--ink);font-weight:500">面向普通用户的记忆产品</em>"这个位置上，也还没有赚到钱。<em style="color:var(--ink);font-weight:500">两者都还在验证阶段，只是验证的东西不一样。</em>
+    </p>
 
     <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin:64px 0 20px">产品优先级</div>
 
@@ -1534,22 +1596,16 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       <div class="ptag">P1<span class="label">重要 / 差异化</span></div>
       <div class="items">
         <div class="item">
+          <h4>把"手动复制粘贴"的操作成本降下来</h4>
+          <p>这是 MemoryOS 当前最大的体验短板。每次对话结束后要复制指令、粘贴到 AI、再把总结复制回来 — 步骤太多，日常使用不现实。如果不解决这个问题，产品只能留住最有耐心的那一小群用户。可能的方向：做成"一键同步"或者本地剪贴板监听，在不放弃"用户确认"的前提下把操作从五步减到一步。</p>
+        </div>
+        <div class="item">
           <h4>增加"建议确认"模式</h4>
           <p>在"全自动"和"全手动"之间找到平衡 — AI 推荐要保存的内容，用户一键确认。</p>
         </div>
         <div class="item">
           <h4>让用户可以直接在应用内编辑记录</h4>
           <p>mem0 的记忆只能删不能改，支持编辑是一个明确的差异化。</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="prio-row">
-      <div class="ptag">P2<span class="label">可以做 / 体验</span></div>
-      <div class="items">
-        <div class="item">
-          <h4>优化复制粘贴的操作步骤</h4>
-          <p>当前需要手动复制指令、粘贴到 AI、再复制总结回来，步骤偏多，可以探索减少操作次数。</p>
         </div>
       </div>
     </div>
@@ -1581,15 +1637,16 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <li>需要用户手动复制粘贴，操作步骤比自动记录多</li>
         <li>按项目分开记录的设计，跨项目搜索不太方便</li>
         <li>目前是一个人开发，更新速度和稳定性有限</li>
+        <li>当前的"手动复制粘贴"工作流，对大多数普通用户来说操作成本过高，是产品最需要优先解决的体验问题</li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════ 9 / SUMMARY ═══════════════════ -->
-<section class="section" id="summary" data-screen-label="11 Summary">
+<section class="section" id="summary" data-screen-label="12 Summary">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">9</span><span>总结对照表</span></div>
+    <div class="eyebrow"><span class="num">10</span><span>总结对照表</span></div>
     <h2>对策与机会点</h2>
 
     <table class="summary">
@@ -1614,17 +1671,17 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <footer>
   <span>© 2026 Jiajia Jiang / 江佳佳</span>
   <span>London / Shanghai · 2025 — 26</span>
-  <a href="mailto:ucbv512@ucl.ac.uk" class="no-underline">ucbv512@ucl.ac.uk</a>
+  <a href="/cdn-cgi/l/email-protection#9aeff9f8ecafaba8daeff9f6b4fbf9b4eff1" class="no-underline"><span class="__cf_email__" data-cfemail="42372120347773700237212e6c23216c3729">[email&#160;protected]</span></a>
 </footer>
 
 <!-- ═══════════════════ LIGHTBOX ═══════════════════ -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看">
   <button class="lb-close" id="lb-close">CLOSE  ✕</button>
-  <img id="lb-img" src="" alt="">
+  <img id="lb-img" alt="">
   <div class="lb-cap" id="lb-cap"></div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function(){
   const lb=document.getElementById('lb');
   const lbImg=document.getElementById('lb-img');
