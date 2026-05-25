@@ -1400,11 +1400,17 @@
     if (!canvas.__mouseHandler) {
       const slideEl = canvas.closest('.slide');
       canvas.__mouseHandler = (e) => {
+        const cur = codeBgState.get(canvas);
+        if (!cur) return;
         const r = slideEl.getBoundingClientRect();
-        state.mx = e.clientX - r.left;
-        state.my = e.clientY - r.top;
+        cur.mx = e.clientX - r.left;
+        cur.my = e.clientY - r.top;
       };
-      canvas.__mouseLeave = () => { state.mx = -9999; state.my = -9999; };
+      canvas.__mouseLeave = () => {
+        const cur = codeBgState.get(canvas);
+        if (!cur) return;
+        cur.mx = -9999; cur.my = -9999;
+      };
       slideEl.addEventListener('mousemove', canvas.__mouseHandler);
       slideEl.addEventListener('mouseleave', canvas.__mouseLeave);
     }
