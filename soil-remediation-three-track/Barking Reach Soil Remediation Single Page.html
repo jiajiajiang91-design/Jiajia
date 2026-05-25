@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barking Reach Soil Remediation | Single Page Framework</title>
+  <style>
+    :root {
+      --bg: #0e1110;
+      --panel: rgba(245, 241, 232, 0.96);
+      --ink: #121514;
+      --muted: #626a68;
+      --line: rgba(18, 21, 20, 0.14);
+      --cream: #f6f1e8;
+      --cream-2: #ebe4d8;
+      --plant: #4f7d44;
+      --myco: #b17032;
+      --eng: #526f7f;
+      --danger: #a9423a;
+      --water: #4f75a7;
+      --reuse: #577a4f;
+      --sludge: #a7653f;
+      --radius: 8px;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--cream);
+      letter-spacing: 0;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      letter-spacing: 0;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .app {
+      width: 100vw;
+      height: 100vh;
+      min-height: 760px;
+      display: grid;
+      grid-template-rows: 72px minmax(0, 1fr) 118px;
+      background:
+        linear-gradient(90deg, rgba(14, 17, 16, 0.94), rgba(14, 17, 16, 0.58), rgba(14, 17, 16, 0.96)),
+        url("assets/site-hero-map.png") center / cover;
+    }
+
+    .topbar {
+      margin: 16px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(14, 17, 16, 0.78);
+      backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .brand-mark {
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(246, 241, 232, 0.74);
+      border-radius: 50%;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 5px 3px;
+      border-top: 1px solid rgba(246, 241, 232, 0.74);
+      transform: rotate(-25deg);
+    }
+
+    .top-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(246, 241, 232, 0.72);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .pill {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .workspace {
+      min-height: 0;
+      padding: 8px 24px 10px;
+      display: grid;
+      grid-template-columns: minmax(250px, 0.58fr) minmax(560px, 1.52fr) minmax(280px, 0.72fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(13, 15, 14, 0.76);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .left-panel {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: rgba(246, 241, 232, 0.62);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 620px;
+      font-size: clamp(38px, 4.2vw, 62px);
+      line-height: 0.98;
+      font-weight: 760;
+    }
+
+    .lead {
+      margin-top: 18px;
+      color: rgba(246, 241, 232, 0.74);
+      font-size: 16px;
+      line-height: 1.56;
+    }
+
+    .rule-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rule {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .rule b {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(246, 241, 232, 0.94);
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .rule span {
+      display: block;
+      color: rgba(246, 241, 232, 0.72);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .stage {
+      position: relative;
+      background: rgba(246, 241, 232, 0.94);
+      color: var(--ink);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .stage-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 22px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stage-kicker {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .stage-title {
+      font-size: clamp(26px, 2.6vw, 40px);
+      line-height: 1.06;
+      font-weight: 740;
+    }
+
+    .track-badge {
+      flex: 0 0 auto;
+      min-width: 94px;
+      border-radius: 999px;
+      padding: 8px 10px;
+      text-align: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 750;
+      background: var(--eng);
+      text-transform: uppercase;
+    }
+
+    .track-badge.plant { background: var(--plant); }
+    .track-badge.myco { background: var(--myco); }
+    .track-badge.engineering { background: var(--eng); }
+    .track-badge.system { background: #303534; }
+
+    .stage-body {
+      min-height: 0;
+      padding: 18px 22px 20px;
+      display: grid;
+      align-items: stretch;
+    }
+
+    .visual {
+      min-height: 0;
+      display: none !important;
+    }
+
+    .visual.active {
+      display: grid !important;
+    }
+
+    .split-visual {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .engineering-visual {
+      grid-template-rows: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .engineering-visual .mini-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .engineering-visual .method-box {
+      min-height: 0;
+    }
+
+    .engineering-visual .method-box p {
+      font-size: 11px;
+      line-height: 1.34;
+    }
+
+    .photo-block {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #ddd5c8;
+      min-height: 0;
+      position: relative;
+    }
+
+    .photo-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-block::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.36));
+      pointer-events: none;
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      z-index: 1;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .diagram-card {
+      border: 1px solid var(--line);
+      background: #fffdfa;
+      border-radius: var(--radius);
+      padding: 16px;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .diagram-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .diagram-title h3 {
+      font-size: 17px;
+      line-height: 1.24;
+    }
+
+    .diagram-title span {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .method-box {
+      min-height: 96px;
+      border-radius: var(--radius);
+      padding: 12px;
+      background: #f3eee5;
+      border: 1px solid var(--line);
+    }
+
+    .method-box h4 {
+      margin: 0 0 7px;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .method-box p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .soil-wash {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .flow {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 9px;
+      align-items: center;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 84px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: var(--radius);
+      border: 1px solid rgba(169, 66, 58, 0.26);
+      background: #fff8f2;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.28;
+      font-weight: 680;
+    }
+
+    .engineering-visual .flow-step {
+      min-height: 66px;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .engineering-visual .flow-step small {
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    .flow-step small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.32;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(18, 21, 20, 0.48);
+      font-weight: 800;
+    }
+
+    .outputs {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 0.95fr;
+      gap: 9px;
+    }
+
+    .output-box {
+      border-radius: var(--radius);
+      border: 1px dashed rgba(18, 21, 20, 0.24);
+      padding: 12px;
+      min-height: 104px;
+      background: #fffefa;
+    }
+
+    .engineering-visual .output-box {
+      min-height: 62px;
+      padding: 9px;
+    }
+
+    .engineering-visual .output-box h4 {
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .engineering-visual .output-box p {
+      font-size: 11px;
+      line-height: 1.28;
+    }
+
+    .output-box h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .output-box p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .output-box.reuse { border-color: rgba(87, 122, 79, 0.42); }
+    .output-box.sludge { border-color: rgba(167, 101, 63, 0.46); }
+    .output-box.water { border-color: rgba(79, 117, 167, 0.46); }
+    .output-box.reuse h4 { color: var(--reuse); }
+    .output-box.sludge h4 { color: var(--sludge); }
+    .output-box.water h4 { color: var(--water); }
+
+    .system-map {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .route-card {
+      border-radius: var(--radius);
+      padding: 18px;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+    }
+
+    .route-card b {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      margin-bottom: 18px;
+      background: #303534;
+      font-size: 13px;
+    }
+
+    .route-card h3 {
+      font-size: 22px;
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .route-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.52;
+    }
+
+    .route-card.plant b { background: var(--plant); }
+    .route-card.myco b { background: var(--myco); }
+    .route-card.engineering b { background: var(--eng); }
+    .route-card.timeline b { background: #303534; }
+
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .plant-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fffdfa;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .plant-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+    }
+
+    .plant-card div {
+      padding: 11px;
+    }
+
+    .plant-card h4 {
+      margin: 0 0 4px;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .plant-card p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .right-panel {
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 14px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .status-cell {
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.055);
+      padding: 11px;
+      min-width: 0;
+    }
+
+    .status-cell span {
+      display: block;
+      margin-bottom: 5px;
+      color: rgba(246, 241, 232, 0.52);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .status-cell b {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .logic {
+      min-height: 0;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .logic-block {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 11px;
+    }
+
+    .logic-block h3 {
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: rgba(246, 241, 232, 0.62);
+      text-transform: uppercase;
+    }
+
+    .logic-block p {
+      color: rgba(246, 241, 232, 0.76);
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .source-line {
+      color: rgba(246, 241, 232, 0.48);
+      font-size: 11px;
+      line-height: 1.42;
+    }
+
+    .source-line a {
+      color: rgba(246, 241, 232, 0.72);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(246, 241, 232, 0.20);
+    }
+
+    .rail {
+      margin: 0 16px 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(14, 17, 16, 0.82);
+      backdrop-filter: blur(18px);
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+    }
+
+    .tick {
+      border: 0;
+      background: transparent;
+      min-width: 0;
+      padding: 14px 11px 12px;
+      cursor: pointer;
+      text-align: left;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(246, 241, 232, 0.64);
+    }
+
+    .tick:first-child { border-left: 0; }
+
+    .tick:hover,
+    .tick.active {
+      background: rgba(246, 241, 232, 0.10);
+      color: var(--cream);
+    }
+
+    .tick.active {
+      box-shadow: inset 0 3px 0 var(--danger);
+    }
+
+    .tick span {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: rgba(246, 241, 232, 0.46);
+    }
+
+    .tick b {
+      display: block;
+      font-size: 13px;
+      line-height: 1.22;
+      white-space: normal;
+    }
+
+    @media (max-width: 1180px) {
+      .app {
+        min-height: 720px;
+        grid-template-rows: 68px minmax(0, 1fr) 112px;
+      }
+
+      .workspace {
+        grid-template-columns: 0.58fr 1.46fr 0.72fr;
+        gap: 12px;
+        padding: 6px 16px 8px;
+      }
+
+      .lead, .logic-block p {
+        font-size: 12px;
+      }
+
+      .rule-list {
+        display: none;
+      }
+
+      .flow-step {
+        min-height: 76px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      html, body {
+        overflow: auto;
+      }
+
+      .app {
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: auto auto auto;
+      }
+
+      .topbar,
+      .workspace,
+      .rail {
+        margin: 10px;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+        padding: 0;
+      }
+
+      .rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .split-visual,
+      .system-map {
+        grid-template-columns: 1fr;
+      }
+
+      .plant-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flow,
+      .outputs {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-step:not(:last-child)::after {
+        content: "↓";
+        right: 50%;
+        top: auto;
+        bottom: -17px;
+        transform: translateX(50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Programming Decay · Barking Reach Soil Remediation</span></div>
+      <div class="top-meta">
+        <span class="pill">Single-page crit tool</span>
+        <span class="pill">CSM → Track → Access</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel left-panel">
+        <div>
+          <p class="eyebrow">Three-track remediation framework</p>
+          <h1 id="heroTitle">Pollution family selects the track.</h1>
+          <p class="lead" id="heroLead">Severity then decides treatment intensity, public access and time. This is a rule surface for Barking Reach, not a general green-tech catalogue.</p>
+        </div>
+        <div class="rule-list">
+          <div class="rule"><b>1</b><span>Organic contamination goes to mycelium only when metal background will not suppress enzyme activity.</span></div>
+          <div class="rule"><b>2</b><span>Metals are managed by stabilization / extraction logic; they are not “degraded”.</span></div>
+          <div class="rule"><b>3</b><span>Asbestos, cyanide and uncertain hotspots stay in the engineering / physical track.</span></div>
+        </div>
+      </section>
+
+      <section class="panel stage">
+        <div class="stage-head">
+          <div>
+            <p class="stage-kicker" id="stageKicker">Rule overview</p>
+            <h2 class="stage-title" id="stageTitle">One site, three repair intelligences.</h2>
+          </div>
+          <div class="track-badge system" id="trackBadge">System</div>
+        </div>
+        <div class="stage-body">
+          <div class="visual system-map active" data-visual="overview">
+            <article class="route-card plant">
+              <div><b>PLT</b><h3>植物轨</h3><p>金属/类金属、河岸径流、长期稳定化与低风险提取。</p></div>
+            </article>
+            <article class="route-card myco">
+              <div><b>MYC</b><h3>菌丝轨</h3><p>烃类、TPH、PAH、酚、PCB；需要避光、保湿和木质基质。</p></div>
+            </article>
+            <article class="route-card engineering">
+              <div><b>ENG</b><h3>工程 / 物理轨</h3><p>石棉、氰化物、高金属热点、未知源；先切断暴露路径。</p></div>
+            </article>
+            <article class="route-card timeline">
+              <div><b>CA</b><h3>状态转移</h3><p>不是静态分区：场地要从 locked → controlled → visible → open 逐步解锁。</p></div>
+            </article>
+          </div>
+
+          <div class="visual engineering-visual" data-visual="extreme">
+            <div class="diagram-card soil-wash">
+              <div class="diagram-title"><h3>土壤清洗机工作流程</h3><span>辅助物理处理</span></div>
+              <div class="flow">
+                <div class="flow-step">污染土壤<br>开挖与进场<small>excavation / intake</small></div>
+                <div class="flow-step">预处理<small>去除建筑垃圾、金属、木材、破碎大块土</small></div>
+                <div class="flow-step">加水制浆<small>soil + water slurry</small></div>
+                <div class="flow-step">机械擦洗<small>scrubbing / attrition washing</small></div>
+                <div class="flow-step">筛分与分级<small>separation / grading</small></div>
+              </div>
+              <div class="outputs">
+                <div class="output-box reuse"><h4>A 可回用物料</h4><p>粗颗粒、砂、砾石经检测达标后可回填或再利用。</p></div>
+                <div class="output-box sludge"><h4>B 污染集中</h4><p>细颗粒、黏土、有机质和污染物形成高污染泥 / 污泥，脱水后外运或进一步修复。</p></div>
+                <div class="output-box water"><h4>C 水处理回用</h4><p>沉淀、絮凝、过滤、活性炭等处理后循环回用，减少新水需求。</p></div>
+              </div>
+            </div>
+            <div class="diagram-card">
+              <div class="diagram-title"><h3>极高污染不是“种植物”问题</h3><span>Engineering first</span></div>
+              <div class="mini-grid">
+                <div class="method-box"><h4>封盖 / Clean Cover</h4><p>阻断人体接触、扬尘和径流路径；Barking Reach 残留 hardstanding 可作为 hard cap 逻辑。</p></div>
+                <div class="method-box"><h4>ISS 固化稳定</h4><p>固定污染物迁移性，适合金属热点；需避开密集桩基阵列。</p></div>
+                <div class="method-box"><h4>挖运 / Dig & Dump</h4><p>仅用于石棉、氰化物等不可生物处理热点。</p></div>
+                <div class="method-box"><h4>土壤清洗 / Soil Washing</h4><p>污染被转移并浓缩到细泥和污水流。</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="visual split-visual" data-visual="organic">
+            <div class="photo-block"><img src="assets/oyster.jpg" alt="Oyster mushroom"><div class="photo-caption">Pleurotus ostreatus / 平菇：白腐真菌，适合烃类与 PAH 叙事。</div></div>
+            <div class="diagram-card">
+              <div class="diagram-title"><h3>暗场孵化，不是开放公园</h3><span>Mycoremediation</span></div>
+              <div class="mini-grid">
+                <div class="method-box"><h4>污染家族</h4><p>TPH、PAH、酚、PCB 等有机污染物。</p></div>
+                <div class="method-box"><h4>生长条件</h4><p>避光、保湿、木质纤维基质、温和金属背景。</p></div>
+                <div class="method-box"><h4>设计形态</h4><p>覆膜 / 帆布拼贴的暗色孵化场，可见但不可进入。</p></div>
+                <div class="method-box"><h4>边界</h4><p>不处理石棉、混凝土、金属和氰化物。</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="visual plant-grid" data-visual="metal">
+            <article class="plant-card"><img src="assets/fescue.jpg" alt="Fescue"><div><h4>高羊茅 / Festuca</h4><p>表层稳定化与抗侵蚀覆盖。</p></div></article>
+            <article class="plant-card"><img src="assets/ryegrass.jpg" alt="Ryegrass"><div><h4>黑麦草 / Lolium</h4><p>快速建植，先控制扬尘和裸土。</p></div></article>
+            <article class="plant-card"><img src="assets/bentgrass.jpg" alt="Bentgrass"><div><h4>剪股颖 / Agrostis</h4><p>贫瘠/金属土上的低矮草毯。</p></div></article>
+            <article class="plant-card"><img src="assets/buddleja.jpg" alt="Buddleja"><div><h4>醉鱼草 / Buddleja</h4><p>棕地先锋灌木，需边界控制。</p></div></article>
+            <article class="plant-card"><img src="assets/birch.jpg" alt="Birch"><div><h4>垂枝桦 / Betula</h4><p>长期先锋林地与演替结构。</p></div></article>
+            <article class="plant-card"><img src="assets/miscanthus.jpg" alt="Miscanthus"><div><h4>巨芒草 / Miscanthus</h4><p>中污染长期稳定化，不是一年净化器。</p></div></article>
+          </div>
+
+          <div class="visual plant-grid" data-visual="medium">
+            <article class="plant-card"><img src="assets/miscanthus.jpg" alt="Miscanthus"><div><h4>Miscanthus</h4><p>20–25 年生物质基础设施。</p></div></article>
+            <article class="plant-card"><img src="assets/willow.jpg" alt="Willow"><div><h4>柳 / Salix</h4><p>短轮伐、湿地边界与金属管理。</p></div></article>
+            <article class="plant-card"><img src="assets/poplar.jpg" alt="Poplar"><div><h4>杨 / Populus</h4><p>深根液压控制与长期边界林。</p></div></article>
+            <article class="plant-card"><img src="assets/reed-canary.jpg" alt="Reed canary grass"><div><h4>虉草 / Phalaris</h4><p>排水沟、湿边界和过滤带。</p></div></article>
+            <article class="plant-card"><img src="assets/flax.jpg" alt="Flax"><div><h4>亚麻 / Flax</h4><p>小尺度非食用纤维试验。</p></div></article>
+            <article class="plant-card"><img src="assets/hemp.jpg" alt="Hemp"><div><h4>工业大麻 / Hemp</h4><p>只作为合规前提下的纤维候选。</p></div></article>
+          </div>
+
+          <div class="visual plant-grid" data-visual="low">
+            <article class="plant-card"><img src="assets/sunflower.jpg" alt="Sunflower"><div><h4>向日葵</h4><p>低/中污染的可见提取试验，不可食用。</p></div></article>
+            <article class="plant-card"><img src="assets/flax.jpg" alt="Flax"><div><h4>亚麻</h4><p>纤维材料叙事，但收割物按污染生物质处理。</p></div></article>
+            <article class="plant-card"><img src="assets/hemp.jpg" alt="Hemp"><div><h4>工业大麻</h4><p>合规、品种和公众观感都需要谨慎。</p></div></article>
+            <article class="plant-card"><img src="assets/willow.jpg" alt="Willow"><div><h4>柳</h4><p>可进入低风险区的生态与材料边界。</p></div></article>
+            <article class="plant-card"><img src="assets/birch.jpg" alt="Birch"><div><h4>桦</h4><p>修复后的先锋林地和长期公共空间。</p></div></article>
+            <article class="plant-card"><img src="assets/site-now-blender.png" alt="Barking Reach site"><div><h4>Verified ground</h4><p>建筑落位只能发生在已验证或已封控的地面上。</p></div></article>
+          </div>
+
+          <div class="visual split-visual" data-visual="river">
+            <div class="photo-block"><img src="assets/willow.jpg" alt="Willow"><div class="photo-caption">Willow / Salix：Thames 边界的过滤、稳定与短轮伐候选。</div></div>
+            <div class="diagram-card">
+              <div class="diagram-title"><h3>河岸是污染迁移路径</h3><span>Riparian filter</span></div>
+              <div class="mini-grid">
+                <div class="method-box"><h4>源</h4><p>场地上游 / 中部污染土和硬质地表径流。</p></div>
+                <div class="method-box"><h4>路径</h4><p>排水沟、潮汐边界、地下水与地表径流。</p></div>
+                <div class="method-box"><h4>拦截</h4><p>bioswale、reedbed、柳林、湿草甸。</p></div>
+                <div class="method-box"><h4>开放</h4><p>边界可开放，但必须先受上游修复状态约束。</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="visual system-map" data-visual="unlock">
+            <article class="route-card timeline"><div><b>01</b><h3>Reveal</h3><p>用 X-ray / 线框显示旧 turbine hall、冷却隧道、hardstanding 和推断污染家族。</p></div></article>
+            <article class="route-card engineering"><div><b>02</b><h3>Lock</h3><p>极高污染先封控、清洗、固化或挖运。公共路线只能架空或绕行。</p></div></article>
+            <article class="route-card myco"><div><b>03</b><h3>Incubate</h3><p>有机污染地块进入暗场菌丝孵化，成为视频里最明确的“正在修复”状态。</p></div></article>
+            <article class="route-card plant"><div><b>04</b><h3>Open</h3><p>低风险和修复后地块才转为公园、湿地、短轮伐林和未来建筑基座。</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel right-panel">
+        <div>
+          <p class="eyebrow" id="detailEyebrow">Current state</p>
+          <h2 id="detailTitle">Rule overview</h2>
+        </div>
+        <div class="status-grid">
+          <div class="status-cell"><span>污染家族</span><b id="familyVal">mixed / unknown</b></div>
+          <div class="status-cell"><span>轨道</span><b id="trackVal">system selector</b></div>
+          <div class="status-cell"><span>时间尺度</span><b id="timeVal">variable</b></div>
+          <div class="status-cell"><span>可达性</span><b id="accessVal">state-based</b></div>
+        </div>
+        <div class="logic">
+          <div class="logic-block"><h3>为什么这样分</h3><p id="whyText">污染物的化学性质先决定修复轨道；污染严重度再决定开放程度。这样可以避免把植物、菌丝和工程技术混成一个万能方案。</p></div>
+          <div class="logic-block"><h3>设计动作</h3><p id="actionText">把轨道转译成场地表皮：硬封盖、暗色孵化场、稳定化草毯、短轮伐林、湿地过滤和架空路径。</p></div>
+          <div class="logic-block"><h3>CA / 视频状态</h3><p id="caText">每个 cell 的状态从 locked、controlled、visible 到 open 转移。公共化不是画绿地，而是修复状态解锁。</p></div>
+        </div>
+        <p class="source-line">Soil washing logic checked against <a href="https://www.epa.gov/remedytech/remediation-technology-descriptions-cleaning-contaminated-sites">US EPA remedy descriptions</a>, <a href="https://www.rewa-gruppe.de/en/remediation-technologies/soil-washing">REWA soil washing notes</a>, and the user-provided process diagram.</p>
+      </aside>
+    </main>
+
+    <nav class="rail" id="rail" aria-label="contamination state selector"></nav>
+  </div>
+
+  <script>
+    const states = [
+      {
+        id: "overview", idx: "00", tick: "RULE SET", label: "三轨总览",
+        heroTitle: "Pollution family selects the track.",
+        heroLead: "Severity then decides treatment intensity, public access and time. This is a rule surface for Barking Reach, not a general green-tech catalogue.",
+        kicker: "Rule overview", title: "One site, three repair intelligences.", badge: "System", badgeClass: "system",
+        detail: "Rule overview", family: "mixed / unknown", track: "system selector", time: "variable", access: "state-based",
+        why: "污染物的化学性质先决定修复轨道；污染严重度再决定开放程度。这样可以避免把植物、菌丝和工程技术混成一个万能方案。",
+        action: "把轨道转译成场地表皮：硬封盖、暗色孵化场、稳定化草毯、短轮伐林、湿地过滤和架空路径。",
+        ca: "每个 cell 的状态从 locked、controlled、visible 到 open 转移。公共化不是画绿地，而是修复状态解锁。"
+      },
+      {
+        id: "extreme", idx: "01", tick: "EXTREME", label: "极高污染",
+        heroTitle: "极高污染先走工程轨。",
+        heroLead: "No random image, no planting fantasy: asbestos, cyanide, high metals and uncertain sources need physical control before any civic program.",
+        kicker: "Engineering / physical track", title: "Hotspots are processed before public ground.", badge: "ENG", badgeClass: "engineering",
+        detail: "极高污染 / 热点", family: "asbestos / cyanide / high metals", track: "engineering", time: "weeks–months", access: "closed or elevated",
+        why: "石棉、氰化物和高金属热点不是菌丝或植物的工作对象。土壤清洗可以把污染集中到细泥和废水流，降低需要外运处置的体积。",
+        action: "把工程轨画成流程：挖掘进场、预处理、加水制浆、擦洗、筛分，再分出可回用粗颗粒、污染污泥和循环水。",
+        ca: "该 cell 维持 locked，直到暴露路径被封盖 / 固化 / 清洗 / 挖运处理，且监测结果允许进入 controlled。"
+      },
+      {
+        id: "organic", idx: "02", tick: "ORGANIC", label: "高有机",
+        heroTitle: "Mycelium is a dark incubation field.",
+        heroLead: "It is for hydrocarbons and PAH, not concrete, asbestos or metals. The architectural expression is cover, moisture and time.",
+        kicker: "Mycelium track", title: "Organic contamination becomes a covered incubation surface.", badge: "MYC", badgeClass: "myco",
+        detail: "高污染 / 有机为主", family: "TPH / PAH / phenols / PCB", track: "mycelium", time: "16 weeks–2 years", access: "visible, not entered",
+        why: "白腐真菌依赖木质素降解酶处理有机污染物，但高金属背景会抑制关键酶活性。",
+        action: "设计成覆膜避光、保湿、加入木质纤维基质的暗场孵化区，与开放植物场形成对比。",
+        ca: "只有当 cell 的污染家族为有机、且金属背景不压制菌丝时，才进入 mycelium incubation。"
+      },
+      {
+        id: "metal", idx: "03", tick: "HIGH METAL", label: "高金属",
+        heroTitle: "High metal zones stabilise first.",
+        heroLead: "At high concentrations, plants reduce exposure and migration. They do not magically remove the metals.",
+        kicker: "Plant track / high severity", title: "Roots and cover reduce dust, runoff and contact.", badge: "PLT", badgeClass: "plant",
+        detail: "高污染 / 金属为主", family: "Pb / Cd / Zn / Cu / Ni etc.", track: "plant stabilization", time: "1–10 years", access: "controlled edge",
+        why: "金属不会被降解，高污染区优先控制暴露、扬尘、径流和根区风险，不适合作为提取试验田。",
+        action: "使用高羊茅、黑麦草、剪股颖和先锋灌木形成稳定化表皮；必要时与封盖、覆土和雨水控制叠加。",
+        ca: "vegetation cover + exposure control 建立后，cell 从 locked 转为 controlled，开放范围仍受路径控制。"
+      },
+      {
+        id: "medium", idx: "04", tick: "MEDIUM", label: "中污染",
+        heroTitle: "Medium pollution becomes managed biomass.",
+        heroLead: "The point is not instant cleansing; it is a long-term operational landscape.",
+        kicker: "Plant track / managed biomass", title: "Stabilization, coppice and monitoring become infrastructure.", badge: "PLT", badgeClass: "plant",
+        detail: "中污染 / 混合金属", family: "mixed metals", track: "assisted stabilization", time: "3–25 years", access: "edge open",
+        why: "中污染区适合辅助稳定化和长期生物质管理，Miscanthus 的价值是长期基础设施，不是一年修复完成。",
+        action: "布置巨芒草、柳/杨短轮伐、湿地边界草和年度收割监测，把维护动作显化。",
+        ca: "cell 通过连续监测周期累积置信度，公共路径从边缘逐渐向内部推进。"
+      },
+      {
+        id: "low", idx: "05", tick: "LOW", label: "低/中污染",
+        heroTitle: "Extraction is only credible at lower risk.",
+        heroLead: "Seasonal extraction strips can be public-facing, but the harvested biomass remains contaminated material.",
+        kicker: "Plant track / extraction trials", title: "Visible planting, controlled harvest.", badge: "PLT", badgeClass: "plant",
+        detail: "低 / 中污染", family: "lower-risk metals", track: "phytoextraction trial", time: "seasonal–3 years", access: "educational viewing",
+        why: "低/中污染才适合把提取变成可见试验。收割物不能画成普通能源或食物链。",
+        action: "用向日葵、亚麻、工业大麻等形成季节性条带，同时画出检测、隔离和专门处置路径。",
+        ca: "cell 可进入 visible learning plot，但 biomass backend 保持 controlled。"
+      },
+      {
+        id: "river", idx: "06", tick: "RIVER", label: "河岸边界",
+        heroTitle: "The Thames edge is a pathway.",
+        heroLead: "Repair is not only inside the site: runoff must be filtered before it reaches the river.",
+        kicker: "Riparian / hydraulic control", title: "Water edges depend on upstream repair states.", badge: "PLT", badgeClass: "plant",
+        detail: "河岸 / 径流边界", family: "runoff / wet edge", track: "filtering buffer", time: "1–10 years", access: "managed open",
+        why: "河岸不是单纯景观边界，而是污染迁移路径。上游未解锁时，河岸不能被当成完全开放公共区。",
+        action: "用 bioswale、reedbed、湿草甸、柳林和受控步道形成过滤边界。",
+        ca: "river cells 受 upstream cells 约束：上游源未被控制时，下游开放状态不能升级。"
+      },
+      {
+        id: "unlock", idx: "07", tick: "UNLOCK", label: "开放序列",
+        heroTitle: "Public access is a remediation status.",
+        heroLead: "The video / metaverse can show zones unlocking as the ground moves from historical evidence to repair operation.",
+        kicker: "Timeline logic", title: "Reveal → lock → incubate → stabilise → open.", badge: "CA", badgeClass: "system",
+        detail: "状态转移", family: "all families", track: "CA rule", time: "months–25 years", access: "locked → open",
+        why: "这把老师说的“走在场地里看到不同东西被揭示”转成具体机制：看到历史、看到污染、看到修复、看到开放。",
+        action: "视频里不要先展示最终公园，而是展示不同轨道以不同速度修复并解锁公共路线。",
+        ca: "locked / controlled / visible / open 是核心状态，策略不是静态贴色。"
+      }
+    ];
+
+    const rail = document.getElementById("rail");
+    states.forEach((state) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "tick";
+      button.dataset.id = state.id;
+      button.innerHTML = `<span>${state.tick}</span><b>${state.label}</b>`;
+      button.addEventListener("click", () => setState(state.id));
+      rail.appendChild(button);
+    });
+
+    function setState(id) {
+      const state = states.find(item => item.id === id) || states[0];
+      document.getElementById("heroTitle").textContent = state.heroTitle;
+      document.getElementById("heroLead").textContent = state.heroLead;
+      document.getElementById("stageKicker").textContent = state.kicker;
+      document.getElementById("stageTitle").textContent = state.title;
+      const badge = document.getElementById("trackBadge");
+      badge.textContent = state.badge;
+      badge.className = `track-badge ${state.badgeClass}`;
+      document.getElementById("detailTitle").textContent = state.detail;
+      document.getElementById("familyVal").textContent = state.family;
+      document.getElementById("trackVal").textContent = state.track;
+      document.getElementById("timeVal").textContent = state.time;
+      document.getElementById("accessVal").textContent = state.access;
+      document.getElementById("whyText").textContent = state.why;
+      document.getElementById("actionText").textContent = state.action;
+      document.getElementById("caText").textContent = state.ca;
+      document.querySelectorAll(".visual").forEach(item => item.classList.toggle("active", item.dataset.visual === state.id));
+      document.querySelectorAll(".tick").forEach(item => item.classList.toggle("active", item.dataset.id === state.id));
+    }
+
+    window.addEventListener("keydown", event => {
+      const currentIndex = states.findIndex(item => document.querySelector(`.tick[data-id="${item.id}"]`).classList.contains("active"));
+      if (event.key === "ArrowRight") {
+        setState(states[Math.min(states.length - 1, currentIndex + 1)].id);
+      }
+      if (event.key === "ArrowLeft") {
+        setState(states[Math.max(0, currentIndex - 1)].id);
+      }
+    });
+
+    setState("overview");
+  </script>
+</body>
+</html>

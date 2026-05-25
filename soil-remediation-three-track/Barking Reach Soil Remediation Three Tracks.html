@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barking Reach Soil Remediation | Three-Track Framework</title>
+  <style>
+    :root {
+      --ink: #101214;
+      --muted: #5f666d;
+      --line: rgba(16, 18, 20, 0.12);
+      --soft: #f4f1ea;
+      --paper: #fbfaf7;
+      --night: #111413;
+      --night-2: #1b201d;
+      --plant: #4d7c45;
+      --plant-soft: #dfe9d7;
+      --myco: #b96e32;
+      --myco-soft: #f0dfc8;
+      --eng: #536c7a;
+      --eng-soft: #dbe5e8;
+      --warn: #9e4038;
+      --gold: #c6a45f;
+      --radius: 8px;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      letter-spacing: 0;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      inset: 16px 16px auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(17, 20, 19, 0.72);
+      color: #f7f2e8;
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.56);
+      border-radius: 50%;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.56);
+      transform: rotate(35deg);
+      transform-origin: center;
+    }
+
+    .brand-mark::after {
+      transform: rotate(-35deg);
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 100%;
+    }
+
+    .topnav a {
+      color: #f7f2e8;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      opacity: 0.82;
+    }
+
+    .topnav a:hover {
+      opacity: 1;
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: end;
+      padding: 108px 28px 28px;
+      background:
+        linear-gradient(180deg, rgba(17, 20, 19, 0.08), rgba(17, 20, 19, 0.90)),
+        url("assets/site-hero-map.png") center / cover;
+      color: #f9f4ea;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 32vh;
+      background: linear-gradient(180deg, rgba(17, 20, 19, 0), var(--night));
+      opacity: 0.84;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 24px;
+      align-items: end;
+      min-width: 0;
+    }
+
+    .hero-inner > * {
+      min-width: 0;
+    }
+
+    .kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(249, 244, 234, 0.72);
+      margin: 0 0 14px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 920px;
+      font-size: 76px;
+      line-height: 0.97;
+      font-weight: 760;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 22px 0 0;
+      font-size: 20px;
+      line-height: 1.5;
+      color: rgba(249, 244, 234, 0.78);
+    }
+
+    .hero-panel {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(12, 14, 13, 0.62);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .hero-panel h2 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .field-facts {
+      display: grid;
+      gap: 12px;
+    }
+
+    .fact {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.11);
+      color: rgba(249, 244, 234, 0.76);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .fact b {
+      color: #fff7e9;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 650;
+    }
+
+    section {
+      padding: 96px 28px;
+      scroll-margin-top: 120px;
+    }
+
+    .night {
+      color: #f5efe5;
+      background: var(--night);
+    }
+
+    .soft {
+      background: var(--soft);
+    }
+
+    .wrap {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(280px, 0.55fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 36px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .night .eyebrow {
+      color: rgba(245, 239, 229, 0.58);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.08;
+      font-weight: 740;
+    }
+
+    .section-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .night .section-copy {
+      color: rgba(245, 239, 229, 0.64);
+    }
+
+    .corrections {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .correction {
+      min-height: 236px;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .correction .num {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--ink);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .correction h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .correction p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+      font-size: 15px;
+    }
+
+    .tracks {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .track-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fdfbf6;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .track-media {
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+      background: #1b1d1b;
+    }
+
+    .track-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(1.02);
+    }
+
+    .track-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.56));
+    }
+
+    .track-label {
+      position: absolute;
+      z-index: 1;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .track-body {
+      padding: 20px;
+    }
+
+    .track-body h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .track-body p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(16, 18, 20, 0.12);
+      color: rgba(16, 18, 20, 0.72);
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    .engine {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.45fr) minmax(0, 0.85fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .scenario-list {
+      display: grid;
+      gap: 9px;
+      align-content: start;
+    }
+
+    .scenario-btn {
+      width: 100%;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdf8;
+      cursor: pointer;
+    }
+
+    .scenario-btn:hover,
+    .scenario-btn.active {
+      border-color: rgba(16, 18, 20, 0.32);
+      background: #ffffff;
+    }
+
+    .scenario-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--eng);
+    }
+
+    .scenario-btn[data-track="plant"] .scenario-dot {
+      background: var(--plant);
+    }
+
+    .scenario-btn[data-track="myco"] .scenario-dot {
+      background: var(--myco);
+    }
+
+    .scenario-name {
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .scenario-sub {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 450;
+    }
+
+    .scenario-arrow {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .result {
+      border-radius: var(--radius);
+      overflow: hidden;
+      min-height: 590px;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .result-top {
+      padding: 24px;
+      background: linear-gradient(135deg, var(--eng-soft), #fffdf8);
+    }
+
+    .result[data-track="plant"] .result-top {
+      background: linear-gradient(135deg, var(--plant-soft), #fffdf8);
+    }
+
+    .result[data-track="myco"] .result-top {
+      background: linear-gradient(135deg, var(--myco-soft), #fffdf8);
+    }
+
+    .result h3 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.12;
+    }
+
+    .result-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .meta-cell {
+      border-top: 1px solid rgba(16, 18, 20, 0.16);
+      padding-top: 10px;
+      min-width: 0;
+    }
+
+    .meta-cell span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .meta-cell b {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 650;
+    }
+
+    .result-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 18px;
+      padding: 22px 24px 24px;
+    }
+
+    .result-text {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .logic-block {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .logic-block:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .logic-block h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: rgba(16, 18, 20, 0.72);
+    }
+
+    .logic-block p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .result-image {
+      min-height: 310px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #e8e1d6;
+      align-self: stretch;
+    }
+
+    .result-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gradient-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.55fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .gradient-visual {
+      min-height: 560px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(17, 20, 19, 0.08), rgba(17, 20, 19, 0.92)),
+        url("assets/aggregate-2023.jpg") center / cover;
+      color: #fff7e9;
+      position: relative;
+      display: grid;
+      align-items: end;
+      padding: 24px;
+    }
+
+    .gradient-visual::before {
+      content: "";
+      position: absolute;
+      inset: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+
+    .gradient-text {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .gradient-text h3 {
+      margin: 0 0 12px;
+      font-size: 40px;
+      line-height: 1.08;
+    }
+
+    .gradient-text p {
+      margin: 0;
+      color: rgba(255, 247, 233, 0.74);
+      font-size: 17px;
+      line-height: 1.58;
+    }
+
+    .gradient-panel {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .gradient-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: #f7f4ee;
+      border-radius: var(--radius);
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      min-height: 64px;
+    }
+
+    .tab-btn.active {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    .tab-btn b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .tab-btn span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.32;
+    }
+
+    .tab-btn.active span {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .species-strip {
+      display: grid;
+      gap: 10px;
+    }
+
+    .species-card {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .species-card img {
+      width: 76px;
+      height: 88px;
+      object-fit: cover;
+    }
+
+    .species-card div {
+      padding: 11px 12px 11px 0;
+      min-width: 0;
+    }
+
+    .species-card h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .species-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .sequence {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .sequence-step {
+      min-height: 330px;
+      padding: 16px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sequence-step b {
+      font-size: 12px;
+      color: rgba(245, 239, 229, 0.58);
+      text-transform: uppercase;
+    }
+
+    .sequence-step h3 {
+      margin: 12px 0;
+      font-size: 21px;
+      line-height: 1.2;
+    }
+
+    .sequence-step p {
+      margin: 0;
+      color: rgba(245, 239, 229, 0.66);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .sequence-step .access {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.11);
+      font-size: 13px;
+      color: #fff6e7;
+    }
+
+    .translation {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .translation-figure {
+      min-height: 540px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(16, 18, 20, 0.0), rgba(16, 18, 20, 0.78)),
+        url("assets/demolition-2018.png") center / cover;
+    }
+
+    .translation-figure .caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      color: #fff8ea;
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .translation-list {
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .translation-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdf8;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 14px;
+    }
+
+    .translation-item span {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .translation-item h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .translation-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .warning-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .warning {
+      background: #fffdf8;
+      border: 1px solid rgba(158, 64, 56, 0.24);
+      border-left: 4px solid var(--warn);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .warning h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.25;
+      color: var(--warn);
+    }
+
+    .warning p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .sources {
+      color: rgba(245, 239, 229, 0.72);
+      background: #0d0f0e;
+      padding: 54px 28px;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .sources h2 {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .sources p,
+    .sources li {
+      color: rgba(245, 239, 229, 0.62);
+      line-height: 1.58;
+      font-size: 13px;
+    }
+
+    .sources ul {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      column-gap: 28px;
+    }
+
+    @media (max-width: 1020px) {
+      h1 {
+        font-size: 56px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      .hero-inner,
+      .section-head,
+      .engine,
+      .gradient-stage,
+      .translation,
+      .source-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tracks,
+      .corrections,
+      .warning-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sequence {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .result-body {
+        grid-template-columns: 1fr;
+      }
+
+      .result-image {
+        min-height: 260px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar {
+        position: absolute;
+        inset: 10px 10px auto 10px;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .topnav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: stretch;
+        width: 100%;
+      }
+
+      .topnav a {
+        font-size: 11px;
+        padding: 6px 8px;
+        min-width: 0;
+        white-space: normal;
+      }
+
+      .hero {
+        padding: 148px 18px 22px;
+      }
+
+      section {
+        padding: 72px 18px;
+        scroll-margin-top: 150px;
+      }
+
+      h1 {
+        font-size: 38px;
+        max-width: 8.8em;
+      }
+
+      .hero-copy {
+        max-width: 21rem;
+      }
+
+      h2,
+      .gradient-text h3 {
+        font-size: 30px;
+      }
+
+      .hero-copy {
+        font-size: 17px;
+      }
+
+      .result-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sequence {
+        grid-template-columns: 1fr;
+      }
+
+      .sequence-step {
+        min-height: 220px;
+      }
+
+      .sources ul {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Programming Decay · Barking Reach</span></div>
+    <nav class="topnav" aria-label="page navigation">
+      <a href="#tracks">Three Tracks</a>
+      <a href="#engine">Rule Engine</a>
+      <a href="#sequence">Unlock Sequence</a>
+      <a href="#translation">Design Translation</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <p class="kicker">Soil remediation as the first architecture</p>
+          <h1>Clean ground is not a background. It is the project.</h1>
+          <p class="hero-copy">Barking Reach is no longer a power station and not yet a market. The design begins by reading ground health: what can be biologically treated, what must be physically controlled, and what can only become public after remediation unlocks it.</p>
+        </div>
+        <aside class="hero-panel" aria-label="site facts">
+          <h2>From program decay to soil-first regeneration</h2>
+          <div class="field-facts">
+            <div class="fact"><b>Site</b><span>Barking Reach Power Station, Dagenham Dock. Cleared industrial ground beside the Thames.</span></div>
+            <div class="fact"><b>Problem</b><span>Post-demolition material stock, made ground, residual hardstanding, possible hydrocarbons, metals and asbestos-cement risk.</span></div>
+            <div class="fact"><b>Move</b><span>Use a three-track remediation framework as the rule set for landscape, public access and later architecture.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="soft" id="correction">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Critical Correction</p>
+            <h2>The project is not “bio-remediation can fix everything”.</h2>
+          </div>
+          <p class="section-copy">The framework gets stronger by drawing hard boundaries. This is the part worth making very visible in crit: each technique has a precise chemical territory, and the site becomes a choreography of different speeds.</p>
+        </div>
+        <div class="corrections">
+          <article class="correction">
+            <div>
+              <span class="num">1</span>
+              <h3>Mycelium does not treat asbestos or concrete.</h3>
+              <p>Mycelium is reserved for organic pollutants such as hydrocarbons, PAH, phenols and PCB. Asbestos and mineral hazards move to engineering control.</p>
+            </div>
+          </article>
+          <article class="correction">
+            <div>
+              <span class="num">2</span>
+              <h3>Metals are not degraded.</h3>
+              <p>Plants can immobilise, stabilise, extract slowly or alter migration pathways. The claim is management and risk reduction, not disappearance.</p>
+            </div>
+          </article>
+          <article class="correction">
+            <div>
+              <span class="num">3</span>
+              <h3>Pollution gradient decides the plant role.</h3>
+              <p>The same species can stabilise in high pollution, support long-term management in medium pollution, and only extract in lower-risk zones.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="night" id="tracks">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Three-Track Framework</p>
+            <h2>One ground, three kinds of repair intelligence.</h2>
+          </div>
+          <p class="section-copy">The tracks are not aesthetic zones. They are chemical responsibilities: plants manage metals and water edges, mycelium incubates organic contamination, engineering handles hotspots that biology should not touch.</p>
+        </div>
+        <div class="tracks">
+          <article class="track-card">
+            <div class="track-media">
+              <img src="assets/miscanthus.jpg" alt="Miscanthus biomass crop">
+              <div class="track-label"><span>Track 01</span><span>Plant</span></div>
+            </div>
+            <div class="track-body">
+              <h3>Plants manage metals and runoff.</h3>
+              <p>Phytostabilization, assisted stabilization, slow extraction, willow / poplar buffers and wet meadow filtration.</p>
+              <div class="tag-row">
+                <span class="tag">1–25 years</span>
+                <span class="tag">visible repair</span>
+                <span class="tag">controlled access</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="track-card">
+            <div class="track-media">
+              <img src="assets/oyster.jpg" alt="Oyster mushroom mycelium">
+              <div class="track-label"><span>Track 02</span><span>Mycelium</span></div>
+            </div>
+            <div class="track-body">
+              <h3>Mycelium incubates organic pollution.</h3>
+              <p>White-rot fungi such as Pleurotus use lignin-degrading enzymes to oxidise hydrocarbons and PAH under dark, moist covers.</p>
+              <div class="tag-row">
+                <span class="tag">16 weeks–2 years</span>
+                <span class="tag">dark cover</span>
+                <span class="tag">closed plots</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="track-card">
+            <div class="track-media">
+              <img src="assets/demolition-2018.png" alt="Barking Reach demolition works">
+              <div class="track-label"><span>Track 03</span><span>Engineering</span></div>
+            </div>
+            <div class="track-body">
+              <h3>Engineering controls the unbiological.</h3>
+              <p>Asbestos, cyanide, high metal hotspots and uncertain sources require capping, ISS, excavation, soil washing or monitored isolation.</p>
+              <div class="tag-row">
+                <span class="tag">weeks–months</span>
+                <span class="tag">risk control</span>
+                <span class="tag">no direct access</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft" id="engine">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Rule Engine</p>
+            <h2>Pollution family sets the track. Severity sets the public threshold.</h2>
+          </div>
+          <p class="section-copy">This is the table translated into a decision surface. It can later become the Cellular Automata rule set: family routes the cell; severity and confidence decide treatment, access and time.</p>
+        </div>
+
+        <div class="engine">
+          <div class="scenario-list" id="scenarioList"></div>
+          <article class="result" id="resultCard" data-track="engineering">
+            <div class="result-top">
+              <p class="eyebrow" id="resultTrack">Engineering Track</p>
+              <h3 id="resultTitle">Hotspot control before public use</h3>
+              <div class="result-meta">
+                <div class="meta-cell"><span>Strategy</span><b id="resultStrategy">Capping / ISS / excavation</b></div>
+                <div class="meta-cell"><span>Time</span><b id="resultTime">Weeks to months</b></div>
+                <div class="meta-cell"><span>Access</span><b id="resultAccess">Not open</b></div>
+                <div class="meta-cell"><span>Evidence</span><b id="resultEvidence">CSM + testing</b></div>
+              </div>
+            </div>
+            <div class="result-body">
+              <div class="result-text">
+                <div class="logic-block">
+                  <h4>Why this route</h4>
+                  <p id="resultWhy">Biological systems should not be asked to solve asbestos, cyanide or high-risk unknown sources.</p>
+                </div>
+                <div class="logic-block">
+                  <h4>Design action</h4>
+                  <p id="resultAction">Keep hardstanding as a cap where possible, isolate hotspots, and let elevated routes pass over zones that are not yet unlocked.</p>
+                </div>
+                <div class="logic-block">
+                  <h4>CA translation</h4>
+                  <p id="resultCA">Cell state remains locked until source-pathway-receptor risk is broken and monitoring confirms a lower exposure category.</p>
+                </div>
+              </div>
+              <div class="result-image">
+                <img id="resultImage" src="assets/demolition-2018.png" alt="Selected remediation track visual">
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="gradient">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Plant Gradient</p>
+            <h2>Plants are not chosen first. Their role changes with contamination.</h2>
+          </div>
+          <p class="section-copy">This reframes the plant palette as a management gradient rather than a species catalogue. It also prevents the dangerous claim that planting automatically equals cleaning.</p>
+        </div>
+
+        <div class="gradient-stage">
+          <div class="gradient-visual">
+            <div class="gradient-text">
+              <p class="kicker" id="gradientKicker">High contamination</p>
+              <h3 id="gradientTitle">Stabilise first. Do not extract from the worst ground.</h3>
+              <p id="gradientCopy">High contamination zones use roots and cover to reduce dust, runoff and contact. The landscape is a controlled skin, not an edible or fully open park.</p>
+            </div>
+          </div>
+          <aside class="gradient-panel">
+            <div class="gradient-tabs" id="gradientTabs"></div>
+            <div class="species-strip" id="speciesStrip"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="night" id="sequence">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Unlock Sequence</p>
+            <h2>The site heals unevenly. Public access follows the repair chain.</h2>
+          </div>
+          <p class="section-copy">This is the part that connects William’s “walk through the site” idea to design. The metaverse / video can reveal former buildings, soil sections and repair states as zones gradually become available.</p>
+        </div>
+        <div class="sequence">
+          <article class="sequence-step">
+            <div>
+              <b>Stage 01</b>
+              <h3>Reveal buried histories</h3>
+              <p>X-ray former turbines, cooling tunnels, hardstanding and suspected industrial use polygons as a conceptual site model.</p>
+            </div>
+            <div class="access">Access: observed from routes</div>
+          </article>
+          <article class="sequence-step">
+            <div>
+              <b>Stage 02</b>
+              <h3>Lock the hotspots</h3>
+              <p>Asbestos, cyanide and uncertain source zones are capped, stabilised, washed or removed before any public claim is made.</p>
+            </div>
+            <div class="access">Access: closed or elevated</div>
+          </article>
+          <article class="sequence-step">
+            <div>
+              <b>Stage 03</b>
+              <h3>Incubate organic soil</h3>
+              <p>Dark mycelium mats occupy hydrocarbon / PAH areas with moist timber substrates, covers and staged harvest.</p>
+            </div>
+            <div class="access">Access: visible, not entered</div>
+          </article>
+          <article class="sequence-step">
+            <div>
+              <b>Stage 04</b>
+              <h3>Grow stabilising fields</h3>
+              <p>Miscanthus, grass cover, willow buffers and pioneer planting turn exposure control into a long-term landscape system.</p>
+            </div>
+            <div class="access">Access: edge paths</div>
+          </article>
+          <article class="sequence-step">
+            <div>
+              <b>Stage 05</b>
+              <h3>Open repaired ground</h3>
+              <p>Low-risk and post-remediation areas become wetland, meadow, short-rotation coppice, civic routes and later building footprints.</p>
+            </div>
+            <div class="access">Access: public park</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft" id="translation">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Design Translation</p>
+            <h2>From table to drawing: what this page should generate next.</h2>
+          </div>
+          <p class="section-copy">For crit, this framework should not stay as an appendix table. It should become the logic behind a ground plan, a sectional sequence and a walk-through video.</p>
+        </div>
+        <div class="translation">
+          <figure class="translation-figure">
+            <figcaption class="caption">The demolition image becomes more than evidence of clearing: it is the start of a repair terrain where caps, dark incubation plots, biomass strips and public routes are staged over time.</figcaption>
+          </figure>
+          <div class="translation-list">
+            <article class="translation-item">
+              <span>1</span>
+              <div>
+                <h3>CSM map instead of fake concentration map</h3>
+                <p>Use confirmed / inferred line types. Former lubricating oil depot and motor works imply organic risk; turbine hardstanding and demolition residues imply capping and material control.</p>
+              </div>
+            </article>
+            <article class="translation-item">
+              <span>2</span>
+              <div>
+                <h3>Three treatment fabrics</h3>
+                <p>Light plant fields for metal management, dark mycelium covers for organic incubation, hard caps / fenced cuts for engineering control.</p>
+              </div>
+            </article>
+            <article class="translation-item">
+              <span>3</span>
+              <div>
+                <h3>Access as a remediation status</h3>
+                <p>The path network is not just circulation. It records whether a zone is locked, visible, controlled, edge-open or fully public.</p>
+              </div>
+            </article>
+            <article class="translation-item">
+              <span>4</span>
+              <div>
+                <h3>Architecture grows after the ground</h3>
+                <p>Building footprints should land on stable caps, retained slabs or verified low-risk ground, not on a top-down four-tower diagram.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="warnings">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Crit Traps</p>
+            <h2>Do not let the project overclaim.</h2>
+          </div>
+          <p class="section-copy">These are the lines that should remain visible in your working notes and diagrams. They make the project more credible, not weaker.</p>
+        </div>
+        <div class="warning-grid">
+          <article class="warning"><h3>No universal bio-remediation.</h3><p>Plants and fungi have different chemical territories. Mixing them into one green cure-all will get attacked immediately.</p></article>
+          <article class="warning"><h3>No “metal degradation”.</h3><p>Use extract, immobilise, stabilise, reduce bioavailability or change migration pathway.</p></article>
+          <article class="warning"><h3>No food or ordinary biomass stream.</h3><p>Harvested biomass from contaminated soil needs testing, isolation, thermal treatment or specialist disposal.</p></article>
+          <article class="warning"><h3>No mycelium for asbestos.</h3><p>Asbestos cement and mineral fibres are engineering-track hazards.</p></article>
+          <article class="warning"><h3>No one-year Miscanthus miracle.</h3><p>First year is establishment. Its value is long-term stabilization and biomass infrastructure.</p></article>
+          <article class="warning"><h3>No fake measured map.</h3><p>Use CSM, confidence levels and confirmed / inferred drawing conventions until actual soil testing exists.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sources">
+    <div class="wrap source-grid">
+      <div>
+        <h2>Evidence Backbone</h2>
+        <p>Built from Jiajia’s three-track remediation notes, May 23, 2026. This page is a presentation layer, not a replacement for the detailed markdown table.</p>
+      </div>
+      <ul>
+        <li>Moreira et al. 2021, phytomanagement of metal(loid)-contaminated soils.</li>
+        <li>Grzegórska et al. 2023, Miscanthus remediation and long-term biomass management.</li>
+        <li>Fernández-Braña et al. 2023, plant strategy depends on pollution degree.</li>
+        <li>Stamets / Battelle 1998 and related mycoremediation references for hydrocarbon treatment.</li>
+        <li>SuRF-UK framework, Tier 1 assessment and sustainable remediation framing.</li>
+        <li>Forest Research, RHS and horticultural references for plant form and UK suitability checks.</li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const scenarios = [
+      {
+        id: "hotspot",
+        track: "engineering",
+        short: "ENG",
+        label: "极高 / 热点",
+        sub: "石棉、氰化物、高浓度金属、未确认源",
+        title: "Hotspot control before public use",
+        strategy: "Capping / ISS / excavation",
+        time: "Weeks to months",
+        access: "Not open",
+        evidence: "CSM + testing",
+        why: "Biological systems should not be asked to solve asbestos, cyanide or high-risk unknown sources.",
+        action: "Keep hardstanding as a cap where possible, isolate hotspots, and let elevated routes pass over zones that are not yet unlocked.",
+        ca: "Cell state remains locked until source-pathway-receptor risk is broken and monitoring confirms a lower exposure category.",
+        image: "assets/demolition-2018.png",
+        trackLabel: "Engineering Track"
+      },
+      {
+        id: "organic-high",
+        track: "myco",
+        short: "MYC",
+        label: "高污染 / 有机为主",
+        sub: "烃类、TPH、PAH、酚、PCB",
+        title: "Dark incubation for organic contamination",
+        strategy: "Mycelium biopile / covered mats",
+        time: "16 weeks to 2 years",
+        access: "Visible, not entered",
+        evidence: "Historic use + CSM",
+        why: "White-rot fungi can oxidise organic pollutants through lignin-degrading enzymes, but need darkness, moisture and suitable substrate.",
+        action: "Make covered incubation fields: timber fibre, mushroom substrate, moisture control, harvest and post-treatment.",
+        ca: "Organic cells become mycelium cells only when metal background is moderate enough not to suppress enzyme activity.",
+        image: "assets/oyster.jpg",
+        trackLabel: "Mycelium Track"
+      },
+      {
+        id: "metal-high",
+        track: "plant",
+        short: "PLT",
+        label: "高污染 / 金属为主",
+        sub: "高金属、生物有效态高、扬尘风险",
+        title: "Stabilise the surface, do not extract",
+        strategy: "Phytostabilization",
+        time: "1 to 10 years",
+        access: "Controlled edge access",
+        evidence: "CSM + sampling priority",
+        why: "At high concentrations, the priority is reducing contact, dust and runoff. Extraction is slow and can be unsafe if overclaimed.",
+        action: "Use dense grass cover, pioneer shrubs, soil amendments, rainwater control and capped mounds.",
+        ca: "The cell can shift from locked to controlled only after vegetation cover and exposure control are established.",
+        image: "assets/fescue.jpg",
+        trackLabel: "Plant Track"
+      },
+      {
+        id: "mixed-medium",
+        track: "plant",
+        short: "PLT",
+        label: "中污染 / 混合金属",
+        sub: "长期迁移、慢性暴露、可管理风险",
+        title: "Long-term biomass management",
+        strategy: "Assisted stabilization + slow uptake",
+        time: "3 to 25 years",
+        access: "Edges open, core managed",
+        evidence: "CSM + annual monitoring",
+        why: "Medium contamination can become a productive management field rather than a fast-cleaning promise.",
+        action: "Miscanthus, compost or biochar amendment, annual cutting, controlled biomass handling and monitoring.",
+        ca: "The cell accumulates repair time. Public access expands from edge to centre only after repeated stable monitoring cycles.",
+        image: "assets/miscanthus.jpg",
+        trackLabel: "Plant Track"
+      },
+      {
+        id: "low-extract",
+        track: "plant",
+        short: "PLT",
+        label: "低 / 中污染",
+        sub: "可控风险、适合试验和教育性可见化",
+        title: "Visible extraction trials",
+        strategy: "Phytoextraction strips",
+        time: "Seasonal to 3 years",
+        access: "Educational viewing",
+        evidence: "Low-risk sampling",
+        why: "Extraction becomes more credible at lower contamination levels, especially as a visible experimental field.",
+        action: "Sunflower, flax, hemp or annual strips; harvest biomass as contaminated material, not food or ordinary energy crop.",
+        ca: "The cell can become a public learning plot while biomass handling remains a controlled backend process.",
+        image: "assets/sunflower.jpg",
+        trackLabel: "Plant Track"
+      },
+      {
+        id: "open-eco",
+        track: "plant",
+        short: "PLT",
+        label: "低 / 修复后",
+        sub: "污染低或已稳定、生态恢复与公共使用",
+        title: "Productive ecology and public ground",
+        strategy: "Meadow / coppice / wetland",
+        time: "Ongoing",
+        access: "Open",
+        evidence: "Confirmed lower risk",
+        why: "The park appears after the risk pathway is controlled. It is the result of remediation, not a cosmetic green layer.",
+        action: "Meadow, wetland, short-rotation willow / poplar, public paths and later building footprints on verified ground.",
+        ca: "The cell is unlocked as civic ground and can host program, paths, platforms or lightweight building systems.",
+        image: "assets/willow.jpg",
+        trackLabel: "Plant Track"
+      },
+      {
+        id: "river",
+        track: "plant",
+        short: "PLT",
+        label: "河岸 / 径流边界",
+        sub: "Thames 水位影响、径流携污入河",
+        title: "Filter the water edge",
+        strategy: "Riparian filtering / hydraulic control",
+        time: "1 to 10 years",
+        access: "Open with edge management",
+        evidence: "Hydrology + CSM",
+        why: "The Thames edge is a pathway. Repair must filter runoff before it leaves the site.",
+        action: "Willow buffer, reed canary grass, wet meadow, bioswale, reedbed and controlled bank access.",
+        ca: "Water-edge cells depend on upstream cells. If source cells remain dirty, the edge cannot be treated as fully public.",
+        image: "assets/willow.jpg",
+        trackLabel: "Plant Track"
+      }
+    ];
+
+    const gradients = [
+      {
+        id: "high",
+        label: "高污染",
+        sub: "稳定化",
+        kicker: "High contamination",
+        title: "Stabilise first. Do not extract from the worst ground.",
+        copy: "High contamination zones use roots and cover to reduce dust, runoff and contact. The landscape is a controlled skin, not an edible or fully open park.",
+        species: [
+          ["assets/fescue.jpg", "Festuca / Lolium / Agrostis", "Dense grass cover for surface stabilization and erosion control."],
+          ["assets/ryegrass.jpg", "Lolium perenne", "Fast establishment where the first task is to stop erosion and dust."],
+          ["assets/bentgrass.jpg", "Agrostis capillaris", "Low metallophyte-like cover for poor, acidic or metal-bearing soils."],
+          ["assets/buddleja.jpg", "Buddleja davidii", "Pioneer brownfield shrub; useful as succession logic with boundary control."]
+        ]
+      },
+      {
+        id: "medium",
+        label: "中污染",
+        sub: "长期管理",
+        kicker: "Medium contamination",
+        title: "Make a managed biomass field, not a one-time cure.",
+        copy: "Medium zones can combine soil amendment, biomass planting and annual monitoring. The repair is slow, visible and operational.",
+        species: [
+          ["assets/miscanthus.jpg", "Miscanthus × giganteus", "Root / rhizome accumulation, stabilization and annual cut management."],
+          ["assets/willow.jpg", "Willow coppice", "Short-rotation buffer planting for wet edges and metal management."],
+          ["assets/poplar.jpg", "Poplar coppice", "Deep-rooted hydraulic control and longer public woodland structure."],
+          ["assets/reed-canary.jpg", "Reed canary grass", "Wet swale and runoff edge stabilization."]
+        ]
+      },
+      {
+        id: "low",
+        label: "低污染",
+        sub: "可见提取",
+        kicker: "Low to medium contamination",
+        title: "Extraction becomes a public experiment only when risk is lower.",
+        copy: "Lower-risk strips can show seasonal change: planting, uptake, harvest, testing and controlled biomass disposal.",
+        species: [
+          ["assets/sunflower.jpg", "Sunflower", "Strong visual identity, seasonal phytoextraction, non-food harvest."],
+          ["assets/hemp.jpg", "Industrial hemp", "Non-food fibre crop candidate where regulation and cultivar choice allow."],
+          ["assets/flax.jpg", "Flax", "Material narrative through contaminated fibre trials, with strict handling."],
+          ["assets/miscanthus.jpg", "Miscanthus strips", "Slow uptake plus biomass infrastructure for monitored plots."]
+        ]
+      },
+      {
+        id: "open",
+        label: "修复后",
+        sub: "公共生态",
+        kicker: "Post-remediation",
+        title: "Open ground is an earned condition.",
+        copy: "Once the site is stable or lower-risk, productive ecology can become public park, wetland, coppice and later architectural support.",
+        species: [
+          ["assets/willow.jpg", "Willow / wet meadow", "Filtering edge, floodable landscape and public ecology."],
+          ["assets/birch.jpg", "Birch pioneer woodland", "Brownfield succession with a local UK species substitution."],
+          ["assets/poplar.jpg", "Poplar woodland", "Longer-term buffer structure and shaded civic routes."],
+          ["assets/site-now-blender.png", "Verified building ground", "Future architecture lands after soil status is known."]
+        ]
+      }
+    ];
+
+    const scenarioList = document.getElementById("scenarioList");
+    const resultCard = document.getElementById("resultCard");
+    const resultTrack = document.getElementById("resultTrack");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultStrategy = document.getElementById("resultStrategy");
+    const resultTime = document.getElementById("resultTime");
+    const resultAccess = document.getElementById("resultAccess");
+    const resultEvidence = document.getElementById("resultEvidence");
+    const resultWhy = document.getElementById("resultWhy");
+    const resultAction = document.getElementById("resultAction");
+    const resultCA = document.getElementById("resultCA");
+    const resultImage = document.getElementById("resultImage");
+
+    function setScenario(id) {
+      const scenario = scenarios.find(item => item.id === id) || scenarios[0];
+      resultCard.dataset.track = scenario.track;
+      resultTrack.textContent = scenario.trackLabel;
+      resultTitle.textContent = scenario.title;
+      resultStrategy.textContent = scenario.strategy;
+      resultTime.textContent = scenario.time;
+      resultAccess.textContent = scenario.access;
+      resultEvidence.textContent = scenario.evidence;
+      resultWhy.textContent = scenario.why;
+      resultAction.textContent = scenario.action;
+      resultCA.textContent = scenario.ca;
+      resultImage.src = scenario.image;
+      resultImage.alt = scenario.title;
+      document.querySelectorAll(".scenario-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.id === scenario.id);
+      });
+    }
+
+    scenarios.forEach(scenario => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "scenario-btn";
+      button.dataset.id = scenario.id;
+      button.dataset.track = scenario.track;
+      button.innerHTML = `
+        <span class="scenario-dot">${scenario.short}</span>
+        <span><span class="scenario-name">${scenario.label}</span><span class="scenario-sub">${scenario.sub}</span></span>
+        <span class="scenario-arrow">→</span>
+      `;
+      button.addEventListener("click", () => setScenario(scenario.id));
+      scenarioList.appendChild(button);
+    });
+
+    const gradientTabs = document.getElementById("gradientTabs");
+    const speciesStrip = document.getElementById("speciesStrip");
+    const gradientKicker = document.getElementById("gradientKicker");
+    const gradientTitle = document.getElementById("gradientTitle");
+    const gradientCopy = document.getElementById("gradientCopy");
+
+    function setGradient(id) {
+      const gradient = gradients.find(item => item.id === id) || gradients[0];
+      gradientKicker.textContent = gradient.kicker;
+      gradientTitle.textContent = gradient.title;
+      gradientCopy.textContent = gradient.copy;
+      speciesStrip.innerHTML = "";
+      gradient.species.forEach(species => {
+        const card = document.createElement("article");
+        card.className = "species-card";
+        card.innerHTML = `
+          <img src="${species[0]}" alt="${species[1]}">
+          <div><h4>${species[1]}</h4><p>${species[2]}</p></div>
+        `;
+        speciesStrip.appendChild(card);
+      });
+      document.querySelectorAll(".tab-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.id === gradient.id);
+      });
+    }
+
+    gradients.forEach(gradient => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "tab-btn";
+      button.dataset.id = gradient.id;
+      button.innerHTML = `<b>${gradient.label}</b><span>${gradient.sub}</span>`;
+      button.addEventListener("click", () => setGradient(gradient.id));
+      gradientTabs.appendChild(button);
+    });
+
+    setScenario("hotspot");
+    setGradient("high");
+  </script>
+</body>
+</html>
