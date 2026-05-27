@@ -54,7 +54,7 @@
   /* ================== DECK ================== */
   #deck{
     position:fixed;inset:0;
-    width:500vw;height:100vh;
+    width:600vw;height:100vh;
     display:flex;flex-wrap:nowrap;
     transition:transform .9s var(--ease-deck);
     will-change:transform;
@@ -243,6 +243,82 @@
   }
   .path-step:last-child::after{display:none}
 
+  /* ================== SLIDE 3.5 — FOUR-LAYER DASHBOARD ================== */
+  .layer-dash{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:var(--s-2);
+    flex:1;align-content:center;
+    position:relative;
+  }
+  .layer-ghost{
+    position:absolute;right:-3vw;top:-6vh;
+    font-family:var(--sans);font-weight:200;
+    font-size:28vw;line-height:.85;
+    letter-spacing:-.04em;
+    color:var(--ink);opacity:.03;
+    pointer-events:none;z-index:0;
+    user-select:none;
+  }
+  .layer-card{
+    position:relative;z-index:1;
+    background:rgba(242,240,235,.94);
+    backdrop-filter:blur(3px);
+    border:1px solid var(--rule);
+    padding:0;
+    display:flex;flex-direction:column;
+    transition:border-color .25s var(--ease),transform .25s var(--ease);
+    overflow:hidden;
+  }
+  .layer-card:hover{border-color:var(--signal);transform:translateY(-2px)}
+  .layer-card-head{
+    display:flex;align-items:center;gap:var(--s-2);
+    padding:var(--s-2) var(--s-3);
+    border-bottom:1px solid var(--rule-soft);
+    background:rgba(var(--ink-rgb),.018);
+  }
+  .layer-card-num{
+    font-family:var(--mono);font-weight:500;
+    font-size:1.8rem;line-height:1;
+    color:var(--signal);letter-spacing:-.02em;
+    min-width:42px;
+  }
+  .layer-card-name{
+    font-family:var(--sans);font-weight:500;font-size:.92rem;
+    color:var(--ink);line-height:1.2;
+    letter-spacing:.01em;
+  }
+  .lang-cn .layer-card-name{font-family:var(--cjk),var(--sans);font-weight:500}
+  .layer-card-body{
+    padding:var(--s-2) var(--s-3) var(--s-3);
+    display:flex;flex-direction:column;gap:var(--s-1);
+    flex:1;
+  }
+  .layer-cell{
+    padding:6px 0;
+    border-bottom:1px solid rgba(var(--ink-rgb),.06);
+  }
+  .layer-cell:last-child{border-bottom:none}
+  .layer-cell .k{
+    font-family:var(--mono);font-size:9.5px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--signal);margin-bottom:3px;
+    display:block;
+  }
+  .layer-cell .v{
+    font-size:.8rem;line-height:1.55;color:var(--ink);
+  }
+  .lang-cn .layer-cell .v{font-family:var(--cjk),var(--sans)}
+  .layer-cell .v code{
+    font-family:var(--mono);font-size:.74rem;
+    color:var(--signal);background:rgba(200,69,31,.06);
+    padding:1px 4px;border-radius:2px;
+  }
+  .layer-card--accent{border-left:3px solid var(--signal)}
+  @media(max-width:900px){
+    .layer-dash{grid-template-columns:1fr}
+    .layer-ghost{font-size:40vw;right:-8vw}
+  }
+
   /* ================== SLIDE 5 — ROADMAP ================== */
   .road-list{
     flex:1;align-content:center;
@@ -365,7 +441,7 @@
     <span class="sep">·</span>
     <button class="lang-btn" data-lang-set="cn" aria-pressed="true">中</button>
     <span class="sep">|</span>
-    <span class="acc" id="slideCounter">01</span> / 05
+    <span class="acc" id="slideCounter">01</span> / 06
   </div>
 </header>
 
@@ -391,7 +467,7 @@
       </p>
 
       <div class="cover-meta">
-        <span>v0.1.1</span>
+        <span>v0.1.2</span>
         <span>Tauri + React</span>
         <span>MIT · Windows</span>
       </div>
@@ -520,7 +596,7 @@
             </li>
             <li>
               <strong><span class="lang-en">UI · visual style + brand</span><span class="lang-cn">UI · 视觉风格 + 品牌</span></strong>
-              <span class="sub"><span class="lang-en">Notion-style slate; bilingual EN/CN toggle; all core operations one screen deep — no multi-step wizards, no settings page yet.</span><span class="lang-cn">Notion 风格 slate 蓝灰;中英一键切换;所有核心操作一屏到达——没有多步引导,还没有设置页。</span></span>
+              <span class="sub"><span class="lang-en">Notion-style slate; bilingual EN/CN toggle; all core operations one screen deep.</span><span class="lang-cn">Notion 风格 slate 蓝灰;中英一键切换;所有核心操作一屏到达。</span></span>
             </li>
           </ul>
         </div>
@@ -534,11 +610,11 @@
           <ul>
             <li>
               <strong><span class="lang-en">Business logic · the path that solves the pain</span><span class="lang-cn">业务逻辑 · 解决痛点的路径</span></strong>
-              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools — so the user is the bridge. End a session: user picks what to carry; start the next session: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, but user approves every single write before it touches disk.</span><span class="lang-cn">核心思路: 用户是唯一同时存在于所有 AI 工具里的实体——所以让用户当桥。结束对话: 用户选要带走什么;开始下一段: MemoryOS 把它拼成下一个 AI 能读的 prompt;导入: AI 的回复被解析、分组待审;审核: AI 建议更新,但每一次写盘都要用户亲手确认。</span></span>
+              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools — so the user is the bridge. End a session: user picks what to carry; start the next: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, user approves every write. Memory stays current: AI marks what's outdated in each handoff (Superseded), the app merges new over old, stale decisions retire — so the next AI always gets up-to-date context.</span><span class="lang-cn">核心思路: 用户是唯一同时存在于所有 AI 工具里的实体——所以让用户当桥。结束对话: 用户选要带走什么;开始下一段: MemoryOS 把它拼成下一个 AI 能读的 prompt;导入: AI 的回复被解析、分组待审;审核: AI 建议更新,用户亲手确认才写盘。记忆保持现时: AI 在 handoff 里标出过时内容(Superseded),app 把新旧合并、过时决策退场——下一个 AI 拿到的永远是最新上下文。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">Algorithm · how the modules connect</span><span class="lang-cn">算法 · 模块之间的衔接</span></strong>
-              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + a per-AI template (8 AI presets, each tuned differently) into clipboard. Markdown parser: split the AI's free-text response into 9 typed sections. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. These three pieces are what turn "copy-paste between tools" into a structured, repeatable loop.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 按 AI 定制的模板(8 个预置 AI,各自调过)打包进剪贴板。Markdown 解析: 把 AI 的自由文本回复拆成 9 个结构化字段。风险路由: 把每条建议更新标为 低 / 中 / 高 风险,决定 Review 里哪些默认勾、哪些默认不勾。这三块是把「在工具之间复制粘贴」变成一条结构化、可重复的回路的关键。</span></span>
+              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + standardised prompt template into clipboard. Fault-tolerant parser: recognise headings with or without <code>##</code>, numbered / bold / plain-text / indented variants, zh + en section names — never assume the AI's output is perfectly formatted. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. Superseded merge: AI marks outdated content in the handoff → parser extracts → Review shows old (strikethrough) vs new (highlighted) → user confirms → stale memory retires.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 标准化指令模板打包进剪贴板。容错解析: 有无 <code>##</code>、数字 / 粗体 / 纯文本 / 带缩进的标题都认, 中英文段名都认——不假设 AI 输出格式完美。风险路由: 把每条建议更新标为低 / 中 / 高风险, 决定 Review 里哪些默认勾、哪些默认不勾。Superseded 合并: AI 在 handoff 里标注哪些旧内容已过时 → parser 提取 → Review 页划线对比新旧 → 用户确认 → 过时记忆退场。</span></span>
             </li>
           </ul>
         </div>
@@ -555,11 +631,123 @@
               <span class="sub"><span class="lang-en"><code>about_me.md</code> — the user's long-term identity and preferences, shared across all projects. <code>00_context.md</code> — per-project working snapshot, updated after each session. <code>decisions.md</code> — key decisions accumulated over time. <code>sessions/*</code> — timestamped per-session summaries. These four file types are the product's entire data model — input to the next prompt, output from the last AI, and the user's accumulated working memory.</span><span class="lang-cn"><code>about_me.md</code> — 用户的长期身份和偏好,跨项目共享。<code>00_context.md</code> — 每个项目的工作快照,每次对话结束后更新。<code>decisions.md</code> — 积累的关键决策记录。<code>sessions/*</code> — 按时间戳存的每次对话总结。这四种文件就是产品的全部数据模型——上一次 AI 的输出变成下一次 prompt 的输入,用户的工作记忆就这样积累起来。</span></span>
             </li>
             <li>
-              <strong><span class="lang-en">User behavior data · what I can observe</span><span class="lang-cn">用户行为数据 · 我能观察到什么</span></strong>
-              <span class="sub"><span class="lang-en">Currently: only what users report via GitHub Issues — I have no in-app visibility into where they get stuck or what they skip. Next: lightweight event logging (which screens do users actually visit, where does the handoff loop break, which AI templates get used vs ignored) so iteration priority follows real usage, not my assumptions.</span><span class="lang-cn">目前: 只有用户通过 GitHub Issues 主动反馈的——我在 App 内看不到他们卡在哪、跳过了什么。下一步: 加轻量的事件记录(用户实际走了哪些页面、handoff 回路在哪一步断掉、哪些 AI 模板被用了哪些被跳过),让迭代优先级跟着真实使用走,不跟我的假设走。</span></span>
+              <strong><span class="lang-en">Feedback channel</span><span class="lang-cn">反馈通道</span></strong>
+              <span class="sub"><span class="lang-en">In-app feedback button: user writes a note → one click copies it to clipboard and opens GitHub Issues — paste and submit. No network call from MemoryOS, no backend, no account needed.</span><span class="lang-cn">App 内反馈按钮: 用户写一段文字 → 一键复制到剪贴板并打开 GitHub Issues 页面, 粘贴提交即可。MemoryOS 不发任何网络请求, 不需要后端, 不需要账号。</span></span>
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3.5 · FOUR-LAYER DEEP DIVE (记忆现时性) ============ -->
+  <section class="slide" data-bg="layers">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">02.5</span>
+        <span class="lang-en">Memory freshness · Four-layer breakdown</span>
+        <span class="lang-cn">记忆现时性 · 四层拆解</span>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:var(--s-4);margin-bottom:var(--s-3)">
+        <h2 class="anchor" style="margin-bottom:0;white-space:nowrap">
+          <span class="lang-en">How memory <span class="acc">stays current</span></span>
+          <span class="lang-cn">记忆如何<span class="acc">保持现时</span></span>
+        </h2>
+        <p class="lede" style="margin-bottom:0;white-space:nowrap">
+          <span class="lang-en">The hardest part isn't recording — it's retiring what's outdated. Four layers, each with a clear input → process → output.</span>
+          <span class="lang-cn">最难的不是记录，是让过时的退场。四层架构，每层都有明确的 输入 → 处理 → 输出。</span>
+        </p>
+      </div>
+
+      <div class="layer-dash">
+        <div class="layer-ghost">4L</div>
+
+        <!-- Card 1 · Logic -->
+        <div class="layer-card layer-card--accent">
+          <div class="layer-card-head">
+            <span class="layer-card-num">01</span>
+            <span class="layer-card-name"><span class="lang-en">Logic</span><span class="lang-cn">逻辑层</span></span>
+          </div>
+          <div class="layer-card-body">
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">PAIN</span><span class="lang-cn">痛点</span></span>
+              <span class="v"><span class="lang-en">Direction A→B, task done — old memory stays → next AI misled</span><span class="lang-cn">假设用户方向 A→B、任务完成 → 旧记忆不退场 → 下个 AI 被误导</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">INSIGHT</span><span class="lang-cn">洞察</span></span>
+              <span class="v"><span class="lang-en">AI already read old files in end-prompt — it knows what changed. App reads the structured field and shows the user what's new vs outdated.</span><span class="lang-cn">AI 生成 handoff 时已读过旧文件——它知道什么变了。App 读取结构化字段，展示给用户看哪些是新的、哪些过时了。</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">RULED OUT</span><span class="lang-cn">排除的路</span></span>
+              <span class="v"><span class="lang-en">❌ AI auto-writes (user loses control)<br>❌ User manually diffs (the pain itself)</span><span class="lang-cn">❌ AI 全自动改文件（失去控制权）<br>❌ 用户手动校对（痛点本身）</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 · Algorithm -->
+        <div class="layer-card layer-card--accent">
+          <div class="layer-card-head">
+            <span class="layer-card-num">02</span>
+            <span class="layer-card-name"><span class="lang-en">Algorithm</span><span class="lang-cn">算法层</span></span>
+          </div>
+          <div class="layer-card-body">
+            <div class="layer-cell">
+              <span class="k">01 · PARSE</span>
+              <span class="v"><span class="lang-en">Paste handoff → <code>parseHandoff()</code> extracts suggestions</span><span class="lang-cn">粘贴 handoff → <code>parseHandoff()</code> 切段提取</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k">02 · DETECT</span>
+              <span class="v"><span class="lang-en">Non-empty → trigger Superseded merge Review</span><span class="lang-cn">非空 → 触发 Superseded 合并 Review</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k">03 · COMPARE</span>
+              <span class="v"><span class="lang-en">Old <del>strikethrough</del> vs new <strong>highlight</strong> → user confirms</span><span class="lang-cn">旧 <del>划线</del> vs 新 <strong>高亮</strong> → 用户确认写入</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k">04 · LOOP</span>
+              <span class="v"><span class="lang-en"><code>buildStartSessionPrompt()</code> → AI gets fresh context</span><span class="lang-cn"><code>buildStartSessionPrompt()</code> → AI 拿到现时记忆</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 · Data -->
+        <div class="layer-card">
+          <div class="layer-card-head">
+            <span class="layer-card-num">03</span>
+            <span class="layer-card-name"><span class="lang-en">Data</span><span class="lang-cn">数据层</span></span>
+          </div>
+          <div class="layer-card-body">
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">LIVE FILES</span><span class="lang-cn">活文件</span></span>
+              <span class="v"><code>decisions.md</code> · <code>00_context.md</code> · <code>about_me.md</code><br><span class="lang-en">— overwritable via Superseded merge</span><span class="lang-cn">— 可被 Superseded 合并覆写</span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">ARCHIVE</span><span class="lang-cn">归档</span></span>
+              <span class="v"><code>sessions/*</code><br><span class="lang-en">— append-only, never re-fed to AI</span><span class="lang-cn">— 只追加，不喂给下次 AI</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 · Presentation -->
+        <div class="layer-card">
+          <div class="layer-card-head">
+            <span class="layer-card-num">04</span>
+            <span class="layer-card-name"><span class="lang-en">Presentation</span><span class="lang-cn">表现层</span></span>
+          </div>
+          <div class="layer-card-body">
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">USER PATH</span><span class="lang-cn">交互路径</span></span>
+              <span class="v"><span class="lang-en">End → Import → Review (old <del>×</del> / new <strong>✓</strong>) → Confirm<br><strong>4 clicks max</strong></span><span class="lang-cn">结束 → 导入 → Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 确认<br><strong>最多 4 下</strong></span></span>
+            </div>
+            <div class="layer-cell">
+              <span class="k"><span class="lang-en">BRANCH</span><span class="lang-cn">分叉</span></span>
+              <span class="v"><span class="lang-en">No update → save session only, skip merge</span><span class="lang-cn">没有更新 → 直接保存，跳过合并</span></span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -593,7 +781,7 @@
         <div class="path-step">
           <div class="step-num">02</div>
           <div class="step-what"><span class="lang-en">Pick AI tool template</span><span class="lang-cn">选 AI 工具模板</span></div>
-          <div class="step-where"><code>sourceTools.ts</code> · 8 presets</div>
+          <div class="step-where"><code>sourceTools.ts</code></div>
         </div>
         <div class="path-step">
           <div class="step-num">03</div>
@@ -622,7 +810,7 @@
         </div>
         <div class="path-step">
           <div class="step-num">08</div>
-          <div class="step-what"><span class="lang-en">Group by riskLevel → user ticks → write to disk</span><span class="lang-cn">按 riskLevel 分组 → 用户勾选 → 写盘</span></div>
+          <div class="step-what"><span class="lang-en">Superseded merge: old (strikethrough) vs new (highlight) → user ticks → write</span><span class="lang-cn">Superseded 合并: 旧内容划线 / 新内容高亮 → 用户勾选 → 写盘</span></div>
           <div class="step-where"><code>ReviewPage.tsx</code></div>
         </div>
       </div>
@@ -640,8 +828,8 @@
       </div>
 
       <h2 class="anchor">
-        <span class="lang-en">v0.1.1 <span class="acc">/ Now</span></span>
-        <span class="lang-cn">v0.1.1 <span class="acc">/ 现在</span></span>
+        <span class="lang-en">v0.1.2 <span class="acc">/ Now</span></span>
+        <span class="lang-cn">v0.1.2 <span class="acc">/ 现在</span></span>
       </h2>
 
       <div class="road-list">
@@ -653,28 +841,36 @@
             <span class="lang-cn">核心闭环 · 项目管理 · Bootstrap 引导 · Windows 安装包</span>
           </span>
         </div>
-        <div class="road-item now">
-          <span class="road-mark">●</span>
+        <div class="road-item done">
+          <span class="road-mark">✓</span>
           <span class="road-ver">v0.1.1</span>
           <span class="road-what">
-            <span class="lang-en">Bilingual EN/CN · system-trash delete + Undo · UX polish <em>(current)</em></span>
-            <span class="lang-cn">中英双语 · 删除走系统回收站 + Undo · UX 打磨 <em>(当前)</em></span>
+            <span class="lang-en">Bilingual EN/CN · system-trash delete + Undo · UX polish</span>
+            <span class="lang-cn">中英双语 · 删除走系统回收站 + Undo · UX 打磨</span>
+          </span>
+        </div>
+        <div class="road-item now">
+          <span class="road-mark">●</span>
+          <span class="road-ver">v0.1.2</span>
+          <span class="road-what">
+            <span class="lang-en">Fault-tolerant parser · Superseded memory merge (old strikethrough / new highlight) · in-app file editing · feedback channel · prompt format contract <em>(current)</em></span>
+            <span class="lang-cn">解析容错 · Superseded 记忆合并(旧划线 / 新高亮) · App 内文件编辑 · 反馈通道 · Prompt 格式契约 <em>(当前)</em></span>
           </span>
         </div>
         <div class="road-item todo">
           <span class="road-mark">○</span>
           <span class="road-ver">v0.2</span>
           <span class="road-what">
-            <span class="lang-en">Cross-AI output parity — run the full loop on ChatGPT / Claude / Cursor / Kimi and tune prompts per AI, so "paste into any AI" actually returns a consistent 9-section summary (today it doesn't, quality varies by AI)</span>
-            <span class="lang-cn">跨 AI 输出拉通 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环,按 AI 调 prompt 模板,让「粘到任何 AI 都能拿回一致的 9 段总结」真的成立(目前不成立,不同 AI 质量差很多)</span>
+            <span class="lang-en">Cross-AI output consistency — run the full loop on ChatGPT / Claude / Cursor / Kimi, verify the Superseded merge works across all AIs + 10 seed-user interviews</span>
+            <span class="lang-cn">跨 AI 输出一致性验证 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环, 验证 Superseded 合并跨 AI 都能用 + 10 个种子用户 1v1 访谈</span>
           </span>
         </div>
         <div class="road-item todo">
           <span class="road-mark">○</span>
           <span class="road-ver">v0.3</span>
           <span class="road-what">
-            <span class="lang-en">In-app Markdown editor — stop requiring users to install Obsidian / VS Code just to edit their own files</span>
-            <span class="lang-cn">App 内 Markdown 编辑器 — 不再要求用户先去装 Obsidian / VS Code 才能改自己的文件</span>
+            <span class="lang-en">Mac / Linux build + code signing — platform coverage + kill the "unknown publisher" warning</span>
+            <span class="lang-cn">Mac / Linux 构建 + 代码签名 — 平台覆盖 + 干掉「未知发行者」警告</span>
           </span>
         </div>
         <div class="road-item todo">

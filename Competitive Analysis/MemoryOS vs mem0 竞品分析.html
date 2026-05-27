@@ -192,23 +192,30 @@ em{font-style:normal}
 .section.tight{padding:clamp(48px,6vw,80px) 0}
 .section.alt{background:var(--paper-2)}
 .eyebrow{
-  font-family:var(--font-mono);
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:12px;letter-spacing:.02em;
   color:var(--muted);
   margin-bottom:18px;
   display:flex;align-items:baseline;gap:14px;
+  font-weight:500;
 }
-.eyebrow .num{color:var(--signal);font-weight:500}
+.eyebrow .num{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--signal);font-weight:500;
+}
 .section h2{
-  font-family:var(--font-display),var(--font-cjk);
+  font-family:var(--font-cjk),var(--font-sans);
   font-size:clamp(32px,4.2vw,56px);
-  font-weight:600;
-  letter-spacing:-.02em;
-  line-height:1.06;
+  font-weight:500;
+  letter-spacing:-.01em;
+  line-height:1.1;
   margin:0 0 24px;
   color:var(--ink);
   text-wrap:balance;
 }
+.section h2 .num,
+.section h2 .vs{font-family:var(--font-display);font-weight:500}
 .section h2 .sub{
   display:block;
   font-family:var(--font-cjk),var(--font-sans);
@@ -784,6 +791,567 @@ em{font-style:normal}
 .summary tbody td:nth-child(2){color:var(--ink);font-weight:500}
 .summary tbody td:nth-child(3){font-size:14.5px}
 
+/* ─────────────────────────────────────────────────────────────
+   ARCHITECTURE TEARDOWN — refined typography system
+   CJK fonts ALWAYS lead the font-family stack (Latin chars still
+   render in Inter via the chain; Chinese chars resolve to Noto
+   Sans SC instead of Windows default 宋体).
+───────────────────────────────────────────────────────────── */
+.arch-intro{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:15.5px;line-height:1.7;color:var(--ink-2);
+  margin:0 0 40px;max-width:62ch;
+  font-weight:400;letter-spacing:0;
+}
+.arch-intro em{color:var(--ink);font-weight:500}
+.arch-intro .flow-arrow{color:var(--signal);margin:0 .3em;font-family:var(--font-mono)}
+
+.arch-grid{
+  display:flex;flex-direction:column;gap:0;
+  margin-bottom:72px;
+  border-top:2px solid var(--ink);
+}
+.arch-card{
+  background:var(--paper);
+  padding:48px 0 56px;
+  border-bottom:2px solid var(--ink);
+  position:relative;
+}
+.arch-card-head{
+  display:grid;
+  grid-template-columns:88px 1fr auto;
+  gap:24px;
+  align-items:baseline;
+  margin-bottom:32px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--hair);
+}
+.arch-card-num{
+  font-family:var(--font-display);
+  font-size:64px;
+  font-weight:500;
+  color:var(--signal);
+  line-height:.9;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;
+  align-self:start;
+}
+.arch-card-titles{
+  display:flex;flex-direction:column;gap:6px;
+}
+.arch-tag{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--signal);font-weight:500;
+}
+.arch-name{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:22px;font-weight:500;color:var(--ink);
+  letter-spacing:-.01em;line-height:1.2;
+}
+.arch-role{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13px;font-weight:400;color:var(--muted);
+  letter-spacing:0;line-height:1.5;
+  margin-top:2px;
+}
+.arch-card-progress{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+  align-self:end;padding-bottom:4px;
+}
+.arch-cols{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+  margin-top:0;
+}
+.arch-col{
+  padding:8px 32px 8px 0;
+  border-right:1px solid var(--hair);
+}
+.arch-col + .arch-col{padding-left:32px;padding-right:32px}
+.arch-col.cost{
+  background:rgba(200,69,31,.025);
+  border-right:none;
+  padding:24px 32px 24px 32px;
+  margin-top:-24px;
+  position:relative;
+}
+.arch-col.cost::before{
+  content:"";position:absolute;left:0;top:0;
+  width:2px;height:100%;background:var(--signal);
+}
+.col-label{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:14px;font-weight:500;
+}
+.arch-col.cost .col-label{color:var(--signal)}
+.col-headline{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:18.5px;font-weight:500;
+  color:var(--ink);
+  letter-spacing:-.005em;
+  line-height:1.35;
+  margin-bottom:14px;
+  text-wrap:balance;
+}
+.col-body{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:14px;line-height:1.75;
+  color:var(--ink-2);font-weight:400;
+  letter-spacing:0;
+}
+.col-body strong{color:var(--ink);font-weight:500}
+.col-body em{color:var(--ink);font-weight:500}
+.col-body code{
+  font-family:var(--font-mono);font-size:.86em;
+  color:var(--signal);background:rgba(200,69,31,.06);
+  padding:1.5px 6px;border-radius:2px;
+  font-weight:400;
+}
+
+/* algorithm pipeline (full width inside card) */
+.arch-pipeline{
+  margin-top:0;padding-top:0;
+  margin-bottom:32px;
+}
+.arch-pipeline-label{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;font-weight:500;
+}
+.arch-pipeline-flow{display:flex;gap:3px;margin-bottom:12px}
+.arch-pipeline-step{
+  flex:1;padding:13px 8px;background:var(--paper-2);
+  text-align:center;line-height:1.35;
+}
+.arch-pipeline-step .step-name{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13px;font-weight:500;color:var(--ink);
+  letter-spacing:-.005em;
+}
+.arch-pipeline-step .step-sub{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:11px;color:var(--muted);
+  display:block;margin-top:3px;letter-spacing:0;
+}
+.arch-pipeline-step.hot{
+  background:rgba(200,69,31,.05);
+  border:1px solid var(--signal);
+  flex:1.3;
+}
+.arch-pipeline-step.hot .step-name,
+.arch-pipeline-step.hot .step-sub{color:var(--signal)}
+.arch-pipeline-arrow{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--hair-strong);font-size:14px;
+  font-family:var(--font-mono);
+  width:14px;
+}
+.arch-pipeline-note{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:12.5px;line-height:1.6;color:var(--muted);
+  text-align:center;letter-spacing:0;
+  padding-top:6px;
+}
+.arch-pipeline-note code{
+  font-family:var(--font-mono);font-size:.9em;
+  color:var(--signal);background:rgba(200,69,31,.06);
+  padding:1.5px 5px;
+}
+.arch-cols-2{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  margin-top:24px;padding-top:24px;
+  border-top:1px solid var(--hair);
+}
+.arch-cols-2 .arch-col{padding:8px 32px 8px 0;border-right:1px solid var(--hair)}
+.arch-cols-2 .arch-col + .arch-col{padding-left:32px;padding-right:32px;border-right:none}
+.arch-cols-2 .arch-col.cost{
+  padding:24px 32px;margin-top:-24px;
+  background:rgba(200,69,31,.025);
+}
+
+/* data layer JSON snippet */
+.arch-json{
+  font-family:var(--font-mono);
+  font-size:11.5px;line-height:1.75;
+  background:#1a1a1c;color:#a8a8a8;
+  padding:14px 18px;
+  margin:8px 0 12px;
+  border-radius:2px;
+  font-feature-settings:"liga" 0;
+}
+.arch-json .k{color:var(--signal)}
+.arch-json .v{color:#a8d8a8}
+.arch-json .p{color:#e8e8e8}
+
+/* presentation step pills */
+.arch-pills{display:flex;gap:10px;margin-bottom:16px}
+.arch-pill{
+  flex:1;text-align:center;padding:12px 8px;
+  background:var(--paper-2);
+}
+.arch-pill .pill-figure{
+  font-family:var(--font-display);
+  font-size:24px;font-weight:500;color:var(--ink);
+  line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;
+}
+.arch-pill .pill-word{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:14px;font-weight:500;color:var(--ink);
+  line-height:1;padding-top:7px;letter-spacing:-.005em;
+}
+.arch-pill .pill-label{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-top:6px;font-weight:500;
+}
+
+/* condensed 4-layer comparison table (mem0 vs MemoryOS) */
+.compare-eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);
+  margin:24px 0 18px;font-weight:500;
+}
+.compare-table{border-top:1px solid var(--ink)}
+.compare-row{
+  display:grid;grid-template-columns:100px 1fr 1fr;
+  gap:32px;padding:22px 0;
+  border-bottom:1px solid var(--hair);
+  align-items:baseline;
+}
+.compare-row.head{
+  padding:14px 0;border-bottom:1px solid var(--hair-strong);
+}
+.compare-row:last-child{border-bottom:1px solid var(--ink)}
+.compare-row .layer-cell{
+  font-family:var(--font-mono);
+  font-size:12px;letter-spacing:.06em;color:var(--signal);
+  font-weight:500;
+}
+.compare-row.head .layer-cell,
+.compare-row.head .head-cell{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.compare-row.head .head-cell.us{color:var(--signal)}
+.compare-row .side{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:14.5px;line-height:1.65;
+}
+.compare-row .side.them{color:var(--ink-2)}
+.compare-row .side.them strong{color:var(--ink);font-weight:500}
+.compare-row .side.us{color:var(--ink)}
+.compare-row .side.us strong{font-weight:500}
+
+@media(max-width:880px){
+  .arch-card{padding:32px 28px}
+  .arch-cols,.arch-cols-2{grid-template-columns:1fr;gap:0}
+  .arch-col{
+    padding:22px 0;border-right:none;
+    border-bottom:1px solid var(--hair);
+  }
+  .arch-col + .arch-col{padding-left:0;padding-right:0}
+  .arch-col.cost{
+    margin-right:-28px;margin-left:-28px;
+    padding-left:28px;padding-right:28px;
+  }
+  .compare-row{grid-template-columns:80px 1fr;gap:16px}
+  .compare-row .side.us{grid-column:2;margin-top:8px;padding-top:8px;border-top:1px dashed var(--hair)}
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MARKET + PROFILES — editorial one-screen layout
+───────────────────────────────────────────────────────────── */
+.mp-dashboard{margin-bottom:32px}
+
+/* market bar — single horizontal strip, two layers stacked tight */
+.mp-layer-bar{
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  margin-bottom:28px;
+}
+.mp-layer{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:32px;
+  padding:12px 0;
+  align-items:baseline;
+}
+.mp-layer + .mp-layer{border-top:1px solid var(--hair)}
+.mp-layer-lbl{
+  font-family:var(--font-mono);
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+  line-height:1.3;
+}
+.mp-layer.us .mp-layer-lbl{color:var(--signal)}
+.mp-layer-lbl .layer-num{
+  display:block;font-size:11px;color:var(--signal);
+  margin-bottom:4px;
+}
+.mp-layer-lbl .layer-name{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13px;color:var(--ink);font-weight:500;
+  letter-spacing:-.005em;text-transform:none;
+  margin-top:4px;display:block;
+}
+.mp-layer.us .mp-layer-lbl .layer-name{color:var(--ink)}
+.mp-layer-chips{
+  display:flex;flex-wrap:wrap;gap:6px 0;
+  align-items:baseline;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13.5px;line-height:1.7;color:var(--ink-2);
+}
+.mp-layer-chips strong{color:var(--ink);font-weight:500;letter-spacing:-.005em}
+.mp-layer-chips .sep{color:var(--hair-strong);margin:0 .7em}
+.mp-layer.us .mp-layer-chips .me{
+  color:var(--signal);font-weight:500;
+  border-bottom:1px solid var(--signal);
+  padding-bottom:1px;
+}
+
+/* profiles — two cards, MemoryOS visually distinct */
+.mp-profiles{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;
+}
+.mp-profile{
+  display:flex;flex-direction:column;
+  padding:0 32px 0 0;
+  border-right:1px solid var(--hair);
+}
+.mp-profile + .mp-profile{
+  padding:20px 0 20px 24px;
+  margin-top:-20px;margin-bottom:-20px;
+  background:#fcfaf8;
+  border-right:none;
+  border-left:2px solid var(--signal);
+  position:relative;
+}
+.mp-profile + .mp-profile::before{
+  content:"OUR PRODUCT";
+  position:absolute;top:-10px;left:24px;
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.22em;
+  color:var(--signal);font-weight:500;
+  background:var(--paper);padding:0 8px;
+}
+.mp-profile-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:6px;
+}
+.mp-profile-name{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:24px;font-weight:500;color:var(--ink);
+  letter-spacing:-.015em;
+}
+.mp-profile-link{
+  font-family:var(--font-mono);
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--signal);
+  border-bottom:1px solid currentColor;padding-bottom:1px;
+  transition:opacity .2s;
+}
+.mp-profile-link:hover{opacity:.7}
+.mp-profile-link::after{content:" ↗"}
+.mp-profile-tagline{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13.5px;line-height:1.5;color:var(--ink-2);
+  margin:0 0 12px;
+  font-weight:400;letter-spacing:0;
+}
+.mp-profile-shot{
+  background:#f5f5f7;
+  aspect-ratio:16/9;
+  display:block;
+  margin-bottom:14px;
+  overflow:hidden;cursor:zoom-in;
+  position:relative;
+  border:1px solid var(--hair);
+}
+.mp-profile-shot img{
+  width:100%;height:100%;object-fit:cover;object-position:top;
+  transition:transform .35s ease;
+}
+.mp-profile-shot:hover img{transform:scale(1.02)}
+
+/* compact 3-row meta with mono labels + sans content */
+.mp-profile-meta{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  border-top:1px solid var(--hair-strong);
+}
+.mp-profile-meta-row{
+  display:grid;grid-template-columns:72px 1fr;gap:16px;
+  padding:8px 0;
+  border-bottom:1px solid var(--hair);
+  align-items:baseline;
+}
+.mp-profile-meta-row:last-child{border-bottom:none}
+.mp-profile-meta-row dt{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+  margin:0;
+}
+.mp-profile-meta-row dd{
+  margin:0;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13.5px;line-height:1.55;color:var(--ink);
+  letter-spacing:-.005em;
+}
+.mp-profile-meta-row dd code{
+  font-family:var(--font-mono);font-size:.9em;
+  color:var(--signal);background:rgba(200,69,31,.06);
+  padding:1px 6px;border-radius:2px;
+}
+.mp-profile-meta-row dd .accent{color:var(--signal);font-weight:500}
+
+@media(max-width:880px){
+  .mp-layer{grid-template-columns:1fr;gap:8px}
+  .mp-profiles{grid-template-columns:1fr;gap:48px}
+  .mp-profile{padding:0;border-right:none}
+  .mp-profile + .mp-profile{
+    margin:0;padding:32px 24px;
+    border-left:2px solid var(--signal);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COMPRESSED HANDS-ON dashboard — strong section dividers
+───────────────────────────────────────────────────────────── */
+.ho-log{
+  display:flex;flex-direction:column;gap:0;
+  border-top:2px solid var(--ink);
+  margin-bottom:48px;
+}
+.ho-row{
+  padding:36px 0 40px;
+  border-bottom:2px solid var(--ink);
+  position:relative;
+}
+.ho-row-head{
+  display:grid;
+  grid-template-columns:88px 1fr auto;
+  gap:24px;
+  align-items:baseline;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--hair);
+}
+.ho-letter{
+  font-family:var(--font-display);
+  font-size:64px;
+  font-weight:500;
+  color:var(--signal);
+  line-height:.9;letter-spacing:-.04em;
+  align-self:start;
+  font-variant-numeric:tabular-nums;
+}
+.ho-titles{
+  display:flex;flex-direction:column;gap:6px;
+}
+.ho-row .ho-tag{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--signal);font-weight:500;
+}
+.ho-row .ho-title{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:22px;font-weight:500;color:var(--ink);
+  line-height:1.2;letter-spacing:-.01em;
+  margin:0;
+}
+.ho-row .ho-task{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:13px;line-height:1.6;color:var(--muted);
+  letter-spacing:0;margin:2px 0 0;
+}
+.ho-row .ho-task em{color:var(--ink-2);font-weight:500}
+.ho-progress{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+  align-self:end;padding-bottom:4px;
+}
+.ho-row-body{
+  display:grid;
+  grid-template-columns:1fr 240px;
+  gap:40px;
+  align-items:start;
+}
+.ho-findings{display:flex;flex-direction:column;gap:14px}
+.ho-find{
+  font-family:var(--font-cjk),var(--font-sans);
+  display:grid;grid-template-columns:24px 1fr;
+  gap:14px;align-items:baseline;
+}
+.ho-find .find-mark{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.1em;color:var(--signal);
+  font-weight:500;padding-top:2px;
+}
+.ho-find .find-body{
+  font-size:13.5px;line-height:1.65;color:var(--ink-2);
+}
+.ho-find .find-body strong,
+.ho-find .find-body em{color:var(--ink);font-weight:500}
+.ho-find .find-body code{
+  font-family:var(--font-mono);font-size:.88em;
+  color:var(--signal);background:rgba(200,69,31,.06);
+  padding:1px 5px;border-radius:2px;
+}
+.ho-evidence{
+  display:flex;flex-direction:column;gap:6px;
+}
+.ho-evidence-link{
+  display:block;background:#f5f5f7;
+  cursor:zoom-in;overflow:hidden;position:relative;
+  aspect-ratio:16/10;
+}
+.ho-evidence-link img{
+  width:100%;height:100%;object-fit:cover;object-position:top;
+  transition:transform .3s ease;
+}
+.ho-evidence-link:hover img{transform:scale(1.02)}
+.ho-evidence-cap{
+  font-family:var(--font-mono);
+  font-size:10px;color:var(--muted);
+  letter-spacing:.04em;line-height:1.4;
+}
+.ho-evidence-cap .fig-num{
+  color:var(--signal);margin-right:8px;letter-spacing:.14em;text-transform:uppercase;
+}
+
+/* compact mini-table for scenario C control comparison */
+.ho-mini-table{
+  width:100%;border-collapse:collapse;
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:12.5px;
+  margin-top:4px;
+}
+.ho-mini-table th{
+  text-align:left;padding:6px 10px 6px 0;
+  font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--hair-strong);
+}
+.ho-mini-table th:not(:first-child){text-align:center;padding:6px 4px}
+.ho-mini-table td{padding:8px 10px 8px 0;vertical-align:top;line-height:1.5;color:var(--ink-2)}
+.ho-mini-table td:not(:first-child){text-align:center;font-size:13px;padding:8px 4px}
+.ho-mini-table td:first-child{color:var(--ink)}
+
+@media(max-width:880px){
+  .ho-row{grid-template-columns:1fr;gap:18px}
+  .ho-evidence{max-width:280px}
+}
+
 /* ─── lightbox ─── */
 .lb{
   position:fixed;inset:0;z-index:200;
@@ -839,10 +1407,10 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     <div class="brand"><span class="dot"></span>COMPETITIVE ANALYSIS</div>
     <nav>
       <a href="#findings">核心结论</a>
-      <a href="#market">市场</a>
-      <a href="#profiles">产品</a>
+      <a href="#market">市场&产品</a>
       <a href="#jtbd">问题</a>
       <a href="#users">用户</a>
+      <a href="#arch">架构</a>
       <a href="#axes">差异</a>
       <a href="#hands-on">体验</a>
       <a href="#matrix">对比</a>
@@ -861,10 +1429,10 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     </div>
     <ol>
       <li><a href="#findings"><span class="k">00</span><span>核心结论</span></a></li>
-      <li><a href="#market"><span class="k">01</span><span>市场结构</span></a></li>
-      <li><a href="#profiles"><span class="k">02</span><span>产品画像</span></a></li>
-      <li><a href="#jtbd"><span class="k">03</span><span>解决的问题</span></a></li>
-      <li><a href="#users"><span class="k">04</span><span>谁在用这两个产品</span></a></li>
+      <li><a href="#market"><span class="k">01</span><span>市场结构 &amp; 产品画像</span></a></li>
+      <li><a href="#jtbd"><span class="k">02</span><span>解决的问题</span></a></li>
+      <li><a href="#users"><span class="k">03</span><span>谁在用这两个产品</span></a></li>
+      <li><a href="#arch"><span class="k">04</span><span>产品架构拆解</span></a></li>
       <li><a href="#axes"><span class="k">05</span><span>四条关键差异</span></a></li>
       <li><a href="#hands-on"><span class="k">06</span><span>亲手体验</span></a></li>
       <li><a href="#matrix"><span class="k">07</span><span>功能对比</span></a></li>
@@ -941,94 +1509,89 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
   </div>
 </section>
 
-<!-- ═══════════════════ 1 / MARKET ═══════════════════ -->
-<section class="section" id="market" data-screen-label="03 Market">
+<!-- ═══════════════════ 1 / MARKET + PROFILES ═══════════════════ -->
+<section class="section" id="market" data-screen-label="03 Market & Profiles">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">1</span><span>市场里都有谁</span></div>
-    <h2>不同的市场&赛道<span class="sub">做"AI 记忆"的产品很多，但需要先分清楚。</span></h2>
+    <div class="eyebrow"><span class="num">1</span><span>市场结构 & 产品画像</span></div>
+    <h2>不同赛道，不同产品<span class="sub">"AI 记忆"工具分两层市场——先分清楚谁是谁，再讨论差异。</span></h2>
 
-    <div class="market">
-      <div class="market-layer us">
-        <div class="lbl">UPPER &nbsp;/&nbsp; 给普通用户用</div>
-        <h4>MemoryOS 真正的竞争区域</h4>
-        <ul>
-          <li><strong>mem0 OpenMemory 浏览器插件</strong> — 和 MemoryOS 解决的问题几乎一样，最直接的对手</li>
-          <li><strong>ChatGPT / Claude / Gemini 自带的记忆功能</strong> — 只对自家 AI 有效，无法跨平台</li>
-          <li><strong>MemoryOS</strong> — 桌面应用，本地优先，按项目记录</li>
-        </ul>
+    <div class="mp-dashboard">
+
+      <!-- 上下分层市场 — 水平 bar -->
+      <div class="mp-layer-bar">
+        <div class="mp-layer us">
+          <div class="mp-layer-lbl">
+            <span class="layer-num">UPPER</span>
+            给普通用户
+            <span class="layer-name">MemoryOS 竞争区域</span>
+          </div>
+          <div class="mp-layer-chips">
+            <strong>mem0 OpenMemory 插件</strong><span class="sep">·</span>
+            <strong>ChatGPT / Claude / Gemini 自带记忆</strong><span class="sep">·</span>
+            <span class="me">MemoryOS</span>
+          </div>
+        </div>
+        <div class="mp-layer">
+          <div class="mp-layer-lbl">
+            <span class="layer-num">LOWER</span>
+            给开发者
+            <span class="layer-name">mem0 核心业务</span>
+          </div>
+          <div class="mp-layer-chips">
+            <strong>mem0</strong><span class="sep">·</span>
+            <strong>Supermemory</strong><span class="sep">·</span>
+            <strong>Letta</strong><span class="sep">·</span>
+            <strong>Zep</strong>
+          </div>
+        </div>
       </div>
-      <div class="market-layer">
-        <div class="lbl">LOWER &nbsp;/&nbsp; 给开发者用</div>
-        <h4>mem0 的核心业务在这一层</h4>
-        <ul>
-          <li><strong>mem0</strong> — 记忆接口（核心）</li>
-          <li><strong>Supermemory</strong> · <strong>Letta</strong> · <strong>Zep</strong></li>
-          <li>这一层不是 MemoryOS 的竞争区域</li>
-        </ul>
+
+      <!-- 两个产品画像 — 编辑式 -->
+      <div class="mp-profiles">
+        <!-- mem0 -->
+        <div class="mp-profile">
+          <div class="mp-profile-head">
+            <div class="mp-profile-name">mem0 / OpenMemory</div>
+            <a class="mp-profile-link" href="https://app.mem0.ai" target="_blank" rel="noopener">app.mem0.ai</a>
+          </div>
+          <p class="mp-profile-tagline">浏览器插件，自动记住你在不同 AI 里聊过的内容。</p>
+          <a class="mp-profile-shot" href="assets/主页面引导安装.png" data-zoom="assets/主页面引导安装.png" data-cap="mem0 后台主页 — 新用户登录后看到的第一个页面是代码安装指引。dev-tool 基因第一屏暴露。">
+            <img src="assets/主页面引导安装.png" alt="mem0 Dashboard 主页">
+          </a>
+          <dl class="mp-profile-meta">
+            <div class="mp-profile-meta-row"><dt>形态</dt><dd>Chrome 插件 + API + 网页后台</dd></div>
+            <div class="mp-profile-meta-row"><dt>数据</dt><dd>mem0 云服务器</dd></div>
+            <div class="mp-profile-meta-row"><dt>商业</dt><dd>免费 10K 条 · 付费 $19–249/月</dd></div>
+          </dl>
+        </div>
+
+        <!-- MemoryOS -->
+        <div class="mp-profile">
+          <div class="mp-profile-head">
+            <div class="mp-profile-name">MemoryOS</div>
+            <a class="mp-profile-link" href="https://github.com/jiajiajiang91-design/memoryos" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <p class="mp-profile-tagline">桌面应用，在不同 AI 之间保留连续工作记忆，<span class="accent" style="color:var(--signal);font-weight:500">并让记忆保持现时</span>。</p>
+          <a class="mp-profile-shot" href="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" data-zoom="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" data-cap="MemoryOS 主界面 — 左栏项目列表 / 中间当前目标和最近对话 / 右栏项目信息。建项目即自动分舱。">
+            <img src="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" alt="MemoryOS Dashboard">
+          </a>
+          <dl class="mp-profile-meta">
+            <div class="mp-profile-meta-row"><dt>形态</dt><dd>Windows 桌面（Mac / Linux 计划中）</dd></div>
+            <div class="mp-profile-meta-row"><dt>数据</dt><dd><code>~/Documents/MemoryOS/</code></dd></div>
+            <div class="mp-profile-meta-row"><dt>商业</dt><dd>免费开源 · MIT</dd></div>
+          </dl>
+        </div>
       </div>
+
     </div>
 
-    <p class="market-note">
-      <em>值得注意的一点 ——</em> OpenMemory 浏览器插件就是 mem0 公司做的。一家拿了投资的技术公司，从底层接口往上延伸做了面向普通用户的产品。它带着成熟的技术和资金，直接进入了 MemoryOS 所在的市场。<br><br>
-      但反过来看，<em>mem0 的基因是技术工具</em>，面向普通用户的产品是后来加的。这个基因差异影响了它的产品体验 — 后面会详细展开。
-    </p>
-  </div>
-</section>
-
-<!-- ═══════════════════ 2 / PROFILES ═══════════════════ -->
-<section class="section alt" id="profiles" data-screen-label="04 Profiles">
-  <div class="wrap wrap--wide">
-    <div class="eyebrow"><span class="num">2</span><span>两个产品分别是什么</span></div>
-    <h2>它们其实在解决不同的问题<span class="sub">先把基本信息摆清楚，再讨论差异。</span></h2>
-
-    <div class="profiles">
-      <!-- mem0 -->
-      <div class="profile">
-        <a class="shot" href="assets/主页面引导安装.png" data-zoom="assets/主页面引导安装.png" data-cap="mem0 后台主页 — 新用户登录后看到的第一个页面是代码安装指引。dev-tool 基因第一屏暴露。">
-          <img src="assets/主页面引导安装.png" alt="mem0 Dashboard 主页">
-          <span class="zoom-cue">点击放大</span>
-        </a>
-        <div class="name-row">
-          <div class="name">mem0 / OpenMemory</div>
-          <a class="ext-link" href="https://app.mem0.ai" target="_blank" rel="noopener">app.mem0.ai</a>
-        </div>
-        <p class="tagline">浏览器插件，自动记住你在不同 AI 里聊过的内容。</p>
-        <dl>
-          <dt>主要产品</dt><dd>Chrome 浏览器插件 + 开发者接口 + 网页管理后台</dd>
-          <dt>工作方式</dt><dd>安装插件后，你在 ChatGPT / Claude 等 AI 里聊天，插件自动提取关键信息并保存到云端</dd>
-          <dt>支持 AI</dt><dd>ChatGPT / Claude / Gemini / Perplexity（自动识别）</dd>
-          <dt>数据存放</dt><dd>mem0 的云端服务器</dd>
-          <dt>价格</dt><dd>免费版 10,000 条记忆，付费版更多</dd>
-        </dl>
-      </div>
-
-      <!-- MemoryOS -->
-      <div class="profile">
-        <a class="shot" href="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" data-zoom="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" data-cap="MemoryOS 主界面 — 左侧项目列表 / 中间当前目标和最近对话 / 右侧项目信息。建项目即自动分舱。">
-          <img src="https://raw.githubusercontent.com/jiajiajiang91-design/memoryos/main/docs/screenshots/zh/02_dashboard.png" alt="MemoryOS Dashboard">
-          <span class="zoom-cue">点击放大</span>
-        </a>
-        <div class="name-row">
-          <div class="name">MemoryOS</div>
-          <a class="ext-link" href="https://github.com/jiajiajiang91-design/memoryos" target="_blank" rel="noopener">GitHub</a>
-        </div>
-        <p class="tagline">桌面应用，帮你在不同 AI 工具之间保留连续的工作记录。</p>
-        <dl>
-          <dt>主要产品</dt><dd>Windows 桌面应用（1.7 MB），Mac / Linux 计划中</dd>
-          <dt>工作方式</dt><dd>每次和 AI 对话结束后，把对话总结复制到 MemoryOS；下次开新对话时，把上次的记录复制给 AI 作为背景</dd>
-          <dt>支持 AI</dt><dd>任意 AI（通过复制粘贴，不依赖特定平台接口）</dd>
-          <dt>数据存放</dt><dd>你自己电脑上的普通文本文件 · <code>~/Documents/MemoryOS/</code></dd>
-          <dt>价格</dt><dd>免费开源 · MIT</dd>
-        </dl>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ═══════════════════ 3 / JTBD ═══════════════════ -->
 <section class="section" id="jtbd" data-screen-label="05 JTBD">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">3</span><span>各自在解决什么问题</span></div>
+    <div class="eyebrow"><span class="num">2</span><span>各自在解决什么问题</span></div>
     <h2>从解决的不同问题看出核心区别<span class="sub">从解决的不同问题看出核心区别。后面所有产品差异，都从这里长出来。</span></h2>
 
     <div class="jtbd">
@@ -1067,308 +1630,422 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <!-- ═══════════════════ 4 / USER SEGMENTS ═══════════════════ -->
 <section class="section" id="users" data-screen-label="06 Users">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">4</span><span>谁在用这两个产品</span></div>
-    <h2>用户不一样，结论才成立<span class="sub">两个产品服务的人群不同，所以前面说的所有差异不是"谁更好"，而是在哪些方面有优势。</span></h2>
+    <div class="eyebrow"><span class="num">3</span><span>谁在用这两个产品</span></div>
+    <h2>用户不一样，结论才成立<span class="sub">两个产品服务的人群不同，所有差异不是"谁更好"，而是各自在哪些方面有优势。</span></h2>
 
     <div class="jtbd">
       <div class="jtbd-side">
         <div class="who">他们的主要用户</div>
         <h3>日常 AI 使用者<br>+ 应用开发者</h3>
         <dl>
-          <dt>典型场景</dt><dd>希望 ChatGPT 记住"我养了一只叫布丁的猫""我写代码偏好用 Tailwind""给我的邮件用正式语气"。不需要复杂的项目管理，只想每个 AI 都认识自己。mem0 用户评价里最常见的赞美就是"终于不用反复自我介绍了"，有用户报告每周省下 2–3 小时重复输入上下文的时间。</dd>
-          <dt>使用频率</dt><dd>每天和 AI 聊几句到几十句，话题零散，不需要追溯上周聊了什么。</dd>
-          <dt>对摩擦的容忍度</dt><dd>极低。多一步操作就会卸载。所以 mem0 选择"全自动、装上就忘"是对的 — 这群用户不会也不该手动整理记忆。（有趣的是，即便 mem0 已经做到了高度自动化，Chrome 商店评分也只有 3.7/5 — 部分用户仍然觉得记忆管理不够省心。）</dd>
+          <dt>典型场景</dt><dd>希望每个 AI 都记得"我养了猫叫布丁""写代码用 Tailwind""邮件用正式语气"。不需要项目管理，只想每个 AI 都认识自己。</dd>
+          <dt>使用频率</dt><dd>每天聊几句到几十句，话题零散，不追溯上周。</dd>
+          <dt>摩擦容忍度</dt><dd>极低，多一步操作就卸载。mem0 选"全自动、装上就忘"是对的。</dd>
         </dl>
       </div>
       <div class="jtbd-side us">
         <div class="who">我们的目标用户</div>
-        <h3>管着复杂项目的<br><em>重度知识工作者</em></h3>
+        <h3>在多个 AI 之间切换的<br><em>普通 AI 用户</em></h3>
         <dl>
-          <dt>典型场景</dt><dd>一个研究生连续三周用 Claude 和 ChatGPT 推进论文，每次开新对话都要花 10 分钟重述上次做到哪了；一个产品经理跨五个 AI 工具管着三个并行项目，决策记录散落在各处。</dd>
-          <dt>使用频率</dt><dd>每天在 AI 上深度工作数小时，同一个项目跨越数周甚至数月，上下文连续性是刚需。</dd>
-          <dt>对摩擦的容忍度</dt><dd>较高。他们愿意花 30 秒确认一次记录，换来的是下次开对话不用重述 10 分钟背景。对他们来说，手动确认不是负担，是"确保 AI 记对了"的安全感。</dd>
+          <dt>典型场景</dt><dd>研究生用 Claude 和 ChatGPT 推论文，每次开新对话花 10 分钟重述上次到哪了；自由职业者跨几个 AI 管两三个项目，决策散落各处。已感到复制粘贴之痛，但非技术背景。</dd>
+          <dt>使用频率</dt><dd>每天在 AI 上工作数小时，同一项目跨越数周到数月，上下文连续性是刚需。</dd>
+          <dt>摩擦容忍度</dt><dd>较高。愿意花 30 秒确认一次，换下次不用重述 10 分钟背景——手动确认是"AI 记对了"的安全感。</dd>
         </dl>
       </div>
     </div>
 
     <div class="jtbd-bridge">
-      这份报告的所有实测用的是重度知识工作场景（论文研究 + 竞品分析）。<br>
-      这不是因为日常场景不重要，而是因为 MemoryOS 本来就不是给日常聊天设计的 —<br>
-      <em>在日常场景下，mem0 的"装上就忘"体验确实更好。</em>
+      MemoryOS 不是给日常聊天设计的 —— <em>日常场景下 mem0 的"装上就忘"确实更好</em>。
     </div>
-
-    <p style="font-size:15px;line-height:1.7;color:var(--ink-2);margin:24px auto 0;text-align:center;max-width:760px;text-wrap:pretty">
-      这个分层决定了后面所有对比的阅读方式：两者都是在某个维度上占据优势，没有脱离用户群体的绝对优劣。
-    </p>
   </div>
 </section>
 
-<!-- ═══════════════════ 5 / FOUR AXES ═══════════════════ -->
-<section class="section alt" id="axes" data-screen-label="07 Axes">
+<!-- ═══════════════════ 5 / ARCHITECTURE ═══════════════════ -->
+<section class="section alt" id="arch" data-screen-label="07 Architecture">
   <div class="wrap">
-    <div class="eyebrow"><span class="num">5</span><span>四个关键产品差异</span></div>
-    <h2>产品特性与差异拆解<span class="sub">"记 人" vs "记 事"，直接决定了在四个方面做出相反的选择。</span></h2>
+    <div class="eyebrow"><span class="num">4</span><span>产品架构逆向拆解</span></div>
+    <h2>mem0 架构深度拆解<span class="sub">按产品架构四层框架（逻辑层 / 算法层 / 数据层 / 表现层），逆向拆解 mem0 的实现。</span></h2>
 
-    <div class="axis headrow">
-      <h3>差异 ① &nbsp;自动记录 &nbsp;vs&nbsp; 用户确认</h3>
-      <p>个人信息（"我住在伦敦"）是简单事实，机器提取很准；工作决策（"选方案 A 是因为时间不够"）需要判断，自动提取容易抓偏。</p>
-    </div>
-    <div class="axis">
-      <div class="n">① mem0</div>
-      <div class="col">
-        <h4>怎么做的</h4>
-        <div class="verdict">自动从对话中提取，<em>用户不需要操作</em></div>
-        <div class="reason">浏览器插件在我和 ChatGPT 聊天时，全程没有任何提示就自动保存了记忆 — 我不知道哪句话被记住了，也没有机会在保存前审查。</div>
-      </div>
-      <div class="col">
-        <h4>MemoryOS 怎么做的</h4>
-        <div class="verdict">AI 生成总结后，<em>用户逐条确认要保存哪些</em></div>
-        <div class="reason">工作决策需要判断，自动提取容易抓偏。但诚实地说，当前的"手动复制粘贴"操作成本太高 — 如果用户每天和 AI 对话十几次，这个流程会变成负担。未来需要在"用户确认"和"降低操作步骤"之间找到平衡，比如做成<em>一键确认</em>而不是手动复制。</div>
-      </div>
+    <!-- ═══ mem0 独立拆解 dashboard ═══ -->
+    <p class="arch-intro">每一层按 <em>这层在干什么</em><span class="flow-arrow">→</span><em>mem0 选了什么策略</em><span class="flow-arrow">→</span><em>这个选择的代价</em> 三段拆，推理链尽量贴源码。</p>
+
+    <div class="arch-grid">
+
+      <!-- ═══ 逻辑层 ═══ -->
+      <article class="arch-card">
+        <header class="arch-card-head">
+          <div class="arch-card-num">01</div>
+          <div class="arch-card-titles">
+            <span class="arch-tag">LOGIC</span>
+            <span class="arch-name">逻辑层</span>
+            <span class="arch-role">决定记忆怎么进、怎么出、谁"当前有效"</span>
+          </div>
+          <div class="arch-card-progress">01 / 04</div>
+        </header>
+
+        <div class="arch-cols">
+          <div class="arch-col">
+            <div class="col-label">mem0 选了什么</div>
+            <h3 class="col-headline">追加不覆盖，读取时排序</h3>
+            <p class="col-body">写入时只追加新记忆，不改旧的。谁是"当前事实"由 <code>search()</code> 的语义排序决定。</p>
+          </div>
+          <div class="arch-col">
+            <div class="col-label">为什么这么选</div>
+            <h3 class="col-headline">保留历史完整性</h3>
+            <p class="col-body">新旧冲突时不直接覆盖，而是 <strong>追加新记忆并关联旧的</strong>——用户的偏好演变、经历变化全部保留。自动修正需用户自己设计 agent 工作流调 <code>update(memory_id)</code>。</p>
+          </div>
+          <div class="arch-col cost">
+            <div class="col-label">这个选择的代价</div>
+            <h3 class="col-headline">旧新矛盾同时进上下文</h3>
+            <p class="col-body">"用户住杭州" + "搬到上海" 同时被检索到，AI 不知道信哪条。<strong>适合</strong>偏好演变；<strong>不适合</strong>当前状态、过敏信息、执行中的计划。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ 算法层 ═══ -->
+      <article class="arch-card">
+        <header class="arch-card-head">
+          <div class="arch-card-num">02</div>
+          <div class="arch-card-titles">
+            <span class="arch-tag">ALGORITHM</span>
+            <span class="arch-name">算法层</span>
+            <span class="arch-role">每次对话技术上发生了什么</span>
+          </div>
+          <div class="arch-card-progress">02 / 04</div>
+        </header>
+
+        <div class="arch-pipeline">
+          <div class="arch-pipeline-label">mem0 的完整循环</div>
+          <div class="arch-pipeline-flow">
+            <div class="arch-pipeline-step"><span class="step-name">search</span><span class="step-sub">检索旧记忆</span></div>
+            <div class="arch-pipeline-arrow">›</div>
+            <div class="arch-pipeline-step"><span class="step-name">注入</span><span class="step-sub">塞进 prompt</span></div>
+            <div class="arch-pipeline-arrow">›</div>
+            <div class="arch-pipeline-step"><span class="step-name">生成</span><span class="step-sub">LLM 回答</span></div>
+            <div class="arch-pipeline-arrow">›</div>
+            <div class="arch-pipeline-step hot"><span class="step-name">add</span><span class="step-sub">额外 1 次 LLM 抽取</span></div>
+            <div class="arch-pipeline-arrow">›</div>
+            <div class="arch-pipeline-step"><span class="step-name">存储</span><span class="step-sub">向量库</span></div>
+          </div>
+          <p class="arch-pipeline-note">关键点：第 4 步用 <code>ADDITIVE_EXTRACTION_PROMPT</code> 让 LLM 输出 JSON 记忆——不是规则匹配，是模型判断</p>
+        </div>
+
+        <div class="arch-cols-2">
+          <div class="arch-col">
+            <div class="col-label">为什么用 LLM 抽取</div>
+            <h3 class="col-headline">规则做不到语义判断</h3>
+            <p class="col-body">关键词匹配能识别"我喜欢咖啡"，但识别不了"我每天早上需要一杯不太苦的，最好是手冲"是同一件事。LLM 才能从自由对话里抽出 <em>偏好 / 计划 / 关系 / 助手建议</em>，过滤掉寒暄和重复 echo。</p>
+          </div>
+          <div class="arch-col cost">
+            <div class="col-label">这个选择的代价</div>
+            <h3 class="col-headline">每轮 +1 次 LLM 调用</h3>
+            <p class="col-body">每次 add() ≈ <strong>1× 检索 embed + 1× LLM 抽取 + N× batch embed</strong>。提取 prompt 偏 "when in doubt, extract"，<strong>高召回但容易多存</strong>。对话频繁时累积成本是 mem0 商业模式的核心瓶颈。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ 数据层 ═══ -->
+      <article class="arch-card">
+        <header class="arch-card-head">
+          <div class="arch-card-num">03</div>
+          <div class="arch-card-titles">
+            <span class="arch-tag">DATA</span>
+            <span class="arch-name">数据层</span>
+            <span class="arch-role">业务数据长什么样、怎么组织</span>
+          </div>
+          <div class="arch-card-progress">03 / 04</div>
+        </header>
+
+        <div class="arch-cols">
+          <div class="arch-col">
+            <div class="col-label">mem0 选了什么</div>
+            <h3 class="col-headline">一句话 + 向量，平铺</h3>
+            <pre class="arch-json"><span class="p">{</span>
+  <span class="k">"memory"</span>: <span class="v">"prefers Chinese."</span>,
+  <span class="k">"user_id"</span>: <span class="v">"alice"</span>
+<span class="p">}</span></pre>
+            <p class="col-body">正文 + embedding + 标签。无项目层级。</p>
+          </div>
+          <div class="arch-col">
+            <div class="col-label">为什么这么选</div>
+            <h3 class="col-headline">为 API 优先而非用户优先</h3>
+            <p class="col-body">mem0 的核心客户是<strong>开发者</strong>，不是终端用户。平铺 + 标签过滤的设计对接 API 调用最简单：开发者传 <code>user_id</code> / <code>app_id</code> 即可隔离。"项目"是用户的概念，对 API 来说是多余的层级。</p>
+          </div>
+          <div class="arch-col cost">
+            <div class="col-label">这个选择的代价</div>
+            <h3 class="col-headline">三个入口互不相通</h3>
+            <p class="col-body">实测发现：Chrome 插件 / 网页 / 开发者工具写入的记忆，分别落到 <code>chrome-extension-user</code> / <code>playground</code> / <code>MCP 默认值</code> 三个 user_id 桶里。普通用户根本不知道有这回事。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ 表现层 ═══ -->
+      <article class="arch-card">
+        <header class="arch-card-head">
+          <div class="arch-card-num">04</div>
+          <div class="arch-card-titles">
+            <span class="arch-tag">PRESENTATION</span>
+            <span class="arch-name">表现层</span>
+            <span class="arch-role">普通用户实际操作路径</span>
+          </div>
+          <div class="arch-card-progress">04 / 04</div>
+        </header>
+
+        <div class="arch-cols">
+          <div class="arch-col">
+            <div class="col-label">mem0 提供的操作</div>
+            <div class="arch-pills">
+              <div class="arch-pill">
+                <div class="pill-figure">2-3</div>
+                <div class="pill-label">步 · 查看</div>
+              </div>
+              <div class="arch-pill">
+                <div class="pill-figure">3-4</div>
+                <div class="pill-label">步 · 删除</div>
+              </div>
+              <div class="arch-pill">
+                <div class="pill-word">对话式</div>
+                <div class="pill-label">新增</div>
+              </div>
+            </div>
+            <p class="col-body">查看 / 删除都比较直接。但<strong>新增必须通过对话触发</strong>——在 AI 里说"请记住 X"，不能在记忆库手动创建一条。</p>
+          </div>
+          <div class="arch-col">
+            <div class="col-label">为什么这么选</div>
+            <h3 class="col-headline">"装上就忘"是核心承诺</h3>
+            <p class="col-body">mem0 卖的就是<strong>用户不用管</strong>。如果让用户手动加记忆，等于承认自动提取不够好——产品定位会崩。所以新增入口故意只走"对话式"，连 Dashboard 的"+ 新建"按钮都没有。</p>
+          </div>
+          <div class="arch-col cost">
+            <div class="col-label">这个选择的代价</div>
+            <h3 class="col-headline">主动需求没有入口</h3>
+            <p class="col-body">当用户想<strong>主动告诉 AI 一个事实</strong>（"我刚搬家，地址改了"），不是在自然对话里，而是直接想录入——mem0 没有路径。用户必须先开个对话、绕一圈让 AI 提取，才能写入。</p>
+          </div>
+        </div>
+      </article>
+
     </div>
 
-    <div class="axis headrow">
-      <h3>差异 ② &nbsp;云端 &nbsp;vs&nbsp; 本地</h3>
-      <p>mem0 曾经有可以部署在用户自己电脑上的版本，但最近已标注"即将停用"，全面转向云端 — 这条路 mem0 在主动退出。</p>
-    </div>
-    <div class="axis">
-      <div class="n">② mem0</div>
-      <div class="col">
-        <h4>怎么做的</h4>
-        <div class="verdict">所有记忆存在 <em>mem0 的云服务器</em> 上</div>
-        <div class="reason"><em>优点：</em>换电脑也能用，多设备自动同步。<em>代价：</em>用户的对话内容存在第三方服务器上。</div>
-      </div>
-      <div class="col">
-        <h4>MemoryOS 怎么做的</h4>
-        <div class="verdict">所有数据是用户电脑上的<em>普通文本文件</em></div>
-        <div class="reason"><em>优点：</em>数据完全属于用户，不经过任何第三方服务器。<em>代价：</em>只能在一台电脑上用，不能跨设备同步。</div>
-      </div>
-    </div>
+    <!-- ═══ 四层对照 — 简洁 dashboard ═══ -->
+    <div class="compare-eyebrow">四层对照 · mem0 vs MemoryOS</div>
 
-    <div class="axis headrow">
-      <h3>差异 ③ &nbsp;使用成本</h3>
-      <p>mem0 花钱省用户力气，MemoryOS 花用户力气省钱。哪个更好取决于用户是谁。</p>
-    </div>
-    <div class="axis">
-      <div class="n">③ mem0</div>
-      <div class="col">
-        <h4>怎么做的</h4>
-        <div class="verdict">每存一条 <em>后台调用两次 AI</em></div>
-        <div class="reason">一次提取信息，一次判断是新增还是更新。使用频繁时成本较高。读取通过语义搜索快速匹配。</div>
+    <div class="compare-table">
+      <div class="compare-row head">
+        <div class="layer-cell">层</div>
+        <div class="head-cell">mem0</div>
+        <div class="head-cell us">MemoryOS</div>
       </div>
-      <div class="col">
-        <h4>MemoryOS 怎么做的</h4>
-        <div class="verdict">借用用户在用的 AI 完成总结，<em>不产生额外费用</em></div>
-        <div class="reason">每段对话只在结束时生成一次总结。读取靠用户手动选择附带文件，操作步骤多但零成本。</div>
+      <div class="compare-row">
+        <div class="layer-cell">逻辑</div>
+        <div class="side them"><strong>追加不覆盖</strong><br>读取时排序决定当前事实</div>
+        <div class="side us"><strong>Superseded 合并</strong><br>用户确认后旧记忆退场</div>
       </div>
-    </div>
-
-    <div class="axis headrow">
-      <h3>差异 ④ &nbsp;记录怎么整理</h3>
-      <p>mem0 不只是"没帮用户分好项目" — 它自己三个入口写入的记忆互相都看不到。技术上完全有能力把记忆按项目整理好，差异在<em>谁来承担整理的工作</em>。</p>
-    </div>
-    <div class="axis">
-      <div class="n">④ mem0</div>
-      <div class="col">
-        <h4>怎么做的</h4>
-        <div class="verdict">所有记忆放在 <em>一个按时间排列的列表</em> 里</div>
-        <div class="reason">管理后台虽有项目下拉菜单，但那是给开发者用的技术功能，普通用户面对的是不分组的列表。</div>
+      <div class="compare-row">
+        <div class="layer-cell">算法</div>
+        <div class="side them"><strong>每轮 +1 次 LLM</strong><br>成本随对话轮数线性增长</div>
+        <div class="side us"><strong>结束时 AI 做 1 次总结</strong><br>MemoryOS 自身不调 API</div>
       </div>
-      <div class="col">
-        <h4>MemoryOS 怎么做的</h4>
-        <div class="verdict">每个项目 <em>独立文件夹</em>，自动分舱</div>
-        <div class="reason">建项目时自动创建独立文件夹，里面有项目说明、决策记录、对话历史 — 天然按项目分开。</div>
+      <div class="compare-row">
+        <div class="layer-cell">数据</div>
+        <div class="side them"><strong>一句话 + 向量</strong><br>平铺存储，靠标签过滤</div>
+        <div class="side us"><strong>Markdown 文件</strong><br>按项目分组，拷贝即备份</div>
       </div>
-    </div>
-
-    <div class="axis-note signal" style="margin-top:48px">
-      <strong style="color:var(--ink);font-weight:500">核心判断 ——</strong> 技术上 mem0 完全有能力把记忆按项目整理好，差异不在技术能力，而在<em>谁来承担整理的工作</em>。mem0 把这件事交给了用户和开发者自己处理，MemoryOS 把它做成了产品默认就有的功能。
+      <div class="compare-row">
+        <div class="layer-cell">表现</div>
+        <div class="side them"><strong>查看 2-3 步</strong><br>新增靠对话，不能手动创建</div>
+        <div class="side us"><strong>查看 2 步</strong><br>可手动编辑，4 下完成更新</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ 5 / HANDS-ON ═══════════════════ -->
+<!-- ═══════════════════ 6 / FOUR AXES ═══════════════════ -->
+<section class="section" id="axes" data-screen-label="08 Axes">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">5</span><span>产品特性与差异</span></div>
+    <h2>四条关键差异<span class="sub">"记 人" vs "记 事"，直接决定了四个方面做出相反的选择。</span></h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+      <!-- ① 自动 vs 确认 -->
+      <div style="padding:28px 32px;border:1px solid var(--hair);position:relative;overflow:hidden">
+        <div style="font-family:var(--font-display);font-size:52px;font-weight:600;color:rgba(0,0,0,.04);position:absolute;right:16px;top:-4px;line-height:1;pointer-events:none">①</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:11.5px;letter-spacing:.04em;color:var(--signal);margin-bottom:14px;font-weight:500">自动记录　vs　用户确认</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:14px;line-height:1.6">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">mem0</div>
+            <div style="color:var(--ink-2)"><strong style="color:var(--ink)">自动提取</strong>，用户不操作。插件全程无提示保存记忆。</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">MemoryOS</div>
+            <div style="color:var(--ink)"><strong>AI 总结后用户逐条确认</strong>。工作决策需要判断，自动提取容易抓偏。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② 云端 vs 本地 -->
+      <div style="padding:28px 32px;border:1px solid var(--hair);position:relative;overflow:hidden">
+        <div style="font-family:var(--font-display);font-size:52px;font-weight:600;color:rgba(0,0,0,.04);position:absolute;right:16px;top:-4px;line-height:1;pointer-events:none">②</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:11.5px;letter-spacing:.04em;color:var(--signal);margin-bottom:14px;font-weight:500">云端　vs　用户电脑</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:14px;line-height:1.6">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">mem0</div>
+            <div style="color:var(--ink-2)"><strong style="color:var(--ink)">云服务器</strong>。多设备同步，但数据在第三方。本地版已标注即将停用。</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">MemoryOS</div>
+            <div style="color:var(--ink)"><strong>用户电脑上的文本文件</strong>。拷贝即备份，不经过第三方。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ 使用成本 -->
+      <div style="padding:28px 32px;border:1px solid var(--hair);position:relative;overflow:hidden">
+        <div style="font-family:var(--font-display);font-size:52px;font-weight:600;color:rgba(0,0,0,.04);position:absolute;right:16px;top:-4px;line-height:1;pointer-events:none">③</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:11.5px;letter-spacing:.04em;color:var(--signal);margin-bottom:14px;font-weight:500">使用成本</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:14px;line-height:1.6">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">mem0</div>
+            <div style="color:var(--ink-2)">每存一条<strong style="color:var(--ink)">后台调用 LLM</strong>。花钱省用户力气，频繁时成本高。</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">MemoryOS</div>
+            <div style="color:var(--ink)"><strong>借用用户的 AI 做总结</strong>。花用户 30 秒操作，零额外费用。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ 记录整理 -->
+      <div style="padding:28px 32px;border:1.5px solid var(--signal);position:relative;overflow:hidden;background:rgba(200,69,31,.015)">
+        <div style="font-family:var(--font-display);font-size:52px;font-weight:600;color:rgba(200,69,31,.06);position:absolute;right:16px;top:-4px;line-height:1;pointer-events:none">④</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:11.5px;letter-spacing:.04em;color:var(--signal);margin-bottom:14px;font-weight:500">记录怎么整理</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:14px;line-height:1.6">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">mem0</div>
+            <div style="color:var(--ink-2)"><strong style="color:var(--ink)">一个时间列表</strong>，不分项目。三个入口写入的记忆互相看不到。</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">MemoryOS</div>
+            <div style="color:var(--ink)"><strong>每个项目独立文件夹</strong>，建项目即自动分舱。项目说明 / 决策 / 对话历史天然分开。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 7 / HANDS-ON ═══════════════════ -->
 <section class="section" id="hands-on" data-screen-label="08 Hands-on">
   <div class="wrap">
     <div class="eyebrow"><span class="num">6</span><span>亲手使用产品的体验记录</span></div>
-    <h2>用真实工作内容测试 mem0<span class="sub">围绕三个使用场景，每个场景检验 mem0 一个核心宣传点是否兑现。</span></h2>
+    <h2>用真实工作内容测试 mem0<span class="sub">三个场景检验三个核心宣传点——证据全部来自真实操作。</span></h2>
 
-    <!-- ── SCENARIO A ── -->
-    <div class="scn">
-      <div class="scn-head">
-        <div class="scn-n">场景 A</div>
-        <div>
-          <h3 class="scn-title">在不同 AI 之间延续对话</h3>
-          <p class="scn-task">先在 <em>ChatGPT</em> 里聊我论文的研究方法（Neural Cellular Automata + Pix2Pix 对照），聊几轮。然后关掉 ChatGPT，打开 <em>Claude</em>，问"我论文的基准比较方法是什么"。检验 mem0 宣传的"跨 AI 对话连续性"。<br><br><em style="color:var(--muted);font-style:normal">（说明：这个测试用的是学术研究场景，属于重度知识工作。对于日常聊天场景，mem0 的自动记忆在颗粒度上可能完全够用。）</em></p>
-        </div>
-      </div>
-      <div class="scn-body">
-        <div class="spacer"></div>
-        <div>
-          <!-- finding 1 -->
-          <div class="find">
-            <div class="find-n">发现 01</div>
-            <h4>记忆跨平台保存了，但不同入口之间是断开的</h4>
-            <p>浏览器插件成功从 ChatGPT 对话中抓取了一条记忆：</p>
-            <div class="quote">用户正在做一篇关于用 Neural Cellular Automata 进行景观设计生成的论文，正在考虑用 Pix2Pix 做基准比较，但担心 Pix2Pix 的分辨率限制会让比较不公平。</div>
-            <p>但当我通过<em>另一个入口</em>（Claude Code 的开发者工具）搜索这条记忆时，三次搜索全部返回空。原因是：浏览器插件保存的记忆和开发者工具查看的记忆，被分在了<em>两个不相通的存储空间</em>里。</p>
-            <div class="scn-fig">
-              <a href="assets/GPT的回答列入记忆.png" data-zoom="assets/GPT的回答列入记忆.png" data-cap="Fig.07 — mem0 记忆详情，标注来源是 ChatGPT。"><img src="assets/GPT的回答列入记忆.png" alt="mem0 记忆详情"></a>
-              <div class="cap"><span class="fig-num">Fig. 07</span>mem0 记忆详情 — 标注了来源是 ChatGPT。</div>
-            </div>
+    <div class="ho-log">
+
+      <!-- 场景 A · 跨 AI 连续性 -->
+      <article class="ho-row">
+        <header class="ho-row-head">
+          <div class="ho-letter">A</div>
+          <div class="ho-titles">
+            <span class="ho-tag">SCENARIO A · 跨 AI 连续</span>
+            <h3 class="ho-title">在不同 AI 之间延续对话</h3>
+            <p class="ho-task">ChatGPT 聊论文 → Claude 问 <em>"基准比较方法是什么"</em>。检验"跨 AI 对话连续性"。</p>
           </div>
+          <div class="ho-progress">01 / 04</div>
+        </header>
+        <div class="ho-row-body">
+          <div class="ho-findings">
+            <div class="ho-find"><span class="find-mark">01</span><div class="find-body">mem0 记的只是"在做景观论文，考虑用 Pix2Pix"——<strong>一句话概括</strong>，丢失方法论细节（SuRF-UK 评估框架、CL:AIRE 标准、分区比例等）。</div></div>
+            <div class="ho-find"><span class="find-mark">02</span><div class="find-body">Claude <strong>直接忽略 mem0 注入的信息</strong>，用自己的记忆给了详细得多的回答——第三方记忆工具被平台自带记忆压制。</div></div>
+            <div class="ho-find"><span class="find-mark">03</span><div class="find-body">插件加载延迟明显，且同一条记忆<strong>被重复注入两次</strong>。</div></div>
+          </div>
+          <div class="ho-evidence">
+            <a class="ho-evidence-link" href="assets/转到claude.ai给出的回答.png" data-zoom="assets/转到claude.ai给出的回答.png" data-cap="Fig.09 — Claude 忽略 mem0 信息，用自己的记忆回答了完整的研究方法。"><img src="assets/转到claude.ai给出的回答.png" alt="Claude 的详细回答"></a>
+            <div class="ho-evidence-cap"><span class="fig-num">Fig. 09</span>Claude 用自己的记忆回答</div>
+          </div>
+        </div>
+      </article>
 
-          <!-- finding 2 -->
-          <div class="find">
-            <div class="find-n">发现 02</div>
-            <h4>mem0 记的太粗，Claude 自己记的更详细</h4>
-            <table class="kv">
-              <thead><tr><th>来源</th><th>回答内容</th><th>详细程度</th></tr></thead>
+      <!-- 场景 B · 记忆整理 -->
+      <article class="ho-row">
+        <header class="ho-row-head">
+          <div class="ho-letter">B</div>
+          <div class="ho-titles">
+            <span class="ho-tag">SCENARIO B · 记忆整理</span>
+            <h3 class="ho-title">查看记忆是怎么被整理的</h3>
+            <p class="ho-task">Playground 聊两个话题（<em>论文 + 竞品分析</em>），后台看记忆列表。检验"掌控你的 AI 记忆"。</p>
+          </div>
+          <div class="ho-progress">02 / 04</div>
+        </header>
+        <div class="ho-row-body">
+          <div class="ho-findings">
+            <div class="ho-find"><span class="find-mark">01</span><div class="find-body">两个不同话题 + 浏览器插件抓取的记忆，<strong>全混在同一时间列表里</strong>，不能按话题分组也不能筛选。</div></div>
+            <div class="ho-find"><span class="find-mark">02</span><div class="find-body">自动分类只有 <code>technology / professional</code> 等宽泛标签——论文和竞品分析都归到"技术"，<strong>区分不出来</strong>。</div></div>
+            <div class="ho-find"><span class="find-mark">03</span><div class="find-body">意外亮点：Playground 自动整理的<strong>用户画像超出预期</strong>（教育背景 / 工具偏好 / 沟通风格），但功能只在测试区可见，<strong>插件和开发者工具端都看不到</strong>。</div></div>
+          </div>
+          <div class="ho-evidence">
+            <a class="ho-evidence-link" href="assets/mem0-categories.png" data-zoom="assets/mem0-categories.png" data-cap="Fig.05 — mem0 后台 Memories 列表，Categories 列只有 technology / professional details 两类。"><img src="assets/mem0-categories.png" alt="mem0 自动分类太粗"></a>
+            <div class="ho-evidence-cap"><span class="fig-num">Fig. 05</span>分类太粗，论文和竞品都归"技术"</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 场景 C · 用户控制 -->
+      <article class="ho-row">
+        <header class="ho-row-head">
+          <div class="ho-letter">C</div>
+          <div class="ho-titles">
+            <span class="ho-tag">SCENARIO C · 用户控制</span>
+            <h3 class="ho-title">用户能不能控制什么被记住</h3>
+            <p class="ho-task">观察插件 → 后台试删除和编辑。检验商店宣传语"<em>完全控制 AI 的记忆内容</em>"。</p>
+          </div>
+          <div class="ho-progress">03 / 04</div>
+        </header>
+        <div class="ho-row-body">
+          <div class="ho-findings">
+            <table class="ho-mini-table">
+              <thead><tr><th>操作</th><th>mem0</th><th>MemoryOS</th></tr></thead>
               <tbody>
-                <tr>
-                  <td>mem0 记住的</td>
-                  <td>"在做景观论文，考虑用 Pix2Pix 做对照"</td>
-                  <td>一句话概括 — 知道你在做什么，<em>不知道具体怎么做的</em></td>
-                </tr>
-                <tr>
-                  <td>Claude 自记</td>
-                  <td>SuRF-UK 评估框架 · CL:AIRE 标准 · 三层评估结构 · 7 种修复策略 · 15 项可测指标 · 分区比例（DECAY 19.6% / REUSE 65.4% / REWILD 15.0%）</td>
-                  <td>完整方法论 — <em>不只知道做什么，还知道怎么做的</em></td>
-                </tr>
+                <tr><td>保存前确认</td><td>❌</td><td>✅</td></tr>
+                <tr><td>保存时通知</td><td>❌</td><td>✅</td></tr>
+                <tr><td>删除一条</td><td>✅</td><td>✅（回收站可恢复）</td></tr>
+                <tr><td>修改内容</td><td>❌ 只能删</td><td>✅ 文本文件直接编辑</td></tr>
+                <tr><td>保存前拦截</td><td>❌</td><td>✅</td></tr>
               </tbody>
             </table>
-            <p><em>Claude 直接忽略了 mem0 提供的信息，用自己记住的内容给了一个详细得多的回答。</em></p>
-            <div class="scn-fig">
-              <a href="assets/转到claude.ai给出的回答.png" data-zoom="assets/转到claude.ai给出的回答.png" data-cap="Fig.09 — Claude 忽略 mem0 信息，用自己的记忆回答了完整的研究方法。"><img src="assets/转到claude.ai给出的回答.png" alt="Claude 的详细回答"></a>
-              <div class="cap"><span class="fig-num">Fig. 09</span>Claude 的回答 — 忽略 mem0，用自己的记忆给出完整方法论。</div>
-            </div>
-            <p style="margin-top:14px">这说明两件事：mem0 的记忆提取是"简单概括"，适合记住<em>个人偏好</em>，不适合记<em>需要细节的工作内容</em>；当 AI 平台自己的记忆功能变强了，第三方记忆工具提供的信息反而会被忽略 — 这对所有第三方记忆产品（包括 MemoryOS）都是一个需要关注的趋势。</p>
+            <div class="ho-find" style="margin-top:10px"><span class="find-mark">→</span><div class="find-body">商店宣传"完全控制"，但用户实际<strong>只能事后删除</strong>——不能审查、不能修改、不能选择性保存。<strong>宣传和体验落差明显。</strong></div></div>
           </div>
+          <div class="ho-evidence">
+            <a class="ho-evidence-link" href="assets/可删不可改.png" data-zoom="assets/可删不可改.png" data-cap="Fig.11 — mem0 删除确认弹窗，无编辑按钮。"><img src="assets/可删不可改.png" alt="mem0 只能删不能改"></a>
+            <div class="ho-evidence-cap"><span class="fig-num">Fig. 11</span>只有删除，没有编辑</div>
+          </div>
+        </div>
+      </article>
 
-          <!-- finding 3 -->
-          <div class="find">
-            <div class="find-n">发现 03</div>
-            <h4>记忆加载速度慢</h4>
-            <p>在 Claude 端，mem0 的浏览器插件显示"正在加载记忆…"，体感等待明显。对于一个宣传"无缝衔接"的产品，这个延迟影响了使用感受。</p>
-            <div class="scn-fig">
-              <a href="assets/转到claude.ai调用插件.png" data-zoom="assets/转到claude.ai调用插件.png" data-cap="Fig.08 — Claude 端 mem0 插件加载中，等待时间明显。"><img src="assets/转到claude.ai调用插件.png" alt="插件加载中"></a>
-              <div class="cap"><span class="fig-num">Fig. 08</span>Claude 上 mem0 插件加载中 — 等待时间明显。</div>
-            </div>
+      <!-- 附加 · 开发者视角 -->
+      <article class="ho-row">
+        <header class="ho-row-head">
+          <div class="ho-letter">+</div>
+          <div class="ho-titles">
+            <span class="ho-tag">ADDENDUM · 开发者视角</span>
+            <h3 class="ho-title">从 Claude Code 接入 mem0</h3>
+            <p class="ho-task">在开发者工具里走完整套安装配置——让普通用户视角和开发者视角形成对照。</p>
           </div>
+          <div class="ho-progress">04 / 04</div>
+        </header>
+        <div class="ho-row-body">
+          <div class="ho-findings">
+            <div class="ho-find"><span class="find-mark">01</span><div class="find-body">官方说"60 秒完成"，实际<strong>走了 7 个步骤</strong>，含两套独立身份验证。</div></div>
+            <div class="ho-find"><span class="find-mark">02</span><div class="find-body">安装指引默认 Mac 终端，Windows 用户需自己翻译命令；让用户把密钥<strong>明文写进系统配置文件</strong>，违反安全基本规范。</div></div>
+            <div class="ho-find"><span class="find-mark">03</span><div class="find-body">新用户登录第一屏是 <code>pip install mem0ai</code> 安装命令——<strong>定位明显是开发者，不是普通用户</strong>。"面向普通用户的 AI 记忆产品"这个位置目前是空的。</div></div>
+          </div>
+          <div class="ho-evidence">
+            <a class="ho-evidence-link" href="assets/claude-code-mem0-install.png" data-zoom="assets/claude-code-mem0-install.png" data-cap="Fig.12 — Claude Code 中安装 mem0 插件的真实过程：环境变量未生效、Python 缺失、SessionStart hook 报错。"><img src="assets/claude-code-mem0-install.png" alt="Claude Code 安装 mem0"></a>
+            <div class="ho-evidence-cap"><span class="fig-num">Fig. 12</span>实际配置：报错多次，远不止 60 秒</div>
+          </div>
+        </div>
+      </article>
 
-          <!-- finding 4 -->
-          <div class="find">
-            <div class="find-n">发现 04</div>
-            <h4>注入方式的技术问题</h4>
-            <p>mem0 把记忆信息以纯文本形式插入到用户发送的消息里，AI 可以选择使用也可以选择忽略。而且<em>同一条记忆被重复插入了两次</em> — 这是一个产品 bug。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SCENARIO B ── -->
-    <div class="scn">
-      <div class="scn-head">
-        <div class="scn-n">场景 B</div>
-        <div>
-          <h3 class="scn-title">查看记忆是怎么被整理的</h3>
-          <p class="scn-task">在 mem0 的在线测试区（Playground）分别聊两个不同话题（<em>论文 + 竞品分析</em>），然后去管理后台看记忆列表。检验 mem0 的"掌控你的 AI 记忆"宣传点。</p>
-        </div>
-      </div>
-      <div class="scn-body">
-        <div class="spacer"></div>
-        <div>
-          <div class="find">
-            <div class="find-n">发现 01</div>
-            <h4>所有记忆混在一个列表里</h4>
-            <p>两个完全不同的话题（论文研究 vs 竞品分析）的记忆，加上浏览器插件从 ChatGPT 抓的记忆，全部混在同一个按时间排序的列表里。<em>没有按项目分开，也不能按话题筛选。</em></p>
-            <div class="scn-fig">
-              <a href="assets/记忆汇总列表.png" data-zoom="assets/记忆汇总列表.png" data-cap="Fig.10 — mem0 记忆列表，所有来源混在一起。"><img src="assets/记忆汇总列表.png" alt="mem0 记忆汇总列表"></a>
-              <div class="cap"><span class="fig-num">Fig. 10</span>mem0 记忆列表 — 所有来源的记忆混在一个时间列表里。</div>
-            </div>
-          </div>
-          <div class="find">
-            <div class="find-n">发现 02</div>
-            <h4>自动分类太粗</h4>
-            <p>mem0 给每条记忆自动打了分类标签，但只有"技术""职业信息""个人偏好"这几个很宽泛的类别。<em>论文和竞品分析都被归到了"技术"这个大类下面，区分不出来。</em></p>
-            <div class="scn-fig">
-              <a href="assets/mem0-categories.png" data-zoom="assets/mem0-categories.png" data-cap="Fig.05 — mem0 后台 Memories 列表，Categories 列只有 technology / professional details 两类，论文研究与竞品分析无法区分。"><img src="assets/mem0-categories.png" alt="mem0 自动分类"></a>
-              <div class="cap"><span class="fig-num">Fig. 05</span>mem0 后台 Memories 列表 — Categories 列高亮：论文研究与竞品分析全部归为 technology / professional details，区分不出来。</div>
-            </div>
-          </div>
-          <div class="find">
-            <div class="find-n">发现 03</div>
-            <h4>用户画像提取 — 做得比预想的好</h4>
-            <p>mem0 在线测试区右侧自动从对话中整理出了一份用户画像：教育背景（UCL Bartlett）、专业方向、使用的 AI 工具、语言偏好、沟通风格等。这个功能的效果<em>超出预期</em> — 它确实擅长"记住一个人是什么样的"。</p>
-            <p>但这个功能只在测试区可见，<em>浏览器插件和开发者工具端都看不到，功能没有打通</em>。</p>
-            <div class="scn-fig">
-              <a href="assets/playground测试2.png" data-zoom="assets/playground测试2.png" data-cap="Fig.04 — Playground 自动提取的用户画像，跨对话归纳能力超出预期。"><img src="assets/playground测试2.png" alt="Playground 用户画像"></a>
-              <div class="cap"><span class="fig-num">Fig. 04</span>Playground 自动提取的用户画像。</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SCENARIO C ── -->
-    <div class="scn">
-      <div class="scn-head">
-        <div class="scn-n">场景 C</div>
-        <div>
-          <h3 class="scn-title">用户能不能控制什么被记住</h3>
-          <p class="scn-task">在 ChatGPT 里正常聊天时观察浏览器插件的行为 → 在管理后台尝试删除和编辑记忆。检验 mem0 商店页的"<em>完全控制 AI 的记忆内容</em>"宣传语。</p>
-        </div>
-      </div>
-      <div class="scn-body">
-        <div class="spacer"></div>
-        <div>
-          <table class="kv">
-            <thead><tr><th>操作</th><th>mem0</th><th>MemoryOS</th><th>说明</th></tr></thead>
-            <tbody>
-              <tr><td>保存前确认</td><td>❌ 不支持</td><td>✅ 支持</td><td>mem0 自动保存，用户没有机会事先审查</td></tr>
-              <tr><td>保存时通知</td><td>❌ 无通知</td><td>✅ 有通知</td><td>用户不知道哪句话被存了</td></tr>
-              <tr><td>删除一条</td><td>✅ 支持</td><td>✅ 支持</td><td>mem0 删除不可恢复；MemoryOS 进回收站可恢复</td></tr>
-              <tr><td>修改内容</td><td>❌ 不支持</td><td>✅ 支持</td><td>mem0 的记忆<em>只能删不能改</em>；MemoryOS 是普通文本文件，任何编辑器都能改</td></tr>
-              <tr><td>保存前拦截</td><td>❌ 不支持</td><td>✅ 支持</td><td>mem0 如果记错了只能事后发现再删；MemoryOS 必须用户手动粘贴才会写入</td></tr>
-            </tbody>
-          </table>
-          <div class="scn-fig">
-            <a href="assets/可删不可改.png" data-zoom="assets/可删不可改.png" data-cap="Fig.11 — mem0 删除确认弹窗，无编辑按钮。"><img src="assets/可删不可改.png" alt="mem0 删除确认"></a>
-            <div class="cap"><span class="fig-num">Fig. 11</span>mem0 删除确认 — 可以删，但没有编辑按钮。</div>
-          </div>
-          <p style="margin-top:18px;font-size:15.5px;line-height:1.65;color:var(--ink-2)"><em style="color:var(--ink);font-weight:500">核心问题：</em>mem0 在 Chrome 应用商店的宣传语是"完全控制 AI 的记忆内容"，但实际上用户唯一能做的控制只有<em>事后删除</em> — 不能事先审查、不能修改内容、不能选择性保存。<em style="color:var(--ink);font-weight:500">宣传和实际体验之间有明显的落差。</em></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── ADDENDUM ── -->
-    <div class="scn">
-      <div class="scn-head">
-        <div class="scn-n">附加</div>
-        <div>
-          <h3 class="scn-title">从开发者视角接入 mem0</h3>
-          <p class="scn-task">为了更全面地理解 mem0，我还在 <em>Claude Code</em>（开发者工具）里安装了 mem0 插件并完成了全部配置。</p>
-        </div>
-      </div>
-      <div class="scn-body">
-        <div class="spacer"></div>
-        <div>
-          <table class="kv">
-            <thead><tr><th>观察</th><th>细节</th></tr></thead>
-            <tbody>
-              <tr><td>配置步骤多</td><td>官方说"60 秒完成"，实际需要走 <em>7 个步骤</em>，包括两套独立的身份验证</td></tr>
-              <tr><td>只考虑 Mac 用户</td><td>安装指引默认你用的是 Mac 的终端，Windows 用户需要自己翻译命令</td></tr>
-              <tr><td>安全问题</td><td>指引让用户把密钥<em>明文写进系统配置文件</em>，不符合安全管理的基本要求</td></tr>
-              <tr><td>新用户第一屏</td><td>不是产品功能，而是代码安装指引 — <code style="font-family:var(--font-mono);font-size:.92em;background:var(--paper-2);padding:1px 5px;border-radius:3px">pip install mem0ai</code></td></tr>
-            </tbody>
-          </table>
-          <p style="margin-top:18px;font-size:15.5px;line-height:1.65;color:var(--ink-2)">这些细节反映了 mem0 的产品定位：它<em style="color:var(--ink);font-weight:500">目前主要面向技术开发者，不是普通用户</em>。从注册流程、页面措辞（"Hobby plan"）到管理后台的信息呈现方式，都假设用户是程序员。<em style="color:var(--ink);font-weight:500">这意味着"面向普通用户的 AI 记忆产品"这个市场位，目前是空的。</em></p>
-          <div class="scn-fig">
-            <a href="assets/claude-code-mem0-install.png" data-zoom="assets/claude-code-mem0-install.png" data-cap="Fig.12 — Claude Code 中安装 mem0 插件的真实过程：环境变量未生效、Python 缺失、SessionStart hook 报错。"><img src="assets/claude-code-mem0-install.png" alt="Claude Code 中安装 mem0 插件"></a>
-            <div class="cap"><span class="fig-num">Fig. 12</span>Claude Code 中安装 mem0 插件 — 实际配置过程：环境变量、OAuth、SessionStart hook 多次报错，"60 秒完成"实际走了 7 步。</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1381,7 +2058,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:56px">
       <div>
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">mem0 更适合</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:12px;letter-spacing:.04em;color:var(--muted);margin-bottom:14px;font-weight:500">mem0 更适合</div>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:15.5px;line-height:1.55;color:var(--ink-2)">
           <li><em style="color:var(--ink);font-weight:500">让新的 AI 快速认识你</em> — 安装插件就自动工作</li>
           <li><em style="color:var(--ink);font-weight:500">多台电脑切换使用</em> — 数据在云端</li>
@@ -1390,7 +2067,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         </ul>
       </div>
       <div>
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin-bottom:14px">MemoryOS 更适合</div>
+        <div style="font-family:var(--font-cjk),var(--font-sans);font-size:12px;letter-spacing:.04em;color:var(--signal);margin-bottom:14px;font-weight:500">MemoryOS 更适合</div>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:15.5px;line-height:1.55;color:var(--ink-2)">
           <li><em style="color:var(--ink);font-weight:500">管理一个持续进行的项目</em> — 按项目自动分文件夹</li>
           <li><em style="color:var(--ink);font-weight:500">需要知道"上次做到哪、为什么这么决定"</em></li>
@@ -1412,14 +2089,14 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <div class="feat">安装复杂度</div>
         <div class="col them"><div class="v" style="--w:92%"></div><div class="t">一键扩展</div></div>
         <div class="col us"><div class="v" style="--w:55%"></div><div class="t">需下载</div></div>
-        <div class="vd them" tabindex="0">→ mem0<span class="tip">浏览器插件一键安装，零摩擦；MemoryOS 需要下载 1.7 MB 桌面应用，多一步。</span></div>
+        <div class="vd them" tabindex="0">→ mem0<span class="tip">浏览器插件一键安装，零摩擦；MemoryOS 需要下载桌面应用，多一步。</span></div>
       </div>
 
       <div class="score-row">
         <div class="feat">自动记忆捕获</div>
         <div class="col them"><div class="v" style="--w:95%"></div><div class="t">对话自动抓</div></div>
         <div class="col us"><div class="v" style="--w:20%"></div><div class="t">需手动粘贴</div></div>
-        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 自动提取、零操作；MemoryOS 需要手动复制粘贴，操作成本高。对日常用户来说 mem0 的方式明显更好；只有管着复杂项目、需要确保记录准确的用户，才愿意承受这个摩擦。</span></div>
+        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 自动提取、零操作；MemoryOS 需要手动复制粘贴，操作成本高。对日常用户来说 mem0 的方式明显更好；需要确保记录准确、愿意花 30 秒换来下次续上的用户，才愿意承受这个摩擦。</span></div>
       </div>
 
       <div class="score-row">
@@ -1472,10 +2149,10 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
 
       <div class="score-row">
-        <div class="feat">包体积</div>
-        <div class="col them"><div class="v" style="--w:0%"></div><div class="t">N/A · 扩展</div></div>
-        <div class="col us"><div class="v" style="--w:95%"></div><div class="t">1.7 MB</div></div>
-        <div class="vd draw" tabindex="0">— 不可比<span class="tip">浏览器插件和桌面应用形态不同，无法直接比较 — 列出作为参考。</span></div>
+        <div class="feat">数据位置</div>
+        <div class="col them"><div class="v" style="--w:20%"></div><div class="t">云端</div></div>
+        <div class="col us"><div class="v" style="--w:90%"></div><div class="t">数据在你电脑上</div></div>
+        <div class="vd us" tabindex="0">MemoryOS ←<span class="tip">换 AI 零成本，30 秒续上。数据不经过第三方服务器。</span></div>
       </div>
     </div>
   </div>
@@ -1494,7 +2171,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <p>我在 mem0 的在线测试区讨论 "<em>mem0 vs MemoryOS</em>" 的竞品对比策略时，讨论内容被 mem0 <em>自动保存成了记忆</em> — 包括"MemoryOS 的定位是什么""mem0 哪里有风险"这些分析笔记。</p>
         <p>我的竞争分析笔记，<em>直接存在了我正在分析的那家公司的服务器上</em>。</p>
         <p>这个问题的根源是"自动记录、不经用户确认"的设计选择。在日常聊天中这可能只是不方便，但在敏感场景下（商业讨论、竞争分析、法律咨询），就变成了实际的安全隐患。</p>
-        <p style="margin-top:14px;padding-left:14px;border-left:2px solid var(--signal);color:var(--ink)"><em style="color:var(--muted);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:6px">补充</em>独立评测机构对 mem0 浏览器插件的隐私评分为 <em style="color:var(--signal);font-weight:600">2/5</em>，指出其宣传的 "local-first" 与实际的云端数据传输不符。这不是个案，是产品级的隐私设计问题。</p>
+        <p style="margin-top:14px;padding-left:14px;border-left:2px solid var(--signal);color:var(--ink)"><em style="color:var(--muted);font-family:var(--font-cjk),var(--font-sans);font-size:11px;letter-spacing:.04em;display:block;margin-bottom:6px;font-weight:500">补充</em>独立评测机构对 mem0 浏览器插件的隐私评分为 <em style="color:var(--signal);font-weight:600">2/5</em>，指出其宣传的 "local-first" 与实际的云端数据传输不符。这不是个案，是产品级的隐私设计问题。</p>
         <div class="spr-fig">
           <a href="assets/playground测试4.png" data-zoom="assets/playground测试4.png" data-cap="Fig.06 — Playground 中的竞品分析讨论被自动保存为记忆。"><img src="assets/playground测试4.png" alt="竞品分析被记忆"></a>
           <div class="cap"><span class="fig-num">Fig. 06</span>Playground 中的竞品分析讨论被自动保存为记忆。</div>
@@ -1542,7 +2219,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section alt" id="strategy" data-screen-label="11 Strategy">
   <div class="wrap">
     <div class="eyebrow"><span class="num">9</span><span>MemoryOS 接下来做什么</span></div>
-    <h2>定位调整 · 资源优先级 · 不打的仗<span class="sub">建议从"跨 AI 记忆"调整为"跨 AI 工作记录"。</span></h2>
+    <h2>定位调整 · 资源优先级<span class="sub">建议从"跨 AI 记忆"调整为"跨 AI 工作记录"。</span></h2>
 
     <div class="rec-grid">
       <div>
@@ -1557,7 +2234,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
     </div>
 
-    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin:64px 0 20px">商业模式 · 靠什么活下去</div>
+    <div style="font-family:var(--font-cjk),var(--font-sans);font-size:13px;letter-spacing:.04em;color:var(--signal);margin:64px 0 20px;font-weight:500">商业模式 · 靠什么活下去</div>
 
     <div class="rec-grid">
       <div>
@@ -1576,7 +2253,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       这个差距是真实的：mem0 拿了 <em style="color:var(--ink);font-weight:500">$24M</em> 融资、API 季度调用量 <em style="color:var(--ink);font-weight:500">1.86 亿次</em>，MemoryOS 目前是一个人自制的 demo。但反过来看，mem0 的收入来自开发者接口，不来自浏览器插件 — 它在"<em style="color:var(--ink);font-weight:500">面向普通用户的记忆产品</em>"这个位置上，也还没有赚到钱。<em style="color:var(--ink);font-weight:500">两者都还在验证阶段，只是验证的东西不一样。</em>
     </p>
 
-    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin:64px 0 20px">产品优先级</div>
+    <div style="font-family:var(--font-cjk),var(--font-sans);font-size:13px;letter-spacing:.04em;color:var(--signal);margin:64px 0 20px;font-weight:500">产品优先级</div>
 
     <div class="prio-row">
       <div class="ptag">P0<span class="label">最高 / 核心差异</span></div>
@@ -1603,42 +2280,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <h4>增加"建议确认"模式</h4>
           <p>在"全自动"和"全手动"之间找到平衡 — AI 推荐要保存的内容，用户一键确认。</p>
         </div>
-        <div class="item">
-          <h4>让用户可以直接在应用内编辑记录</h4>
-          <p>mem0 的记忆只能删不能改，支持编辑是一个明确的差异化。</p>
-        </div>
       </div>
-    </div>
-
-    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);margin:64px 0 0">不做的事</div>
-    <div class="donot">
-      <div>
-        <div class="what">不做"通用网页记忆"</div>
-        <div class="why">这是 mem0 和各大 AI 平台自带功能都在做的方向，正面竞争没有优势。</div>
-      </div>
-      <div>
-        <div class="what">暂不做"云端同步"</div>
-        <div class="why">当前阶段优先验证核心功能是否成立，云端同步是未来用户量增长后值得加的能力。</div>
-      </div>
-      <div>
-        <div class="what">不做浏览器插件</div>
-        <div class="why">不抢 OpenMemory 的产品形态，守住桌面应用的定位。</div>
-      </div>
-      <div>
-        <div class="what">不做开发者接口</div>
-        <div class="why">不和 mem0 的底层技术业务竞争。</div>
-      </div>
-    </div>
-
-    <div class="shortcomings">
-      <div class="lbl">需要诚实说明的不足</div>
-      <ul>
-        <li>数据存在本地，不能多台电脑同步使用</li>
-        <li>需要用户手动复制粘贴，操作步骤比自动记录多</li>
-        <li>按项目分开记录的设计，跨项目搜索不太方便</li>
-        <li>目前是一个人开发，更新速度和稳定性有限</li>
-        <li>当前的"手动复制粘贴"工作流，对大多数普通用户来说操作成本过高，是产品最需要优先解决的体验问题</li>
-      </ul>
     </div>
   </div>
 </section>
@@ -1657,7 +2299,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <tr><td>记住一句话概括</td><td>记录完整的工作总结</td><td>用户需要的不只是"AI 知道我在做什么"，还需要"上次做到哪了"</td></tr>
         <tr><td>三个入口的记忆互相看不到</td><td>所有记录统一管理</td><td>用户不应该关心"这条记忆是从哪个入口存进来的"</td></tr>
         <tr><td>自动保存、不经用户确认</td><td>用户可以事先审查再决定保存</td><td>在用户还没有充分信任 AI 判断力的阶段，给用户控制权更安全</td></tr>
-        <tr><td>记忆只能删除、不能修改</td><td>数据是普通文本文件，随时可以编辑</td><td>记录是用户的资产，应该像笔记本一样可以修改和整理</td></tr>
+        <tr><td>记忆只能删除、不能修改内容</td><td>数据是普通文本文件，可在 app 内直接编辑，也可用任何编辑器打开</td><td>记录是用户的资产，应该像笔记本一样可以修改和整理</td></tr>
         <tr><td>正在退出"数据存在本地"这条路</td><td>坚持数据存在用户本地</td><td>对方主动让出的位置，竞争压力最小的差异化方向</td></tr>
         <tr><td>产品定位偏向技术开发者</td><td>明确面向普通用户</td><td>从注册流程到默认页面都在说"这是给程序员用的"，普通用户的市场还是空白</td></tr>
       </tbody>
