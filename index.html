@@ -452,7 +452,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 
 .ship-ctas{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(3,1fr);
   gap:var(--s-2);
   margin-top:var(--s-4);
 }
@@ -491,7 +491,13 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   line-height:1.4;
 }
 .ship-cta:hover .cta-sub{color:#aaa}
-@media(max-width:700px){.ship-ctas{grid-template-columns:1fr}}
+.ship-cta--highlight{border:2px solid var(--signal);background:var(--paper-soft)}
+.ship-cta--highlight .cta-lbl{color:var(--signal);font-weight:500}
+.ship-cta--highlight:hover{background:var(--signal);color:var(--paper);border-color:var(--signal)}
+.ship-cta--highlight:hover .cta-lbl{color:var(--paper)}
+.ship-cta--highlight:hover .cta-sub{color:rgba(255,255,255,.7)}
+@media(max-width:900px){.ship-ctas{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ship-ctas{grid-template-columns:1fr}}
 
 /* DEMO EMBED — Programming Decay V3 inline (02.A in new numbering) */
 .demo-embed-wrap{
@@ -719,12 +725,12 @@ body[data-lang="cn"] .lang-cn{
       <p class="landing-now">
         <span class="now-lbl"><span class="lang-en">Now shipping</span><span class="lang-cn">正在交付</span></span>
         <a href="case_study.html">MemoryOS v0.1.1</a>
-        <span class="meta lang-en">· 1.7 MB cross-AI work log · MIT open source</span>
-        <span class="meta lang-cn">· 1.7 MB 跨 AI 工作记录 · MIT 开源</span>
+        <span class="meta lang-en">· cross-AI work log · MIT open source</span>
+        <span class="meta lang-cn">· 跨 AI 工作记录 · MIT 开源</span>
       </p>
 
       <p class="landing-pos">
-        <span class="lang-en">Shanghai-based, currently at UCL Bartlett (MArch Urban Design), graduating 2026. I build AI products (MemoryOS, shipped and self-used) and use algorithms to turn messy spatial problems into explainable decision logic.</span>
+        <span class="lang-en">Shanghai-based, currently at UCL Bartlett (MArch Urban Design), graduating 2026. I build AI products (MemoryOS, shipped and self-used) and use algorithms to turn messy spatial problems into explainable remediation logic.</span>
         <span class="lang-cn">常驻上海，现于伦敦 UCL Bartlett 读城市设计硕士，2026 毕业。独立做 AI 产品（MemoryOS，已上线自用），也用算法把复杂的空间问题拆解成可解释的判断逻辑。</span>
       </p>
 
@@ -753,8 +759,8 @@ body[data-lang="cn"] .lang-cn{
         <li><a href="#row-01"><span class="k">01</span><span class="t"><span class="lang-en">MemoryOS — Cross-AI Work Log</span><span class="lang-cn">MemoryOS — 跨 AI 工作记录</span></span><span class="y">26</span></a></li>
         <li><a href="#row-02"><span class="k">02</span><span class="t"><span class="lang-en">Competitive Analysis — MemoryOS × mem0</span><span class="lang-cn">竞品分析 — MemoryOS × mem0</span></span><span class="y">26</span></a></li>
         <li class="div"><span></span><span class="dv"><span class="lang-en">MArch Thesis</span><span class="lang-cn">硕士毕设</span></span><span></span></li>
-        <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Programming Decay — Decision Demo</span><span class="lang-cn">Programming Decay — 决策 Demo</span></span><span class="y">25 — 26</span></a></li>
-        <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Barking Reach — Site Timeline 3D</span><span class="lang-cn">Barking Reach — 场地时间线 3D</span></span><span class="y">25 — 26</span></a></li>
+        <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Programming Decay — Algorithmic Remediation</span><span class="lang-cn">Programming Decay — 算法驱动的场地修复</span></span><span class="y">25 — 26</span></a></li>
+        <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Barking Reach — Site Evidence Timeline</span><span class="lang-cn">Barking Reach — 场地证据时间轴</span></span><span class="y">25 — 26</span></a></li>
         <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Programming Decay — Research Booklet</span><span class="lang-cn">Programming Decay — 研究文档</span></span><span class="y">25 — 26</span></a></li>
         <li><a href="#row-06"><span class="k">06</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
         <li class="div"><span></span><span class="dv"><span class="lang-en">Spatial Foundation</span><span class="lang-cn">空间基础</span></span><span></span></li>
@@ -797,8 +803,8 @@ body[data-lang="cn"] .lang-cn{
         <span class="lang-cn">MemoryOS — 跨 AI 工作记录<span class="cn">按项目分组的跨 AI 记忆工具</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">We switch between ChatGPT, Claude, Cursor and others daily — but none of them remember what happened in the others. ChatGPT Memory knows "you're a designer" (personal profile), not "where your thesis left off last Tuesday" (work progress). MemoryOS solves the second problem: it organises your work records by project, with every entry traceable to its source, stored as local files you own. Defined, built and shipped solo.</span>
-        <span class="lang-cn">我们每天在 ChatGPT、Claude、Cursor 之间切换——但没有一个 AI 记得你在另一个 AI 里做到哪了。ChatGPT Memory 记住的是"你是设计师"（个人画像），不是"论文上次改到第五章、因为时间不够砍了云端方案"（工作进展）。MemoryOS 解决的是第二个问题：按项目整理工作记录，每条记录标注来源，数据存在你自己电脑上。从定义、开发到上线由一人完成。</span>
+        <span class="lang-en">Daily switching between ChatGPT / Claude / Cursor — none of them remember what happened in the others. ChatGPT Memory knows "you're a designer" (profile), not "your thesis stopped at chapter 5" (work progress). MemoryOS tries to address the second one: per-project local files, shipped solo.</span>
+        <span class="lang-cn">每天在 ChatGPT / Claude / Cursor 之间切换,但没有一个 AI 记得你在别处做到哪。ChatGPT Memory 记的是"你是设计师"（画像），不是"论文上次改到第五章"（工作进展）。MemoryOS 想处理的是后者——按项目本地存储,一人完成。</span>
       </p>
       <div class="row-tags">
         <span class="row-tag">Cross-AI Work Log</span>
@@ -809,8 +815,8 @@ body[data-lang="cn"] .lang-cn{
     <dl class="row-meta">
       <dt>User</dt><dd><span class="lang-en">AI power users — researchers / designers / PMs</span><span class="lang-cn">AI 重度用户 — 研究者 / 设计师 / 产品经理</span></dd>
       <dt>Input</dt><dd><span class="lang-en">Local Markdown files + clipboard bridge</span><span class="lang-cn">本地 Markdown 文件 + 剪贴板桥接</span></dd>
-      <dt>Method</dt><dd><span class="lang-en">Zero-API cost routing · Privacy-first trust logic · Low-friction session handoff</span><span class="lang-cn">零 API 成本路由 · 隐私优先信任逻辑 · 低摩擦会话交接</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">Cross-AI handoff sessions + user-confirmed writes</span><span class="lang-cn">跨 AI 工具的会话交接 + 用户确认后的写入</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">User confirms what to carry at end of session; AI drafts, user approves. Local file + clipboard, no cloud, no API.</span><span class="lang-cn">用户每次结束对话时确认要"带走"什么,AI 起草、用户审核。本地文件 + 剪贴板,没有云、没有 API。</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">AI-summarised end-of-session notes, manually carried into the next tool</span><span class="lang-cn">AI 生成的对话结尾笔记,由用户手动带去下一个工具</span></dd>
       <dt>Status</dt><dd><span class="lang-en">v0.1.1 shipped · dogfooding · MIT open source</span><span class="lang-cn">v0.1.1 已发布 · 自用迭代中 · MIT 开源</span></dd>
     </dl>
     <div class="row-year">2026</div>
@@ -828,8 +834,8 @@ body[data-lang="cn"] .lang-cn{
         <span class="lang-cn">已交付产品 · MemoryOS · v0.1.1 Windows 安装包</span>
       </span>
       <h3>
-        <span class="lang-en">One working memory, across every AI tool</span>
-        <span class="lang-cn">一份工作记忆，贯穿每一个 AI 工具</span>
+        <span class="lang-en">One local memory file, take it into any AI yourself</span>
+        <span class="lang-cn">一份本地的工作记忆,可以自己带进任何 AI 工具</span>
       </h3>
     </div>
     <a class="open" href="case_study.html"><span class="lang-en">Read case study ↗</span><span class="lang-cn">阅读 Case Study ↗</span></a>
@@ -867,12 +873,10 @@ body[data-lang="cn"] .lang-cn{
   </div>
 
   <div class="lang-en">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">The real problem sits one level above the tool-switch annoyance: people now rely on multiple AIs precisely because each is good at different things, but those AIs share no memory, so the collaboration never compounds. Several routes could close this gap — unified clients, API integrations, cloud sync. MemoryOS takes one of them: a shared memory layer that ends a session by writing down the key points, and carries them into the next session in any tool. The bet is on which route, not just the feature.</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Once the memory-layer route was chosen, two decisions defined its shape: (1) the memory file lives on the user's own machine, not in any vendor account — nobody wants their notes scattered across different companies' servers; (2) the AI drafts updates but the user approves every single write — trust collapses the moment an AI silently edits your notes. Designed, built and shipped end-to-end by one person; the case study unpacks all five decisions and what kind of user feedback would disprove them.</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">One layer below the tool-switch annoyance: AIs each have strengths but don't share memory, so collaboration never compounds. MemoryOS takes a "user-bridged" route — write key points at session end, carry them into the next session in any tool. Most basic shape one person could ship at this stage: local file, AI drafts updates, user confirms each write. Later iterations may change it. The 5 decisions, and the kind of user feedback that would disprove them, are in the case study.</p>
   </div>
   <div class="lang-cn">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">真正的问题在"换工具麻烦"之上一层：人们之所以依赖多个 AI，正是因为它们各有所长，但这些 AI 之间没有共享记忆，协作因此无法累积。弥补这个断层有好几条路——统一客户端、API 集成、云端同步。MemoryOS 选了其中一条：一个共享记忆层，结束对话时把要点写下来，下一段对话无论在哪个 AI 里都能带回去。赌的是"选哪条路"，不只是某个功能。</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">选定记忆层这条路之后，两个关键决策定义了它的形态：(1) 记忆文件存在用户自己的电脑里，不在任何厂商的云账户上——没人愿意自己的笔记散落在不同公司的服务器；(2) AI 起草更新但每一次写入都由用户确认——AI 一旦悄悄改了你的笔记，信任就崩了。整套产品定义、设计、工程都是一个人完成的；Case Study 完整拆解 5 个核心决策，以及"什么样的用户反馈会推翻这些判断"。</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">换工具麻烦的下一层问题是: 不同 AI 各有所长但互不通气,协作累积不起来。MemoryOS 选了"用户主动桥接"这条路——对话结束时把要点写下来,下一段对话在哪个 AI 里都能带回去。当前最朴素的形态: 记忆文件存在本地、AI 起草更新、用户确认每一次写入。这是一个人在当前阶段能搭出来的样子,后续迭代可能会变。详细的 5 个决策、以及什么样的用户反馈会推翻它们,见 Case Study。</p>
   </div>
 
   <div class="ship-ctas">
@@ -884,7 +888,12 @@ body[data-lang="cn"] .lang-cn{
     <a class="ship-cta" href="https://github.com/jiajiajiang91-design/memoryos/releases" target="_blank" rel="noopener">
       <span class="cta-lbl">Download v0.1.1 ↗</span>
       <span class="cta-name">Windows .exe / .msi</span>
-      <span class="cta-sub"><span class="lang-en">~1.7 MB binary · Windows 10+</span><span class="lang-cn">~1.7 MB 安装包 · Windows 10+</span></span>
+      <span class="cta-sub"><span class="lang-en">Windows 10+ · one-click install</span><span class="lang-cn">Windows 10+ · 一键安装</span></span>
+    </a>
+    <a class="ship-cta ship-cta--highlight" href="product-architecture.html">
+      <span class="cta-lbl"><span class="lang-en">Product architecture →</span><span class="lang-cn">产品架构 →</span></span>
+      <span class="cta-name"><span class="lang-en">Business · Logic · Data · Flow · Roadmap</span><span class="lang-cn">业务架构 · 逻辑层 · 数据层 · 关键流程 · 路线图</span></span>
+      <span class="cta-sub"><span class="lang-en">How the product is structured and why each piece exists</span><span class="lang-cn">产品怎么拆的、每一块为什么存在</span></span>
     </a>
   </div>
 
@@ -900,23 +909,23 @@ body[data-lang="cn"] .lang-cn{
     <div class="row-num">02</div>
     <div class="row-title">
       <h3>
-        <span class="lang-en">Competitive Analysis — MemoryOS × mem0<span class="cn">Who helps AI remember you — a side-by-side product teardown</span></span>
-        <span class="lang-cn">竞品分析 — MemoryOS × mem0<span class="cn">谁在帮 AI 记住你——两个跨 AI 记忆产品的对比分析</span></span>
+        <span class="lang-en">Competitive Analysis — MemoryOS × mem0<span class="cn">A side-by-side test of two cross-AI memory tools</span></span>
+        <span class="lang-cn">竞品分析 — MemoryOS × mem0<span class="cn">两个跨 AI 记忆工具的逐项实测</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">A hands-on competitive analysis comparing MemoryOS against mem0 / OpenMemory — the closest direct competitor backed by YC funding. Tested three real task flows (cross-AI recall, memory organisation, user control) with my own work content instead of toy scenarios. Key finding: mem0's three entry points store memories in three isolated buckets that can't see each other, breaking its core "cross-platform sync" promise at the user experience level.</span>
-        <span class="lang-cn">亲手使用 mem0 / OpenMemory 完成三条真实任务流（跨 AI 召回、记忆整理方式、用户控制权），和 MemoryOS 做逐项对比。核心发现：mem0 的三个产品入口各自存储记忆到互不相通的空间，"跨平台同步"的承诺在实际使用中是断开的。</span>
+        <span class="lang-en">Hands-on test of mem0 / OpenMemory (YC-backed, closest competitor) — cross-AI recall, memory organisation, user control. Observation: mem0's three entry points each store memory in their own bucket; cross-platform sync didn't connect across them in my test. Going in I assumed I had only hacked together a rough local tool; coming out, I found even a funded, team-built product is disconnected internally — that doesn't prove I'm right, only that no one has actually pulled it off yet.</span>
+        <span class="lang-cn">亲手测 mem0 / OpenMemory（YC 投的同方向最接近产品）—— 跨 AI 召回、记忆整理、用户控制权三条任务流。观察到: mem0 三个入口各自存到自己的空间,"跨平台同步"在测试里没串起来。测之前我以为自己只是粗糙地搓了一版本地工具;测之后发现连有钱有团队的玩家内部也是断的——这不证明我的方向对,只是说目前没人真的做出来。</span>
       </p>
       <div class="row-tags">
         <span class="row-tag">Competitive Analysis</span>
         <span class="row-tag">Hands-on Testing</span>
-        <span class="row-tag">Product Strategy</span>
+        <span class="row-tag">User-Flow Comparison</span>
       </div>
     </div>
     <dl class="row-meta">
       <dt>Scope</dt><dd><span class="lang-en">mem0 OpenMemory (Chrome ext) + Dashboard + Claude Code plugin</span><span class="lang-cn">mem0 OpenMemory（浏览器插件）+ 管理后台 + 开发者工具</span></dd>
       <dt>Method</dt><dd><span class="lang-en">3 task flows with real work content · 13 evidence screenshots</span><span class="lang-cn">3 条任务流实测 · 13 张证据截图</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">Strategic positioning · Feature matrix · Actionable roadmap</span><span class="lang-cn">定位分析 · 功能对比矩阵 · 可执行的产品建议</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Feature comparison table + per-product observation notes + a list of things I might change in MemoryOS based on what I saw</span><span class="lang-cn">功能对比表 + 各产品观察笔记 + 看完后我可能改 MemoryOS 的方向清单</span></dd>
     </dl>
     <div class="row-year">2026</div>
     <div class="row-arrow">→</div>
@@ -944,15 +953,15 @@ body[data-lang="cn"] .lang-cn{
     <div class="row-num">03</div>
     <div class="row-title">
       <h3>
-        <span class="lang-en">Programming Decay — Decision Demo<span class="cn">毕设交互 Demo / 决策过程可视化</span></span>
-        <span class="lang-cn">Programming Decay — 决策 Demo<span class="cn">毕设交互 Demo / 决策过程可视化</span></span>
+        <span class="lang-en">Programming Decay — Algorithmic Remediation<span class="cn">硕士毕设 / 可追溯的场地修复链路</span></span>
+        <span class="lang-cn">Programming Decay — 算法驱动的场地修复<span class="cn">硕士毕设 / 可追溯的场地修复链路</span></span>
       </h3>
       <p class="row-sub">
-        <span class="lang-en">My MArch thesis, structured as a decision chain — from the global pollution footprint of cement down to one specific site at Dagenham Dock. A five-step path (evidence → site → strategy → generation → feedback) opens up a process that is usually opaque, exposing the reasoning behind each step.</span>
-        <span class="lang-cn">硕士毕设，把一个跨度极大的问题整理成一条可逐步展开的判断链：从全球水泥生产的污染足迹，一路追到东伦敦 Dagenham Dock 的一块具体场地。一条"证据 → 选址 → 策略 → 生成 → 反馈"的五步路径，将原本看不透的决策过程逐层展开，每一步的判断依据清晰可查。</span>
+        <span class="lang-en">My MArch thesis treats post-industrial contamination not as a one-time cleanup but as a design problem unfolding across three scales — from the planetary footprint of cement, through UK industrial corridors, down to a single site at Dagenham Dock. An algorithmic pipeline (GIS evidence → K-Means site selection → four remediation strategies → Pix2Pix spatial generation → Neural CA temporal evolution) makes each step traceable and explainable; the final spatial judgement remains with the designer.</span>
+        <span class="lang-cn">硕士毕设把后工业污染场地的修复重新定义为一个跨尺度的设计问题——从水泥产业的行星级污染足迹，经英国工业走廊，落到 Dagenham Dock 一块具体场地。一条算法链路（GIS 证据 → K-Means 选址 → 四种修复策略 → Pix2Pix 空间生成 → Neural CA 时间演化）让每一步治理过程可追溯、可解释；最终的空间判断仍由设计者完成。</span>
       </p>
       <div class="row-tags">
-        <span class="row-tag">Decision Chain</span>
+        <span class="row-tag">Remediation Pipeline</span>
         <span class="row-tag">Geospatial</span>
         <span class="row-tag">Human–AI Workflow</span>
       </div>
@@ -961,8 +970,8 @@ body[data-lang="cn"] .lang-cn{
       <dt><span class="lang-en">Context</span><span class="lang-cn">面向场景</span></dt><dd><span class="lang-en">Site remediation planning — choosing between sites and strategies with traceable evidence</span><span class="lang-cn">污染土地的修复规划——需要在多地块、多策略间做有依据的取舍</span></dd>
       <dt>Input</dt><dd><span class="lang-en">GIS layers · Overpass · Google Places sentiment</span><span class="lang-cn">GIS 图层 · Overpass API · Google Places 情感数据</span></dd>
       <dt>Method</dt><dd><span class="lang-en">K-Means · Pix2Pix · Neural CA · n8n pipeline</span><span class="lang-cn">K-Means 聚类 · Pix2Pix 模型 · Neural CA · n8n 自动化管道</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">Operable decision UI · 4-strategy zoning</span><span class="lang-cn">可操作的决策界面 · 4 策略分区方案</span></dd>
-      <dt>Status</dt><dd><span class="lang-en">Primary thesis demo · embedded below</span><span class="lang-cn">毕设主 Demo · 嵌入于下方</span></dd>
+      <dt>Output</dt><dd><span class="lang-en">Explorable remediation pipeline · 4-strategy zoning</span><span class="lang-cn">可探索的治理链路 · 4 策略分区方案</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">Primary thesis output · embedded below</span><span class="lang-cn">毕设主输出 · 嵌入于下方</span></dd>
     </dl>
     <div class="row-year">2025 — 26</div>
     <div class="row-arrow">→</div>
@@ -983,8 +992,8 @@ body[data-lang="cn"] .lang-cn{
     <div class="row-num">04</div>
     <div class="row-title">
       <h3>
-        <span class="lang-en">Barking Reach — Site Timeline 3D<span class="cn">Barking Reach 场地时间线 / 现状 3D 切片</span></span>
-        <span class="lang-cn">Barking Reach — 场地时间线 3D<span class="cn">现状 3D 切片</span></span>
+        <span class="lang-en">Barking Reach — Site Evidence Timeline<span class="cn">Barking Reach 场地时间线 / 现状 3D 切片</span></span>
+        <span class="lang-cn">Barking Reach — 场地证据时间轴<span class="cn">现状 3D 切片</span></span>
       </h3>
       <p class="row-sub">
         <span class="lang-en">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. A site-study plate from the Programming Decay thesis.</span>
@@ -1069,27 +1078,27 @@ body[data-lang="cn"] .lang-cn{
     <span class="num">02.A</span>
     <div>
       <span class="lbl">
-        <span class="lang-en">Embedded Demo · Programming Decay · Entropy Atlas built-in</span>
-        <span class="lang-cn">嵌入 Demo · Programming Decay · 内含 Entropy Atlas 证据层</span>
+        <span class="lang-en">Embedded Thesis · Programming Decay · Entropy Atlas built-in</span>
+        <span class="lang-cn">嵌入交互页 · Programming Decay · 内含 Entropy Atlas 证据层</span>
       </span>
       <h3>
-        <span class="lang-en">A clickable decision process — from evidence to feedback</span>
-        <span class="lang-cn">一个可点击的决策过程：从证据到反馈</span>
+        <span class="lang-en">A traceable remediation pipeline — from planetary evidence to site architecture</span>
+        <span class="lang-cn">一条可追溯的治理链路：从行星级证据到场地建筑</span>
       </h3>
     </div>
     <a class="open" href="programming-decay-v3.1/index.html" target="_blank"><span class="lang-en">Open standalone ↗</span><span class="lang-cn">独立打开 ↗</span></a>
   </div>
 
   <div class="demo-embed-frame">
-    <iframe src="programming-decay-v3.1/index.html" title="Programming Decay — embedded interactive demo" loading="lazy"></iframe>
+    <iframe src="programming-decay-v3.1/index.html" title="Programming Decay — embedded interactive thesis" loading="lazy"></iframe>
   </div>
 
   <!-- Mobile fallback — iframe-free CTA so 3D / map gestures don't trap scroll -->
   <div class="demo-embed-mobile">
-    <span class="lbl"><span class="lang-en">Demo · best viewed on desktop</span><span class="lang-cn">Demo · 桌面端体验更佳</span></span>
+    <span class="lbl"><span class="lang-en">Thesis · best viewed on desktop</span><span class="lang-cn">毕设交互页 · 桌面端体验更佳</span></span>
     <p>
-      <span class="lang-en">The embedded demo contains a 3D viewer and pannable layers that conflict with touch-scroll. Open it in a new tab to use it on mobile.</span>
-      <span class="lang-cn">该 Demo 含有 3D 视窗与可拖动图层，与移动端触摸滑动冲突——请在新标签页中打开使用。</span>
+      <span class="lang-en">The embedded thesis contains a 3D viewer and pannable layers that conflict with touch-scroll. Open it in a new tab to use it on mobile.</span>
+      <span class="lang-cn">该交互页含有 3D 视窗与可拖动图层，与移动端触摸滑动冲突——请在新标签页中打开使用。</span>
     </p>
     <a class="cta" href="programming-decay-v3.1/index.html" target="_blank" rel="noopener">
       <span class="lang-en">Open standalone ↗</span><span class="lang-cn">独立打开 ↗</span>
@@ -1097,12 +1106,12 @@ body[data-lang="cn"] .lang-cn{
   </div>
 
   <div class="lang-en">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">From global industrial data down to a single 8×8 cell at Dagenham Dock, the thesis is laid out as one explorable interface. Every scroll, every layer toggle, every inference call is another round of reasoning over the same ground. What used to be an opaque process is broken down into legible steps — less <em>looking at a project</em>, more <em>operating a reasoning tool</em>: the final judgement comes from human and algorithm together, not the designer alone.</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this demo as the site-evidence layer.</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">From planetary cement metabolism down to a single 8×8 cell at Dagenham Dock, the thesis is laid out as one explorable interface. Three scales of evidence — planetary, national, site — feed into an algorithmic pipeline where each remediation step is traceable: why this site, why this strategy, why this spatial layout. The algorithm provides comparable, iterable design evidence; the final spatial judgement remains with the designer.</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">The Entropy Atlas — the n8n-orchestrated evidence layer of ~1,000 East-London post-industrial sites — is included <em>inside</em> this thesis as the site-evidence layer.</p>
   </div>
   <div class="lang-cn">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">从全球尺度的行业数据，到 Dagenham Dock 上一格 8×8 网格的具体判断，整个毕设被整理成一个可逐步操作的界面。每一次滚动、每一次图层切换、每一次分析调用，都是对同一片场地的一次重新判断。原本看不透的决策过程被拆解成逐层可读的步骤——与其说是浏览一个项目，不如说是操作一套判断工具：最终结论由人与算法共同完成，而非设计师单方决定。</p>
-    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Entropy Atlas（熵图集）—— 由 n8n 自动化抓取的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>证据数据源</em>嵌入在该 Demo 内部。</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">从全球水泥产业的行星级代谢，到 Dagenham Dock 上一格 8×8 网格的具体判断，整个毕设被整理成一个可逐步探索的界面。三个尺度的证据——行星、国家、场地——接入一条算法链路，让每一步治理过程可追溯：为什么选这个场地、为什么分配这种策略、为什么是这个空间布局。算法提供的是可比较、可迭代的设计证据；最终的空间判断仍由设计者完成。</p>
+    <p style="margin-top:12px;color:var(--muted);font-size:var(--caption)">Entropy Atlas（熵图集）—— 由 n8n 自动化抓取的东伦敦约 1,000 处后工业场地证据层 —— 已作为<em>证据数据源</em>嵌入在该交互页内部。</p>
   </div>
 
   <div class="demo-flow">
@@ -1122,8 +1131,8 @@ body[data-lang="cn"] .lang-cn{
     <span class="lang-cn">空间基础</span>
   </h2>
   <p class="sect-head-desc">
-    <span class="lang-en">Architectural and urban projects reframed as decision logic and user systems — the training ground for product reasoning.</span>
-    <span class="lang-cn">建筑与城市设计项目，被重新框定为决策逻辑和用户系统——产品思维的早期训练场。</span>
+    <span class="lang-en">Architectural and urban projects reframed as spatial reasoning and user systems — the training ground for product thinking.</span>
+    <span class="lang-cn">建筑与城市设计项目，被重新框定为空间推理和用户系统——产品思维的早期训练场。</span>
   </p>
 </header>
 

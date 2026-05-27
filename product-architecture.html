@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MemoryOS · Product Architecture — Jiajia Jiang</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F2F0EB;
+    --paper-soft:#F9F9F9;
+    --ink:#0A0A0A;
+    --ink-rgb:10,10,10;
+    --muted:#6F6F6F;
+    --faint:#9E9A91;
+    --rule:#C9C5BC;
+    --rule-soft:#DCD8CE;
+    --signal:#C8451F;
+    --signal-rgb:200,69,31;
+
+    --sans:'Inter','Neue Haas Grotesk Text',Arial,Helvetica,sans-serif;
+    --mono:'IBM Plex Mono','JetBrains Mono','SFMono-Regular',Consolas,monospace;
+    --cjk:'Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
+
+    --s-1:8px;--s-2:16px;--s-3:24px;--s-4:32px;--s-5:40px;--s-6:48px;--s-8:64px;--s-10:80px;
+
+    --ease-deck:cubic-bezier(.77,0,.175,1);
+    --ease:cubic-bezier(.2,0,0,1);
+  }
+
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    width:100%;height:100%;overflow:hidden;
+    background:var(--paper);color:var(--ink);
+    font-family:var(--cjk),var(--sans);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body:not([data-lang="cn"]) .lang-cn{display:none}
+  body[data-lang="cn"] .lang-en{display:none}
+
+  /* ================== CODE BG CANVAS ================== */
+  canvas.code-bg{
+    position:fixed;inset:0;
+    width:100vw;height:100vh;
+    z-index:1;display:block;
+    pointer-events:none;
+  }
+
+  /* ================== DECK ================== */
+  #deck{
+    position:fixed;inset:0;
+    width:500vw;height:100vh;
+    display:flex;flex-wrap:nowrap;
+    transition:transform .9s var(--ease-deck);
+    will-change:transform;
+    z-index:10;
+  }
+  .slide{
+    width:100vw;height:100vh;flex:0 0 100vw;
+    position:relative;overflow:hidden;
+    background:transparent;
+    padding:calc(48px + 3vh) 5vw 9vh;
+    display:flex;flex-direction:column;
+    pointer-events:auto;
+  }
+  .slide-inner{
+    position:relative;z-index:2;
+    flex:1;display:flex;flex-direction:column;
+    min-height:0;
+    background:none;
+    padding:var(--s-4) 0;
+  }
+
+  /* chrome class removed — replaced by fixed .topbar */
+
+  /* ================== KICKER / TITLE ================== */
+  .kicker{
+    font-family:var(--mono);
+    font-size:12px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);
+    display:inline-flex;align-items:center;gap:var(--s-2);
+    margin-bottom:var(--s-3);
+  }
+  .kicker .dot{
+    width:6px;height:6px;background:var(--signal);
+    display:inline-block;
+  }
+  .kicker .acc{color:var(--signal)}
+
+  .anchor{
+    font-family:var(--sans);font-weight:200;
+    font-size:clamp(2.4rem,5.4vw,4.6rem);
+    line-height:1.02;letter-spacing:-.025em;
+    color:var(--ink);
+    margin-bottom:var(--s-3);
+  }
+  .lang-cn .anchor,.anchor.lang-cn{font-family:var(--cjk),var(--sans);font-weight:300;letter-spacing:-.01em}
+  .anchor .acc{color:var(--signal);font-style:italic}
+
+  .lede{
+    font-family:var(--sans);font-weight:300;
+    font-size:clamp(1rem,1.4vw,1.25rem);
+    color:var(--muted);line-height:1.55;
+    max-width:62ch;
+    margin-bottom:var(--s-5);
+  }
+  .lang-cn .lede{font-family:var(--cjk),var(--sans)}
+
+  /* ================== SLIDE 1 — COVER ================== */
+  .s-cover{justify-content:center}
+  .s-cover .slide-inner{padding-top:0}
+  .s-cover .cover-meta{
+    display:flex;flex-wrap:wrap;gap:var(--s-3);
+    font-family:var(--mono);font-size:12px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-top:var(--s-4);
+  }
+  .s-cover .cover-meta span{padding:6px 12px;border:1px solid var(--rule);background:rgba(242,240,235,.8)}
+  .s-cover .cover-hint{
+    position:absolute;right:5vw;bottom:7vh;
+    font-family:var(--mono);font-size:11px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--faint);
+    z-index:3;
+  }
+  .s-cover .cover-hint .arr{color:var(--signal)}
+
+  /* ================== SLIDE 2 — BUSINESS ARCH (5 cards) ================== */
+  .biz-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    gap:var(--s-3);
+    flex:1;align-content:center;
+  }
+  .biz-card{
+    background:rgba(242,240,235,.92);
+    backdrop-filter:blur(3px);
+    border:1px solid var(--rule);
+    padding:var(--s-4) var(--s-3) var(--s-3);
+    display:flex;flex-direction:column;
+    transition:border-color .25s var(--ease),transform .25s var(--ease);
+  }
+  .biz-card:hover{border-color:var(--signal);transform:translateY(-3px)}
+  .biz-card .num{
+    font-family:var(--mono);font-size:11px;font-weight:500;
+    letter-spacing:.2em;color:var(--signal);
+    margin-bottom:var(--s-2);
+  }
+  .biz-card .title{
+    font-family:var(--sans);font-weight:500;font-size:1.05rem;
+    line-height:1.25;color:var(--ink);
+    margin-bottom:var(--s-1);
+  }
+  .lang-cn .biz-card .title{font-family:var(--cjk),var(--sans);font-weight:500}
+  .biz-card .desc{
+    font-size:.82rem;line-height:1.55;color:var(--muted);
+    flex:1;margin-bottom:var(--s-3);
+  }
+  .biz-card .file{
+    font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.06em;color:var(--faint);
+    border-top:1px solid var(--rule-soft);padding-top:8px;
+  }
+  @media(max-width:1100px){.biz-grid{grid-template-columns:repeat(2,1fr)}}
+
+  /* ================== SLIDE 3 — IMPLEMENTATION ARCH (3 columns) ================== */
+  .impl-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:var(--s-4);
+    flex:1;align-content:center;
+  }
+  .impl-col{
+    background:rgba(242,240,235,.92);
+    backdrop-filter:blur(3px);
+    border:1px solid var(--rule);
+    padding:var(--s-4);
+    display:flex;flex-direction:column;
+  }
+  .impl-col .layer{
+    font-family:var(--mono);font-size:11px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--signal);margin-bottom:var(--s-1);
+  }
+  .impl-col .layer-name{
+    font-family:var(--sans);font-weight:300;font-size:1.6rem;
+    color:var(--ink);margin-bottom:var(--s-3);letter-spacing:-.01em;
+  }
+  .lang-cn .impl-col .layer-name{font-family:var(--cjk),var(--sans)}
+  .impl-col ul{list-style:none;padding:0;margin:0}
+  .impl-col li{
+    font-size:.86rem;line-height:1.6;color:var(--ink);
+    padding:8px 0;border-bottom:1px solid var(--rule-soft);
+  }
+  .impl-col li:last-child{border-bottom:0}
+  .impl-col li code{
+    font-family:var(--mono);font-size:.78rem;
+    color:var(--signal);background:rgba(200,69,31,.06);
+    padding:1px 5px;border-radius:2px;
+  }
+  .impl-col li .sub{
+    display:block;font-size:.74rem;color:var(--muted);margin-top:2px;
+  }
+  @media(max-width:1000px){.impl-grid{grid-template-columns:1fr}}
+
+  /* ================== SLIDE 4 — CRITICAL PATH (step bar) ================== */
+  .path-flow{
+    display:flex;flex-wrap:wrap;gap:var(--s-2);
+    flex:1;align-content:center;
+  }
+  .path-step{
+    flex:1 1 calc(25% - var(--s-2));
+    min-width:200px;
+    background:rgba(242,240,235,.92);
+    backdrop-filter:blur(3px);
+    border:1px solid var(--rule);
+    padding:var(--s-3);
+    position:relative;
+  }
+  .path-step .step-num{
+    font-family:var(--mono);font-size:11px;font-weight:500;
+    letter-spacing:.2em;color:var(--signal);
+    margin-bottom:var(--s-1);
+  }
+  .path-step .step-what{
+    font-family:var(--sans);font-weight:500;font-size:.94rem;
+    color:var(--ink);line-height:1.35;margin-bottom:6px;
+  }
+  .lang-cn .path-step .step-what{font-family:var(--cjk),var(--sans);font-weight:500}
+  .path-step .step-where{
+    font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.06em;color:var(--faint);line-height:1.4;
+  }
+  .path-step .step-where code{color:var(--signal)}
+  .path-step::after{
+    content:"→";
+    position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+    color:var(--rule);font-family:var(--mono);font-size:16px;
+    z-index:1;
+  }
+  .path-step:last-child::after{display:none}
+
+  /* ================== SLIDE 5 — ROADMAP ================== */
+  .road-list{
+    flex:1;align-content:center;
+    display:flex;flex-direction:column;justify-content:center;
+    max-width:100%;
+    background:rgba(242,240,235,.92);
+    backdrop-filter:blur(3px);
+    padding:var(--s-4);
+    border:1px solid var(--rule-soft);
+  }
+  .road-item{
+    display:grid;grid-template-columns:36px 80px 1fr;gap:var(--s-3);
+    align-items:baseline;
+    padding:var(--s-3) 0;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .road-item:last-child{border-bottom:0}
+  .road-mark{
+    font-family:var(--mono);font-size:18px;font-weight:500;
+    color:var(--faint);text-align:center;
+  }
+  .road-item.done .road-mark{color:var(--signal)}
+  .road-item.now .road-mark{color:var(--ink)}
+  .road-ver{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink);
+  }
+  .road-item.now .road-ver{color:var(--signal)}
+  .road-item.todo .road-ver{color:var(--muted)}
+  .road-what{
+    font-family:var(--sans);font-size:.96rem;line-height:1.5;color:var(--ink);
+  }
+  .lang-cn .road-what{font-family:var(--cjk),var(--sans)}
+  .road-item.todo .road-what{color:var(--muted)}
+  .road-tail{
+    margin-top:var(--s-5);padding-top:var(--s-4);
+    border-top:2px solid var(--ink);
+    font-family:var(--sans);font-style:italic;font-size:1rem;
+    color:var(--ink);max-width:100%;
+  }
+  .lang-cn .road-tail{font-family:var(--cjk),var(--sans);font-style:normal}
+
+  /* ================== NAV (bottom dots + arrows) ================== */
+  #nav{
+    position:fixed;left:50%;bottom:2.6vh;
+    transform:translateX(-50%);
+    z-index:30;
+    display:flex;gap:14px;align-items:center;
+    padding:8px 16px;
+    background:rgba(242,240,235,.86);
+    backdrop-filter:blur(6px);
+    border:1px solid var(--rule);
+  }
+  #nav button{
+    background:none;border:0;cursor:pointer;
+    font-family:var(--mono);font-size:14px;color:var(--muted);
+    padding:2px 6px;line-height:1;
+  }
+  #nav button:hover{color:var(--ink)}
+  .dots{display:flex;gap:10px}
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:transparent;border:1px solid var(--muted);
+    cursor:pointer;transition:all .2s var(--ease);
+  }
+  .dot:hover{border-color:var(--ink)}
+  .dot.active{background:var(--signal);border-color:var(--signal)}
+
+  /* ================== TOP BAR (fixed single row) ================== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;
+    z-index:31;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:var(--s-2) 5vw;
+    font-family:var(--mono);font-size:12px;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);
+    background:rgba(242,240,235,.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .topbar a{color:inherit;text-decoration:none}
+  .topbar a:hover{color:var(--ink)}
+  .topbar .sep{color:var(--faint);margin:0 .5em}
+  .topbar .acc{color:var(--signal)}
+  .topbar-right{display:flex;align-items:center;gap:var(--s-3)}
+  .topbar .lang-btn{
+    background:none;border:0;font:inherit;
+    letter-spacing:inherit;text-transform:inherit;
+    color:var(--muted);cursor:pointer;padding:2px 4px;
+  }
+  .topbar .lang-btn[aria-pressed="true"]{color:var(--ink);border-bottom:1px solid var(--ink)}
+  .topbar .lang-btn:hover{color:var(--ink)}
+
+  /* ================== RESPONSIVE — bail out of deck on narrow ================== */
+  @media(max-width:760px){
+    .anchor{font-size:2.2rem}
+    .biz-grid{grid-template-columns:1fr;gap:var(--s-2)}
+    .impl-grid{grid-template-columns:1fr;gap:var(--s-3)}
+    .path-step{flex:1 1 100%}
+    .path-step::after{display:none}
+    .slide{padding:7vh 5vw 11vh}
+  }
+</style>
+</head>
+<body data-lang="cn">
+
+<canvas class="code-bg" id="codeBg"></canvas>
+
+<header class="topbar">
+  <span>
+    <a href="index.html">← JJ.</a>
+    <span class="sep">/</span>
+    <span class="lang-en">MemoryOS / Product Architecture</span>
+    <span class="lang-cn">MemoryOS / 产品架构</span>
+  </span>
+  <div class="topbar-right">
+    <button class="lang-btn" data-lang-set="en">EN</button>
+    <span class="sep">·</span>
+    <button class="lang-btn" data-lang-set="cn" aria-pressed="true">中</button>
+    <span class="sep">|</span>
+    <span class="acc" id="slideCounter">01</span> / 05
+  </div>
+</header>
+
+<div id="deck">
+
+  <!-- ============ SLIDE 1 · COVER ============ -->
+  <section class="slide s-cover" data-bg="cover">
+    <div class="slide-inner" style="justify-content:center">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="lang-en">A traceable shape</span>
+        <span class="lang-cn">一个可拆开看的形态</span>
+      </div>
+
+      <h1 class="anchor">
+        <span class="lang-en">MemoryOS<br>Product <span class="acc">Architecture</span></span>
+        <span class="lang-cn">MemoryOS<br>产品<span class="acc">架构</span></span>
+      </h1>
+
+      <p class="lede">
+        <span class="lang-en">The most basic shape a one-person team could ship right now: cross-AI working memory that lives on the user's machine, drafted by AI, confirmed by user — every write a deliberate act.</span>
+        <span class="lang-cn">一个人当前阶段能搭出来的最朴素形态:跨 AI 工作记忆,存在用户自己电脑上,AI 起草、用户确认——每一次写入都是一次明确的动作。</span>
+      </p>
+
+      <div class="cover-meta">
+        <span>v0.1.1</span>
+        <span>Tauri + React</span>
+        <span>MIT · Windows</span>
+      </div>
+    </div>
+    <div class="cover-hint">
+      <span class="lang-en"><span class="arr">→</span> Arrow / Scroll / Click dot</span>
+      <span class="lang-cn"><span class="arr">→</span> 方向键 / 滚轮 / 点圆点</span>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2 · BUSINESS ARCH ============ -->
+  <section class="slide" data-bg="business">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">01</span>
+        <span class="lang-en">Business architecture · What the product does</span>
+        <span class="lang-cn">业务架构 · 产品做了哪几块</span>
+      </div>
+
+      <h2 class="anchor">
+        <span class="lang-en">Five <span class="acc">working modules</span></span>
+        <span class="lang-cn">五个<span class="acc">功能块</span></span>
+      </h2>
+
+      <p class="lede">
+        <span class="lang-en">Each module maps to a real component in the codebase — not feature ideas, but things you can open and use right now.</span>
+        <span class="lang-cn">每一块对应代码里一个真实的 component,不是 PPT 上的功能想法,是装上就能点开用的东西。</span>
+      </p>
+
+      <div class="biz-grid">
+        <div class="biz-card">
+          <div class="num">① / WORKSPACE</div>
+          <div class="title">
+            <span class="lang-en">Project workspace</span>
+            <span class="lang-cn">项目工作区</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">Sidebar lists all projects; each is an isolated folder with its own about / context / decisions / sessions.</span>
+            <span class="lang-cn">侧栏列出所有项目;每个项目独立一个文件夹,有自己的 about / context / decisions / sessions。</span>
+          </div>
+          <div class="file">Sidebar.tsx · Dashboard.tsx</div>
+        </div>
+
+        <div class="biz-card">
+          <div class="num">② / HANDOFF OUT</div>
+          <div class="title">
+            <span class="lang-en">Copy start / end prompt</span>
+            <span class="lang-cn">复制开始 / 结束指令</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">Pack selected context + standardised prompt into the clipboard. Pick the AI tool you're heading to, paste, go.</span>
+            <span class="lang-cn">把选中的上下文 + 标准化指令打包写进剪贴板。选你要去的 AI,粘进去,开始。</span>
+          </div>
+          <div class="file">CopyPromptModal.tsx · sourceTools.ts</div>
+        </div>
+
+        <div class="biz-card">
+          <div class="num">③ / HANDOFF IN</div>
+          <div class="title">
+            <span class="lang-en">Import session summary</span>
+            <span class="lang-cn">导入对话总结</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">Paste the AI's 9-section Markdown back; parser slices it into typed fields ready for review.</span>
+            <span class="lang-cn">把 AI 输出的 9 段式 Markdown 贴回来;parser 切成结构化字段,准备进 Review。</span>
+          </div>
+          <div class="file">ImportHandoffModal.tsx · parser.ts</div>
+        </div>
+
+        <div class="biz-card">
+          <div class="num">④ / REVIEW</div>
+          <div class="title">
+            <span class="lang-en">Risk-tiered review</span>
+            <span class="lang-cn">风险分级 Review</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">AI-suggested updates grouped by risk: low (default-on) / medium / high (default-off + warning). User ticks, writes happen.</span>
+            <span class="lang-cn">AI 建议的更新按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。用户勾,才写。</span>
+          </div>
+          <div class="file">ReviewPage.tsx</div>
+        </div>
+
+        <div class="biz-card">
+          <div class="num">⑤ / STORAGE</div>
+          <div class="title">
+            <span class="lang-en">Local files + system trash</span>
+            <span class="lang-cn">本地文件 + 系统回收站</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">All Markdown under ~/Documents/MemoryOS. Deletes go through the OS trash via the Rust <code>trash</code> crate — 5s undo toast in-app.</span>
+            <span class="lang-cn">全是 Markdown 文件,放在 ~/Documents/MemoryOS。删除走系统回收站(Rust <code>trash</code> crate),App 内还有 5 秒 Undo。</span>
+          </div>
+          <div class="file">main.rs · FileViewerModal.tsx</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3 · IMPLEMENTATION ARCH ============ -->
+  <section class="slide" data-bg="impl">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">02</span>
+        <span class="lang-en">Product architecture · Three layers</span>
+        <span class="lang-cn">产品架构 · 三层</span>
+      </div>
+
+      <h2 class="anchor">
+        <span class="lang-en">How it <span class="acc">holds together</span></span>
+        <span class="lang-cn">这些东西怎么<span class="acc">连在一起</span></span>
+      </h2>
+
+      <div class="impl-grid">
+        <div class="impl-col">
+          <div class="layer">Presentation</div>
+          <div class="layer-name">
+            <span class="lang-en">Presentation</span>
+            <span class="lang-cn">表现层</span>
+          </div>
+          <ul>
+            <li>
+              <strong><span class="lang-en">Interaction · user experience path</span><span class="lang-cn">交互 · 用户体验路径</span></strong>
+              <span class="sub"><span class="lang-en">The main page flow: Bootstrap (first-run onboarding) → Dashboard (pick a project, see current goal + recent sessions) → Copy Prompt → paste into external AI → paste AI's response back → Review → save. Every screen is one action, no dead ends.</span><span class="lang-cn">主页面流转: Bootstrap(首次引导) → Dashboard(选项目、看当前目标 + 最近对话) → 复制指令 → 粘到外部 AI → 把 AI 的回复粘回来 → Review → 保存。每一屏一个动作,没有死胡同。</span></span>
+            </li>
+            <li>
+              <strong><span class="lang-en">UI · visual style + brand</span><span class="lang-cn">UI · 视觉风格 + 品牌</span></strong>
+              <span class="sub"><span class="lang-en">Notion-style slate; bilingual EN/CN toggle; all core operations one screen deep — no multi-step wizards, no settings page yet.</span><span class="lang-cn">Notion 风格 slate 蓝灰;中英一键切换;所有核心操作一屏到达——没有多步引导,还没有设置页。</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="impl-col">
+          <div class="layer">Logic</div>
+          <div class="layer-name">
+            <span class="lang-en">Logic</span>
+            <span class="lang-cn">逻辑层</span>
+          </div>
+          <ul>
+            <li>
+              <strong><span class="lang-en">Business logic · the path that solves the pain</span><span class="lang-cn">业务逻辑 · 解决痛点的路径</span></strong>
+              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools — so the user is the bridge. End a session: user picks what to carry; start the next session: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, but user approves every single write before it touches disk.</span><span class="lang-cn">核心思路: 用户是唯一同时存在于所有 AI 工具里的实体——所以让用户当桥。结束对话: 用户选要带走什么;开始下一段: MemoryOS 把它拼成下一个 AI 能读的 prompt;导入: AI 的回复被解析、分组待审;审核: AI 建议更新,但每一次写盘都要用户亲手确认。</span></span>
+            </li>
+            <li>
+              <strong><span class="lang-en">Algorithm · how the modules connect</span><span class="lang-cn">算法 · 模块之间的衔接</span></strong>
+              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + a per-AI template (8 AI presets, each tuned differently) into clipboard. Markdown parser: split the AI's free-text response into 9 typed sections. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. These three pieces are what turn "copy-paste between tools" into a structured, repeatable loop.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 按 AI 定制的模板(8 个预置 AI,各自调过)打包进剪贴板。Markdown 解析: 把 AI 的自由文本回复拆成 9 个结构化字段。风险路由: 把每条建议更新标为 低 / 中 / 高 风险,决定 Review 里哪些默认勾、哪些默认不勾。这三块是把「在工具之间复制粘贴」变成一条结构化、可重复的回路的关键。</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="impl-col">
+          <div class="layer">Data</div>
+          <div class="layer-name">
+            <span class="lang-en">Data</span>
+            <span class="lang-cn">数据层</span>
+          </div>
+          <ul>
+            <li>
+              <strong><span class="lang-en">Business data · what flows through the product</span><span class="lang-cn">业务数据 · 在产品里流转的内容</span></strong>
+              <span class="sub"><span class="lang-en"><code>about_me.md</code> — the user's long-term identity and preferences, shared across all projects. <code>00_context.md</code> — per-project working snapshot, updated after each session. <code>decisions.md</code> — key decisions accumulated over time. <code>sessions/*</code> — timestamped per-session summaries. These four file types are the product's entire data model — input to the next prompt, output from the last AI, and the user's accumulated working memory.</span><span class="lang-cn"><code>about_me.md</code> — 用户的长期身份和偏好,跨项目共享。<code>00_context.md</code> — 每个项目的工作快照,每次对话结束后更新。<code>decisions.md</code> — 积累的关键决策记录。<code>sessions/*</code> — 按时间戳存的每次对话总结。这四种文件就是产品的全部数据模型——上一次 AI 的输出变成下一次 prompt 的输入,用户的工作记忆就这样积累起来。</span></span>
+            </li>
+            <li>
+              <strong><span class="lang-en">User behavior data · what I can observe</span><span class="lang-cn">用户行为数据 · 我能观察到什么</span></strong>
+              <span class="sub"><span class="lang-en">Currently: only what users report via GitHub Issues — I have no in-app visibility into where they get stuck or what they skip. Next: lightweight event logging (which screens do users actually visit, where does the handoff loop break, which AI templates get used vs ignored) so iteration priority follows real usage, not my assumptions.</span><span class="lang-cn">目前: 只有用户通过 GitHub Issues 主动反馈的——我在 App 内看不到他们卡在哪、跳过了什么。下一步: 加轻量的事件记录(用户实际走了哪些页面、handoff 回路在哪一步断掉、哪些 AI 模板被用了哪些被跳过),让迭代优先级跟着真实使用走,不跟我的假设走。</span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4 · CRITICAL PATH ============ -->
+  <section class="slide" data-bg="path">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">03</span>
+        <span class="lang-en">Critical path · The end-session loop</span>
+        <span class="lang-cn">关键流程 · 结束对话的回路</span>
+      </div>
+
+      <h2 class="anchor">
+        <span class="lang-en">After you hit <span class="acc">"Copy End-Session Prompt"</span></span>
+        <span class="lang-cn">按下<span class="acc">「复制结束指令」</span>之后</span>
+      </h2>
+
+      <p class="lede">
+        <span class="lang-en">Eight steps from click to written-to-disk — each labelled with the file that owns it.</span>
+        <span class="lang-cn">从点击到落盘,八步走完——每一步都标了实际负责的文件。</span>
+      </p>
+
+      <div class="path-flow">
+        <div class="path-step">
+          <div class="step-num">01</div>
+          <div class="step-what"><span class="lang-en">User clicks button</span><span class="lang-cn">用户点按钮</span></div>
+          <div class="step-where"><code>CopyPromptModal.tsx</code></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">02</div>
+          <div class="step-what"><span class="lang-en">Pick AI tool template</span><span class="lang-cn">选 AI 工具模板</span></div>
+          <div class="step-where"><code>sourceTools.ts</code> · 8 presets</div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">03</div>
+          <div class="step-what"><span class="lang-en">Assemble prompt + context</span><span class="lang-cn">拼装 prompt + 上下文</span></div>
+          <div class="step-where">about_me · 00_context · decisions</div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">04</div>
+          <div class="step-what"><span class="lang-en">Write to clipboard</span><span class="lang-cn">写入剪贴板</span></div>
+          <div class="step-where"><code>@tauri-apps/api</code> clipboard</div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">05</div>
+          <div class="step-what"><span class="lang-en">User pastes into AI → AI returns 9-section Markdown</span><span class="lang-cn">用户粘到 AI → AI 返回 9 段 Markdown</span></div>
+          <div class="step-where"><span class="lang-en">external · ChatGPT / Claude / …</span><span class="lang-cn">外部 · ChatGPT / Claude / …</span></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">06</div>
+          <div class="step-what"><span class="lang-en">User pastes back</span><span class="lang-cn">用户粘回 MemoryOS</span></div>
+          <div class="step-where"><code>ImportHandoffModal.tsx</code></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">07</div>
+          <div class="step-what"><span class="lang-en">Parse → typed UpdateSuggestion[]</span><span class="lang-cn">解析 → 结构化 UpdateSuggestion[]</span></div>
+          <div class="step-where"><code>parser.ts</code> · parseHandoff()</div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">08</div>
+          <div class="step-what"><span class="lang-en">Group by riskLevel → user ticks → write to disk</span><span class="lang-cn">按 riskLevel 分组 → 用户勾选 → 写盘</span></div>
+          <div class="step-where"><code>ReviewPage.tsx</code></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5 · ROADMAP ============ -->
+  <section class="slide" data-bg="road">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">04</span>
+        <span class="lang-en">Where it is · Roadmap</span>
+        <span class="lang-cn">当前阶段 · 路线图</span>
+      </div>
+
+      <h2 class="anchor">
+        <span class="lang-en">v0.1.1 <span class="acc">/ Now</span></span>
+        <span class="lang-cn">v0.1.1 <span class="acc">/ 现在</span></span>
+      </h2>
+
+      <div class="road-list">
+        <div class="road-item done">
+          <span class="road-mark">✓</span>
+          <span class="road-ver">v0.1.0</span>
+          <span class="road-what">
+            <span class="lang-en">Core handoff loop · project management · Bootstrap onboarding · Windows installer</span>
+            <span class="lang-cn">核心闭环 · 项目管理 · Bootstrap 引导 · Windows 安装包</span>
+          </span>
+        </div>
+        <div class="road-item now">
+          <span class="road-mark">●</span>
+          <span class="road-ver">v0.1.1</span>
+          <span class="road-what">
+            <span class="lang-en">Bilingual EN/CN · system-trash delete + Undo · UX polish <em>(current)</em></span>
+            <span class="lang-cn">中英双语 · 删除走系统回收站 + Undo · UX 打磨 <em>(当前)</em></span>
+          </span>
+        </div>
+        <div class="road-item todo">
+          <span class="road-mark">○</span>
+          <span class="road-ver">v0.2</span>
+          <span class="road-what">
+            <span class="lang-en">Cross-AI output parity — run the full loop on ChatGPT / Claude / Cursor / Kimi and tune prompts per AI, so "paste into any AI" actually returns a consistent 9-section summary (today it doesn't, quality varies by AI)</span>
+            <span class="lang-cn">跨 AI 输出拉通 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环,按 AI 调 prompt 模板,让「粘到任何 AI 都能拿回一致的 9 段总结」真的成立(目前不成立,不同 AI 质量差很多)</span>
+          </span>
+        </div>
+        <div class="road-item todo">
+          <span class="road-mark">○</span>
+          <span class="road-ver">v0.3</span>
+          <span class="road-what">
+            <span class="lang-en">In-app Markdown editor — stop requiring users to install Obsidian / VS Code just to edit their own files</span>
+            <span class="lang-cn">App 内 Markdown 编辑器 — 不再要求用户先去装 Obsidian / VS Code 才能改自己的文件</span>
+          </span>
+        </div>
+        <div class="road-item todo">
+          <span class="road-mark">○</span>
+          <span class="road-ver">v0.4</span>
+          <span class="road-what">
+            <span class="lang-en">Mac / Linux build + code signing — platform coverage + kill the "unknown publisher" first-launch warning</span>
+            <span class="lang-cn">Mac / Linux 构建 + 代码签名 — 平台覆盖 + 干掉首次启动的「未知发行者」警告</span>
+          </span>
+        </div>
+        <div class="road-item todo">
+          <span class="road-mark">○</span>
+          <span class="road-ver">later</span>
+          <span class="road-what">
+            <span class="lang-en">Multi-machine sync without going cloud — explore Git / iCloud / Dropbox as the bridge, no vendor account, no central server</span>
+            <span class="lang-cn">不上云的多机器同步 — 用 Git / iCloud / Dropbox 当桥, 不要厂商账号、不要中心服务器</span>
+          </span>
+        </div>
+
+        <p class="road-tail">
+          <span class="lang-en">This is a rough order, not a contract — what actually gets built next depends on what breaks first for the people using it.</span>
+          <span class="lang-cn">这是个大致顺序,不是承诺——实际先做哪个,看用的人先在哪一步卡住。</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<nav id="nav" aria-label="Slide navigation">
+  <button id="prevBtn" aria-label="Previous">←</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn" aria-label="Next">→</button>
+</nav>
+
+<script>
+(function(){
+  /* ============ DECK STATE ============ */
+  const deck = document.getElementById("deck");
+  const slides = document.querySelectorAll(".slide");
+  const NUM = slides.length;
+  const dotsWrap = document.getElementById("dots");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  let idx = 0;
+
+  /* build dots */
+  const dots = [];
+  for (let i = 0; i < NUM; i++) {
+    const d = document.createElement("button");
+    d.className = "dot" + (i === 0 ? " active" : "");
+    d.dataset.idx = i;
+    d.setAttribute("aria-label", "Go to slide " + (i+1));
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  }
+
+  function go(n){
+    n = Math.max(0, Math.min(NUM-1, n));
+    if (n === idx) return;
+    idx = n;
+    deck.style.transform = `translateX(-${idx*100}vw)`;
+    dots.forEach((d,i)=>d.classList.toggle("active", i===idx));
+    const counter = document.getElementById("slideCounter");
+    if (counter) counter.textContent = String(idx+1).padStart(2,"0");
+    if (location.hash !== "#"+(idx+1)) {
+      history.replaceState(null, "", "#"+(idx+1));
+    }
+  }
+  function next(){ go(idx+1); }
+  function prev(){ go(idx-1); }
+
+  /* ============ EVENTS ============ */
+  window.addEventListener("keydown", (e)=>{
+    const tag = (e.target.tagName||"").toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
+    switch (e.key) {
+      case "ArrowRight": case " ": case "PageDown": case "ArrowDown":
+        e.preventDefault(); next(); break;
+      case "ArrowLeft": case "PageUp": case "ArrowUp":
+        e.preventDefault(); prev(); break;
+      case "Home":
+        e.preventDefault(); go(0); break;
+      case "End":
+        e.preventDefault(); go(NUM-1); break;
+      case "Escape":
+        location.href = "index.html"; break;
+    }
+  });
+
+  let wheelBuf = 0, lastWheel = 0;
+  const WHEEL_THR = 80, WHEEL_COOL = 700;
+  window.addEventListener("wheel", (e)=>{
+    const delta = e.deltaY || e.deltaX;
+    if (Math.abs(delta) < 4) return;
+    const now = Date.now();
+    if (now - lastWheel > WHEEL_COOL) wheelBuf = 0;
+    wheelBuf += delta;
+    lastWheel = now;
+    if (wheelBuf > WHEEL_THR) { wheelBuf = 0; next(); }
+    else if (wheelBuf < -WHEEL_THR) { wheelBuf = 0; prev(); }
+  }, { passive: true });
+
+  let touchX = null, touchY = null;
+  window.addEventListener("touchstart", (e)=>{
+    if (e.touches.length !== 1) { touchX = null; return; }
+    touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener("touchend", (e)=>{
+    if (touchX === null || !e.changedTouches[0]) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)*1.4) {
+      if (dx < 0) next(); else prev();
+    }
+    touchX = null;
+  }, { passive: true });
+
+  dots.forEach(d => d.addEventListener("click", ()=>go(parseInt(d.dataset.idx,10))));
+  prevBtn.addEventListener("click", prev);
+  nextBtn.addEventListener("click", next);
+
+  /* hashchange */
+  window.addEventListener("hashchange", ()=>{
+    const m = location.hash.match(/^#(\d+)$/);
+    if (m) {
+      const n = parseInt(m[1],10) - 1;
+      if (!isNaN(n)) go(n);
+    }
+  });
+  /* initial hash */
+  (function(){
+    const m = location.hash.match(/^#(\d+)$/);
+    if (m) {
+      const n = parseInt(m[1],10) - 1;
+      if (!isNaN(n) && n >= 0 && n < NUM) {
+        idx = n;
+        deck.style.transition = "none";
+        deck.style.transform = `translateX(-${idx*100}vw)`;
+        void deck.offsetWidth;
+        deck.style.transition = "";
+        dots.forEach((d,i)=>d.classList.toggle("active", i===idx));
+      }
+    }
+  })();
+
+  /* keep deck aligned on resize without animation */
+  window.addEventListener("resize", ()=>{
+    const t = deck.style.transition;
+    deck.style.transition = "none";
+    deck.style.transform = `translateX(-${idx*100}vw)`;
+    void deck.offsetWidth;
+    deck.style.transition = t;
+  });
+
+  /* ============ LANGUAGE TOGGLE ============ */
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", ()=>{
+      const lang = btn.dataset.langSet;
+      document.body.dataset.lang = lang;
+      document.querySelectorAll(".lang-btn").forEach(b=>{
+        b.setAttribute("aria-pressed", b.dataset.langSet === lang ? "true" : "false");
+      });
+    });
+  });
+
+  /* ============ CODE BG CANVAS + MOUSE REPEL ============
+     Real snippets pulled from memoryos-v2 src/ + src-tauri/.
+     Repel parameters identical to barking-reach-deck for visual consistency.
+  */
+  const CODE_LINES = [
+    "// MemoryOS — cross-AI working memory, local-first",
+    "import type { ParsedHandoff } from \"../types\";",
+    "",
+    "export function parseHandoff(raw: string): ParsedHandoff {",
+    "  const metaBlock = raw.match(/##\\s*Metadata\\s*\\n([\\s\\S]*?)/i)?.[1] ?? \"\";",
+    "  return {",
+    "    metadata,",
+    "    whatWeWorkedOn:   extract(raw, \"What We Worked On\"),",
+    "    keyDecisions:     extract(raw, \"Key Decisions\"),",
+    "    currentState:     extract(raw, \"Current Project State\"),",
+    "    openQuestions:    extract(raw, \"Open Questions\"),",
+    "    nextActions:      extract(raw, \"Next Actions\"),",
+    "    suggestedContextUpdate:   extract(raw, \"Suggested Updates to 00_context.md\"),",
+    "    suggestedDecisionsUpdate: extract(raw, \"Suggested Updates to decisions.md\"),",
+    "    suggestedAboutMeUpdate:   extract(raw, \"Suggested Updates to about_me.md\"),",
+    "  };",
+    "}",
+    "",
+    "export const PRESET_SOURCE_TOOLS = [",
+    "  \"ChatGPT\", \"Claude\", \"Gemini\", \"Grok\",",
+    "  \"Cursor\",  \"Codex\",  \"DeepSeek\", \"Kimi\",",
+    "] as const;",
+    "",
+    "// risk-tiered review — low (default-on) / medium / high (default-off + warning)",
+    "export type RiskLevel = \"low\" | \"medium\" | \"high\";",
+    "export type UpdateSuggestion = {",
+    "  targetFile: string;       // 'session' | 'about_me.md' | 'decisions.md'",
+    "  riskLevel: RiskLevel;",
+    "  content: string;",
+    "  selected: boolean;",
+    "  warning?: string;",
+    "};",
+    "",
+    "// src-tauri/src/main.rs — local-only, no network",
+    "#[tauri::command]",
+    "fn move_to_trash(path: String) -> Result<(), String> {",
+    "  trash::delete(&path).map_err(|e| e.to_string())",
+    "}",
+    "",
+    "#[tauri::command]",
+    "fn restore_from_trash(original_path: String) -> Result<(), String> {",
+    "  let items = trash::os_limited::list().map_err(|e| e.to_string())?;",
+    "  let item = items.into_iter()",
+    "    .filter(|it| it.original_parent.join(&it.name) == target)",
+    "    .max_by_key(|it| it.time_deleted)",
+    "    .ok_or_else(|| \"回收站里找不到该路径\".into())?;",
+    "  trash::os_limited::restore_all([item]).map_err(|e| e.to_string())?;",
+    "  Ok(())",
+    "}",
+    "",
+    "// Tauri builder — invoke handlers for the two trash commands",
+    "tauri::Builder::default()",
+    "  .invoke_handler(tauri::generate_handler![move_to_trash, restore_from_trash])",
+    "  .run(tauri::generate_context!())",
+    "  .expect(\"error while running tauri application\");",
+    "",
+    "// ~/Documents/MemoryOS/ — user owns every byte",
+    "//   about_me.md",
+    "//   projects/<slug>/",
+    "//     project.json",
+    "//     00_context.md",
+    "//     decisions.md",
+    "//     sessions/session_2026-05-26_1746.md",
+  ];
+
+  // Keywords to highlight in signal orange — product semantics, not random tokens
+  const KW_RE = /\b(parseHandoff|PRESET_SOURCE_TOOLS|RiskLevel|UpdateSuggestion|riskLevel|sourceTool|about_me|decisions|sessions|trash|Tauri|tauri|ChatGPT|Claude|Gemini|Grok|Cursor|Codex|DeepSeek|Kimi|MemoryOS)\b/g;
+
+  const canvas = document.getElementById("codeBg");
+  let ctx, W=0, H=0, DPR=1;
+  let cols = [];
+  let raf = 0;
+  let mx = -9999, my = -9999;
+
+  function setup(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx = canvas.getContext("2d");
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.font = '13px "IBM Plex Mono","JetBrains Mono",monospace';
+    ctx.textBaseline = "top";
+
+    const numCols = Math.max(7, Math.min(12, Math.floor(W / 220)));
+    cols = [];
+    for (let i = 0; i < numCols; i++) {
+      const band = (i % 3 === 0) ? "strong" : (i % 3 === 1) ? "mid" : "faint";
+      const baseLow  = band === "strong" ? 0.06 : band === "mid" ? 0.03 : 0.014;
+      const baseHigh = band === "strong" ? 0.14 : band === "mid" ? 0.08 : 0.04;
+      cols.push({
+        x: 24 + (W - 48) * (i / numCols) + (Math.random() - 0.5) * 30,
+        yOffset: Math.random() * CODE_LINES.length * 22,
+        speed: 8 + Math.random() * 16,
+        phase: Math.random() * Math.PI * 2,
+        lineFreq: 0.18 + Math.random() * 0.5,
+        baseLow, baseHigh
+      });
+    }
+  }
+
+  function drawLine(line, x, y, baseAlpha, now){
+    let lastIdx = 0, cursorX = x, m;
+    KW_RE.lastIndex = 0;
+    while ((m = KW_RE.exec(line)) !== null) {
+      const before = line.slice(lastIdx, m.index);
+      ctx.fillStyle = `rgba(10,10,10,${baseAlpha.toFixed(3)})`;
+      ctx.fillText(before, cursorX, y);
+      cursorX += ctx.measureText(before).width;
+      const kwPulse = 0.15 + 0.22 * Math.abs(Math.sin(now / 700 + m.index * 0.7));
+      const kwAlpha = Math.min(0.55, baseAlpha * 1.5 + kwPulse * 0.30);
+      ctx.fillStyle = `rgba(200,69,31,${kwAlpha.toFixed(3)})`;
+      ctx.fillText(m[0], cursorX, y);
+      cursorX += ctx.measureText(m[0]).width;
+      lastIdx = m.index + m[0].length;
+    }
+    if (lastIdx < line.length) {
+      ctx.fillStyle = `rgba(10,10,10,${baseAlpha.toFixed(3)})`;
+      ctx.fillText(line.slice(lastIdx), cursorX, y);
+    }
+  }
+
+  const LINE_H = 22;
+  const REPEL_R = 170;
+  const REPEL_STR = 90;
+
+  let last = performance.now();
+  function frame(now){
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    ctx.clearRect(0, 0, W, H);
+
+    const totalH = CODE_LINES.length * LINE_H;
+    cols.forEach((col)=>{
+      col.yOffset = (col.yOffset + col.speed * dt) % totalH;
+      for (let i = 0; i < CODE_LINES.length; i++) {
+        let y = i * LINE_H - col.yOffset;
+        while (y < -LINE_H) y += totalH;
+        while (y > H + LINE_H) y -= totalH;
+        if (y < -LINE_H || y > H + LINE_H) continue;
+
+        let dx = col.x - mx, dy = y - my;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        let drawX = col.x, drawY = y, proximityFade = 1;
+        if (dist < REPEL_R && dist > 0.1) {
+          let t = 1 - dist / REPEL_R;
+          let force = t * t * REPEL_STR;
+          drawX += (dx / dist) * force;
+          drawY += (dy / dist) * force;
+          proximityFade = 0.25 + 0.75 * (1 - t * t);
+        }
+
+        const range = col.baseHigh - col.baseLow;
+        const baseAlpha = (col.baseLow + range * Math.abs(
+          Math.sin(now / 1000 * col.lineFreq + col.phase + i * 0.3)
+        )) * proximityFade;
+        drawLine(CODE_LINES[i], drawX, drawY, baseAlpha, now);
+      }
+    });
+    raf = requestAnimationFrame(frame);
+  }
+
+  /* track mouse globally; rely on deck container for repel */
+  window.addEventListener("mousemove", (e)=>{
+    mx = e.clientX; my = e.clientY;
+  });
+  window.addEventListener("mouseleave", ()=>{ mx = -9999; my = -9999; });
+  window.addEventListener("resize", ()=>{ setup(); });
+
+  setup();
+  raf = requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>
