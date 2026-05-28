@@ -3,9 +3,64 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jiajia Jiang / 江佳佳 — Spatial Designer → AI Product</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
+/* ───── 00.5 / WELCOME SPLASH — clean centered text, ~2.4s, once per session ───── */
+#splash{
+  position:fixed; inset:0; z-index:9999;
+  background:var(--paper);
+  display:grid; place-items:center;
+  opacity:1; visibility:visible;
+  transition:opacity .7s cubic-bezier(.16,1,.3,1), visibility .7s;
+}
+#splash.is-done{ opacity:0; visibility:hidden; pointer-events:none; }
+.splash-code{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; animation:sp-fade 1.3s ease .15s forwards; }
+.splash-veil{ position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 48% 44% at 50% 50%, var(--paper) 0%, rgba(255,255,255,.74) 36%, rgba(255,255,255,0) 72%); }
+.splash-inner{ position:relative; z-index:2; text-align:center; padding:0 6vw; }
+.splash-kicker{
+  font-family:var(--font-mono); font-size:var(--mono-s);
+  letter-spacing:.24em; text-transform:uppercase; color:var(--muted);
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:var(--s-4);
+  opacity:0; transform:translateY(10px);
+  animation:sp-up .8s cubic-bezier(.16,1,.3,1) .15s forwards;
+}
+.splash-kicker .dot{ width:6px; height:6px; background:var(--signal); display:inline-block; }
+.splash-title{
+  font-family:var(--font-cjk); font-weight:300;
+  font-size:clamp(3.2rem,11vw,7.5rem); line-height:1; letter-spacing:.1em;
+  color:var(--ink); margin:0;
+  opacity:0; transform:translateY(22px);
+  animation:sp-up 1s cubic-bezier(.16,1,.3,1) .3s forwards;
+}
+.splash-en{
+  font-family:var(--font-mono); font-weight:400;
+  font-size:var(--mono-s); letter-spacing:.2em; text-transform:uppercase; color:var(--muted);
+  margin-top:var(--s-4);
+  opacity:0; transform:translateY(14px);
+  animation:sp-up .9s cubic-bezier(.16,1,.3,1) .5s forwards;
+}
+.splash-bar{
+  width:min(200px,42vw); height:1px; background:var(--rule);
+  margin:var(--s-6) auto 0; position:relative; overflow:hidden;
+  opacity:0; animation:sp-fade .6s ease .7s forwards;
+}
+.splash-bar span{
+  position:absolute; inset:0; transform-origin:left center; transform:scaleX(0);
+  background:var(--signal);
+  animation:sp-load 1.7s cubic-bezier(.4,0,.2,1) .8s forwards;
+}
+@keyframes sp-up{ to{ opacity:1; transform:none; } }
+@keyframes sp-fade{ to{ opacity:1; } }
+@keyframes sp-load{ to{ transform:scaleX(1); } }
+@media(prefers-reduced-motion:reduce){
+  #splash .splash-kicker,#splash .splash-title,#splash .splash-cn,#splash .splash-bar,#splash .splash-bar span{
+    animation-duration:.01s;
+  }
+}
+
 /* ───── HOMEPAGE — LANDING PLATE + ARCHIVE INDEX ───── */
 .home-nav-right{display:flex;gap:28px;align-items:center}
 .home-nav-right .cv{color:var(--signal)}
@@ -690,6 +745,187 @@ body[data-lang="cn"] .lang-cn{
 </style>
 </head>
 <body data-lang="en">
+
+<!-- ═══ WELCOME SPLASH (code-rain · MemoryOS parser · ~2.8s · once per session) ═══ -->
+<div id="splash" role="presentation" aria-hidden="true">
+  <canvas id="splash-code" class="splash-code" aria-hidden="true"></canvas>
+  <div class="splash-veil"></div>
+  <div class="splash-inner">
+    <div class="splash-kicker"><span class="dot"></span>Welcome · 欢迎</div>
+    <h2 class="splash-title">江佳佳</h2>
+    <div class="splash-en">Jiajia Jiang · Spatial Designer → AI Product</div>
+    <div class="splash-bar"><span></span></div>
+  </div>
+</div>
+<script>
+(function(){
+  var splash=document.getElementById('splash');
+  if(!splash) return;
+  if(sessionStorage.getItem('jj_splash')){ if(splash.parentNode) splash.remove(); return; }
+
+  /* ── code-rain: MemoryOS handoff parser, light palette (faint ink + signal quotes) ── */
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cv=document.getElementById('splash-code'); if(!cv||reduce) return;
+    var ctx=cv.getContext('2d'); if(!ctx) return;
+    var dpr=Math.min(window.devicePixelRatio||1,2), W,H;
+    function size(){ W=window.innerWidth;H=window.innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.font='12px "IBM Plex Mono","SFMono-Regular",monospace';ctx.textBaseline='top'; }
+    size();
+    var LINES=[
+      '// ── lib/sourceTools.ts · 预置 8 个 AI 工具 + 自定义 ──',
+      'export const PRESET_SOURCE_TOOLS = [',
+      '  "ChatGPT", "Claude", "Gemini", "Grok",',
+      '  "Cursor", "Codex", "DeepSeek", "Kimi",',
+      '] as const;',
+      '',
+      'const TINTS: Record<string, string> = {',
+      '  ChatGPT:  "bg-[#E8F0E8] text-[#3D6B3D]",',
+      '  Claude:   "bg-[#F5E8E0] text-[#A05536]",',
+      '  Cursor:   "bg-[#E8E8F0] text-[#3D3D6B]",',
+      '  Kimi:     "bg-[#F4EBD4] text-[#7D5F1E]",',
+      '};',
+      'export function tintFor(tool: string): string {',
+      '  return TINTS[tool] ?? FALLBACK_TINT;',
+      '}',
+      '',
+      '// ── types.ts ──',
+      'export type RiskLevel = "low" | "medium" | "high";',
+      '',
+      'export type ProjectMeta = {',
+      '  slug: string;',
+      '  name: string;',
+      '  currentGoal: string;',
+      '  currentGoalBullets: string[];',
+      '  progress: number;',
+      '  createdAt: string;',
+      '  updatedAt: string;',
+      '};',
+      '',
+      'export type ParsedHandoff = {',
+      '  metadata: Record<string, string>;',
+      '  whatWeWorkedOn: string;',
+      '  keyDecisions: string;',
+      '  currentState: string;',
+      '  openQuestions: string;',
+      '  nextActions: string;',
+      '  suggestedContextUpdate: string;',
+      '};',
+      '',
+      'export type UpdateSuggestion = {',
+      '  targetFile: string;',
+      '  riskLevel: RiskLevel;',
+      '  mode?: "append" | "replace";',
+      '};',
+      '',
+      '// ── lib/fs.ts · Tauri 本地文件系统(数据只在你磁盘上) ──',
+      '// workspace/',
+      '//   about_me.md',
+      '//   projects/<slug>/',
+      '//     project.json',
+      '//     00_context.md',
+      '//     decisions.md',
+      '//     sessions/session_YYYY-MM-DD_HHmm.md',
+      '',
+      'import { readDir, readTextFile, writeTextFile } from "@tauri-apps/api/fs";',
+      'import { join, documentDir } from "@tauri-apps/api/path";',
+      '',
+      'const WORKSPACE_KEY = "memoryos.workspace";',
+      'const SAMPLE_SLUG = "我的第一个项目";',
+      '',
+      'export function loadWorkspace(): string | null {',
+      '  return localStorage.getItem(WORKSPACE_KEY);',
+      '}',
+      '',
+      'export async function getDefaultWorkspacePath(): Promise<string> {',
+      '  const docDir = await documentDir();',
+      '  return await join(docDir, "MemoryOS");',
+      '}',
+      '',
+      'export async function quickSetupWorkspace(customPath?: string) {',
+      '  const workspace = customPath ?? (await getDefaultWorkspacePath());',
+      '  await ensureWorkspaceLayout(workspace);',
+      '  await ensureSampleProject(workspace);',
+      '  return workspace;',
+      '}',
+      '',
+      '// ── lib/parser.ts · 把 handoff Markdown 拆成结构化字段 ──',
+      'export function parseHandoff(raw: string): ParsedHandoff {',
+      '  const metadata: Record<string, string> = {};',
+      '  for (const line of metaText.split("\\n")) {',
+      '    const m = line.match(/^\\s*-\\s*([^:]+):\\s*(.+)$/);',
+      '    if (m) metadata[m[1].trim()] = m[2].trim();',
+      '  }',
+      '  return {',
+      '    whatWeWorkedOn: extract(raw, "What We Worked On"),',
+      '    keyDecisions:   extract(raw, "Key Decisions"),',
+      '    currentState:   extract(raw, "Current Project State"),',
+      '    nextActions:    extract(raw, "Next Actions"),',
+      '  };',
+      '}',
+      '',
+      'function extract(text: string, heading: string): string {',
+      '  for (const re of patterns) {',
+      '    const m = text.match(re);',
+      '    if (m?.[1]?.trim()) return m[1].trim();',
+      '  }',
+      '  return "";',
+      '}',
+      '',
+      '// ── App.tsx ──',
+      'import { useEffect, useMemo, useState } from "react";',
+      '',
+      'export default function App() {',
+      '  const [workspace, setWorkspace] = useState<string | null>(null);',
+      '  const [projects, setProjects] = useState<ProjectMeta[]>([]);',
+      '  const [project, setProject] = useState<Project | null>(null);',
+      '',
+      '  // Restore last workspace on launch',
+      '  useEffect(() => {',
+      '    const w = loadWorkspace();',
+      '    if (w) setWorkspace(w);',
+      '  }, []);',
+      '}',
+    ];
+    var LH=18, totalH=LINES.length*LH, TILE_W=415, PAD=14;
+    var QRE=/"[^"]*"/g, running=true, raf=0, last=performance.now(), off=0, SPEED=22;
+    function drawLine(s,x,y,a){ var li=0,cx=x; QRE.lastIndex=0; var m;
+      while((m=QRE.exec(s))!==null){ var pre=s.slice(li,m.index);
+        ctx.fillStyle='rgba(29,29,31,'+a.toFixed(3)+')'; ctx.fillText(pre,cx,y); cx+=ctx.measureText(pre).width;
+        var ka=Math.min(0.62,a*2.6+0.30); ctx.fillStyle='rgba(200,69,31,'+ka.toFixed(3)+')'; ctx.fillText(m[0],cx,y); cx+=ctx.measureText(m[0]).width;
+        li=m.index+m[0].length; }
+      if(li<s.length){ ctx.fillStyle='rgba(29,29,31,'+a.toFixed(3)+')'; ctx.fillText(s.slice(li),cx,y); }
+    }
+    function frame(now){ if(!running)return; var dt=Math.min(0.05,(now-last)/1000); last=now;
+      off=(off+SPEED*dt)%totalH; ctx.clearRect(0,0,W,H);
+      var N=LINES.length, first=Math.floor(off/LH), yStart=-(off%LH);
+      var tiles=Math.ceil(W/TILE_W)+1, rows=Math.ceil(H/LH)+2;
+      for(var r=0;r<rows;r++){ var y=yStart+r*LH; if(y>H) break;
+        for(var j=0;j<tiles;j++){ var x=j*TILE_W+PAD;
+          var idx=(((first+r)+j*5)%N+N)%N;
+          var band=j%3, lo=band===0?0.16:band===1?0.10:0.06, hi=band===0?0.25:band===1?0.16:0.10;
+          var a=lo+(hi-lo)*Math.abs(Math.sin(now/1500 + r*0.22 + j*0.7));
+          drawLine(LINES[idx], x, y, a); } }
+      raf=requestAnimationFrame(frame); }
+    raf=requestAnimationFrame(frame);
+    window.addEventListener('resize',size);
+    splash.__stopCode=function(){ running=false; if(raf)cancelAnimationFrame(raf); };
+  })();
+
+  var root=document.documentElement; root.style.overflow='hidden';
+  var done=false;
+  function dismiss(){ if(done)return; done=true;
+    splash.classList.add('is-done'); root.style.overflow='';
+    if(splash.__stopCode) splash.__stopCode();
+    try{ sessionStorage.setItem('jj_splash','1'); }catch(e){}
+    setTimeout(function(){ if(splash&&splash.parentNode) splash.remove(); },800);
+  }
+  var t=setTimeout(dismiss,2800);
+  ['click','keydown','wheel','touchstart'].forEach(function(ev){
+    window.addEventListener(ev,function(){ clearTimeout(t); dismiss(); },{once:true,passive:true});
+  });
+})();
+</script>
+
 <nav>
   <a href="index.html" class="nav-logo"><span class="lang-en">JIAJIA JIANG</span><span class="lang-cn">江佳佳</span></a>
   <ul class="nav-links home-nav-right">
