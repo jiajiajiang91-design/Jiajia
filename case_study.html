@@ -239,6 +239,37 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   margin:0 0 var(--s-3);
   max-width:none;
 }
+.cs-hero-takeaway{
+  margin:var(--s-4) 0 0;
+  padding:var(--s-3) var(--s-4);
+  border-left:2px solid var(--signal);
+  background:var(--paper-2,#fafafa);
+  max-width:66ch;
+}
+.cs-hero-takeaway .lbl{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:.7rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--signal);
+  margin-bottom:8px;
+}
+.cs-hero-takeaway p{
+  font-family:var(--font-cjk),var(--font-sans);
+  font-size:var(--body-l);
+  line-height:1.6;
+  color:var(--ink);
+  margin:0;
+}
+.cs-hero-takeaway .en{
+  display:block;
+  font-family:var(--font-sans);
+  font-size:var(--body-m,.9rem);
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px;
+}
 
 /* ---- Hero metadata strip (4-col, mono labels, ink-top / rule-bottom hairline) ---- */
 .cs-meta-strip{
@@ -724,6 +755,11 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <p class="cs-hero-body">我用一套 Markdown 文件夹在 ChatGPT、Claude、Cursor、Gemini 之间手动同步上下文 3 个月。每次开新对话都要重新告诉 AI 我是谁、上次到哪了, 复制粘贴自己是谁三个月之后会想砸键盘。</p>
 
         <p class="cs-hero-body">ChatGPT Memory 记住的是"你是谁", Claude Projects 只对 Claude 生效, Notion AI 锁在自己的工作区。<strong>但没有工具帮你记住"这件事做到哪了、为什么这么决定的"</strong> —— 我把这件事做成了一个桌面 app。</p>
+
+        <div class="cs-hero-takeaway">
+          <span class="lbl">这个项目训练的能力</span>
+          <p>定义一个 AI 工作流问题 → 设计最小可验证闭环 → 交付可运行的桌面 Demo → 基于真实使用摩擦持续迭代。<span class="en">This project trained me to define an AI workflow problem, design a minimum testable loop, ship a working desktop demo, and iterate based on real usage friction.</span></p>
+        </div>
 
         <dl class="cs-meta-strip" aria-label="Project metadata">
           <div><dt>Year</dt><dd>2026</dd></div>
@@ -1287,13 +1323,16 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 <footer>
   <span>© 2026 Jiajia Jiang / 江佳佳</span>
   <span>London / Shanghai · 2025 — 26</span>
-  <a href="mailto:ucbv512@ucl.ac.uk" class="no-underline">ucbv512@ucl.ac.uk</a>
+  <a href="mailto:jiajia.jiang.25@ucl.ac.uk" class="no-underline">jiajia.jiang.25@ucl.ac.uk</a>
 </footer>
 
 <script>
 (function(){
   /* ═══ SCROLL REVEAL ═══ */
-  document.querySelectorAll('.cs-section > h2, .cs-section > h1, .cs-section > p, .cs-section > dl, .cs-section > aside, .cs-section > div, .cs-section > table, .cs-section > ul, .cs-section > ol').forEach(function(el,i){
+  document.querySelectorAll('.cs-section > *').forEach(function(el,i){
+    var t = el.tagName;
+    if(t==='SCRIPT'||t==='STYLE'||t==='BR'||t==='HEADER') return;
+    if(el.classList.contains('rv') || el.parentElement.closest('.rv')) return;
     el.classList.add('rv');
     el.style.transitionDelay = Math.min(i * 0.06, 0.36) + 's';
   });

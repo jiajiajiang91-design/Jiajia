@@ -140,6 +140,37 @@ em{font-style:normal}
 @media(max-width:780px){.struct-row{grid-template-columns:70px 1fr 1fr}.struct-row .sc-dim,.struct-row .sc-cell{padding:10px 12px;font-size:13px}}
 
 /* ═══ HANDS-ON OBSERVATION ═══ */
+.bench-head{margin-top:48px}
+.bench-kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);font-weight:500}
+.bench-intro{font-size:14px;line-height:1.65;color:var(--ink-2);margin:10px 0 0;max-width:none}
+.bench-intro strong{color:var(--ink);font-weight:500}
+.bench-method{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;color:var(--muted)}
+.bench-method span{padding:5px 10px;border:1px solid var(--hair);border-radius:3px}
+.bench-method span em{color:var(--signal);font-style:normal;font-weight:500}
+.bench{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin-top:20px;font-size:12.5px}
+.bench-row{display:grid;grid-template-columns:.95fr 1.25fr 1.45fr .7fr 1.4fr;border-bottom:1px solid var(--hair)}
+.bench-row:last-child{border-bottom:none}
+.bench-row.head{background:var(--paper-2)}
+.bench-row:not(.head):hover{background:var(--paper-2)}
+.bench-cell{padding:15px 14px;line-height:1.55;color:var(--ink-2);border-right:1px solid var(--hair)}
+.bench-cell:last-child{border-right:none}
+.bench-cell em{color:var(--ink);font-style:normal;font-weight:500}
+.bench-row.head .bench-cell{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.bench-cell.obj{color:var(--ink)}
+.bench-cell.obj strong{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;font-weight:600;display:block;margin-bottom:4px}
+.bench-cell.obj span{font-size:12px;color:var(--muted)}
+.bench-cell.fix strong{color:var(--signal);font-weight:500}
+.pri{display:inline-block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;padding:3px 7px;border-radius:3px;white-space:nowrap;font-weight:600}
+.pri.p0{background:var(--signal);color:#fff}
+.pri.p1{background:var(--hair-strong);color:var(--ink)}
+.pri-note{display:block;font-size:11px;color:var(--muted);margin-top:7px;line-height:1.4}
+@media(max-width:880px){
+  .bench-row{grid-template-columns:1fr;border-bottom:2px solid var(--hair-strong)}
+  .bench-row.head{display:none}
+  .bench-cell{border-right:none;padding:8px 14px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:baseline}
+  .bench-cell::before{content:attr(data-label);font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+  .bench-cell.obj strong{display:inline-block}
+}
 .obs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--hair);margin-top:40px}
 .obs-card{padding:28px 24px;border-bottom:1px solid var(--hair)}
 .obs-card:nth-child(odd){border-right:1px solid var(--hair)}
@@ -265,8 +296,7 @@ footer a:hover{border-color:var(--ink)}
     <div class="kpi-grid">
       <div class="kpi rv"><div class="kpi-label">VALUATION</div><div class="kpi-value">$<span data-count="200">0</span><span class="u">亿</span></div><div class="kpi-note">2026.05 美团领投<br><em>6 个月涨 5×</em></div></div>
       <div class="kpi rv"><div class="kpi-label">6-MONTH RAISED</div><div class="kpi-value">$<span data-count="39">0</span><span class="u">亿</span></div><div class="kpi-note">含 $20 亿最新轮<br>国内 LLM 行业最高</div></div>
-      <div class="kpi rv"><div class="kpi-label">ARR</div><div class="kpi-value">$<span data-count="2">0</span><span class="u">亿</span></div><div class="kpi-note">2026.04<br><em>3 月→4 月翻倍</em></div></div>
-      <div class="kpi rv"><div class="kpi-label">MAU</div><div class="kpi-value"><span data-count="1830">0</span><span class="u">万</span></div><div class="kpi-note">峰值 3600 万（2024.10）<br><em>回落近半</em></div></div>
+      <div class="kpi rv"><div class="kpi-label">MAU</div><div class="kpi-value">约 <span data-count="967">0</span><span class="u">万</span></div><div class="kpi-note">峰值 3600 万（2024.10）<br><em>2025 Q3 回落约七成</em></div></div>
       <div class="kpi rv"><div class="kpi-label">PAID USER GROWTH</div><div class="kpi-value"><span data-count="170">0</span><span class="u">%/月</span></div><div class="kpi-note">全球付费用户月增速</div></div>
       <div class="kpi rv"><div class="kpi-label">MEMBERSHIP</div><div class="kpi-value">¥49–699</div><div class="kpi-note">统一 agent 额度池<br>按用量分 4 档</div></div>
       <div class="kpi rv"><div class="kpi-label">LATEST MODEL</div><div class="kpi-value">K2.6</div><div class="kpi-note">2026.04 · Agent Swarm<br>最多 100 子 agent 并行</div></div>
@@ -280,19 +310,19 @@ footer a:hover{border-color:var(--ink)}
 <section class="section" id="signal">
   <div class="wrap">
     <div class="eyebrow"><span class="num">02</span><span>关键信号</span></div>
-    <h2>MAU 腰斩，付费暴涨<span class="sub">这两条曲线的背离是理解 Kimi 商业模式的核心线索。</span></h2>
+    <h2>MAU 回落七成，付费暴涨<span class="sub">这两条曲线的背离是理解 Kimi 商业模式的核心线索。</span></h2>
     <div class="divergence rv">
       <div class="div-side down">
         <div class="div-label">MAU · 免费用户</div>
         <div class="div-bar-wrap"><div class="div-bar" id="bar-mau"></div></div>
-        <div class="div-nums"><span>3600 万</span><span class="now">→ 1830 万</span></div>
-        <div class="div-insight">2024.10 峰值后<em>持续回落近半</em>。免费用户来了又走——聊天体验不够留住人。</div>
+        <div class="div-nums"><span>3600 万</span><span class="now">→ 约 967 万</span></div>
+        <div class="div-insight">2024.10 峰值后<em>回落约七成（2025 Q3）</em>。免费用户来了又走——聊天体验不够留住人。</div>
       </div>
       <div class="div-side up">
         <div class="div-label">PAID USERS · 付费用户</div>
         <div class="div-bar-wrap"><div class="div-bar" id="bar-paid"></div></div>
         <div class="div-nums"><span>基数</span><span class="now">→ 月增 170%</span></div>
-        <div class="div-insight">ARR 从 3 月 $1 亿 → 4 月 $2 亿，<em>单月翻倍</em>。20 天收入超过去年全年。</div>
+        <div class="div-insight">海外 API 收入自 2025.11 起<em>增长 4 倍</em>（K2 模型驱动），付费转化在加速。</div>
       </div>
       <div class="div-verdict">
         <em>解读：</em>免费聊天用户在走，但愿意为 agent 工作能力付费的用户在快速涌入。Kimi 的增长不靠"用的人多"，靠"用的人付钱"——这指向一个核心判断：它赌的不是 C 端流量，是<em>工作台付费转化率</em>。
@@ -329,6 +359,46 @@ footer a:hover{border-color:var(--ink)}
         <div class="obs-tag">桌面端 · CODEX 能力</div>
         <h4>Kimi 桌面端也能控制浏览器</h4>
         <p>除了网页版 WebBridge，Kimi 桌面端也有类似 Codex 的浏览器控制能力。说明<em>浏览器自动化是横向基础能力</em>，不是某个入口的附属功能。</p>
+      </div>
+    </div>
+
+    <div class="bench-head">
+      <span class="bench-kicker">Benchmark · 测试计划</span>
+      <p class="bench-intro">把上面的实测整理成一份可复用的测试计划。我没有只记"能不能用"，而是用 PM 的方式判断：每个能力先定义<strong>结果指标</strong>（只看任务链最后一环，不看中间点击率）→ 用漏斗思路定位<strong>卡在哪一环</strong> → 按<strong>问题优先级</strong>决定先修什么。这是我给产品团队做 AI 功能验证时会交付的东西。</p>
+      <div class="bench-method">
+        <span><em>结果指标</em> · 看任务链最后一环</span>
+        <span><em>过程定位</em> · 漏斗卡点</span>
+        <span><em>问题定级</em> · P0 闭环 ＞ P0 体验 ＞ P1</span>
+      </div>
+    </div>
+    <div class="bench rv">
+      <div class="bench-row head">
+        <div class="bench-cell">测试对象 / 任务</div>
+        <div class="bench-cell">核心指标（结果）</div>
+        <div class="bench-cell">观察 · 卡在哪一环</div>
+        <div class="bench-cell">定级</div>
+        <div class="bench-cell">优化建议</div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-cell obj" data-label="对象"><strong>WebBridge</strong><span>发小红书笔记：登录创作者后台 → 填标题 / 正文 / 封面 / 话题 → 发布</span></div>
+        <div class="bench-cell" data-label="指标">任务完成率 · <em>手动介入次数</em> · 端到端耗时</div>
+        <div class="bench-cell" data-label="观察">能跑通，但<em>卡在"登录态"这一环</em>——掉登录后 agent 无法自行恢复，需人工接管</div>
+        <div class="bench-cell" data-label="定级"><span class="pri p0">P0</span><span class="pri-note">逻辑闭环：失败时回不到可继续的状态</span></div>
+        <div class="bench-cell fix" data-label="建议">任务前做<strong>登录态 / 环境预检</strong>；失败时给出明确"接管点"，让用户一步补登</div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-cell obj" data-label="对象"><strong>PDF 处理</strong><span>读取并总结一份 PDF，定位引用出处</span></div>
+        <div class="bench-cell" data-label="指标">总结准确率（设 <em>≥70% 符合预期</em> 为通过）· 引用可定位率 · 耗时</div>
+        <div class="bench-cell" data-label="观察">用 Python（PyMuPDF / OCR）迂回，能成<em>但卡在"解析"这一环</em>，长文档 / 扫描件更慢</div>
+        <div class="bench-cell" data-label="定级"><span class="pri p1">P1</span><span class="pri-note">体验型：能走通但不够快</span></div>
+        <div class="bench-cell fix" data-label="建议">长文档先返回<strong>进度与预期耗时</strong>，避免误判卡死；扫描件 OCR 时提示置信度</div>
+      </div>
+      <div class="bench-row">
+        <div class="bench-cell obj" data-label="对象"><strong>Claw</strong><span>跨多次会话持续推进同一项目（记住习惯、复用流程）</span></div>
+        <div class="bench-cell" data-label="指标"><em>记忆连续性</em> · 任务断点恢复率 · 重复交代成本</div>
+        <div class="bench-cell" data-label="观察">潜力大，但<em>卡在"恢复"这一环</em>——长期上下文一断，就退回从头交代</div>
+        <div class="bench-cell" data-label="定级"><span class="pri p0">P0</span><span class="pri-note">留存命门：一次性自动化留不住人</span></div>
+        <div class="bench-cell fix" data-label="建议"><strong>项目级记忆 + 断点快照</strong>；每次恢复先回放"上次做到哪、为什么这么定"</div>
       </div>
     </div>
   </div>
@@ -424,7 +494,7 @@ footer a:hover{border-color:var(--ink)}
 <footer>
   <span>&copy; 2026 Jiajia Jiang / 江佳佳</span>
   <span>London / Shanghai &middot; 2025 &mdash; 26</span>
-  <a href="mailto:ucbv512@ucl.ac.uk">ucbv512@ucl.ac.uk</a>
+  <a href="mailto:jiajia.jiang.25@ucl.ac.uk">jiajia.jiang.25@ucl.ac.uk</a>
 </footer>
 
 <script>

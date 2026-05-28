@@ -2315,7 +2315,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <footer>
   <span>© 2026 Jiajia Jiang / 江佳佳</span>
   <span>London / Shanghai · 2025 — 26</span>
-  <a href="mailto:ucbv512@ucl.ac.uk" class="no-underline">ucbv512@ucl.ac.uk</a>
+  <a href="mailto:jiajia.jiang.25@ucl.ac.uk" class="no-underline">jiajia.jiang.25@ucl.ac.uk</a>
 </footer>
 
 <!-- ═══════════════════ LIGHTBOX ═══════════════════ -->
@@ -2355,9 +2355,20 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 
 // ─── SCROLL REVEAL ───
 (function(){
-  document.querySelectorAll('.section > .wrap > .findings > .finding, .section > .wrap > .arch-grid > .arch-card, .section > .wrap > .market, .section > .wrap > .profiles, .section > .wrap > .jtbd, .section > .wrap > .axis, .section > .wrap > .scn, .section > .wrap > .spr, .section > .wrap > .scorecard, .section > .wrap > .rec-grid, .section > .wrap > .compare-table, .section > .wrap > h2, .section > .wrap > .lede, .section > .wrap > table').forEach(function(el,i){
+  function rvMount(el,i){
+    if(el.classList.contains('rv')) return;
     el.classList.add('rv');
-    el.style.transitionDelay = Math.min(i * 0.06, 0.36) + 's';
+    el.style.transitionDelay = Math.min((i||0) * 0.06, 0.36) + 's';
+  }
+  // pass 1 — per-card reveals inside known grids (keep the staggered feel)
+  document.querySelectorAll('.section > .wrap > .findings > .finding, .section > .wrap > .arch-grid > .arch-card').forEach(rvMount);
+  // pass 2 — every other top-level block in each section (covers text / 线条 / 表格图表 the old whitelist missed)
+  document.querySelectorAll('.section > .wrap > *').forEach(function(el,i){
+    var t = el.tagName;
+    if(t==='SCRIPT'||t==='STYLE'||t==='BR') return;
+    if(el.classList.contains('rv')) return;
+    if(el.querySelector('.rv')) return; // contains per-card reveals — let those animate
+    rvMount(el,i);
   });
   var rvObs = new IntersectionObserver(function(entries){
     entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('vis'); });
