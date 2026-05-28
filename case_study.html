@@ -23,6 +23,14 @@
 
 html{scroll-padding-top:clamp(96px,14vh,144px)}
 
+/* ═══ REVEAL ANIMATION ═══ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+.cs-section .rv:nth-child(2){transition-delay:.08s}
+.cs-section .rv:nth-child(3){transition-delay:.16s}
+.cs-section .rv:nth-child(4){transition-delay:.24s}
+.cs-section .rv:nth-child(5){transition-delay:.32s}
+
 /* ---- page envelope (Notion-aligned 1280 max, sits inside shared nav) ---- */
 .cs-page{
   max-width:1280px;
@@ -674,8 +682,6 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   <ul class="nav-links">
     <li><a href="index.html#product">Product</a></li>
     <li><a href="index.html#systems">Thesis</a></li>
-    <li><a href="index.html#foundation">Foundation</a></li>
-    <li><a href="index.html#workflows">Workflows</a></li>
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
@@ -1286,6 +1292,17 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
 <script>
 (function(){
+  /* ═══ SCROLL REVEAL ═══ */
+  document.querySelectorAll('.cs-section > h2, .cs-section > h1, .cs-section > p, .cs-section > dl, .cs-section > aside, .cs-section > div, .cs-section > table, .cs-section > ul, .cs-section > ol').forEach(function(el,i){
+    el.classList.add('rv');
+    el.style.transitionDelay = Math.min(i * 0.06, 0.36) + 's';
+  });
+  var rvObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('vis'); });
+  },{ threshold:0.1, rootMargin:'0px 0px -30px 0px' });
+  document.querySelectorAll('.rv').forEach(function(el){ rvObs.observe(el); });
+
+  /* ═══ TOC SCROLLSPY ═══ */
   var links = Array.from(document.querySelectorAll('#cs-toc a[href^="#"]'));
   if(!links.length) return;
   var map = new Map();

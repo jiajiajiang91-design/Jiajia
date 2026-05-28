@@ -39,6 +39,10 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+/* ═══ REVEAL ANIMATION ═══ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
 body{
   margin:0;
   background:var(--paper);
@@ -1395,8 +1399,6 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
   <ul class="nav-links">
     <li><a href="../index.html#product">Product</a></li>
     <li><a href="../index.html#systems">Thesis</a></li>
-    <li><a href="../index.html#foundation">Foundation</a></li>
-    <li><a href="../index.html#workflows">Workflows</a></li>
     <li><a href="../index.html#about">About</a></li>
     <li><a href="../index.html#contact">Contact</a></li>
   </ul>
@@ -2349,6 +2351,18 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
   lbClose.addEventListener('click',close);
   lb.addEventListener('click',e=>{ if(e.target===lb) close(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+})();
+
+// ─── SCROLL REVEAL ───
+(function(){
+  document.querySelectorAll('.section > .wrap > .findings > .finding, .section > .wrap > .arch-grid > .arch-card, .section > .wrap > .market, .section > .wrap > .profiles, .section > .wrap > .jtbd, .section > .wrap > .axis, .section > .wrap > .scn, .section > .wrap > .spr, .section > .wrap > .scorecard, .section > .wrap > .rec-grid, .section > .wrap > .compare-table, .section > .wrap > h2, .section > .wrap > .lede, .section > .wrap > table').forEach(function(el,i){
+    el.classList.add('rv');
+    el.style.transitionDelay = Math.min(i * 0.06, 0.36) + 's';
+  });
+  var rvObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('vis'); });
+  },{ threshold:0.08, rootMargin:'0px 0px -30px 0px' });
+  document.querySelectorAll('.rv').forEach(function(el){ rvObs.observe(el); });
 })();
 
 // ─── TOC scrollspy ───
