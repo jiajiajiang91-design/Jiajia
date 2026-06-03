@@ -46,7 +46,7 @@
   /* ================== CODE BG CANVAS ================== */
   canvas.code-bg{
     position:fixed;inset:0;
-    width:100vw;height:100vh;
+    width:100vw;height:100vh;height:100dvh;
     z-index:1;display:block;
     pointer-events:none;
   }
@@ -54,15 +54,16 @@
   /* ================== DECK ================== */
   #deck{
     position:fixed;inset:0;
-    width:600vw;height:100vh;
+    width:600vw;height:100vh;height:100dvh;
     display:flex;flex-wrap:nowrap;
     transition:transform .9s var(--ease-deck);
     will-change:transform;
     z-index:10;
   }
   .slide{
-    width:100vw;height:100vh;flex:0 0 100vw;
-    position:relative;overflow:hidden;
+    width:100vw;height:100vh;height:100dvh;flex:0 0 100vw;
+    position:relative;overflow-y:auto;overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
     background:transparent;
     padding:calc(48px + 3vh) 5vw 9vh;
     display:flex;flex-direction:column;
@@ -137,8 +138,7 @@
     flex:1;align-content:center;
   }
   .biz-card{
-    background:rgba(242,240,235,.92);
-    backdrop-filter:blur(3px);
+    background:#F2F0EB;
     border:1px solid var(--rule);
     padding:var(--s-4) var(--s-3) var(--s-3);
     display:flex;flex-direction:column;
@@ -174,8 +174,7 @@
     flex:1;align-content:center;
   }
   .impl-col{
-    background:rgba(242,240,235,.92);
-    backdrop-filter:blur(3px);
+    background:#F2F0EB;
     border:1px solid var(--rule);
     padding:var(--s-4);
     display:flex;flex-direction:column;
@@ -214,8 +213,7 @@
   .path-step{
     flex:1 1 calc(25% - var(--s-2));
     min-width:200px;
-    background:rgba(242,240,235,.92);
-    backdrop-filter:blur(3px);
+    background:#F2F0EB;
     border:1px solid var(--rule);
     padding:var(--s-3);
     position:relative;
@@ -261,8 +259,7 @@
   }
   .layer-card{
     position:relative;z-index:1;
-    background:rgba(242,240,235,.94);
-    backdrop-filter:blur(3px);
+    background:#F2F0EB;
     border:1px solid var(--rule);
     padding:0;
     display:flex;flex-direction:column;
@@ -324,8 +321,7 @@
     flex:1;align-content:center;
     display:flex;flex-direction:column;justify-content:center;
     max-width:100%;
-    background:rgba(242,240,235,.92);
-    backdrop-filter:blur(3px);
+    background:#F2F0EB;
     padding:var(--s-4);
     border:1px solid var(--rule-soft);
   }
@@ -950,6 +946,7 @@
     if (n === idx) return;
     idx = n;
     deck.style.transform = `translateX(-${idx*100}vw)`;
+    if (deck.children[idx]) deck.children[idx].scrollTop = 0;
     dots.forEach((d,i)=>d.classList.toggle("active", i===idx));
     const counter = document.getElementById("slideCounter");
     if (counter) counter.textContent = String(idx+1).padStart(2,"0");
@@ -983,6 +980,14 @@
   window.addEventListener("wheel", (e)=>{
     const delta = e.deltaY || e.deltaX;
     if (Math.abs(delta) < 4) return;
+    // if the current slide is taller than the viewport, let it scroll
+    // vertically first; only flip slides once at the top/bottom edge.
+    const cur = deck.children[idx];
+    if (cur) {
+      const canDown = cur.scrollTop + cur.clientHeight < cur.scrollHeight - 1;
+      const canUp = cur.scrollTop > 1;
+      if ((delta > 0 && canDown) || (delta < 0 && canUp)) { wheelBuf = 0; return; }
+    }
     const now = Date.now();
     if (now - lastWheel > WHEEL_COOL) wheelBuf = 0;
     wheelBuf += delta;

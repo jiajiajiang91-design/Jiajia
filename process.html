@@ -216,7 +216,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
       </svg>
       <span class="txt2">
         <span class="l"><span class="lang-en">The artifact · verbatim</span><span class="lang-cn">原始工件 · 原文照登</span></span>
-        <span class="t"><span class="lang-en">Read the full PRD v0.3.1</span><span class="lang-cn">查看 PRD v0.3.1 全文</span></span>
+        <span class="t"><span class="lang-en">Read the full PRD</span><span class="lang-cn">查看 PRD 全文</span></span>
       </span>
       <span class="arr">→</span>
     </a>
@@ -227,8 +227,8 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 <section class="sect reveal">
   <span class="lbl"><span class="lang-en">01 · PRD snapshot</span><span class="lang-cn">01 · PRD 速览</span></span>
   <h2>
-    <span class="lang-en">PRD v0.3.1 at a glance<span class="en">Inbox at the core, MCP / browser plugin as entry channels</span></span>
-    <span class="lang-cn">PRD v0.3.1 速览<span class="en">Inbox 为核心，MCP / 浏览器插件为入口</span></span>
+    <span class="lang-en">PRD at a glance<span class="en">Inbox at the core, MCP / browser plugin as entry channels</span></span>
+    <span class="lang-cn">PRD 速览<span class="en">Inbox 为核心，MCP / 浏览器插件为入口</span></span>
   </h2>
   <div class="snap">
     <div class="cell hl">
@@ -333,7 +333,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
       <div class="ag">
         <div class="who">Codex</div>
         <span class="tag">independent review</span>
-        <div class="does"><span class="lang-en">A different model cross-checks the spec &amp; the <code>.mcpb</code> packaging; its corrections became the v0.3.1 patches.</span><span class="lang-cn">换一个模型交叉核对规格与 <code>.mcpb</code> 打包；它的修正变成了 v0.3.1 的消歧补丁。</span></div>
+        <div class="does"><span class="lang-en">A different model cross-checks the spec &amp; the <code>.mcpb</code> packaging; its corrections became the disambiguation patches.</span><span class="lang-cn">换一个模型交叉核对规格与 <code>.mcpb</code> 打包；它的修正变成了规格里的消歧补丁。</span></div>
       </div>
     </div>
   </div>
@@ -359,7 +359,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
   </p>
   <div class="cards">
     <div class="card accent full">
-      <span class="k"><span class="lang-en">Disambiguation patches · v0.3.1 — problem → fix</span><span class="lang-cn">消歧补丁 · v0.3.1 — 不打会出什么事 → 怎么解</span></span>
+      <span class="k"><span class="lang-en">Disambiguation patches — problem → fix</span><span class="lang-cn">消歧补丁 — 不打会出什么事 → 怎么解</span></span>
       <ol class="patchlist">
         <li><span class="pn">01</span><div class="pc"><span class="lang-en"><strong>Who actually wrote this memory?</strong> One handoff can come from different channels (manual / MCP) and different clients (Claude Desktop / Codex…). Crammed into one field, they're indistinguishable — so I split it into <code>sourceChannel</code> + <code>sourceClient</code>, and made the often-unreliable "platform" field nullable.</span><span class="lang-cn"><strong>这条记忆到底谁写的？</strong>一份 handoff 可能来自不同通道（手动 / MCP）、不同客户端（Claude Desktop / Codex…）。挤在一个字段里就分不清——所以拆成 <code>sourceChannel</code> ＋ <code>sourceClient</code> 两个字段，那个常常填不准的"平台"字段干脆设成可空。</span></div></li>
         <li><span class="pn">02</span><div class="pc"><span class="lang-en"><strong>Two processes writing the same log collide.</strong> The app and the server are separate processes; if both append to one telemetry file they race. So each writes its own file, merged only at analysis time.</span><span class="lang-cn"><strong>两个进程写同一份埋点会打架。</strong>app 和 server 是两个进程，都往同一个埋点文件追加就会并发冲突——让它们各写各的文件，分析时再合并。</span></div></li>

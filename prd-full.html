@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PRD v0.3.1 (full) — MemoryOS Inbox + dual-channel | Jiajia Jiang</title>
+<title>PRD (full) — MemoryOS Inbox + dual-channel | Jiajia Jiang</title>
 <meta name="description" content="The verbatim PRD that multiple AI agents built MemoryOS v0.2.0 from. By Jiajia Jiang.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,11 @@ a.nav-logo:hover{color:var(--signal)}
 .doc pre .c{color:#8a8a8a}
 .doc pre .s{color:#d98b6a}
 .doc table{width:100%;border-collapse:collapse;margin:var(--s-3) 0;font-size:13.5px}
-.doc th,.doc td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.55}
+.doc th,.doc td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.55;overflow-wrap:anywhere;word-break:break-word}
+.doc table.fixed{table-layout:fixed}
+.doc table.m-table col.c1{width:26%}
+.doc table.m-table col.c2{width:9%}
+.doc table.m-table col.c3{width:65%}
 .doc th{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400}
 .doc td:first-child{font-weight:500}
 .doc td code,.doc th code{background:none;padding:0}
@@ -92,7 +96,7 @@ html{scroll-padding-top:78px}
 <div class="prd-layout">
   <aside class="toc" aria-label="目录 / contents">
     <div class="toc-head">
-      <span><span class="num">PRD</span>&nbsp;&nbsp;v0.3.1</span>
+      <span><span class="num">PRD</span>&nbsp;&nbsp;FULL</span>
       <span>11 §</span>
     </div>
     <ol>
@@ -117,8 +121,8 @@ html{scroll-padding-top:78px}
   <div class="doc-col">
   <header class="doc-hero">
     <div class="doc-hero-inner">
-      <span class="status"><span class="lang-en">The verbatim artifact · PRD v0.3.1</span><span class="lang-cn">原始工件 · PRD v0.3.1</span></span>
-      <h1>MemoryOS v0.3.1 PRD</h1>
+      <span class="status"><span class="lang-en">The verbatim artifact · PRD</span><span class="lang-cn">原始工件 · PRD</span></span>
+      <h1>MemoryOS PRD</h1>
       <p><span class="lang-en">The full product requirements doc that Claude Code and Codex built MemoryOS v0.2.0 from — shown verbatim (Chinese, as written). The method narrative is on the <a class="linklike" href="process.html">Process page</a>.</span><span class="lang-cn">Claude Code 和 Codex 据此交付 MemoryOS v0.2.0 的完整产品需求文档——原文照登。方法叙事见 <a class="linklike" href="process.html">工作方法页</a>。</span></p>
       <a class="back" href="process.html">← <span class="lang-en">Back to Process</span><span class="lang-cn">返回工作方法</span></a>
     </div>
@@ -126,14 +130,14 @@ html{scroll-padding-top:78px}
 
   <main class="doc">
   <p class="meta">
-    # MemoryOS v0.3.1 PRD — Memory Inbox 为核心，MCP / 浏览器插件为入口<br>
-    版本：v0.3.1 · 日期：2026-06-02 · 作者：Jiajia<br>
+    # MemoryOS PRD — Memory Inbox 为核心，MCP / 浏览器插件为入口<br>
+    日期：2026-06-02 · 作者：Jiajia<br>
     方向 B（结构化项目工作记忆 / 多 AI 知识工作者）
   </p>
 
-  <blockquote><strong>架构（v0.3 起）：</strong>核心 = <strong>Memory Inbox + Review 入库</strong>（通道无关）；MCP / 浏览器插件只是写进 Inbox 的入口。三层：P0 核心层 Inbox / P0 通道 A 本地 MCP（先打通 1 个客户端）/ P1 通道 B 浏览器插件（验证后再做）。</blockquote>
+  <blockquote><strong>架构：</strong>核心 =<strong>Memory Inbox + Review 入库</strong>（通道无关）；MCP / 浏览器插件只是写进 Inbox 的入口。三层：P0 核心层 Inbox / P0 通道 A 本地 MCP（先打通 1 个客户端）/ P1 通道 B 浏览器插件（验证后再做）。</blockquote>
 
-  <blockquote class="rl"><strong>v0.3.1 实现对齐补丁</strong>（已合并进正文，逐条对应章节，给多 agent 协作消歧）：
+  <blockquote class="rl"><strong>实现对齐补丁</strong>（已合并进正文，逐条对应章节，给多 agent 协作消歧）：
     <ol>
       <li><strong>来源字段拆分</strong>（§4.2）：<code>sourceChannel</code>（manual/mcp/browser）+ <code>sourceClient</code>（Claude Desktop/Codex/ChatGPT Web…）；<code>sourcePlatform</code> 设为<strong>可选/可空</strong>（常不可靠）。<code>cross_ai_reuse</code> 以 <code>sourceClient</code> 为准。</li>
       <li><strong>埋点改通道无关</strong>（§4.2）：事件带 <code>channel</code> 字段；按"写入进程"分文件避免并发写竞争——app 写 <code>telemetry.jsonl</code>，server 写 <code>telemetry.server.jsonl</code>，<strong>不再用 <code>mcp.</code> 前缀</strong>。</li>
@@ -199,7 +203,8 @@ html{scroll-padding-top:78px}
   </ul>
 
   <h2 id="s3"><span class="n">3.</span>业务架构（功能模块 M0–M8）</h2>
-  <table>
+  <table class="fixed m-table">
+    <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
     <thead><tr><th>模块</th><th>阶段</th><th>说明</th></tr></thead>
     <tbody>
       <tr><td>M0 Memory Inbox（核心）</td><td>0-1</td><td><code>.memoryos/inbox/</code> 存待审结构化 handoff；badge 计 <code>status=pending</code>；review/apply/discard；apply/discard 后移 <code>.memoryos/archive/</code>。所有通道写这里。</td></tr>
@@ -262,7 +267,8 @@ html{scroll-padding-top:78px}
   </ul>
   <h3>5.5 客户端连接教程页（M6）</h3>
   <p><strong>严禁为不支持本地 MCP 的客户端编造 MCP 配置。</strong> 矩阵（2026-06 快照，过期重核）：</p>
-  <table>
+  <table class="fixed m-table">
+    <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
     <thead><tr><th>客户端</th><th>本地 MCP</th><th>教程页给什么</th></tr></thead>
     <tbody>
       <tr><td>Claude Desktop</td><td class="yes">✅</td><td><code>.mcpb</code> 双击（推荐）或 <code>claude_desktop_config.json</code></td></tr>
@@ -324,7 +330,7 @@ env = { MEMORYOS_WORKSPACE = <span class="s">"&lt;用户真实 workspace 路径&
   </ul>
 
   <hr>
-  <p class="meta">v0.3.1，Inbox 为核心、通道为入口。每完成一 Phase 同步回 <code>00_context.md</code>/<code>decisions.md</code> 并走 supersede。</p>
+  <p class="meta">Inbox 为核心、通道为入口。每完成一 Phase 同步回 <code>00_context.md</code>/<code>decisions.md</code> 并走 supersede。</p>
 
   <p style="margin-top:var(--s-6)"><a class="linklike" href="process.html">← <span class="lang-en">Back to the Process page</span><span class="lang-cn">返回工作方法页</span></a></p>
   </main>
