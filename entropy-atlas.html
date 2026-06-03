@@ -6,6 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
+/* full-width text — flush to the margin, wrap as little as possible (match process / prd pages) */
+.hero h1,.hero h1 .en,.hero-sub,.sect h2,.sect h2 .en,.txt,.sect-sub,.lead-txt{max-width:none}
 .sect-sub{font-family:var(--font-serif);font-style:italic;font-size:1rem;color:var(--dim-light);margin:-4px 0 24px;line-height:1.5}
 .lead-txt{font-size:.78rem;color:var(--white);line-height:1.95;max-width:880px;padding:20px 24px;border-left:2px solid var(--cyan);background:rgba(0,240,255,.03);margin:24px 0 8px}
 .product-logic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:48px 0 24px}
@@ -40,7 +42,7 @@
 <section class="sect reveal">
   <div class="lbl">交互地图 Interactive Map</div>
   <h2>在线地图</h2>
-  <p class="txt">Entropy Atlas 是一个独立 HTML 文件。部署网站时将 N8N_OUTPUT_entropy_atlas.html 放到同一文件夹，下方 iframe 即可加载。或直接用下方链接在新标签页打开。</p>
+  <p class="txt">Entropy Atlas 是我在AA建筑联盟学院 VIBE AI Workshop 中独立交付的优秀作品</p>
   <div class="atlas-frame">
     <iframe src="N8N_OUTPUT_entropy_atlas.html"></iframe>
   </div>
@@ -88,7 +90,7 @@
 
 <section class="sect reveal">
   <div class="lbl">n8n 工作流 Workflow</div>
-  <h2>自动化管道视频</h2>
+  <h2>解说视频</h2>
   <p class="txt">n8n 自动化工作流的演示视频 — 展示从数据采集到地图生成的完整流程。</p>
   <div class="vid"><iframe src="https://www.youtube.com/embed/XA8W4Zhc5Ek" allowfullscreen></iframe></div>
 </section>

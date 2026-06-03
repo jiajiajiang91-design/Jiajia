@@ -1499,9 +1499,9 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <p>Claude 直接忽略了 mem0 提供的信息，用自己记住的内容回答了一个更详细的答案。第三方记忆工具的空间正在被压缩。</p>
       </div>
       <div class="finding">
-        <div class="n">03 &nbsp;/&nbsp; LOCAL ABANDONED</div>
-        <h3>mem0 正在放弃"数据在用户自己电脑上"。</h3>
-        <p>本地部署版本已标注即将停用，全面转向云端。MemoryOS 可以继续坚持做本地APP这条路。</p>
+        <div class="n">03 &nbsp;/&nbsp; LOCAL DE-EMPHASISED</div>
+        <h3>mem0 的本地方案在收缩，重心转向平台 / API。</h3>
+        <p>OpenMemory 的本地 UI 方案已标注 sunset，官方更导向 self-hosted server；mem0 的战略重心更偏平台 / API，而不是普通用户的本地桌面 app。面向普通用户、数据在自己电脑上的本地 APP 这条路，MemoryOS 可以继续坚持。</p>
       </div>
     </div>
 
@@ -1891,7 +1891,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:14px;line-height:1.6">
           <div>
             <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">mem0</div>
-            <div style="color:var(--ink-2)"><strong style="color:var(--ink)">云服务器</strong>。多设备同步，但数据在第三方。本地版已标注即将停用。</div>
+            <div style="color:var(--ink-2)"><strong style="color:var(--ink)">云服务器</strong>。多设备同步，但数据在第三方。本地 UI 方案已标注 sunset，重心转向 self-hosted / 平台。</div>
           </div>
           <div>
             <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">MemoryOS</div>
@@ -2095,10 +2095,10 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
 
       <div class="score-row">
-        <div class="feat">自动记忆捕获</div>
-        <div class="col them"><div class="v" style="--w:95%"></div><div class="t">对话自动抓</div></div>
-        <div class="col us"><div class="v" style="--w:20%"></div><div class="t">需手动粘贴</div></div>
-        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 自动提取、零操作；MemoryOS 需要手动复制粘贴，操作成本高。对日常用户来说 mem0 的方式明显更好；需要确保记录准确、愿意花 30 秒换来下次续上的用户，才愿意承受这个摩擦。</span></div>
+        <div class="feat">记忆捕获</div>
+        <div class="col them"><div class="v" style="--w:95%"></div><div class="t">对话静默自动抓</div></div>
+        <div class="col us"><div class="v" style="--w:70%"></div><div class="t">MCP 一条指令 + 审核</div></div>
+        <div class="vd draw" tabindex="0">— 设计取舍<span class="tip">mem0 全自动、零操作，但用户没有控制权。MemoryOS v0.2.0 起：支持 MCP 的客户端一条指令就把总结写进收件箱（不再手动复制粘贴），但入库前保留一次审核——这是刻意的设计选择，不是做不到自动。还连不上 MCP 的网页聊天 AI 仍可走复制粘贴兜底。</span></div>
       </div>
 
       <div class="score-row">
@@ -2137,17 +2137,17 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
 
       <div class="score-row">
-        <div class="feat">跨 AI 支持数</div>
-        <div class="col them"><div class="v" style="--w:55%"></div><div class="t">4 平台 · 自动</div></div>
-        <div class="col us"><div class="v" style="--w:82%"></div><div class="t">8 平台 · 手动</div></div>
-        <div class="vd draw" tabindex="0">— 各有优势<span class="tip">mem0 自动识别 4 个平台；MemoryOS 不依赖 API 集成，支持 8 个平台但需要手动选择。</span></div>
+        <div class="feat">跨 AI 接入</div>
+        <div class="col them"><div class="v" style="--w:55%"></div><div class="t">4 平台 · API 自动</div></div>
+        <div class="col us"><div class="v" style="--w:80%"></div><div class="t">任意 AI 剪贴板 + MCP 自动</div></div>
+        <div class="vd us" tabindex="0">MemoryOS ←<span class="tip">mem0 靠 API/插件自动识别约 4 个平台。MemoryOS 两条路：① 剪贴板桥接任意 AI（手动）；② v0.2.0 新增本地 MCP server——已在 Claude Desktop（.mcpb）实测跑通，Codex / Claude Code / Cursor / Cline 等本地客户端可手动配置同一 server（未逐一验证）。连上后一条指令完成记忆读取与待审暂存，最终入库仍需用户确认；不依赖任何厂商 API。网页聊天端连不上本地 server，走剪贴板兜底。</span></div>
       </div>
 
       <div class="score-row">
         <div class="feat">开发者集成</div>
         <div class="col them"><div class="v" style="--w:95%"></div><div class="t">API + SDK + MCP</div></div>
-        <div class="col us"><div class="v" style="--w:5%"></div><div class="t">不提供</div></div>
-        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 的底层业务就在开发者集成；MemoryOS 是面向终端用户的桌面应用，不竞争这一层。</span></div>
+        <div class="col us"><div class="v" style="--w:35%"></div><div class="t">本地 MCP server</div></div>
+        <div class="vd them" tabindex="0">→ mem0<span class="tip">mem0 的底层业务就是面向开发者的 API + SDK 平台。MemoryOS v0.2.0 起也提供一个本地 MCP server（.mcpb），但目的是把终端用户的个人 AI 客户端连到自己的记忆，不是做开发平台，这一层不正面竞争。</span></div>
       </div>
 
       <div class="score-row">
@@ -2210,8 +2210,8 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     <div class="spr">
       <div class="spr-n">意外 05<br><span style="color:var(--muted);font-size:11px;letter-spacing:.14em">战略让位</span></div>
       <div>
-        <h3>对方主动退出了"数据在用户本地"这条路</h3>
-        <p>mem0 的本地部署版本已在 GitHub 上标注为 "<em>即将停用</em>"，正在全面转向云端。这意味着"用户的数据存在自己电脑上"这个价值主张，<em>mem0 正在主动放弃</em>。MemoryOS 在这条路上的竞争压力反而减轻了。</p>
+        <h3>对方的本地方案在收缩，重心转向平台 / API</h3>
+        <p>OpenMemory 的本地 UI 方案已在 GitHub 标注 "<em>sunset</em>"，官方更导向 self-hosted server；mem0 的战略重心更偏平台 / API，而不是普通用户的本地桌面 app。对"普通用户、数据在自己电脑上"这个位置，MemoryOS 的竞争压力反而更小。</p>
       </div>
     </div>
   </div>
@@ -2275,12 +2275,12 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       <div class="ptag">P1<span class="label">重要 / 差异化</span></div>
       <div class="items">
         <div class="item">
-          <h4>把"手动复制粘贴"的操作成本降下来</h4>
-          <p>这是 MemoryOS 当前最大的体验短板。每次对话结束后要复制指令、粘贴到 AI、再把总结复制回来 — 步骤太多，日常使用不现实。如果不解决这个问题，产品只能留住最有耐心的那一小群用户。可能的方向：做成"一键同步"或者本地剪贴板监听，在不放弃"用户确认"的前提下把操作从五步减到一步。</p>
+          <h4>把"手动复制粘贴"的操作成本降下来 <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:#2e7d32;border:1px solid #2e7d32;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle">✓ v0.2.0 已落地</span></h4>
+          <p>测完竞品我把这条定为最大体验短板：每次对话结束要复制指令、粘贴到 AI、再把总结复制回来，步骤太多。<strong>v0.2.0 已经动手解决</strong>——新增本地 MCP server（已在 Claude Desktop 实测，其余本地客户端可手动配置），连上后一条指令完成记忆读取与待审暂存，省掉手动复制粘贴；同时不放弃"用户确认"——写回只进收件箱，审核后才入库。网页聊天端继续保留复制粘贴兜底。</p>
         </div>
         <div class="item">
-          <h4>增加"建议确认"模式</h4>
-          <p>在"全自动"和"全手动"之间找到平衡 — AI 推荐要保存的内容，用户一键确认。</p>
+          <h4>"建议确认"模式 <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:#2e7d32;border:1px solid #2e7d32;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle">✓ 已落地</span></h4>
+          <p>在"全自动"和"全手动"之间找平衡——AI 推荐要保存的内容，用户审核确认。v0.2.0 把它做成了通道无关的「记忆收件箱」：无论 MCP 写回还是手动导入，都先进收件箱、按风险分级、逐条确认后才入库。</p>
         </div>
       </div>
     </div>

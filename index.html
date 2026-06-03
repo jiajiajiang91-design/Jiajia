@@ -256,6 +256,8 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
   text-align:right;color:var(--muted);
   font-size:var(--mono-s);letter-spacing:.14em;
 }
+.lc-list li.sub .t{color:var(--muted);font-size:.72rem}
+.lc-list li.sub .k,.lc-list li.sub .y{color:var(--muted)}
 .lc-list li.div{
   background:var(--paper);
   border-bottom:1px solid var(--ink);
@@ -742,6 +744,46 @@ body[data-lang="cn"] .lang-cn{
   word-break:keep-all !important;
   line-break:strict !important;
 }
+
+/* ── ship-screen zoom + lightbox ── */
+.ship-zoom{position:relative;display:block;cursor:zoom-in;overflow:hidden;border:1px solid var(--rule);background:var(--paper-soft)}
+.ship-zoom img{border:0;display:block}
+.ship-zoom .zoom-cue{
+  position:absolute;top:8px;right:8px;width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(15,15,17,.62);color:#fff;font-size:14px;border-radius:5px;
+  opacity:0;transition:opacity .15s;pointer-events:none;
+}
+.ship-zoom:hover .zoom-cue{opacity:1}
+.ship-zoom:hover img{filter:brightness(.95)}
+.lb{
+  position:fixed;inset:0;z-index:300;background:rgba(15,15,17,.92);
+  display:none;align-items:center;justify-content:center;padding:48px;flex-direction:column;
+}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:calc(100vh - 140px);background:var(--paper-soft);box-shadow:0 40px 80px rgba(0,0,0,.4)}
+.lb .lb-cap{margin-top:20px;color:#d6d6d6;font-size:13px;line-height:1.55;max-width:820px;text-align:center}
+.lb .lb-close{
+  position:absolute;top:24px;right:32px;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;
+  cursor:pointer;background:transparent;border:1px solid #444;padding:8px 14px;
+}
+.lb .lb-close:hover{color:#fff;border-color:#fff}
+
+/* ── thesis media cards (under row 04) ── */
+.thesis-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-2);margin:var(--s-2) 0 var(--s-4)}
+.thesis-card{display:flex;flex-direction:column;border:1px solid var(--rule);background:var(--paper-soft);overflow:hidden;transition:border-color var(--t-hover) var(--ease)}
+.thesis-card:hover{border-color:var(--ink)}
+.thesis-card .thumb{aspect-ratio:16/10;overflow:hidden;background:#1b1b1d;border-bottom:1px solid var(--rule)}
+.thesis-card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform var(--t-media) var(--ease)}
+.thesis-card:hover .thumb img{transform:scale(1.04)}
+.thesis-card .tbody{padding:var(--s-3)}
+.thesis-card .tlbl{display:block;font-family:var(--font-mono);font-size:var(--mono-s);letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:6px}
+.thesis-card .tname{font-family:var(--font-sans);font-weight:600;font-size:1rem;color:var(--ink);line-height:1.3;margin-bottom:6px}
+.thesis-card .tsub{font-size:var(--caption);line-height:1.55;color:var(--muted)}
+.thesis-cards-lbl{font-family:var(--font-mono);font-size:var(--mono-s);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:var(--s-3) 0 0}
+.thesis-cards-lbl .acc{color:var(--signal)}
+@media(max-width:760px){.thesis-cards{grid-template-columns:1fr}}
 </style>
 </head>
 <body data-lang="en">
@@ -959,9 +1001,9 @@ body[data-lang="cn"] .lang-cn{
 
       <p class="landing-now">
         <span class="now-lbl"><span class="lang-en">Now shipping</span><span class="lang-cn">正在交付</span></span>
-        <a href="case_study.html">MemoryOS v0.1.2</a>
-        <span class="meta lang-en">· cross-AI work log · MIT open source</span>
-        <span class="meta lang-cn">· 跨 AI 工作记录 · MIT 开源</span>
+        <a href="case_study.html">MemoryOS v0.2.0</a>
+        <span class="meta lang-en">· cross-AI work log · connects to AI via MCP · MIT open source</span>
+        <span class="meta lang-cn">· 跨 AI 工作记录 ·  MCP 接入  · Vibe Coding 独立产出</span>
       </p>
 
       <p class="landing-pos">
@@ -987,7 +1029,7 @@ body[data-lang="cn"] .lang-cn{
     <aside class="landing-card" aria-label="Portfolio index card">
       <header class="lc-head">
         <span class="lc-num">INDEX</span>
-        <span class="lc-id">7 WORKS · 2025 — 26</span>
+        <span class="lc-id">5 WORKS · 2025 — 26</span>
       </header>
       <ol class="lc-list">
         <li class="div"><span></span><span class="dv"><span class="lang-en">Independent Product</span><span class="lang-cn">独立产品</span></span><span></span></li>
@@ -996,13 +1038,12 @@ body[data-lang="cn"] .lang-cn{
         <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Kimi Product Strategy Teardown</span><span class="lang-cn">Kimi 产品战略拆解</span></span><span class="y">26</span></a></li>
         <li class="div"><span></span><span class="dv"><span class="lang-en">MArch Thesis</span><span class="lang-cn">硕士毕设</span></span><span></span></li>
         <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Programming Decay — Algorithmic Remediation</span><span class="lang-cn">Programming Decay — 算法驱动的场地修复</span></span><span class="y">25 — 26</span></a></li>
-        <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Barking Reach — Site Evidence Timeline</span><span class="lang-cn">Barking Reach — 场地证据时间轴</span></span><span class="y">25 — 26</span></a></li>
-        <li><a href="#row-06"><span class="k">06</span><span class="t"><span class="lang-en">Programming Decay — Research Booklet</span><span class="lang-cn">Programming Decay — 研究文档</span></span><span class="y">25 — 26</span></a></li>
-        <li><a href="#row-07"><span class="k">07</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
+        <li class="sub"><a href="entropy-atlas.html"><span class="k">↳</span><span class="t"><span class="lang-en">Entropy Atlas · Barking Reach 3D · Research Atlas</span><span class="lang-cn">Entropy Atlas · Barking Reach 3D · 研究图集</span></span><span class="y">↗</span></a></li>
+        <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
       </ol>
       <footer class="lc-foot">
-        <span><span class="lang-en">7 ENTRIES</span><span class="lang-cn">7 个项目</span></span>
-        <span><span class="lang-en">1 PRODUCT · 2 ANALYSES · 4 THESIS</span><span class="lang-cn">1 产品 · 2 竞品分析 · 4 毕设</span></span>
+        <span><span class="lang-en">5 ENTRIES</span><span class="lang-cn">5 个项目</span></span>
+        <span><span class="lang-en">1 PRODUCT · 2 ANALYSES · 1 THESIS (+3)</span><span class="lang-cn">1 产品 · 2 竞品分析 · 1 毕设 (+3 输出)</span></span>
       </footer>
     </aside>
   </div>
@@ -1012,7 +1053,7 @@ body[data-lang="cn"] .lang-cn{
 <header class="sect-head" id="product">
   <div class="sect-head-num">
     <span><span class="n">01</span> &nbsp; <span class="lang-en">INDEPENDENT PRODUCT</span><span class="lang-cn">独立产品</span></span>
-    <span><span class="lang-en">1 ENTRY · SHIPPED · DOGFOODING · v0.1.2</span><span class="lang-cn">1 个项目 · 已交付 · 自用迭代中 · v0.1.2</span></span>
+    <span><span class="lang-en">1 ENTRY · SHIPPED · DOGFOODING · v0.2.0</span><span class="lang-cn">1 个项目 · 已交付 · 自用迭代中 · v0.2.0</span></span>
   </div>
   <h2 class="sect-head-title">
     <span class="lang-en">Independent Product</span>
@@ -1020,7 +1061,7 @@ body[data-lang="cn"] .lang-cn{
   </h2>
   <p class="sect-head-desc">
     <span class="lang-en">An independent product I defined, built and shipped myself — to solve a problem I kept hitting in my own work.</span>
-    <span class="lang-cn">我自己定义、自己开发、自己上线的一款产品——为了解决我每天工作中真在遇到的问题。</span>
+    <span class="lang-cn">在收集用户需求、体验现有的AI记忆产品后，由自己定义、开发、上线的一款产品——为了解决我每天工作中真在遇到的问题。</span>
   </p>
 </header>
 
@@ -1038,16 +1079,16 @@ body[data-lang="cn"] .lang-cn{
       </p>
       <div class="row-tags">
         <span class="row-tag">Cross-AI Work Log</span>
-        <span class="row-tag">By-Project Organisation</span>
+        <span class="row-tag">MCP · Local-first</span>
         <span class="row-tag">Tauri · Rust · React</span>
       </div>
     </div>
     <dl class="row-meta">
       <dt>User</dt><dd><span class="lang-en">Everyday AI users who feel the copy-paste pain across tools</span><span class="lang-cn">在多个 AI 之间切换、已感到复制粘贴之痛的普通用户</span></dd>
       <dt>Input</dt><dd><span class="lang-en">Local Markdown files + clipboard bridge to any AI</span><span class="lang-cn">本地 Markdown 文件 + 剪贴板桥接任意 AI</span></dd>
-      <dt>Method</dt><dd><span class="lang-en">AI drafts a structured handoff, user reviews and confirms what to keep. Switch AI tools without reconfiguring.</span><span class="lang-cn">AI 起草结构化总结，用户审核确认保留哪些。换 AI 不用重新配置，30 秒续上。</span></dd>
+      <dt>Method</dt><dd><span class="lang-en">AI drafts a structured handoff, user reviews and confirms what to keep. Switch AI tools without re-stating your context.</span><span class="lang-cn">AI 起草结构化总结，用户审核确认保留哪些。换 AI 不用重述上下文，30 秒续上。</span></dd>
       <dt>Output</dt><dd><span class="lang-en">Up-to-date working memory that any AI can pick up in 30 seconds</span><span class="lang-cn">始终保持现时的工作记忆，任意 AI 30 秒续上</span></dd>
-      <dt>Status</dt><dd><span class="lang-en">v0.1.2 shipped · dogfooding · MIT open source</span><span class="lang-cn">v0.1.2 已发布 · 自用迭代中 · MIT 开源</span></dd>
+      <dt>Status</dt><dd><span class="lang-en">v0.2.0 shipped · MCP + Inbox · dogfooding · MIT open source</span><span class="lang-cn">v0.2.0 已发布 · MCP 接入 + 记忆收件箱 · 自用迭代中 · MIT 开源</span></dd>
     </dl>
     <div class="row-year">2026</div>
     <div class="row-arrow">→</div>
@@ -1060,12 +1101,12 @@ body[data-lang="cn"] .lang-cn{
     <span class="num">01.A</span>
     <div>
       <span class="lbl">
-        <span class="lang-en">Shipped Product · MemoryOS · v0.1.2 Windows Binary</span>
-        <span class="lang-cn">已交付产品 · MemoryOS · v0.1.2 Windows 安装包</span>
+        <span class="lang-en">Shipped Product · MemoryOS · v0.2.0 Windows Binary</span>
+        <span class="lang-cn">已交付产品 · MemoryOS · 接入MCP</span>
       </span>
       <h3>
-        <span class="lang-en">One local memory file, take it into any AI yourself</span>
-        <span class="lang-cn">一份本地的工作记忆,可以自己带进任何 AI 工具</span>
+        <span class="lang-en">A local memory your AI reads directly — every write-back goes through your review</span>
+        <span class="lang-cn">自动化收集工作记忆，AI 直接读取——每一次写回都先经你审核</span>
       </h3>
     </div>
     <a class="open" href="case_study.html"><span class="lang-en">Read case study ↗</span><span class="lang-cn">阅读 Case Study ↗</span></a>
@@ -1073,52 +1114,52 @@ body[data-lang="cn"] .lang-cn{
 
   <div class="ship-screens">
     <figure>
-      <img src="images_memoryos/01_welcome.png" alt="MemoryOS welcome — pick a project to continue" loading="lazy"/>
+      <a class="ship-zoom" href="images_memoryos/v020_01_dashboard_inbox.png" data-zoom="images_memoryos/v020_01_dashboard_inbox.png" data-cap="工作台 — 当前目标、状态、复制开始/结束指令，右上「1 条待审」是新的记忆收件箱入口"><img src="images_memoryos/v020_01_dashboard_inbox.png" alt="MemoryOS dashboard — current goal, status, copy start/end prompts, and a pending-review badge" loading="lazy"/><span class="zoom-cue">⤢</span></a>
       <figcaption>
-        <span class="lang-en"><span class="n">01</span> Welcome — pick a project to continue</span>
-        <span class="lang-cn"><span class="n">01</span> 欢迎 — 选一个项目继续</span>
+        <span class="lang-en"><span class="n">01</span> Dashboard — current goal, copy start/end prompts, "1 pending review"</span>
+        <span class="lang-cn"><span class="n">01</span> 工作台 — 当前目标、复制开始/结束指令、"1 条待审"</span>
       </figcaption>
     </figure>
     <figure>
-      <img src="images_memoryos/02_dashboard.png" alt="MemoryOS dashboard — current goal, recent sessions, project metadata" loading="lazy"/>
+      <a class="ship-zoom" href="images_memoryos/v020_02_review_inbox.png" data-zoom="images_memoryos/v020_02_review_inbox.png" data-cap="记忆收件箱 Review — 建议更新按安全/风险分级，旧内容划线、新内容高亮，逐条接受/编辑/丢弃后才入库"><img src="images_memoryos/v020_02_review_inbox.png" alt="MemoryOS review inbox — accept, edit or discard each suggested memory update before it is written" loading="lazy"/><span class="zoom-cue">⤢</span></a>
       <figcaption>
-        <span class="lang-en"><span class="n">02</span> Dashboard — your current goal and recent sessions</span>
-        <span class="lang-cn"><span class="n">02</span> 工作台 — 当前目标和最近的对话</span>
+        <span class="lang-en"><span class="n">02</span> Review inbox — confirm each write-back before it touches memory</span>
+        <span class="lang-cn"><span class="n">02</span> 记忆收件箱 — 每条写回都先逐条确认再入库</span>
       </figcaption>
     </figure>
     <figure>
-      <img src="images_memoryos/03_end_prompt.png" alt="MemoryOS end-session prompt builder — pick context, pick target AI" loading="lazy"/>
+      <a class="ship-zoom" href="images_memoryos/v020_03_claudedesktop_ext.png" data-zoom="images_memoryos/v020_03_claudedesktop_ext.png" data-cap="Claude Desktop 扩展页 — memoryos 已启用，填入工作区路径，列出三个 MCP 工具（列出项目 / 读取记忆 / 暂存 handoff 待审）"><img src="images_memoryos/v020_03_claudedesktop_ext.png" alt="Claude Desktop Extensions — memoryos installed and enabled with three MCP tools" loading="lazy"/><span class="zoom-cue">⤢</span></a>
       <figcaption>
-        <span class="lang-en"><span class="n">03</span> End a session — pick what to carry, pick the next AI</span>
-        <span class="lang-cn"><span class="n">03</span> 结束对话 — 选要带走的内容，选下一个 AI</span>
+        <span class="lang-en"><span class="n">03</span> Installed in Claude Desktop — memoryos extension, three MCP tools</span>
+        <span class="lang-cn"><span class="n">03</span> 装进 Claude Desktop — memoryos 扩展，3 个 MCP 工具</span>
       </figcaption>
     </figure>
     <figure>
-      <img src="images_memoryos/04_help.png" alt="MemoryOS help drawer — how the handoff loop works" loading="lazy"/>
+      <a class="ship-zoom" href="images_memoryos/v020_04_claudedesktop_grant.png" data-zoom="images_memoryos/v020_04_claudedesktop_grant.png" data-cap="实际跑通 — Claude 主动请求调用「读取项目工作记忆」，每次工具调用仍要用户授权"><img src="images_memoryos/v020_04_claudedesktop_grant.png" alt="Claude Desktop asking permission to use MemoryOS's read-project-memory tool" loading="lazy"/><span class="zoom-cue">⤢</span></a>
       <figcaption>
-        <span class="lang-en"><span class="n">04</span> Help — how the handoff between tools works</span>
-        <span class="lang-cn"><span class="n">04</span> 帮助 — 工具之间的"接力"怎么运作</span>
+        <span class="lang-en"><span class="n">04</span> Working live — Claude reads a project's memory through MCP</span>
+        <span class="lang-cn"><span class="n">04</span> 实际跑通 — Claude 通过 MCP 读取某个项目的记忆</span>
       </figcaption>
     </figure>
   </div>
 
   <div class="lang-en">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">One layer below the tool-switch annoyance: AIs each have strengths but don't share memory, so collaboration never compounds. MemoryOS takes a "user-bridged" route — write key points at session end, carry them into the next session in any tool. Most basic shape one person could ship at this stage: local file, AI drafts updates, user confirms each write. Later iterations may change it. The 5 decisions, and the kind of user feedback that would disprove them, are in the case study.</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">One layer below the tool-switch annoyance: AIs each have strengths but don't share memory, so collaboration never compounds. MemoryOS keeps that memory as local files you own. <strong>v0.2.0 closes the loop both ways:</strong> the AI now <em>reads</em> a project's memory directly through an MCP server (live in Claude Desktop today), and when it wants to <em>write</em> something back, that update lands in a review inbox — nothing touches your memory until you confirm it. The clipboard bridge still works for any AI that can't speak MCP yet. The key product decisions, and the kind of user feedback that would disprove them, are in the case study.</p>
   </div>
   <div class="lang-cn">
-    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">换工具麻烦的下一层问题是: 不同 AI 各有所长但互不通气,协作累积不起来。MemoryOS 选了"用户主动桥接"这条路——对话结束时把要点写下来,下一段对话在哪个 AI 里都能带回去。当前最朴素的形态: 记忆文件存在本地、AI 起草更新、用户确认每一次写入。这是一个人在当前阶段能搭出来的样子,后续迭代可能会变。详细的 5 个决策、以及什么样的用户反馈会推翻它们,见 Case Study。</p>
+    <p style="font-size:var(--body-m);line-height:1.6;color:var(--ink);margin-top:var(--s-3)">换工具麻烦的下一层问题是: 不同 AI 各有所长但互不通气,协作累积不起来。MemoryOS 把这份记忆做成你自己电脑里的本地文件。<strong>v0.2.0 把闭环两头都打通了：</strong>AI 现在能通过 MCP server 直接<em>读取</em>某个项目的记忆（已在 Claude Desktop 里跑通），当它想<em>写回</em>什么时，更新会先进「记忆收件箱」——你不确认，就不会动到正式记忆。还不支持 MCP 的 AI，依旧能用剪贴板桥接。详细的产品决策、以及什么样的用户反馈会推翻它们,见 Case Study。</p>
   </div>
 
   <div class="ship-ctas">
     <a class="ship-cta" href="https://github.com/jiajiajiang91-design/memoryos" target="_blank" rel="noopener">
       <span class="cta-lbl">GitHub repo ↗</span>
       <span class="cta-name">jiajiajiang91-design / memoryos</span>
-      <span class="cta-sub"><span class="lang-en">MIT open source · README · Issue tracker</span><span class="lang-cn">MIT 开源 · README · Issue tracker</span></span>
+      <span class="cta-sub"><span class="lang-en">MIT open source · README · v0.2.0 release &amp; download</span><span class="lang-cn">MIT 开源 · README · v0.2.0 release 与下载</span></span>
     </a>
-    <a class="ship-cta" href="https://github.com/jiajiajiang91-design/memoryos/releases" target="_blank" rel="noopener">
-      <span class="cta-lbl">Download v0.1.2 ↗</span>
-      <span class="cta-name">Windows .exe / .msi</span>
-      <span class="cta-sub"><span class="lang-en">Windows 10+ · one-click install</span><span class="lang-cn">Windows 10+ · 一键安装</span></span>
+    <a class="ship-cta ship-cta--highlight" href="process.html">
+      <span class="cta-lbl"><span class="lang-en">Process / PRD →</span><span class="lang-cn">工作方法 / PRD →</span></span>
+      <span class="cta-name"><span class="lang-en">Multi-agent build of v0.2.0</span><span class="lang-cn">多 Agent 交付 v0.2.0</span></span>
+      <span class="cta-sub"><span class="lang-en">A PRD precise enough for Claude Code + Codex to build it together</span><span class="lang-cn">一份精确到 Claude Code + Codex 能一起实现的 PRD</span></span>
     </a>
     <a class="ship-cta ship-cta--highlight" href="product-architecture.html">
       <span class="cta-lbl"><span class="lang-en">Product architecture →</span><span class="lang-cn">产品架构 →</span></span>
@@ -1128,8 +1169,8 @@ body[data-lang="cn"] .lang-cn{
   </div>
 
   <div class="demo-flow">
-    <span class="lang-en">Start <span class="arr">→</span> Work <span class="arr">→</span> End <span class="arr">→</span> AI Summarize <span class="arr">→</span> Review &amp; Save</span>
-    <span class="lang-cn">开始 <span class="arr">→</span> 工作 <span class="arr">→</span> 结束 <span class="arr">→</span> AI 总结 <span class="arr">→</span> 审核保存</span>
+    <span class="lang-en">AI reads memory (MCP) <span class="arr">→</span> Work <span class="arr">→</span> AI drafts handoff <span class="arr">→</span> Review inbox <span class="arr">→</span> Save</span>
+    <span class="lang-cn">AI 读取记忆 (MCP) <span class="arr">→</span> 工作 <span class="arr">→</span> AI 起草总结 <span class="arr">→</span> 收件箱审核 <span class="arr">→</span> 入库</span>
   </div>
 </section>
 
@@ -1195,15 +1236,15 @@ body[data-lang="cn"] .lang-cn{
 <header class="sect-head" id="systems">
   <div class="sect-head-num">
     <span><span class="n">04</span> &nbsp; <span class="lang-en">MARCH THESIS · PROGRAMMING DECAY</span><span class="lang-cn">硕士毕设 · PROGRAMMING DECAY</span></span>
-    <span><span class="lang-en">4 OUTPUTS · ONE THESIS · MULTIPLE MEDIA</span><span class="lang-cn">4 个输出 · 一个毕设 · 多种媒介</span></span>
+    <span><span class="lang-en">ONE THESIS · DEMO + 3 OUTPUTS + PREQUEL</span><span class="lang-cn">一个毕设 · 主 Demo + 3 个输出 + 前传</span></span>
   </div>
   <h2 class="sect-head-title">
     <span class="lang-en">Programming Decay</span>
     <span class="lang-cn">Programming Decay<span class="cn">硕士毕设</span></span>
   </h2>
   <p class="sect-head-desc">
-    <span class="lang-en">Four outputs from one MArch thesis (UCL Bartlett RC18) — an interactive demo, a 3D site timeline, a 56-page research booklet, and a Term-1 prequel studio. Each row links to a standalone case study or live demo; the main interactive demo is embedded directly below the index.</span>
-    <span class="lang-cn">同一个硕士毕设（UCL Bartlett RC18）的多个输出切面——交互演示页、场地 3D 时间线、56 页研究图集、Term-1 前传课设。每一行通向一份独立的 Case Study 或可运行 Demo；主 Demo 直接嵌在下方。</span>
+    <span class="lang-en">One MArch thesis (UCL Bartlett RC18), several media: the main interactive demo is embedded below, with three companion outputs — the Entropy Atlas evidence map, a 3D site timeline, and a 56-page research booklet — as cards under it. A Term-1 prequel studio follows.</span>
+    <span class="lang-cn">同一个硕士毕设（UCL Bartlett RC18）的多种媒介：三个配套输出——Entropy Atlas 证据地图、3D 场地时间轴、56 页研究图集。</span>
   </p>
 </header>
 
@@ -1236,74 +1277,36 @@ body[data-lang="cn"] .lang-cn{
     <div class="row-arrow">→</div>
   </a>
 
-  <div class="row-sublink-bar" aria-label="Related sub-page of row 02">
-    <span class="lbl">
-      <span class="lang-en">↳ 02 · Evidence layer</span>
-      <span class="lang-cn">↳ 02 · 证据层</span>
-    </span>
-    <a class="row-sublink" href="entropy-atlas.html">
-      <span class="lang-en">↗ Entropy Atlas standalone — n8n workflow + East-London post-industrial evidence map</span>
-      <span class="lang-cn">↗ Entropy Atlas 独立页 — n8n 工作流 + 东伦敦后工业证据地图</span>
+  <p class="thesis-cards-lbl"><span class="acc">↳ 04 ·</span> <span class="lang-en">Three companion outputs of the same thesis</span><span class="lang-cn">同一个毕设的三个配套输出</span></p>
+  <div class="thesis-cards">
+    <a class="thesis-card" href="entropy-atlas.html">
+      <div class="thumb"><img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_29.jpg" alt="Entropy Atlas — spatialised resident feedback across East London" loading="lazy"></div>
+      <div class="tbody">
+        <div class="tlbl"><span class="lang-en">Evidence layer ↗</span><span class="lang-cn">证据层 ↗</span></div>
+        <div class="tname">Entropy Atlas</div>
+        <div class="tsub"><span class="lang-en">n8n workflow + ~1,000 East-London post-industrial sites mapped</span><span class="lang-cn">n8n 工作流 + 东伦敦约 1,000 处后工业场地证据地图</span></div>
+      </div>
+    </a>
+    <a class="thesis-card" href="barking-reach-deck/index.html">
+      <div class="thumb"><img src="barking-reach-deck/assets/barking-3d-timeline-thumb.png" alt="Barking Reach — NOW frame, Google 3D Tiles model of the cleared site" loading="lazy"></div>
+      <div class="tbody">
+        <div class="tlbl"><span class="lang-en">Site timeline ↗</span><span class="lang-cn">场地时间轴 ↗</span></div>
+        <div class="tname"><span class="lang-en">Barking Reach — 3D Site Timeline</span><span class="lang-cn">Barking Reach — 3D 场地时间轴</span></div>
+        <div class="tsub"><span class="lang-en">30-year scrubbable timeline · Google 3D Tiles model (three.js)</span><span class="lang-cn">30 年可拖动时间轴 · Google 3D Tiles 模型（three.js）</span></div>
+      </div>
+    </a>
+    <a class="thesis-card" href="programming-decay.html">
+      <div class="thumb"><img src="images_programming_decay/RC18_Jiang_Pei_Programming Decay_页面_30.jpg" alt="Programming Decay research booklet — Dagenham Dock multi-layer analysis" loading="lazy"></div>
+      <div class="tbody">
+        <div class="tlbl"><span class="lang-en">Research booklet ↗</span><span class="lang-cn">研究文档 ↗</span></div>
+        <div class="tname"><span class="lang-en">56-page Research Atlas</span><span class="lang-cn">56 页研究图集</span></div>
+        <div class="tsub"><span class="lang-en">Six chapters of evidence behind every judgement in the demo</span><span class="lang-cn">支撑 Demo 每一步判断的六章研究与数据</span></div>
+      </div>
     </a>
   </div>
 
-  <a href="barking-reach-deck/index.html" class="row" id="row-05">
+  <a href="BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-05">
     <div class="row-num">05</div>
-    <div class="row-title">
-      <h3>
-        <span class="lang-en">Barking Reach — Site Evidence Timeline<span class="cn">Barking Reach 场地时间线 / 现状 3D 切片</span></span>
-        <span class="lang-cn">Barking Reach — 场地证据时间轴<span class="cn">现状 3D 切片</span></span>
-      </h3>
-      <p class="row-sub">
-        <span class="lang-en">A 30-year scrubbable timeline of the Dagenham / Barking Reach power-station site — from 1995 commissioning to 2025 emptiness — with the NOW frame switching into a Google-3D-Tiles model of the cleared ground. A site-study plate from the Programming Decay thesis.</span>
-        <span class="lang-cn">一个可拖动的 30 年时间轴交互页面，记录 Dagenham / Barking Reach 发电站场地从 1995 投产到 2025 清空的全过程。NOW 一帧切换为已清空场地的 Google 3D Tiles 三维模型——多源资料 + 实时三维数据在浏览器里直接可视化。Programming Decay 毕设场地研究图版之一。</span>
-      </p>
-      <div class="row-tags">
-        <span class="row-tag">Site Timeline</span>
-        <span class="row-tag">WebGL · three.js</span>
-        <span class="row-tag">Site Study</span>
-      </div>
-    </div>
-    <dl class="row-meta">
-      <dt>Role</dt><dd><span class="lang-en">Sole author · UCL Bartlett RC18 thesis plate</span><span class="lang-cn">独立作者 · UCL Bartlett 毕设图版</span></dd>
-      <dt>Input</dt><dd><span class="lang-en">Archival photographs 1995 – 2025 · drone footage · Google 3D Tiles via Blender</span><span class="lang-cn">1995-2025 历史档案照片 · 无人机航拍 · 通过 Blender 接入的 Google 3D Tiles</span></dd>
-      <dt>Method</dt><dd><span class="lang-en">Drag-to-scrub timeline · three.js GLTFLoader · KHR_mesh_quantization</span><span class="lang-cn">拖动式时间轴 · three.js GLTFLoader · KHR_mesh_quantization 压缩</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">Browser 3D plate · 44.5 MB optimised GLB</span><span class="lang-cn">浏览器 3D 交互页 · 44.5 MB 优化后 GLB</span></dd>
-      <dt>Status</dt><dd><span class="lang-en">Published · 2025–26</span><span class="lang-cn">已发布 · 2025–26</span></dd>
-    </dl>
-    <div class="row-year">2025 — 26</div>
-    <div class="row-arrow">→</div>
-  </a>
-
-  <a href="programming-decay.html" class="row" id="row-06">
-    <div class="row-num">06</div>
-    <div class="row-title">
-      <h3>
-        <span class="lang-en">Programming Decay — Research Booklet<span class="cn">研究文档 56p</span></span>
-        <span class="lang-cn">Programming Decay — 研究文档<span class="cn">56 页</span></span>
-      </h3>
-      <p class="row-sub">
-        <span class="lang-en">Six-chapter research archive grounding the interactive demo: planetary cement metabolism, UK contamination legacy, material pathology, algorithmic site selection, ML experiments, and the Planetary Intelligence Hub proposition — the full research and data record behind every judgement in the demo above.</span>
-        <span class="lang-cn">支撑 Demo 的六章用户研究与数据档案：全球行业供应链分析、英国本土污染数据梳理、材料状态分析、基于算法的选址逻辑、机器学习实验，以及最终的建筑设想——上面 Demo 的所有判断逻辑都来自这里。</span>
-      </p>
-      <div class="row-tags">
-        <span class="row-tag">Research Archive</span>
-        <span class="row-tag">Spatial Intelligence</span>
-      </div>
-    </div>
-    <dl class="row-meta">
-      <dt>Role</dt><dd><span class="lang-en">Sole author · UCL Bartlett RC18 thesis</span><span class="lang-cn">独立作者 · UCL Bartlett 毕设</span></dd>
-      <dt>Input</dt><dd><span class="lang-en">Global energy / GHG / cement clinker datasets</span><span class="lang-cn">全球能源 / 温室气体 / 水泥熟料数据集</span></dd>
-      <dt>Method</dt><dd><span class="lang-en">GIS reasoning · layered analysis from regional to site scale · four-strategy framework</span><span class="lang-cn">GIS 推理 · 从大范围到具体地块的分层分析 · 四策略框架</span></dd>
-      <dt>Output</dt><dd><span class="lang-en">56-page atlas + four-strategy framework</span><span class="lang-cn">56 页图集 + 四策略框架</span></dd>
-      <dt>Status</dt><dd><span class="lang-en">Submitted · 2025–26</span><span class="lang-cn">已提交 · 2025–26</span></dd>
-    </dl>
-    <div class="row-year">2025 — 26</div>
-    <div class="row-arrow">→</div>
-  </a>
-
-  <a href="BEFORE_PROGRAMMING_DECAY-v1/index.html" class="row" id="row-07">
-    <div class="row-num">07</div>
     <div class="row-title">
       <h3>
         <span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype<span class="cn">衰变前传 / 课设原型</span></span>
@@ -1532,6 +1535,13 @@ body[data-lang="cn"] .lang-cn{
   <a href="mailto:jiajia.jiang.25@ucl.ac.uk" class="no-underline">jiajia.jiang.25@ucl.ac.uk</a>
 </footer>
 
+<!-- ── lightbox ── -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看">
+  <button class="lb-close" id="lb-close">CLOSE ✕</button>
+  <img id="lb-img" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
 <script>
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.06});
@@ -1552,6 +1562,23 @@ document.querySelectorAll('nav a[href^="#"]').forEach(a=>{a.addEventListener('cl
       b.setAttribute('aria-pressed',b.dataset.langSet===l?'true':'false');
     });
   }
+})();
+
+/* ── ship-screen lightbox ── */
+(function(){
+  const lb=document.getElementById('lb');
+  if(!lb) return;
+  const lbImg=document.getElementById('lb-img');
+  const lbCap=document.getElementById('lb-cap');
+  const lbClose=document.getElementById('lb-close');
+  function open(src,cap){lbImg.src=src;lbCap.textContent=cap||'';lb.classList.add('open');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');lbImg.src='';lbCap.textContent='';document.body.style.overflow='';}
+  document.querySelectorAll('[data-zoom]').forEach(el=>{
+    el.addEventListener('click',e=>{e.preventDefault();open(el.getAttribute('data-zoom'),el.getAttribute('data-cap')||'');});
+  });
+  lbClose.addEventListener('click',close);
+  lb.addEventListener('click',e=>{if(e.target===lb) close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape') close();});
 })();
 </script>
 </body>

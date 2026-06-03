@@ -132,7 +132,7 @@
 
   /* ================== SLIDE 2 — BUSINESS ARCH (5 cards) ================== */
   .biz-grid{
-    display:grid;grid-template-columns:repeat(5,1fr);
+    display:grid;grid-template-columns:repeat(3,1fr);
     gap:var(--s-3);
     flex:1;align-content:center;
   }
@@ -467,8 +467,8 @@
       </p>
 
       <div class="cover-meta">
-        <span>v0.1.2</span>
-        <span>Tauri + React</span>
+        <span>v0.2.0</span>
+        <span>Tauri + React · MCP</span>
         <span>MIT · Windows</span>
       </div>
     </div>
@@ -489,8 +489,8 @@
       </div>
 
       <h2 class="anchor">
-        <span class="lang-en">Five <span class="acc">working modules</span></span>
-        <span class="lang-cn">五个<span class="acc">功能块</span></span>
+        <span class="lang-en">Six <span class="acc">working modules</span></span>
+        <span class="lang-cn">六个<span class="acc">功能块</span></span>
       </h2>
 
       <p class="lede">
@@ -541,14 +541,14 @@
         <div class="biz-card">
           <div class="num">④ / REVIEW</div>
           <div class="title">
-            <span class="lang-en">Risk-tiered review</span>
-            <span class="lang-cn">风险分级 Review</span>
+            <span class="lang-en">Risk-tiered review inbox</span>
+            <span class="lang-cn">风险分级收件箱 Review</span>
           </div>
           <div class="desc">
-            <span class="lang-en">AI-suggested updates grouped by risk: low (default-on) / medium / high (default-off + warning). User ticks, writes happen.</span>
-            <span class="lang-cn">AI 建议的更新按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。用户勾,才写。</span>
+            <span class="lang-en">The single gate for <em>every</em> write — clipboard import and MCP write-back both queue here. Grouped by risk: low (default-on) / medium / high (default-off + warning). User ticks, writes happen.</span>
+            <span class="lang-cn">所有写回的<em>唯一</em>关口——剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。用户勾,才写。</span>
           </div>
-          <div class="file">ReviewPage.tsx</div>
+          <div class="file">ReviewPage.tsx · inbox</div>
         </div>
 
         <div class="biz-card">
@@ -562,6 +562,19 @@
             <span class="lang-cn">全是 Markdown 文件,放在 ~/Documents/MemoryOS。删除走系统回收站(Rust <code>trash</code> crate),App 内还有 5 秒 Undo。</span>
           </div>
           <div class="file">main.rs · FileViewerModal.tsx</div>
+        </div>
+
+        <div class="biz-card">
+          <div class="num">⑥ / CONNECT AI · MCP</div>
+          <div class="title">
+            <span class="lang-en">Connect AI (MCP)</span>
+            <span class="lang-cn">连接 AI (MCP)</span>
+          </div>
+          <div class="desc">
+            <span class="lang-en">Local stdio MCP server, packaged as <code>memoryos.mcpb</code> for Claude Desktop. AI reads memory directly (<code>list_projects</code> / <code>get_project_memory</code>); write-back (<code>save_session_handoff</code>) only stages to the inbox — never bypasses review.</span>
+            <span class="lang-cn">本地 stdio MCP server,打包成 <code>memoryos.mcpb</code> 给 Claude Desktop。AI 直接读记忆(<code>list_projects</code> / <code>get_project_memory</code>);写回(<code>save_session_handoff</code>)只暂存进收件箱——绝不绕过审核。</span>
+          </div>
+          <div class="file">server/ · memoryos.mcpb</div>
         </div>
       </div>
     </div>
@@ -694,8 +707,8 @@
           </div>
           <div class="layer-card-body">
             <div class="layer-cell">
-              <span class="k">01 · PARSE</span>
-              <span class="v"><span class="lang-en">Paste handoff → <code>parseHandoff()</code> extracts suggestions</span><span class="lang-cn">粘贴 handoff → <code>parseHandoff()</code> 切段提取</span></span>
+              <span class="k">01 · INGEST</span>
+              <span class="v"><span class="lang-en">Manual paste → <code>parseHandoff()</code> slices raw Markdown; MCP <code>save_session_handoff</code> takes structured input directly. Both normalise to one inbox structure.</span><span class="lang-cn">手动粘贴 → <code>parseHandoff()</code> 切原始 Markdown;MCP <code>save_session_handoff</code> 直接收结构化入参。两者归一成同一收件箱结构。</span></span>
             </div>
             <div class="layer-cell">
               <span class="k">02 · DETECT</span>
@@ -763,55 +776,51 @@
       </div>
 
       <h2 class="anchor">
-        <span class="lang-en">After you hit <span class="acc">"Copy End-Session Prompt"</span></span>
-        <span class="lang-cn">按下<span class="acc">「复制结束指令」</span>之后</span>
+        <span class="lang-en">Now: <span class="acc">one MCP call</span> drops the session into the inbox</span>
+        <span class="lang-cn">现在：<span class="acc">一条 MCP 指令</span>，记忆直接进收件箱</span>
       </h2>
 
       <p class="lede">
-        <span class="lang-en">Eight steps from click to written-to-disk — each labelled with the file that owns it.</span>
-        <span class="lang-cn">从点击到落盘,八步走完——每一步都标了实际负责的文件。</span>
+        <span class="lang-en">v0.2.0 makes the MCP path primary — no more copy-paste on supported clients. The old manual flow stays as a fallback for web chat AIs that can't reach a local server.</span>
+        <span class="lang-cn">v0.2.0 起 MCP 是主路径——支持的客户端不再需要复制粘贴。旧的手动流程降级为兜底，留给连不上本地 server 的网页聊天 AI。</span>
       </p>
 
+      <!-- PRIMARY · MCP path (v0.2.0) -->
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">
+        <span class="lang-en">Primary · v0.2.0 / MCP · verified: Claude Desktop (.mcpb) · manual config: Codex / Claude Code / Cursor / Cline</span>
+        <span class="lang-cn">主路径 · v0.2.0 / MCP · 已实测：Claude Desktop (.mcpb) · 可手动配置：Codex / Claude Code / Cursor / Cline</span>
+      </div>
       <div class="path-flow">
         <div class="path-step">
           <div class="step-num">01</div>
-          <div class="step-what"><span class="lang-en">User clicks button</span><span class="lang-cn">用户点按钮</span></div>
-          <div class="step-where"><code>CopyPromptModal.tsx</code></div>
+          <div class="step-what"><span class="lang-en">At session end, the AI calls <code>save_session_handoff</code> (per the end_session prompt)</span><span class="lang-cn">会话结束，AI 按 end_session 指令调用 <code>save_session_handoff</code></span></div>
+          <div class="step-where"><code>server/</code> · MCP server</div>
         </div>
         <div class="path-step">
           <div class="step-num">02</div>
-          <div class="step-what"><span class="lang-en">Pick AI tool template</span><span class="lang-cn">选 AI 工具模板</span></div>
-          <div class="step-where"><code>sourceTools.ts</code></div>
+          <div class="step-what"><span class="lang-en">Structured handoff is atomically written to the inbox — pending, never touches live memory</span><span class="lang-cn">结构化 handoff 原子写进收件箱——待审，不碰正式记忆</span></div>
+          <div class="step-where"><code>.memoryos/inbox</code> · tmp→rename</div>
         </div>
         <div class="path-step">
           <div class="step-num">03</div>
-          <div class="step-what"><span class="lang-en">Assemble prompt + context</span><span class="lang-cn">拼装 prompt + 上下文</span></div>
-          <div class="step-where">about_me · 00_context · decisions</div>
-        </div>
-        <div class="path-step">
-          <div class="step-num">04</div>
-          <div class="step-what"><span class="lang-en">Write to clipboard</span><span class="lang-cn">写入剪贴板</span></div>
-          <div class="step-where"><code>@tauri-apps/api</code> clipboard</div>
-        </div>
-        <div class="path-step">
-          <div class="step-num">05</div>
-          <div class="step-what"><span class="lang-en">User pastes into AI → AI returns 9-section Markdown</span><span class="lang-cn">用户粘到 AI → AI 返回 9 段 Markdown</span></div>
-          <div class="step-where"><span class="lang-en">external · ChatGPT / Claude / …</span><span class="lang-cn">外部 · ChatGPT / Claude / …</span></div>
-        </div>
-        <div class="path-step">
-          <div class="step-num">06</div>
-          <div class="step-what"><span class="lang-en">User pastes back</span><span class="lang-cn">用户粘回 MemoryOS</span></div>
-          <div class="step-where"><code>ImportHandoffModal.tsx</code></div>
-        </div>
-        <div class="path-step">
-          <div class="step-num">07</div>
-          <div class="step-what"><span class="lang-en">Parse → typed UpdateSuggestion[]</span><span class="lang-cn">解析 → 结构化 UpdateSuggestion[]</span></div>
-          <div class="step-where"><code>parser.ts</code> · parseHandoff()</div>
-        </div>
-        <div class="path-step">
-          <div class="step-num">08</div>
-          <div class="step-what"><span class="lang-en">Superseded merge: old (strikethrough) vs new (highlight) → user ticks → write</span><span class="lang-cn">Superseded 合并: 旧内容划线 / 新内容高亮 → 用户勾选 → 写盘</span></div>
+          <div class="step-what"><span class="lang-en">Back in the app: review each suggestion (old <del>×</del> / new <strong>✓</strong>) → write</span><span class="lang-cn">回 App 逐条 Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 入库</span></div>
           <div class="step-where"><code>ReviewPage.tsx</code></div>
+        </div>
+      </div>
+
+      <!-- FALLBACK · manual clipboard path (minimized) -->
+      <div style="margin-top:var(--s-3);border:1px solid var(--rule);background:rgba(10,10,10,.06);padding:var(--s-2) var(--s-3)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">
+          <span class="lang-en">Fallback · manual clipboard · for web chat AIs that can't reach a local server (ChatGPT / Kimi / …)</span>
+          <span class="lang-cn">兜底 · 手动剪贴板 · 给连不上本地 server 的网页聊天 AI（ChatGPT / Kimi / …）</span>
+        </div>
+        <div style="font-family:var(--sans);font-size:12px;line-height:1.6;color:var(--muted)">
+          <span class="lang-en">① Copy end-session prompt → ② pick AI template → ③ assemble prompt + context → ④ write to clipboard → ⑤ paste into AI, get 9-section Markdown → ⑥ paste back → ⑦ <code>parseHandoff()</code> → ⑧ <strong>same Review</strong> → write</span>
+          <span class="lang-cn">① 复制结束指令 → ② 选 AI 模板 → ③ 拼装 prompt + 上下文 → ④ 写剪贴板 → ⑤ 粘到 AI，拿回 9 段 Markdown → ⑥ 粘回 App → ⑦ <code>parseHandoff()</code> 解析 → ⑧ <strong>同一个 Review</strong> → 入库</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px">
+          <span class="lang-en">Both paths converge at the same Review — the write gate never moves.</span>
+          <span class="lang-cn">两条路汇到同一个 Review——写回这道关从不挪位。</span>
         </div>
       </div>
     </div>
@@ -828,8 +837,8 @@
       </div>
 
       <h2 class="anchor">
-        <span class="lang-en">v0.1.2 <span class="acc">/ Now</span></span>
-        <span class="lang-cn">v0.1.2 <span class="acc">/ 现在</span></span>
+        <span class="lang-en">v0.2.0 <span class="acc">/ Now</span></span>
+        <span class="lang-cn">v0.2.0 <span class="acc">/ 现在</span></span>
       </h2>
 
       <div class="road-list">
@@ -849,20 +858,28 @@
             <span class="lang-cn">中英双语 · 删除走系统回收站 + Undo · UX 打磨</span>
           </span>
         </div>
-        <div class="road-item now">
-          <span class="road-mark">●</span>
+        <div class="road-item done">
+          <span class="road-mark">✓</span>
           <span class="road-ver">v0.1.2</span>
           <span class="road-what">
-            <span class="lang-en">Fault-tolerant parser · Superseded memory merge (old strikethrough / new highlight) · in-app file editing · feedback channel · prompt format contract <em>(current)</em></span>
-            <span class="lang-cn">解析容错 · Superseded 记忆合并(旧划线 / 新高亮) · App 内文件编辑 · 反馈通道 · Prompt 格式契约 <em>(当前)</em></span>
+            <span class="lang-en">Fault-tolerant parser · Superseded memory merge (old strikethrough / new highlight) · in-app file editing · feedback channel · prompt format contract</span>
+            <span class="lang-cn">解析容错 · Superseded 记忆合并(旧划线 / 新高亮) · App 内文件编辑 · 反馈通道 · Prompt 格式契约</span>
+          </span>
+        </div>
+        <div class="road-item now">
+          <span class="road-mark">●</span>
+          <span class="road-ver">v0.2.0</span>
+          <span class="road-what">
+            <span class="lang-en">Connect AI (MCP) + memory inbox — local stdio MCP server + <code>memoryos.mcpb</code>, AI reads memory directly in Claude Desktop; every write-back (MCP or manual) lands in a review inbox before it's saved <em>(current)</em></span>
+            <span class="lang-cn">连接 AI(MCP) + 记忆收件箱 — 本地 stdio MCP server + <code>memoryos.mcpb</code>, AI 在 Claude Desktop 里直接读记忆;所有写回(MCP / 手动)都先进收件箱待审再入库 <em>(当前)</em></span>
           </span>
         </div>
         <div class="road-item todo">
           <span class="road-mark">○</span>
-          <span class="road-ver">v0.2</span>
+          <span class="road-ver">v0.2.x</span>
           <span class="road-what">
-            <span class="lang-en">Cross-AI output consistency — run the full loop on ChatGPT / Claude / Cursor / Kimi, verify the Superseded merge works across all AIs + 10 seed-user interviews</span>
-            <span class="lang-cn">跨 AI 输出一致性验证 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环, 验证 Superseded 合并跨 AI 都能用 + 10 个种子用户 1v1 访谈</span>
+            <span class="lang-en">Cross-AI output consistency — run the full loop on ChatGPT / Claude / Cursor / Kimi, verify the Superseded merge works across all AIs + 10 seed-user interviews + web-AI connection spike</span>
+            <span class="lang-cn">跨 AI 输出一致性验证 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环, 验证 Superseded 合并跨 AI 都能用 + 10 个种子用户 1v1 访谈 + 网页端 AI 接入 spike</span>
           </span>
         </div>
         <div class="road-item todo">

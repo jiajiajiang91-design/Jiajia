@@ -494,6 +494,12 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   border:1px solid var(--rule);
   background:var(--paper-soft);
 }
+.cs-roadmap-stage--done{
+  border-color:var(--signal);
+  border-inline-start:3px solid var(--signal);
+  background:rgba(200,69,31,.03);
+}
+.cs-roadmap-stage--done .cs-roadmap-when::after{content:" ✓"}
 .cs-roadmap-stage h4{
   margin:0 0 var(--s-2);
   font-family:var(--font-sans);
@@ -622,6 +628,29 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   letter-spacing:.04em;
   text-align:center;
 }
+
+/* three screenshots side-by-side */
+.cs-shot-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-3);
+  margin-block:var(--s-6);
+  border-block-start:1px solid var(--rule);border-block-end:1px solid var(--rule);
+  padding-block:var(--s-4);
+}
+.cs-shot-row figure{margin:0;display:flex;flex-direction:column}
+.cs-shot-row .frame{aspect-ratio:16/10;background:#1b1b1d;border:1px solid var(--rule);overflow:hidden;cursor:zoom-in;position:relative;display:block}
+.cs-shot-row .frame img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.cs-shot-row .frame .zoom-cue{position:absolute;top:8px;right:8px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:rgba(15,15,17,.6);color:#fff;font-size:13px;border-radius:5px;opacity:0;transition:opacity .15s}
+.cs-shot-row .frame:hover .zoom-cue{opacity:1}
+.cs-shot-row figcaption{font-family:var(--font-mono);font-size:var(--mono-s);color:var(--muted);margin-block-start:var(--s-2);letter-spacing:.04em;line-height:1.5}
+@media(max-width:760px){.cs-shot-row{grid-template-columns:1fr}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:300;background:rgba(15,15,17,.92);display:none;align-items:center;justify-content:center;padding:48px;flex-direction:column}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:calc(100vh - 140px);box-shadow:0 40px 80px rgba(0,0,0,.4)}
+.lb .lb-cap{margin-top:18px;color:#d6d6d6;font-size:13px;line-height:1.55;max-width:820px;text-align:center;font-family:var(--font-cjk),var(--font-sans)}
+.lb .lb-close{position:absolute;top:24px;right:32px;font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;cursor:pointer;background:transparent;border:1px solid #444;padding:8px 14px}
+.lb .lb-close:hover{color:#fff;border-color:#fff}
 
 /* ============================================================
    Section 6 — 三出口 (BUILD_SPEC § 6.2)
@@ -766,11 +795,11 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <div><dt>Role</dt><dd>Solo Founder / PM / Engineer</dd></div>
           <div><dt>Domain</dt><dd>Cross-AI Work Log</dd></div>
           <div><dt>Users</dt><dd>普通 AI 用户 (已感到复制粘贴之痛, 但非技术背景)</dd></div>
-          <div><dt>Input</dt><dd>Local Markdown Files + Clipboard Bridge</dd></div>
-          <div><dt>Tools</dt><dd>Tauri + React + TS + Rust trash crate</dd></div>
-          <div><dt>Output</dt><dd>Cross-AI Handoff Sessions + Risk-Tiered Writes</dd></div>
+          <div><dt>Input</dt><dd>Local Markdown Files + Clipboard Bridge + MCP</dd></div>
+          <div><dt>Tools</dt><dd>Tauri + React + TS + Rust · MCP server (.mcpb)</dd></div>
+          <div><dt>Output</dt><dd>Cross-AI Handoff Sessions + Review Inbox (gated writes)</dd></div>
           <div><dt>License</dt><dd>MIT Licensed Open Source</dd></div>
-          <div><dt>Status</dt><dd>v0.1.2 Shipped</dd></div>
+          <div><dt>Status</dt><dd>v0.2.0 Shipped</dd></div>
           <div><dt>Footprint</dt><dd>Windows 桌面端</dd></div>
         </dl>
 
@@ -782,9 +811,9 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             <span class="cs-quick-cta-sub">MIT 开源代码 · README · Issue tracker</span>
           </a>
           <a href="https://github.com/jiajiajiang91-design/memoryos/releases" class="cs-quick-cta-card" target="_blank" rel="noopener">
-            <span class="cs-quick-cta-lbl">Download v0.1.2 ↗</span>
-            <span class="cs-quick-cta-name">Windows .exe / .msi</span>
-            <span class="cs-quick-cta-sub">Windows 安装包 · 即装即用</span>
+            <span class="cs-quick-cta-lbl">Download v0.2.0 ↗</span>
+            <span class="cs-quick-cta-name">Windows .exe / .msi · .mcpb</span>
+            <span class="cs-quick-cta-sub">Windows 安装包 · 附 Claude Desktop 扩展</span>
           </a>
         </aside>
       </section>
@@ -908,10 +937,42 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
         <p>MemoryOS 服务一类核心用户: <strong>普通 AI 用户</strong> —— 在多个 AI 之间切换工作, 已经感到"复制粘贴自己是谁"的真实痛感, 但非技术背景, 不会自建 RAG 或写 prompt template。</p>
 
-        <!-- ───── Fig. 03 — Dashboard-style 5-step flow ───── -->
+        <p style="margin-top:var(--s-3)"><strong>v0.2.0 起有两条路，最后都汇到同一个 Review：</strong>支持 MCP 的客户端（已实测 Claude Desktop）走下面的主路径，AI 直接读记忆、一条指令把总结写进收件箱，省掉复制粘贴；还连不上 MCP 的网页聊天 AI（ChatGPT / Kimi 等）走再下面的手动 5 步兜底。</p>
+
+        <!-- ───── Fig. 03a — MCP primary path (v0.2.0) ───── -->
+        <figure class="cs-figure">
+          <div style="text-align:center;margin-bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);">主路径 · v0.2.0 / MCP · 已实测 Claude Desktop</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">01</div>
+              <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">读取记忆</div>
+              <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">AI 经 MCP 直接读项目记忆<br><code style="font-size:11px">get_project_memory</code></div>
+            </div>
+            <div style="padding:20px 16px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:6px;border-top:3px solid var(--rule);">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:12px;">02</div>
+              <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">Work</div>
+              <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">正常和 AI 工作<br>不用复制粘贴</div>
+            </div>
+            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">03</div>
+              <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">一条指令写回</div>
+              <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">AI 调 <code style="font-size:11px">save_session_handoff</code><br>总结直接进收件箱（待审）</div>
+            </div>
+            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1.5px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">04</div>
+              <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">Review &amp; Save</div>
+              <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">回 App 按风险分级勾选<br>用户确认才入库</div>
+            </div>
+          </div>
+          <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03a — MCP 主路径（v0.2.0）：读直连 · 一条指令写回收件箱 · 仍由用户审核入库</figcaption>
+        </figure>
+
+        <p style="margin-top:var(--s-4)">网页聊天 AI 连不上本地 server，走<strong>手动 5 步兜底</strong>——用剪贴板桥接，殊途同归到同一个收件箱：</p>
+
+        <!-- ───── Fig. 03 — Dashboard-style 5-step flow (manual fallback) ───── -->
         <figure class="cs-figure">
           <!-- Loop-back label -->
-          <div style="text-align:center;margin-bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);">↺ 用户主动驱动 · 每次对话重复</div>
+          <div style="text-align:center;margin-bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">兜底路径 · 手动剪贴板 · 给连不上 MCP 的网页聊天 AI</div>
 
           <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
 
@@ -962,10 +1023,10 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             <span><span style="display:inline-block;width:20px;border-top:2px dashed var(--muted);margin-right:6px;vertical-align:middle;"></span>用户在外部 AI 里执行</span>
           </div>
 
-          <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03 — 五步工作流闭环 · Start → Work → End → AI 总结 → Review &amp; Save</figcaption>
+          <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03 — 手动兜底的五步闭环 · Start → Work → End → AI 总结 → Review &amp; Save</figcaption>
         </figure>
 
-        <p>工作流是一个<strong>用户主动驱动的 5 步循环</strong>:</p>
+        <p>兜底路径是一个<strong>用户主动驱动的 5 步循环</strong>（MCP 跑不通时仍可用）:</p>
 
         <ol class="cs-steps">
           <li>
@@ -1005,20 +1066,20 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           </li>
         </ol>
 
-        <!-- ───── Fig. 04 — Dashboard screenshot ───── -->
+        <!-- ───── Fig. 04 — Dashboard screenshot (v0.2.0) ───── -->
         <figure class="cs-screenshot">
-          <img src="images_memoryos/02_dashboard.png" alt="MemoryOS 主界面: 左栏项目列表, 中间当前目标 + 最近对话, 右栏项目元数据" loading="lazy"/>
-          <figcaption>Fig. 04 — Dashboard 主界面: 左栏项目列表 / 中间当前目标 + 最近对话 / 右栏项目元数据</figcaption>
+          <img src="images_memoryos/v020_01_dashboard_inbox.png" alt="MemoryOS v0.2.0 工作台: 当前目标 / 状态 / 复制开始+结束指令 / 右上「1 条待审」收件箱入口" loading="lazy"/>
+          <figcaption>Fig. 04 — 工作台（v0.2.0）: 当前目标、复制开始/结束指令，右上「1 条待审」是新的记忆收件箱入口</figcaption>
         </figure>
 
-        <p>注意第 5 步的设计选择: <strong>不是 AI 直接写文件, 是用户勾选 checkbox 确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场 —— AI 总结、用户确认。下一节展开。</p>
+        <p>不管走哪条路，最后那一关都不变: <strong>不是 AI 直接写文件, 是用户在收件箱里按风险分级勾选、确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场 —— AI 读取与起草、用户确认入库。下一节展开。</p>
       </section>
 
       <!-- ═══════════════════════════════════════════════════════
            Section 4 · How it works
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--how" id="how">
-        <h2>系统架构 — 三层全本地，AI 在边界之外</h2>
+        <h2>系统架构 — 本地三层，读可直连、写必经审核</h2>
 
         <!-- ───── Fig. 05 — Dashboard-style Architecture ───── -->
         <figure class="cs-figure">
@@ -1039,8 +1100,8 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#F2F0EB);border:1px solid var(--rule);border-radius:4px;">
                 <div style="min-width:36px;height:36px;border-radius:4px;background:var(--signal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:500;">03</div>
                 <div>
-                  <div style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);">Bridge · 剪贴板桥接</div>
-                  <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-top:2px;">用户主动粘贴 · 支持所有 AI</div>
+                  <div style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);">Bridge · 两条桥</div>
+                  <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-top:2px;">剪贴板 (支持所有 AI) · MCP (Claude Desktop 等)</div>
                 </div>
               </div>
 
@@ -1056,6 +1117,8 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">回收站</span>
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">Superseded 合并</span>
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">文件可编辑</span>
+                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(200,69,31,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">MCP server</span>
+                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(200,69,31,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">记忆收件箱</span>
                   </div>
                 </div>
               </div>
@@ -1078,7 +1141,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             </div>
 
           </div>
-          <figcaption style="margin-top:12px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 05 — 三层架构 · AI 调用永远发生在 MemoryOS 边界之外</figcaption>
+          <figcaption style="margin-top:12px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 05 — 本地三层 · AI 可经 MCP 直接读取，但写回一律先进收件箱待审</figcaption>
         </figure>
 
         <ol class="cs-layers">
@@ -1101,7 +1164,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <span class="cs-layer-name">3. 桥接层</span>
               <span class="cs-step-anchor">OUTPUT</span>
             </div>
-            <p>用<strong>剪贴板</strong>桥接所有 AI。MemoryOS 把上下文写进剪贴板，用户粘到任意 AI；AI 输出复制回来，用户勾选保存——换 AI 不用重新配置，30 秒续上。</p>
+            <p>两条桥并行。<strong>剪贴板</strong>桥接所有 AI、无需任何配置：把上下文写进剪贴板，用户粘到任意 AI，输出复制回来勾选保存。<strong>MCP</strong>（v0.2.0 新增）让支持的客户端（已实测 Claude Desktop）一次配置后直接<em>读取</em>本地记忆、并把总结<em>写回</em>——但写回只进「待审收件箱」，不绕过用户。换 AI 不用重述上下文，30 秒续上。</p>
           </li>
         </ol>
 
@@ -1115,19 +1178,39 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
         <table>
           <thead>
-            <tr><th>步骤</th><th>v0.1.2 主导技术</th><th>AI 的位置</th></tr>
+            <tr><th>步骤</th><th>主导技术</th><th>AI 的位置</th></tr>
           </thead>
           <tbody>
             <tr><td>Storage</td><td>文件系统</td><td>—</td></tr>
             <tr><td>Start prompt</td><td>模板拼接</td><td>—</td></tr>
             <tr><td>End prompt</td><td>模板拼接 + 格式契约</td><td>—</td></tr>
             <tr><td>对话总结生成</td><td><strong>AI 在用户的 AI 工具里跑</strong></td><td>第 3 方 AI (ChatGPT/Claude/etc) — 不是 MemoryOS 调用</td></tr>
+            <tr><td>AI 读取记忆 (MCP · v0.2.0)</td><td>本地 stdio MCP server · 只读本地文件</td><td>AI 客户端主动调 <code>list_projects</code> / <code>get_project_memory</code></td></tr>
+            <tr><td>AI 写回 (MCP · v0.2.0)</td><td><code>save_session_handoff</code> → <strong>待审收件箱</strong></td><td>AI 只能把总结暂存，<strong>不能直接入库</strong></td></tr>
             <tr><td>记忆更新 (Superseded)</td><td>容错 parser 提取 + 新旧合并</td><td>AI 在 handoff 里标注哪些旧内容过时, app 解析并呈现</td></tr>
             <tr><td>Review &amp; Save</td><td>用户勾选 (旧划线 / 新高亮)</td><td>—</td></tr>
           </tbody>
         </table>
 
-        <p><strong>唯一的 AI 调用发生在用户的浏览器里，不在 MemoryOS 内。</strong>三层都可以离线工作。</p>
+        <p>v0.1.2 之前，唯一的 AI 调用都发生在用户的浏览器里。v0.2.0 让 AI 能通过 MCP 直接读本地记忆，但 <strong>MCP server 全程只跑本地 stdio、不开端口、不联网，写回一律先进收件箱</strong>——读可以直连，<strong>写这道关永远在用户手里</strong>。三层依旧可以离线工作。</p>
+
+        <h3>v0.2.0 — 连接 AI（MCP）+ 记忆收件箱</h3>
+        <p>v0.1.2 之前，AI 读到记忆全靠用户复制粘贴。v0.2.0 多了一条 <strong>MCP 通道</strong>：把 server 打包成 <code>memoryos.mcpb</code>，在 Claude Desktop 里装上、填一个工作区路径，AI 就能直接 <code>list_projects</code> / <code>get_project_memory</code>。但反方向写回被刻意做"窄"——AI 调 <code>save_session_handoff</code> 只能把总结送进<strong>待审收件箱</strong>，必须用户回到 App 里逐条 Review 才入库。这条「读直连、写经审」的边界，是整个 local-first 叙事在接入自动化之后还能立住的关键。</p>
+
+        <div class="cs-shot-row">
+          <figure>
+            <a class="frame" href="images_memoryos/v020_03_claudedesktop_ext.png" data-zoom="images_memoryos/v020_03_claudedesktop_ext.png" data-cap="Fig. 07 — 把 memoryos.mcpb 装进 Claude Desktop：启用 + 填工作区路径 + 三个工具（列出项目 / 读取记忆 / 暂存 handoff 待审）"><img src="images_memoryos/v020_03_claudedesktop_ext.png" alt="Claude Desktop 扩展页：memoryos 已启用，工作区路径已填，列出三个 MCP 工具" loading="lazy"/><span class="zoom-cue">⤢</span></a>
+            <figcaption>Fig. 07 — 装进 Claude Desktop：启用 + 工作区路径 + 三个工具</figcaption>
+          </figure>
+          <figure>
+            <a class="frame" href="images_memoryos/v020_04_claudedesktop_grant.png" data-zoom="images_memoryos/v020_04_claudedesktop_grant.png" data-cap="Fig. 08 — 跑通：Claude 主动请求调用「读取项目工作记忆」，每次工具调用仍要用户授权"><img src="images_memoryos/v020_04_claudedesktop_grant.png" alt="Claude Desktop 弹出授权请求，询问是否允许使用 MemoryOS 的读取项目工作记忆工具" loading="lazy"/><span class="zoom-cue">⤢</span></a>
+            <figcaption>Fig. 08 — 跑通：Claude 请求调用「读取项目工作记忆」，仍需用户授权</figcaption>
+          </figure>
+          <figure>
+            <a class="frame" href="images_memoryos/v020_02_review_inbox.png" data-zoom="images_memoryos/v020_02_review_inbox.png" data-cap="Fig. 09 — 写回这道关：AI 暂存的总结进收件箱，按风险分级、逐条 Review 后才入正式记忆"><img src="images_memoryos/v020_02_review_inbox.png" alt="记忆收件箱 Review 界面：建议更新分安全/中等风险，旧内容划线、新内容高亮，逐条接受或编辑" loading="lazy"/><span class="zoom-cue">⤢</span></a>
+            <figcaption>Fig. 09 — 写回经审：总结进收件箱，按风险分级逐条 Review 才入库</figcaption>
+          </figure>
+        </div>
 
         <!-- ───── Product Lens — 3-column dashboard ───── -->
         <div style="border-block:1px solid var(--ink);padding:var(--s-4) 0;margin-block:var(--s-8)">
@@ -1150,7 +1233,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             </div>
 
             <div style="padding:var(--s-3);border:1.5px solid var(--signal);background:rgba(200,69,31,.02)">
-              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">v0.1.2 核心机制</div>
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">核心机制</div>
               <div style="font-family:var(--font-cjk),var(--font-sans);font-size:var(--body-m);line-height:1.7;color:var(--ink)">
                 <strong>记忆现时性</strong><br>
                 AI 标出过时内容 → 容错解析 → Review 划线对比 → 用户确认 → 旧决策退场
@@ -1161,10 +1244,10 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             <div style="padding:var(--s-3);border:1px solid var(--rule);background:var(--paper-soft)">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">主要风险 &amp; 验证</div>
               <div style="font-family:var(--font-cjk),var(--font-sans);font-size:var(--body-m);line-height:1.7;color:var(--ink)">
-                <strong>用户不愿手动 handoff</strong><br>
-                验证：10 个种子用户用 1 个月，看"复制粘贴"是负担还是控制感
+                <strong>用户嫌"审核"这一下麻烦</strong><br>
+                v0.2.0 的 MCP 已把复制粘贴从支持的客户端里去掉；剩下的摩擦只有"入库前审核一下"。验证：10 个种子用户用 1 个月，看这一下是负担还是控制感
               </div>
-              <div style="margin-top:var(--s-2);font-family:var(--font-mono);font-size:10px;color:var(--muted)">如果反馈反过来，当前定位需要重做</div>
+              <div style="margin-top:var(--s-2);font-family:var(--font-mono);font-size:10px;color:var(--muted)">如果连这一下都嫌烦，"用户是最后一道关"的定位需要重判</div>
             </div>
 
           </div>
@@ -1232,25 +1315,25 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <h2>下一步</h2>
 
         <h3>路线图</h3>
-        <p>v0.1.2 是第一个记忆能保持现时的版本。下面按"必须打通的事"组织。</p>
+        <p>v0.1.2 让记忆能保持现时；v0.2.0 让 AI 能直接连上这份记忆。下面按"必须打通的事"组织。</p>
 
         <div class="cs-roadmap">
+          <div class="cs-roadmap-stage cs-roadmap-stage--done">
+            <span class="cs-roadmap-when">v0.2.0 · 已发布</span>
+            <h4>连接 AI（MCP）+ 记忆收件箱</h4>
+            <ul>
+              <li>MCP server + <code>memoryos.mcpb</code>，Claude Desktop 装上即用，已真实跑通读取链路</li>
+              <li>所有写回（MCP 暂存 / 手动导入）统一进「待审收件箱」，Review 锚定目标项目防 mis-filing</li>
+              <li>使用帮助新增「AI 连接教程」分栏</li>
+            </ul>
+          </div>
           <div class="cs-roadmap-stage">
-            <span class="cs-roadmap-when">v0.2 · 2026.08</span>
+            <span class="cs-roadmap-when">v0.2.x · 2026.08</span>
             <h4>跨 AI 一致性验证 + 种子用户</h4>
             <ul>
               <li>在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环, 验证 Superseded 合并跨 AI 都能用</li>
               <li>完成 10 个种子用户 1v1 访谈 + 整理反馈</li>
-              <li>设置面板 (语言 / 默认 AI / 默认存储路径)</li>
-            </ul>
-          </div>
-          <div class="cs-roadmap-stage">
-            <span class="cs-roadmap-when">v0.3 · 2026.10</span>
-            <h4>跨平台 + 代码签名</h4>
-            <ul>
-              <li>Mac (Intel + Apple Silicon) + Linux build</li>
-              <li>Windows 代码签名 (消除"未知发行者"警告)</li>
-              <li>第一篇用户写的使用文章自然引流</li>
+              <li>设置面板 (语言 / 默认 AI / 默认存储路径)；网页端 AI 接入路径 spike</li>
             </ul>
           </div>
           <div class="cs-roadmap-stage">
@@ -1269,8 +1352,8 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
         <ul class="cs-northstar">
           <li>
-            <span class="cs-northstar-when">v0.1.2 现状</span>
-            <span>我自己 dogfood ≥ 1 个月不脱离 + 10 个种子用户安装上 + 至少 3 个走完 1 次含 Superseded 合并的完整 Start → Save loop。</span>
+            <span class="cs-northstar-when">v0.2.0 现状</span>
+            <span>我自己 dogfood ≥ 1 个月不脱离 + MCP 在 Claude Desktop 真实跑通读取/写回链路 + 10 个种子用户安装上 + 至少 3 个走完 1 次含 Superseded 合并的完整 Start → Save loop。</span>
           </li>
           <li>
             <span class="cs-northstar-when">v0.2 · 2026.08</span>
@@ -1291,8 +1374,8 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
         <div class="cs-risks">
           <div>
-            <h4>用户可能不愿意手动 handoff。</h4>
-            <p>如果种子用户里多数反馈"复制粘贴太烦", 红线需要重判——可能切到"浏览器插件只读模式 + 用户每次确认", 而不是完全自动抓取。</p>
+            <h4>用户可能嫌"审核"这一步麻烦。</h4>
+            <p>v0.2.0 的 MCP 已经把"复制粘贴"从支持的客户端里去掉了——一条指令完成读取与待审暂存。但写回仍要回 App 审核一下才入库。如果种子用户连这一下都反馈"太烦"，"用户是最后一道关"的红线就需要重判，而不是继续往全自动加码。</p>
           </div>
           <div>
             <h4>AI 平台可能自己做项目级记录。</h4>
@@ -1302,6 +1385,11 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
         <h3>继续看下去</h3>
         <ul class="cs-exits">
+          <li>
+            <a href="process.html" class="cs-exit-link">
+              <strong>工作方法 — 多 Agent 交付 v0.2.0</strong> — 我怎么写一份 PRD 让 Claude Code + Codex 一起把它实现出来
+            </a>
+          </li>
           <li>
             <a href="Competitive Analysis/MemoryOS vs mem0 竞品分析.html" class="cs-exit-link">
               <strong>竞品分析 — MemoryOS × mem0</strong> — 亲手使用 mem0 完成三条任务流，和 MemoryOS 做逐项对比
@@ -1325,6 +1413,26 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   <span>London / Shanghai · 2025 — 26</span>
   <a href="mailto:jiajia.jiang.25@ucl.ac.uk" class="no-underline">jiajia.jiang.25@ucl.ac.uk</a>
 </footer>
+
+<!-- ── lightbox ── -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看">
+  <button class="lb-close" id="lb-close">CLOSE ✕</button>
+  <img id="lb-img" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb');if(!lb)return;
+  var lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap'),lbClose=document.getElementById('lb-close');
+  function open(src,cap){lbImg.src=src;lbCap.textContent=cap||'';lb.classList.add('open');document.body.style.overflow='hidden';}
+  function close(){lb.classList.remove('open');lbImg.src='';lbCap.textContent='';document.body.style.overflow='';}
+  document.querySelectorAll('[data-zoom]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();open(el.getAttribute('data-zoom'),el.getAttribute('data-cap')||'');});});
+  lbClose.addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
 
 <script>
 (function(){
