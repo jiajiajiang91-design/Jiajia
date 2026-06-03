@@ -11,7 +11,7 @@
 
 <style>
   :root{
-    --paper:#F2F0EB;
+    --paper:#ffffff;
     --paper-soft:#F9F9F9;
     --ink:#0A0A0A;
     --ink-rgb:10,10,10;
@@ -19,8 +19,8 @@
     --faint:#9E9A91;
     --rule:#C9C5BC;
     --rule-soft:#DCD8CE;
-    --signal:#C8451F;
-    --signal-rgb:200,69,31;
+    --signal:#0130aa;
+    --signal-rgb:1,48,170;
 
     --sans:'Inter','Neue Haas Grotesk Text',Arial,Helvetica,sans-serif;
     --mono:'IBM Plex Mono','JetBrains Mono','SFMono-Regular',Consolas,monospace;
@@ -138,7 +138,7 @@
     flex:1;align-content:center;
   }
   .biz-card{
-    background:#F2F0EB;
+    background:#ffffff;
     border:1px solid var(--rule);
     padding:var(--s-4) var(--s-3) var(--s-3);
     display:flex;flex-direction:column;
@@ -174,7 +174,7 @@
     flex:1;align-content:center;
   }
   .impl-col{
-    background:#F2F0EB;
+    background:#ffffff;
     border:1px solid var(--rule);
     padding:var(--s-4);
     display:flex;flex-direction:column;
@@ -197,7 +197,7 @@
   .impl-col li:last-child{border-bottom:0}
   .impl-col li code{
     font-family:var(--mono);font-size:.78rem;
-    color:var(--signal);background:rgba(200,69,31,.06);
+    color:var(--signal);background:rgba(1,48,170,.06);
     padding:1px 5px;border-radius:2px;
   }
   .impl-col li .sub{
@@ -213,7 +213,7 @@
   .path-step{
     flex:1 1 calc(25% - var(--s-2));
     min-width:200px;
-    background:#F2F0EB;
+    background:#ffffff;
     border:1px solid var(--rule);
     padding:var(--s-3);
     position:relative;
@@ -259,7 +259,7 @@
   }
   .layer-card{
     position:relative;z-index:1;
-    background:#F2F0EB;
+    background:#ffffff;
     border:1px solid var(--rule);
     padding:0;
     display:flex;flex-direction:column;
@@ -307,7 +307,7 @@
   .lang-cn .layer-cell .v{font-family:var(--cjk),var(--sans)}
   .layer-cell .v code{
     font-family:var(--mono);font-size:.74rem;
-    color:var(--signal);background:rgba(200,69,31,.06);
+    color:var(--signal);background:rgba(1,48,170,.06);
     padding:1px 4px;border-radius:2px;
   }
   .layer-card--accent{border-left:3px solid var(--signal)}
@@ -321,7 +321,7 @@
     flex:1;align-content:center;
     display:flex;flex-direction:column;justify-content:center;
     max-width:100%;
-    background:#F2F0EB;
+    background:#ffffff;
     padding:var(--s-4);
     border:1px solid var(--rule-soft);
   }
@@ -1177,7 +1177,7 @@
       cursorX += ctx.measureText(before).width;
       const kwPulse = 0.15 + 0.22 * Math.abs(Math.sin(now / 700 + m.index * 0.7));
       const kwAlpha = Math.min(0.55, baseAlpha * 1.5 + kwPulse * 0.30);
-      ctx.fillStyle = `rgba(200,69,31,${kwAlpha.toFixed(3)})`;
+      ctx.fillStyle = `rgba(1,48,170,${kwAlpha.toFixed(3)})`;
       ctx.fillText(m[0], cursorX, y);
       cursorX += ctx.measureText(m[0]).width;
       lastIdx = m.index + m[0].length;

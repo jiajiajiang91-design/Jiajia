@@ -64,7 +64,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
   overflow-y:auto;
   padding:36px 14px 36px 16px;
   font-family:var(--font-mono);
-  background:var(--paper, #F2F0EB);
+  background:var(--paper, #ffffff);
   z-index:10;
 }
 .cs-toc-head{
@@ -497,7 +497,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 .cs-roadmap-stage--done{
   border-color:var(--signal);
   border-inline-start:3px solid var(--signal);
-  background:rgba(200,69,31,.03);
+  background:rgba(1,48,170,.03);
 }
 .cs-roadmap-stage--done .cs-roadmap-when::after{content:" ✓"}
 .cs-roadmap-stage h4{
@@ -888,9 +888,9 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             </div>
 
             <!-- Top-right: Cross-AI + Local = MemoryOS -->
-            <div style="padding:28px;background:rgba(200,69,31,0.03);border:1.5px solid var(--signal);border-radius:6px;min-height:160px;">
+            <div style="padding:28px;background:rgba(1,48,170,0.03);border:1.5px solid var(--signal);border-radius:6px;min-height:160px;">
               <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:20px;">数据在本地 · 跨 AI — 空白象限</div>
-              <div style="display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:var(--paper,#F2F0EB);border-radius:5px;border:1px solid var(--signal);">
+              <div style="display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:var(--paper,#ffffff);border-radius:5px;border:1px solid var(--signal);">
                 <div style="width:28px;height:28px;border-radius:4px;background:var(--signal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:600;flex-shrink:0;">M</div>
                 <div>
                   <div style="font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--signal);">MemoryOS</div>
@@ -943,7 +943,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <figure class="cs-figure">
           <div style="text-align:center;margin-bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);">主路径 · v0.2.0 / MCP · 已实测 Claude Desktop</div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+            <div style="padding:20px 16px;background:rgba(1,48,170,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">01</div>
               <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">读取记忆</div>
               <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">AI 经 MCP 直接读项目记忆<br><code style="font-size:11px">get_project_memory</code></div>
@@ -953,12 +953,12 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">Work</div>
               <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">正常和 AI 工作<br>不用复制粘贴</div>
             </div>
-            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+            <div style="padding:20px 16px;background:rgba(1,48,170,0.03);border:1px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">03</div>
               <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">一条指令写回</div>
               <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">AI 调 <code style="font-size:11px">save_session_handoff</code><br>总结直接进收件箱（待审）</div>
             </div>
-            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1.5px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+            <div style="padding:20px 16px;background:rgba(1,48,170,0.03);border:1.5px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">04</div>
               <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">Review &amp; Save</div>
               <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">回 App 按风险分级勾选<br>用户确认才入库</div>
@@ -1008,7 +1008,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             </div>
 
             <!-- Step 5: Review & Save -->
-            <div style="padding:20px 16px;background:rgba(200,69,31,0.03);border:1.5px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
+            <div style="padding:20px 16px;background:rgba(1,48,170,0.03);border:1.5px solid var(--signal);border-radius:6px;border-top:3px solid var(--signal);">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--signal);margin-bottom:12px;">05</div>
               <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;">Review &amp; Save</div>
               <div style="font-family:var(--font-sans);font-size:12px;color:var(--muted);line-height:1.6;">按风险分级勾选<br>用户决定写入</div>
@@ -1087,7 +1087,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
 
             <!-- LEFT: User -->
             <div style="text-align:center;">
-              <div style="width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--paper,#F2F0EB);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-family:var(--font-mono);font-size:16px;font-weight:500;">U</div>
+              <div style="width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--paper,#ffffff);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-family:var(--font-mono);font-size:16px;font-weight:500;">U</div>
               <div style="font-family:var(--font-sans);font-size:13px;font-weight:500;color:var(--ink);">User</div>
               <div style="font-family:var(--font-mono);font-size:9px;color:var(--muted);margin-top:4px;letter-spacing:.04em;">多 AI 知识工作者</div>
             </div>
@@ -1097,7 +1097,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <div style="position:absolute;top:-10px;left:16px;background:var(--paper-soft);padding:0 8px;font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);">MEMORYOS</div>
 
               <!-- Bridge -->
-              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#F2F0EB);border:1px solid var(--rule);border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#ffffff);border:1px solid var(--rule);border-radius:4px;">
                 <div style="min-width:36px;height:36px;border-radius:4px;background:var(--signal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:500;">03</div>
                 <div>
                   <div style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);">Bridge · 两条桥</div>
@@ -1106,8 +1106,8 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               </div>
 
               <!-- App -->
-              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#F2F0EB);border:1px solid var(--rule);border-radius:4px;">
-                <div style="min-width:36px;height:36px;border-radius:4px;background:var(--ink);color:var(--paper,#F2F0EB);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:500;">02</div>
+              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#ffffff);border:1px solid var(--rule);border-radius:4px;">
+                <div style="min-width:36px;height:36px;border-radius:4px;background:var(--ink);color:var(--paper,#ffffff);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:500;">02</div>
                 <div>
                   <div style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);">App · Tauri + React + TS</div>
                   <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-top:2px;">Tauri + React + TS</div>
@@ -1117,14 +1117,14 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">回收站</span>
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">Superseded 合并</span>
                     <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:var(--paper-soft);border:1px solid var(--rule);border-radius:3px;color:var(--muted);">文件可编辑</span>
-                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(200,69,31,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">MCP server</span>
-                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(200,69,31,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">记忆收件箱</span>
+                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(1,48,170,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">MCP server</span>
+                    <span style="font-family:var(--font-mono);font-size:9px;padding:2px 6px;background:rgba(1,48,170,.06);border:1px solid var(--signal);border-radius:3px;color:var(--signal);">记忆收件箱</span>
                   </div>
                 </div>
               </div>
 
               <!-- Storage -->
-              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#F2F0EB);border:1px solid var(--rule);border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--paper,#ffffff);border:1px solid var(--rule);border-radius:4px;">
                 <div style="min-width:36px;height:36px;border-radius:4px;background:var(--muted);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:500;">01</div>
                 <div>
                   <div style="font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);">Storage · Markdown 文件系统</div>
@@ -1232,7 +1232,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               </div>
             </div>
 
-            <div style="padding:var(--s-3);border:1.5px solid var(--signal);background:rgba(200,69,31,.02)">
+            <div style="padding:var(--s-3);border:1.5px solid var(--signal);background:rgba(1,48,170,.02)">
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">核心机制</div>
               <div style="font-family:var(--font-cjk),var(--font-sans);font-size:var(--body-m);line-height:1.7;color:var(--ink)">
                 <strong>记忆现时性</strong><br>
@@ -1299,7 +1299,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           </div>
 
           <!-- D6 -->
-          <div style="padding:var(--s-3);border:1.5px solid var(--signal);background:rgba(200,69,31,.02)">
+          <div style="padding:var(--s-3);border:1.5px solid var(--signal);background:rgba(1,48,170,.02)">
             <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">06</div>
             <div style="font-family:var(--font-sans);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:var(--s-2)">Superseded 合并而非 diff</div>
             <p style="font-size:var(--caption);line-height:1.65;color:var(--ink);margin:0">AI 标出过时内容 → app 展示新旧对比 → 用户确认 → 4 下点击完成记忆更新。代价：依赖 AI 标注质量。</p>

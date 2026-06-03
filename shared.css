@@ -3,14 +3,14 @@
 
 :root{
   /* Color */
-  --paper:#F2F0EB;
+  --paper:#ffffff;
   --paper-soft:#F9F9F9;
   --ink:#0A0A0A;
   --off-black:#101112;
   --near-black:#131214;
   --muted:#6F6F6F;
   --rule:#C9C5BC;
-  --signal:#C8451F;
+  --signal:#0130aa;
 
   /* Type */
   --font-sans:'Inter','Neue Haas Grotesk Text',Arial,Helvetica,sans-serif;

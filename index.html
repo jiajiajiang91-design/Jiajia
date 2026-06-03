@@ -933,7 +933,7 @@ body[data-lang="cn"] .lang-cn{
     function drawLine(s,x,y,a){ var li=0,cx=x; QRE.lastIndex=0; var m;
       while((m=QRE.exec(s))!==null){ var pre=s.slice(li,m.index);
         ctx.fillStyle='rgba(29,29,31,'+a.toFixed(3)+')'; ctx.fillText(pre,cx,y); cx+=ctx.measureText(pre).width;
-        var ka=Math.min(0.62,a*2.6+0.30); ctx.fillStyle='rgba(200,69,31,'+ka.toFixed(3)+')'; ctx.fillText(m[0],cx,y); cx+=ctx.measureText(m[0]).width;
+        var ka=Math.min(0.62,a*2.6+0.30); ctx.fillStyle='rgba(1,48,170,'+ka.toFixed(3)+')'; ctx.fillText(m[0],cx,y); cx+=ctx.measureText(m[0]).width;
         li=m.index+m[0].length; }
       if(li<s.length){ ctx.fillStyle='rgba(29,29,31,'+a.toFixed(3)+')'; ctx.fillText(s.slice(li),cx,y); }
     }

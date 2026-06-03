@@ -8,14 +8,14 @@
 
 :root {
   /* ─── COLOR ─────────────────────────────────────────────── */
-  --paper:        #F2F0EB;   /* Main background, warm paper surface */
+  --paper:        #ffffff;   /* Main background, warm paper surface */
   --paper-soft:   #F9F9F9;   /* Alt light, image placeholder, overlay */
   --ink:          #0A0A0A;   /* Primary text, rules, navigation */
   --off-black:    #101112;   /* Dark panels, active rows, inverted */
   --near-black:   #131214;   /* Optional dark page background */
   --muted:        #6F6F6F;   /* Secondary text, captions, inactive */
   --rule:         #C9C5BC;   /* Hairline dividers, grid rules */
-  --signal:       #C8451F;   /* The only structural accent */
+  --signal:       #0130aa;   /* The only structural accent */
 
   /* Semantic foreground / background */
   --fg-1: var(--ink);
