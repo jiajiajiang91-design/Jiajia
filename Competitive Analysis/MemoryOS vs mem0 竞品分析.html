@@ -1474,11 +1474,13 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     <div class="eyebrow"><span class="num">01</span><span>THREE KEY FINDINGS</span></div>
     <h2>三个关键发现<span class="sub">基于亲手使用。</span></h2>
 
+    <p class="lede" style="margin-bottom:40px">先说清楚：mem0 在它的主场很强——能自动从对话里抽取记忆、有成熟的开发者 API、云端同步和生态入口，这些 MemoryOS 都没有。下面三条是我在自己的测试范围里观察到的问题。<br><span style="font-size:14px;color:var(--muted)">测试范围：2026.05 · 同一账号、真实工作内容 · 入口涵盖 Chrome 插件 / 网页后台 / 开发者工具（Claude Code）· 结论仅适用于此范围。</span></p>
+
     <div class="findings">
       <div class="finding">
         <div class="n">01 &nbsp;/&nbsp; SYNC FAILURE</div>
-        <h3>mem0 说的“跨平台同步”，实际是断开的。</h3>
-        <p>我从三个不同入口（Chrome 插件 / 网页后台 / 开发者工具）写入的记忆，互相看不到。同一个用户的记忆被拆成了三份，普通用户无法合并。</p>
+        <h3>在我的测试中，mem0 的三个入口没有形成统一的记忆空间。</h3>
+        <p>我从三个不同入口（Chrome 插件 / 网页后台 / 开发者工具）写入的记忆，互相看不到。同一个用户的记忆被拆成了三份，普通用户难以自行合并。</p>
         <details class="disclose">
           <summary>展开看实测证据（2 张截图）</summary>
           <div class="disclose-body">
@@ -1495,13 +1497,13 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
       </div>
       <div class="finding">
         <div class="n">02 &nbsp;/&nbsp; PLATFORM SQUEEZE</div>
-        <h3>AI 平台自带的记忆正在取代第三方工具。</h3>
-        <p>Claude 直接忽略了 mem0 提供的信息，用自己记住的内容回答了一个更详细的答案。第三方记忆工具的空间正在被压缩。</p>
+        <h3>平台自带记忆，可能挤压第三方工具的空间。</h3>
+        <p>在我的一次测试里，Claude 更依赖自己记住的内容、忽略了 mem0 提供的信息。这至少提示：第三方记忆工具需要证明自己比平台原生记忆更稳定、更可控。</p>
       </div>
       <div class="finding">
         <div class="n">03 &nbsp;/&nbsp; LOCAL DE-EMPHASISED</div>
-        <h3>mem0 的本地方案在收缩，重心转向平台 / API。</h3>
-        <p>OpenMemory 的本地 UI 方案已标注 sunset，官方更导向 self-hosted server；mem0 的战略重心更偏平台 / API，而不是普通用户的本地桌面 app。面向普通用户、数据在自己电脑上的本地 APP 这条路，MemoryOS 可以继续坚持。</p>
+        <h3>从可见入口看，mem0 更偏平台 / API，本地桌面是次要路径。</h3>
+        <p>OpenMemory 的本地 UI 方案已在 GitHub 标注 sunset，官方更导向 self-hosted server；从这些入口看，mem0 更强调平台 / API / self-hosted，而不是普通用户的本地桌面 app。面向普通用户、数据在自己电脑上的本地 APP 这条路，MemoryOS 可以继续做下去。</p>
       </div>
     </div>
 
@@ -1623,7 +1625,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     </div>
 
     <p style="font-size:16.5px;line-height:1.7;color:var(--ink-2);margin:0 auto;text-wrap:pretty;text-align:center">
-      用户完全可以同时用两个 — 用 mem0 让 AI 知道"我是一个景观设计师，偏好简洁的沟通方式"，用 MemoryOS 记录"毕设第五章为什么砍掉了云端方案"。<br>
+      用户完全可以同时用两个 — 用 mem0 让 AI 知道"我是一个景观设计师，偏好简洁的沟通方式"，用 MemoryOS 记录"为什么砍掉了云端方案"。<br>
       <strong style="color:var(--ink);font-weight:500">MemoryOS 不需要打赢 mem0，而是把自己的定位讲清楚。</strong>
     </p>
   </div>
@@ -1741,7 +1743,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <div class="arch-col cost">
             <div class="col-label">这个选择的代价</div>
             <h3 class="col-headline">每轮 +1 次 LLM 调用</h3>
-            <p class="col-body">每次 add() ≈ <strong>1× 检索 embed + 1× LLM 抽取 + N× batch embed</strong>。提取 prompt 偏 "when in doubt, extract"，<strong>高召回但容易多存</strong>。对话频繁时累积成本是 mem0 商业模式的核心瓶颈。</p>
+            <p class="col-body">每次 add() ≈ <strong>1× 检索 embed + 1× LLM 抽取 + N× batch embed</strong>。提取 prompt 偏 "when in doubt, extract"，<strong>高召回但容易多存</strong>。对话频繁时，这可能带来成本压力。</p>
           </div>
         </div>
       </article>
@@ -1776,7 +1778,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <div class="arch-col cost">
             <div class="col-label">这个选择的代价</div>
             <h3 class="col-headline">三个入口互不相通</h3>
-            <p class="col-body">实测发现：Chrome 插件 / 网页 / 开发者工具写入的记忆，分别落到 <code>chrome-extension-user</code> / <code>playground</code> / <code>MCP 默认值</code> 三个 user_id 桶里。普通用户根本不知道有这回事。</p>
+            <p class="col-body">实测发现：Chrome 插件 / 网页 / 开发者工具写入的记忆，分别落到 <code>chrome-extension-user</code> / <code>playground</code> / <code>MCP 默认值</code> 三个 user_id 桶里。普通用户很难察觉这些入口背后的 user_id 差异。</p>
           </div>
         </div>
       </article>
@@ -1815,7 +1817,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <div class="arch-col">
             <div class="col-label">为什么这么选</div>
             <h3 class="col-headline">"装上就忘"是核心承诺</h3>
-            <p class="col-body">mem0 卖的就是<strong>用户不用管</strong>。如果让用户手动加记忆，等于承认自动提取不够好——产品定位会崩。所以新增入口故意只走"对话式"，连 Dashboard 的"+ 新建"按钮都没有。</p>
+            <p class="col-body">mem0 卖的就是<strong>用户不用管</strong>。如果让用户手动加记忆，会削弱它"自动记忆、无需管理"的核心承诺。所以新增入口故意只走"对话式"，连 Dashboard 的"+ 新建"按钮都没有。</p>
           </div>
           <div class="arch-col cost">
             <div class="col-label">这个选择的代价</div>
@@ -2193,8 +2195,8 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     <div class="spr">
       <div class="spr-n">意外 03<br><span style="color:var(--muted);font-size:11px;letter-spacing:.14em">平台挤压</span></div>
       <div>
-        <h3>AI 平台自带的记忆功能正在替代第三方工具</h3>
-        <p>Claude 在回答我的问题时，<em>完全忽略了 mem0 提供的信息</em>，转而使用了自己记住的、更详细的内容。这说明 AI 平台自身的记忆能力在快速增强。</p>
+        <h3>平台自带记忆，可能挤压第三方工具的空间</h3>
+        <p>在我的这次测试里，Claude <em>忽略了 mem0 提供的信息</em>，转而使用了自己记住的、更详细的内容。这至少提示：第三方记忆工具需要证明自己比平台原生记忆更稳、更可控。</p>
         <p>对 MemoryOS 的启示：如果 ChatGPT 和 Claude 的自带记忆功能做到了项目级别的记录能力，那么 MemoryOS 的差异化就只剩下 "<em>数据在本地 + 跨 AI 使用</em>" — 需要确保这两个点足够强。</p>
       </div>
     </div>
@@ -2210,8 +2212,8 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
     <div class="spr">
       <div class="spr-n">意外 05<br><span style="color:var(--muted);font-size:11px;letter-spacing:.14em">战略让位</span></div>
       <div>
-        <h3>对方的本地方案在收缩，重心转向平台 / API</h3>
-        <p>OpenMemory 的本地 UI 方案已在 GitHub 标注 "<em>sunset</em>"，官方更导向 self-hosted server；mem0 的战略重心更偏平台 / API，而不是普通用户的本地桌面 app。对"普通用户、数据在自己电脑上"这个位置，MemoryOS 的竞争压力反而更小。</p>
+        <h3>mem0 的重心更偏平台 / API，本地桌面在弱化</h3>
+        <p>OpenMemory 的本地 UI 方案已在 GitHub 标注 "<em>sunset</em>"，官方更导向 self-hosted server；从这些入口看，mem0 更强调平台 / API，而不是普通用户的本地桌面 app。对"普通用户、数据在自己电脑上"这个位置，目前竞争者不多，MemoryOS 可以继续做下去。</p>
       </div>
     </div>
   </div>
@@ -2302,8 +2304,8 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <tr><td>三个入口的记忆互相看不到</td><td>所有记录统一管理</td><td>用户不应该关心"这条记忆是从哪个入口存进来的"</td></tr>
         <tr><td>自动保存、不经用户确认</td><td>用户可以事先审查再决定保存</td><td>在用户还没有充分信任 AI 判断力的阶段，给用户控制权更安全</td></tr>
         <tr><td>记忆只能删除、不能修改内容</td><td>数据是普通文本文件，可在 app 内直接编辑，也可用任何编辑器打开</td><td>记录是用户的资产，应该像笔记本一样可以修改和整理</td></tr>
-        <tr><td>正在退出"数据存在本地"这条路</td><td>坚持数据存在用户本地</td><td>对方主动让出的位置，竞争压力最小的差异化方向</td></tr>
-        <tr><td>产品定位偏向技术开发者</td><td>明确面向普通用户</td><td>从注册流程到默认页面都在说"这是给程序员用的"，普通用户的市场还是空白</td></tr>
+        <tr><td>本地桌面这条路在弱化</td><td>坚持数据存在用户本地</td><td>mem0 没有重点投入的位置，目前竞争者不多的差异化方向</td></tr>
+        <tr><td>产品定位偏向技术开发者</td><td>明确面向普通用户</td><td>从注册流程到默认页面都更偏开发者，面向普通用户这块还没被很好覆盖</td></tr>
       </tbody>
     </table>
   </div>

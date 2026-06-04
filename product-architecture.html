@@ -448,8 +448,8 @@
     <div class="slide-inner" style="justify-content:center">
       <div class="kicker">
         <span class="dot"></span>
-        <span class="lang-en">A traceable shape</span>
-        <span class="lang-cn">一个可拆开看的形态</span>
+        <span class="lang-en">What the product is made of</span>
+        <span class="lang-cn">产品由哪几块组成</span>
       </div>
 
       <h1 class="anchor">
@@ -458,8 +458,8 @@
       </h1>
 
       <p class="lede">
-        <span class="lang-en">The most basic shape a one-person team could ship right now: cross-AI working memory that lives on the user's machine, drafted by AI, confirmed by user — every write a deliberate act.</span>
-        <span class="lang-cn">一个人当前阶段能搭出来的最朴素形态:跨 AI 工作记忆,存在用户自己电脑上,AI 起草、用户确认——每一次写入都是一次明确的动作。</span>
+        <span class="lang-en">The minimum shippable version of a local-first cross-AI memory tool: working memory that lives on the user's machine, drafted by AI, confirmed by the user — every write a deliberate act.</span>
+        <span class="lang-cn">一个 local-first 跨 AI 记忆工具的最小可用版本：工作记忆存在用户自己电脑上，AI 起草、用户确认——每一次写入都是一次明确的动作。</span>
       </p>
 
       <div class="cover-meta">
@@ -491,7 +491,7 @@
 
       <p class="lede">
         <span class="lang-en">Each module maps to a real component in the codebase — not feature ideas, but things you can open and use right now.</span>
-        <span class="lang-cn">每一块对应代码里一个真实的 component,不是 PPT 上的功能想法,是装上就能点开用的东西。</span>
+        <span class="lang-cn">每一块对应代码里一个真实的 component,是装上就能点开用的东西。</span>
       </p>
 
       <div class="biz-grid">
@@ -541,8 +541,8 @@
             <span class="lang-cn">风险分级收件箱 Review</span>
           </div>
           <div class="desc">
-            <span class="lang-en">The single gate for <em>every</em> write — clipboard import and MCP write-back both queue here. Grouped by risk: low (default-on) / medium / high (default-off + warning). User ticks, writes happen.</span>
-            <span class="lang-cn">所有写回的<em>唯一</em>关口——剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。用户勾,才写。</span>
+            <span class="lang-en">The single gate for <em>every</em> write — clipboard import and MCP write-back both queue here. Grouped by risk: low (default-on) / medium / high (default-off + warning). Only user-approved items are committed to local memory.</span>
+            <span class="lang-cn">所有写回的<em>唯一</em>关口——剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。只有用户确认的条目才会写进本地记忆。</span>
           </div>
           <div class="file">ReviewPage.tsx · inbox</div>
         </div>
@@ -601,7 +601,7 @@
           <ul>
             <li>
               <strong><span class="lang-en">Interaction · user experience path</span><span class="lang-cn">交互 · 用户体验路径</span></strong>
-              <span class="sub"><span class="lang-en">The main page flow: Bootstrap (first-run onboarding) → Dashboard (pick a project, see current goal + recent sessions) → Copy Prompt → paste into external AI → paste AI's response back → Review → save. Every screen is one action, no dead ends.</span><span class="lang-cn">主页面流转: Bootstrap(首次引导) → Dashboard(选项目、看当前目标 + 最近对话) → 复制指令 → 粘到外部 AI → 把 AI 的回复粘回来 → Review → 保存。每一屏一个动作,没有死胡同。</span></span>
+              <span class="sub"><span class="lang-en">The main page flow: Bootstrap (first-run onboarding) → Dashboard (pick a project, see current goal + recent sessions) → Copy Prompt → paste into external AI → paste AI's response back → Review → save. Each screen focuses on one primary action to reduce decision load.</span><span class="lang-cn">主页面流转: Bootstrap(首次引导) → Dashboard(选项目、看当前目标 + 最近对话) → 复制指令 → 粘到外部 AI → 把 AI 的回复粘回来 → Review → 保存。每一屏聚焦一个主要动作，降低决策负担。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">UI · visual style + brand</span><span class="lang-cn">UI · 视觉风格 + 品牌</span></strong>
@@ -748,7 +748,7 @@
           <div class="layer-card-body">
             <div class="layer-cell">
               <span class="k"><span class="lang-en">USER PATH</span><span class="lang-cn">交互路径</span></span>
-              <span class="v"><span class="lang-en">End → Import → Review (old <del>×</del> / new <strong>✓</strong>) → Confirm<br><strong>4 clicks max</strong></span><span class="lang-cn">结束 → 导入 → Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 确认<br><strong>最多 4 下</strong></span></span>
+              <span class="v"><span class="lang-en">End → Import → Review (old <del>×</del> / new <strong>✓</strong>) → Confirm<br><strong>~4 actions (standard flow)</strong></span><span class="lang-cn">结束 → 导入 → Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 确认<br><strong>标准流程约 4 步</strong></span></span>
             </div>
             <div class="layer-cell">
               <span class="k"><span class="lang-en">BRANCH</span><span class="lang-cn">分叉</span></span>
@@ -783,8 +783,8 @@
 
       <!-- PRIMARY · MCP path (v0.2.0) -->
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">
-        <span class="lang-en">Primary · v0.2.0 / MCP · verified: Claude Desktop (.mcpb) · manual config: Codex / Claude Code / Cursor / Cline</span>
-        <span class="lang-cn">主路径 · v0.2.0 / MCP · 已实测：Claude Desktop (.mcpb) · 可手动配置：Codex / Claude Code / Cursor / Cline</span>
+        <span class="lang-en">Primary · v0.2.0 / MCP · Verified: Claude Desktop (.mcpb) · Manually verified: Codex / Claude Code · Configurable, not yet verified: Cursor / Cline · Fallback: clipboard</span>
+        <span class="lang-cn">主路径 · v0.2.0 / MCP · 已实测：Claude Desktop (.mcpb) · 已手动验证：Codex / Claude Code · 可配置但未逐一验证：Cursor / Cline · 兜底：剪贴板</span>
       </div>
       <div class="path-flow">
         <div class="path-step">
@@ -881,14 +881,6 @@
         <div class="road-item todo">
           <span class="road-mark">○</span>
           <span class="road-ver">v0.3</span>
-          <span class="road-what">
-            <span class="lang-en">Mac / Linux build + code signing — platform coverage + kill the "unknown publisher" warning</span>
-            <span class="lang-cn">Mac / Linux 构建 + 代码签名 — 平台覆盖 + 干掉「未知发行者」警告</span>
-          </span>
-        </div>
-        <div class="road-item todo">
-          <span class="road-mark">○</span>
-          <span class="road-ver">v0.4</span>
           <span class="road-what">
             <span class="lang-en">Mac / Linux build + code signing — platform coverage + kill the "unknown publisher" first-launch warning</span>
             <span class="lang-cn">Mac / Linux 构建 + 代码签名 — 平台覆盖 + 干掉首次启动的「未知发行者」警告</span>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Process — Multi-Agent Build of v0.2.0 | Jiajia Jiang</title>
-<meta name="description" content="How MemoryOS v0.2.0 was shipped — a PRD precise enough for multiple AI agents to build in parallel. By Jiajia Jiang.">
+<title>Process — How I Used a PRD to Drive v0.2.0 | Jiajia Jiang</title>
+<meta name="description" content="How MemoryOS v0.2.0 was shipped — a PRD precise enough to drive AI-assisted development, with Claude Code building and Codex reviewing. By Jiajia Jiang.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -192,20 +192,20 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 <header class="hero">
   <div class="hero-content">
     <span class="status">
-      <span class="lang-en">Process · v0.2.0 shipped by orchestrating multiple AI agents</span>
-      <span class="lang-cn">工作方法 · v0.2.0 由编排多个 AI agent 交付</span>
+      <span class="lang-en">Process · how I used a PRD to drive AI-assisted development of v0.2.0</span>
+      <span class="lang-cn">工作方法 · 用一份 PRD 驱动 v0.2.0 的 AI 辅助开发</span>
     </span>
     <h1>
-      <span class="lang-en">A PRD precise enough for several agents to build in parallel<span class="en">I shipped MemoryOS v0.2.0 as PM, spec author and agent orchestrator — not by hand-writing the code.</span></span>
-      <span class="lang-cn">一份让多个 agent 能并行执行的 PRD<span class="en">以 PM、规格作者、agent 编排者的角色交付了 MemoryOS v0.2.0</span></span>
+      <span class="lang-en">How I used a PRD to drive AI-assisted development<span class="en">I shipped MemoryOS v0.2.0 as PM and spec author — AI coding tools implemented against the PRD, while I owned scope, acceptance criteria and release decisions.</span></span>
+      <span class="lang-cn">用一份 PRD 驱动 AI 辅助开发<span class="en">以 PM、规格作者的角色交付了 MemoryOS v0.2.0</span></span>
     </h1>
     <p class="hero-sub">
-      <span class="lang-en">"Vibe coding" usually means chatting a feature into existence. I ran it as a small org: one PRD as the single source of truth, Claude Code building it phase by phase, Codex as an independent reviewer, and me owning scope, red lines and the phase gates — plus pre-empting the exact places two agents would disagree.</span>
-      <span class="lang-cn">Vibe coding时，我把AI当一个小团队来跑：一份 PRD 作唯一事实源，Claude Code 按 Phase 实现，Codex 做独立 review，我负责范围、红线和每道 Phase gate。</span>
+      <span class="lang-en">"Vibe coding" usually means chatting a feature into existence. I treated the PRD as the single source of truth instead: Claude Code implemented it phase by phase, Codex reviewed independently, and I controlled scope, red lines and the phase gates — plus pre-empting the exact places two tools would read the same spec differently.</span>
+      <span class="lang-cn">Vibe coding 常被理解成"聊着聊着功能就出来了"。我换了种做法：把 PRD 当唯一事实源——Claude Code 按 Phase 实现，Codex 独立 review，我负责范围、红线和每道 Phase gate，并提前堵住两个工具可能把同一份规格理解不一致的地方。</span>
     </p>
     <div class="tags">
-      <span class="tag tag--signal">Spec-driven</span>
-      <span class="tag">Multi-agent</span>
+      <span class="tag tag--signal">PRD-driven</span>
+      <span class="tag">Spec as contract</span>
       <span class="tag">Claude Code · Codex</span>
       <span class="tag">Phase-gated</span>
     </div>
@@ -291,15 +291,19 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <span class="lang-cn">Phase 0 → 6，每道都被自测卡住<span class="en">Each phase gated by its own self-test</span></span>
   </h2>
   <div class="timeline">
-    <div class="tphase"><span class="pn">Phase 0</span><div class="pt"><span class="lang-en">Pre-fixes</span><span class="lang-cn">前置修复</span></div><div class="pd"><span class="lang-en">sourceTool→sourceClient; aboutMe out of end-prompt</span><span class="lang-cn">sourceTool→sourceClient；aboutMe 移出结束指令</span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 1</span><div class="pt"><span class="lang-en">Inbox core</span><span class="lang-cn">收件箱核心</span></div><div class="pd"><span class="lang-en">write/read/apply/discard + import-then-review</span><span class="lang-cn">写/读/入库/丢弃 + 导入即 Review</span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 2</span><div class="pt"><span class="lang-en">MCP read</span><span class="lang-cn">MCP 读</span></div><div class="pd"><span class="lang-en"><code>list_projects</code> / <code>get_project_memory</code>, one client</span><span class="lang-cn"><code>list_projects</code> / <code>get_project_memory</code>，一个客户端</span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 3</span><div class="pt"><span class="lang-en">MCP write</span><span class="lang-cn">MCP 写</span></div><div class="pd"><span class="lang-en"><code>save_session_handoff</code> → inbox (atomic)</span><span class="lang-cn"><code>save_session_handoff</code> → 收件箱（原子写）</span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 4</span><div class="pt"><span class="lang-en">Package</span><span class="lang-cn">打包</span></div><div class="pd"><span class="lang-en">bundled with app / <code>.mcpb</code></span><span class="lang-cn">随 app 打包 / <code>.mcpb</code></span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 5</span><div class="pt"><span class="lang-en">Tutorial</span><span class="lang-cn">连接教程</span></div><div class="pd"><span class="lang-en">client matrix, real config paths</span><span class="lang-cn">客户端矩阵、真实配置路径</span></div><span class="pass">PASS</span></div>
-    <div class="tphase"><span class="pn">Phase 6</span><div class="pt"><span class="lang-en">Telemetry + redline</span><span class="lang-cn">埋点 + 红线</span></div><div class="pd"><span class="lang-en">local telemetry + status UI + red-line regression</span><span class="lang-cn">本地埋点 + 状态 UI + 红线回归</span></div><span class="pass">PASS</span></div>
+    <div class="tphase"><span class="pn">Phase 0</span><div class="pt"><span class="lang-en">Pre-fixes</span><span class="lang-cn">前置修复</span></div><div class="pd"><span class="lang-en">sourceTool→sourceClient; aboutMe out of end-prompt</span><span class="lang-cn">sourceTool→sourceClient；aboutMe 移出结束指令</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 1</span><div class="pt"><span class="lang-en">Inbox core</span><span class="lang-cn">收件箱核心</span></div><div class="pd"><span class="lang-en">write/read/apply/discard + import-then-review</span><span class="lang-cn">写/读/入库/丢弃 + 导入即 Review</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 2</span><div class="pt"><span class="lang-en">MCP read</span><span class="lang-cn">MCP 读</span></div><div class="pd"><span class="lang-en"><code>list_projects</code> / <code>get_project_memory</code>, one client</span><span class="lang-cn"><code>list_projects</code> / <code>get_project_memory</code>，一个客户端</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 3</span><div class="pt"><span class="lang-en">MCP write</span><span class="lang-cn">MCP 写</span></div><div class="pd"><span class="lang-en"><code>save_session_handoff</code> → inbox (atomic)</span><span class="lang-cn"><code>save_session_handoff</code> → 收件箱（原子写）</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 4</span><div class="pt"><span class="lang-en">Package</span><span class="lang-cn">打包</span></div><div class="pd"><span class="lang-en">bundled with app / <code>.mcpb</code></span><span class="lang-cn">随 app 打包 / <code>.mcpb</code></span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 5</span><div class="pt"><span class="lang-en">Tutorial</span><span class="lang-cn">连接教程</span></div><div class="pd"><span class="lang-en">client matrix, real config paths</span><span class="lang-cn">客户端矩阵、真实配置路径</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 6</span><div class="pt"><span class="lang-en">Telemetry + redline</span><span class="lang-cn">埋点 + 红线</span></div><div class="pd"><span class="lang-en">local telemetry + status UI + red-line regression</span><span class="lang-cn">本地埋点 + 状态 UI + 红线回归</span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase gate"><span class="pn">P1</span><div class="pt"><span class="lang-en">Browser plugin</span><span class="lang-cn">浏览器插件</span></div><div class="pd"><span class="lang-en">spike — gated behind user validation</span><span class="lang-cn">spike——验证用户后再做</span></div><span class="pass">GATED</span></div>
   </div>
+  <p class="txt" style="font-size:13px;color:var(--muted);margin-top:var(--s-2)">
+    <span class="lang-en">"Self-test" here means the per-phase checks listed in §06 below (pure-logic / in-memory MCP / real-subprocess stdio) — not a CI badge.</span>
+    <span class="lang-cn">这里的"Self-test"指下方 §06 列出的每个 Phase 的实际检查（纯逻辑 / in-memory MCP / 真子进程 stdio），不是 CI 徽章。</span>
+  </p>
 </section>
 
 <!-- ═══ 04 · ORCHESTRATION ═══ -->
@@ -354,8 +358,8 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <span class="lang-cn">三方读的是同一份 PRD。<a class="linklike" href="prd-full.html">展开看全文 PRD →</a></span>
   </p>
   <p class="txt">
-    <span class="lang-en">When several agents build in parallel, things break at the <strong>seams</strong>: two agents read the same field, or the same write, two different ways — and quietly disagree. The PM job is to spot those seams ahead of time and pin them down in the spec before anyone hits them. Four of the patches that came out of that:</span>
-    <span class="lang-cn">多个 agent 并行干活，出事的地方往往在<strong>接缝</strong>上：两个 agent 把同一个字段、同一次写入各自理解，悄悄就不一致了。我要做的是提前看到这些接缝，先把规格写死。下面是这么来的四个补丁：</span>
+    <span class="lang-en">When one spec is handed to several AI tools, things break at the <strong>seams</strong>: two of them read the same field, or the same write, two different ways — and quietly disagree. The PM job is to spot those seams ahead of time and pin them down in the spec before anyone hits them. Four of the patches that came out of that:</span>
+    <span class="lang-cn">把同一份规格交给几个 AI 工具，出事的地方往往在<strong>接缝</strong>上：两个工具把同一个字段、同一次写入各自理解，悄悄就不一致了。我要做的是提前看到这些接缝，先把规格写死。下面是这么来的四个补丁：</span>
   </p>
   <div class="cards">
     <div class="card accent full">
