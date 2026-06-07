@@ -347,7 +347,7 @@ footer a:hover{border-color:var(--ink)}
         <div class="obs-tag">PDF 处理 · 迂回策略</div>
         <h4>用 Python 代码执行来读 PDF</h4>
         <p>Kimi 处理 PDF 不是直接读取，而是<em>跑 Python 代码</em>（PyMuPDF + OCR）迂回解决。和 Claude 直接读取 PDF 相比慢很多，但说明 Kimi 的策略是"用工具链补模型短板"。</p>
-        <div class="obs-vs"><em>底层逻辑：</em>模型能力不够的地方，用代码执行 + 工具调用兜底。这和"AI 工作台"的定位一致：不靠单点模型能力，靠工具集成覆盖面。</div>
+        <div class="obs-vs"><em>底层逻辑：</em>模型能力不够的地方，用代码执行 + 工具调用补充。这和"AI 工作台"的定位一致：不依赖单点模型能力，依赖工具集成覆盖面。</div>
       </div>
       <div class="obs-card rv">
         <div class="obs-tag">CLAW · 长期 AGENT</div>
@@ -414,7 +414,7 @@ footer a:hover{border-color:var(--ink)}
       <div class="struct-row"><div class="sc-dim">组织逻辑</div><div class="sc-cell">按<strong>能力</strong>分——聊天、写代码、画图、分析</div><div class="sc-cell kimi">按<strong>任务完成链路</strong>分——理解需求 → 调工具 → 生成产物 → 交付</div></div>
       <div class="struct-row"><div class="sc-dim">核心动作</div><div class="sc-cell">你问，它答</div><div class="sc-cell kimi">你说任务，<strong>它规划步骤、调用工具、操作网页</strong></div></div>
       <div class="struct-row"><div class="sc-dim">产物</div><div class="sc-cell">文本、代码、图片——<strong>留在对话框内</strong></div><div class="sc-cell kimi">PPT、网站、表格、代码——<strong>直接可交付</strong></div></div>
-      <div class="struct-row"><div class="sc-dim">壁垒</div><div class="sc-cell">模型能力：推理、上下文长度、多模态</div><div class="sc-cell kimi"><strong>工具集成深度 + agent 执行可靠性</strong></div></div>
+      <div class="struct-row"><div class="sc-dim">核心差异</div><div class="sc-cell">模型能力：推理、上下文长度、多模态</div><div class="sc-cell kimi"><strong>工具集成深度 + agent 执行可靠性</strong></div></div>
       <div class="struct-row"><div class="sc-dim">类比</div><div class="sc-cell">更像一个极聪明的<strong>对话伙伴</strong></div><div class="sc-cell kimi">更像一个能操作你电脑的<strong>AI 助理</strong></div></div>
     </div>
   </div>
@@ -468,7 +468,7 @@ footer a:hover{border-color:var(--ink)}
     <h2>这个方向的三个结构性风险</h2>
     <div class="risk-strip">
       <div class="risk-card rv"><div class="rc-num">RISK 01</div><h4>模型能力会反咬工作流</h4><p>Claude 已有 Computer Use，OpenAI 有 Operator。当<em>模型更强的平台 agent 也够用</em>时，"agent 先走一步"赢的时间窗口有限。</p></div>
-      <div class="risk-card rv"><div class="rc-num">RISK 02</div><h4>浏览器操作不是深护城河</h4><p>WebBridge 体验好，但<em>技术形态可复制</em>。浏览器自动化（Playwright / Puppeteer）是成熟技术。壁垒在操作可靠性和成功率，不在架构独占。</p></div>
+      <div class="risk-card rv"><div class="rc-num">RISK 02</div><h4>浏览器操作不是核心壁垒</h4><p>WebBridge 体验好，但<em>技术形态可复制</em>。浏览器自动化（Playwright / Puppeteer）是成熟技术。差异在操作可靠性和成功率，不在架构独占。</p></div>
       <div class="risk-card rv"><div class="rc-num">RISK 03</div><h4>一次性自动化留不住人</h4><p>"帮我做个 PPT"做完就走。真正能留住人的不是"它会点网页"，是<em>"它记得我的一整套工作方式"</em>：模板、发布习惯、上次做到哪了。这是 Claw 正在尝试解决的核心留存问题。</p></div>
     </div>
   </div>
@@ -482,7 +482,7 @@ footer a:hover{border-color:var(--ink)}
     <div style="border-top:2px solid var(--ink);padding:40px 0 0;margin-top:24px" class="rv">
       <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--signal);font-weight:500;margin-bottom:20px">VERDICT</div>
       <blockquote style="margin:0;font-size:clamp(20px,2.4vw,30px);font-weight:400;line-height:1.5;color:var(--ink);letter-spacing:-.005em">
-        我的判断是：月之暗面押注的，是未来一部分用户不会为<em style="font-weight:500;color:var(--signal)">"更聪明的聊天"</em>付钱，而会为<em style="font-weight:500;color:var(--signal)">"AI 帮我完成真实工作"</em>持续付钱。它的商业目标更像是成为工作流的入口，不是卖模型。你每天的资料、网页、文档、表格、代码、发布后台，都从 Kimi 这里开始。
+        我的判断是：月之暗面的假设是，未来一部分用户不会为<em style="font-weight:500;color:var(--signal)">"更聪明的聊天"</em>付钱，而会为<em style="font-weight:500;color:var(--signal)">"AI 帮我完成真实工作"</em>持续付钱。它的商业目标是成为工作流的入口，不是卖模型。你每天的资料、网页、文档、表格、代码、发布后台，都从 Kimi 这里开始。
       </blockquote>
     </div>
   </div>

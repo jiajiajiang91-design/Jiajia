@@ -966,7 +966,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03a — MCP 主路径（v0.2.0）：读直连 · 一条指令写回收件箱 · 仍由用户审核入库</figcaption>
         </figure>
 
-        <p style="margin-top:var(--s-4)">网页聊天 AI 连不上本地 server，走<strong>手动 5 步兜底</strong>，用剪贴板桥接，殊途同归到同一个收件箱：</p>
+        <p style="margin-top:var(--s-4)">网页聊天 AI 连不上本地 server，走<strong>手动 5 步</strong>，用剪贴板桥接，最终进入同一个收件箱：</p>
 
         <!-- ───── Fig. 03 — Dashboard-style 5-step flow (manual fallback) ───── -->
         <figure class="cs-figure">
@@ -1022,10 +1022,10 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             <span><span style="display:inline-block;width:20px;border-top:2px dashed var(--muted);margin-right:6px;vertical-align:middle;"></span>用户在外部 AI 里执行</span>
           </div>
 
-          <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03 — 手动兜底的五步闭环 · Start → Work → End → AI 总结 → Review &amp; Save</figcaption>
+          <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03 — 手动五步流程 · Start → Work → End → AI 总结 → Review &amp; Save</figcaption>
         </figure>
 
-        <p>兜底路径是一个<strong>用户主动驱动的 5 步循环</strong>（MCP 跑不通时仍可用）:</p>
+        <p>手动路径是一个<strong>用户主动驱动的 5 步循环</strong>（MCP 不可用时仍可用）:</p>
 
         <ol class="cs-steps">
           <li>
@@ -1071,7 +1071,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption>Fig. 04 — 工作台（v0.2.0）: 当前目标、复制开始/结束指令，右上「1 条待审」是新的记忆收件箱入口</figcaption>
         </figure>
 
-        <p>不管走哪条路，最后那一关都不变: <strong>不是 AI 直接写文件, 是用户在收件箱里按风险分级勾选、确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场：AI 读取与起草、用户确认入库。下一节展开。</p>
+        <p>不管走哪条路，最后一步都一样: <strong>不是 AI 直接写文件, 是用户在收件箱里按风险分级勾选、确认每一行写入</strong>。这是 MemoryOS 最重要的产品原则：AI 读取与起草，用户确认入库。下一节展开。</p>
       </section>
 
       <!-- ═══════════════════════════════════════════════════════
@@ -1191,10 +1191,10 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           </tbody>
         </table>
 
-        <p>v0.1.2 之前，唯一的 AI 调用都发生在用户的浏览器里。v0.2.0 让 AI 能通过 MCP 直接读本地记忆，但 <strong>MCP server 全程只跑本地 stdio、不开端口、不联网，写回一律先进收件箱</strong>。读可以直连，<strong>写这道关永远在用户手里（AI 可读取、不可直接写入）</strong>。三层都可以离线工作。</p>
+        <p>v0.1.2 之前，唯一的 AI 调用都发生在用户的浏览器里。v0.2.0 让 AI 能通过 MCP 直接读本地记忆，但 <strong>MCP server 全程只跑本地 stdio、不开端口、不联网，写回一律先进收件箱</strong>。读可以直连，<strong>写入永远由用户确认（AI 可读取、不可直接写入）</strong>。三层都可以离线工作。</p>
 
         <h3>v0.2.0: 连接 AI（MCP）</h3>
-        <p>v0.1.2 之前，AI 读到记忆全靠用户复制粘贴。v0.2.0 多了一条 <strong>MCP 通道</strong>：把 server 打包成 <code>memoryos.mcpb</code>，在 Claude Desktop 里装上、填一个工作区路径，AI 就能直接 <code>list_projects</code> / <code>get_project_memory</code>。但反方向写回被刻意做"窄"：AI 调 <code>save_session_handoff</code> 只能把总结送进<strong>待审收件箱</strong>，必须用户回到 App 里逐条 Review 才入库。这条「读直连、写经审」的边界，是整个 local-first 叙事在接入自动化之后还能立住的关键。</p>
+        <p>v0.1.2 之前，AI 读到记忆全靠用户复制粘贴。v0.2.0 多了一条 <strong>MCP 通道</strong>：把 server 打包成 <code>memoryos.mcpb</code>，在 Claude Desktop 里装上、填一个工作区路径，AI 就能直接 <code>list_projects</code> / <code>get_project_memory</code>。但反方向写回被刻意做"窄"：AI 调 <code>save_session_handoff</code> 只能把总结送进<strong>待审收件箱</strong>，必须用户回到 App 里逐条 Review 才入库。这条「读直连、写经审」的边界，是 local-first 产品在引入自动化之后依然能保持用户控制权的关键。</p>
 
         <div class="cs-shot-row">
           <figure>
@@ -1206,7 +1206,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             <figcaption>Fig. 08 — 跑通：Claude 请求调用「读取项目工作记忆」，仍需用户授权</figcaption>
           </figure>
           <figure>
-            <a class="frame" href="images_memoryos/v020_02_review_inbox.png" data-zoom="images_memoryos/v020_02_review_inbox.png" data-cap="Fig. 09 — 写回这道关：AI 暂存的总结进收件箱，按风险分级、逐条 Review 后才入正式记忆"><img src="images_memoryos/v020_02_review_inbox.png" alt="记忆收件箱 Review 界面：建议更新分安全/中等风险，旧内容划线、新内容高亮，逐条接受或编辑" loading="lazy"/><span class="zoom-cue">⤢</span></a>
+            <a class="frame" href="images_memoryos/v020_02_review_inbox.png" data-zoom="images_memoryos/v020_02_review_inbox.png" data-cap="Fig. 09 — 写回流程：AI 暂存的总结进收件箱，按风险分级、逐条 Review 后才入正式记忆"><img src="images_memoryos/v020_02_review_inbox.png" alt="记忆收件箱 Review 界面：建议更新分安全/中等风险，旧内容划线、新内容高亮，逐条接受或编辑" loading="lazy"/><span class="zoom-cue">⤢</span></a>
             <figcaption>Fig. 09 — 写回经审：总结进收件箱，按风险分级逐条 Review 才入库</figcaption>
           </figure>
         </div>
@@ -1235,9 +1235,9 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">核心机制</div>
               <div style="font-family:var(--font-cjk),var(--font-sans);font-size:var(--body-m);line-height:1.7;color:var(--ink)">
                 <strong>记忆现时性</strong><br>
-                AI 标出过时内容 → 容错解析 → Review 划线对比 → 用户确认 → 旧决策退场
+                AI 标出过时内容 → 容错解析 → Review 划线对比 → 用户确认 → 旧内容被替换
               </div>
-              <div style="margin-top:var(--s-2);font-family:var(--font-mono);font-size:10px;color:var(--muted)">解决：session 越攒越冗余、旧决策不退场</div>
+              <div style="margin-top:var(--s-2);font-family:var(--font-mono);font-size:10px;color:var(--muted)">解决：session 越攒越多，旧内容不更新</div>
             </div>
 
             <div style="padding:var(--s-3);border:1px solid var(--rule);background:var(--paper-soft)">
@@ -1314,7 +1314,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <h2>下一步</h2>
 
         <h3>路线图</h3>
-        <p>v0.1.2 让记忆能保持现时；v0.2.0 让 AI 能直接连上这份记忆。下面按"必须打通的事"组织。</p>
+        <p>v0.1.2 让记忆能保持现时；v0.2.0 让 AI 能直接连上这份记忆。下面按优先级排列。</p>
 
         <div class="cs-roadmap">
           <div class="cs-roadmap-stage cs-roadmap-stage--done">
@@ -1373,7 +1373,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <div class="cs-risks">
           <div>
             <h4>用户可能嫌"审核"这一步麻烦。</h4>
-            <p>v0.2.0 的 MCP 已经把"复制粘贴"从支持的客户端里去掉了，一条指令完成读取与待审暂存。但写回仍要回 App 审核一下才入库。如果种子用户连这一下都反馈"太烦"，"用户是最后一道关"的红线就需要重判，不能继续往全自动加码。</p>
+            <p>v0.2.0 的 MCP 已经把"复制粘贴"从支持的客户端里去掉了，一条指令完成读取与待审暂存。但写回仍要回 App 审核一下才入库。如果种子用户连这一下都反馈"太烦"，"用户是最后一道关"这条原则就需要重新评估，不能继续往全自动方向加码。</p>
           </div>
           <div>
             <h4>AI 平台可能自己做项目级记录。</h4>

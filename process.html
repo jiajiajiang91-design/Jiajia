@@ -201,7 +201,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     </h1>
     <p class="hero-sub">
       <span class="lang-en">I wrote a PRD as the single source of truth — not a vague feature wishlist. Claude Code implemented it phase by phase. Codex reviewed independently. I controlled scope, red lines, and every phase gate. Before any code was written, I identified the seams where two AI tools could read the same spec differently, and pinned them down in the PRD.</span>
-      <span class="lang-cn">我写了一份 PRD 当唯一事实源。不是模糊的需求描述，是精确到 AI 能照章执行的工程文档。Claude Code 按 Phase 实现，Codex 独立复审。我负责范围、红线、每道 Phase gate。写代码之前，我先预判了两个 AI 可能把同一段规格各自理解的地方，在 PRD 里提前写死。</span>
+      <span class="lang-cn">我写了一份 PRD 当唯一事实源。不是模糊的需求描述，是精确到 AI 能照章执行的工程文档。Claude Code 按 Phase 实现，Codex 独立复审。我负责范围、约束条件、每道 Phase gate。写代码之前，我先预判了两个 AI 可能把同一段规格各自理解的地方，在 PRD 里提前明确下来。</span>
     </p>
     <div class="tags">
       <span class="tag tag--signal">PRD-driven</span>
@@ -253,7 +253,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     </div>
     <div class="cell hl">
       <span class="k"><span class="lang-en">Role</span><span class="lang-cn">角色</span></span>
-      <div class="v"><span class="lang-en">PM · spec author · orchestrator</span><span class="lang-cn">PM · 规格作者 · 编排者</span><small><span class="lang-en">scope, red lines, phase gates, final check</span><span class="lang-cn">定范围、画红线、把 Phase gate、最终验收</span></small></div>
+      <div class="v"><span class="lang-en">PM · spec author · orchestrator</span><span class="lang-cn">PM · 规格作者 · 编排者</span><small><span class="lang-en">scope, constraints, phase gates, final check</span><span class="lang-cn">定范围、定约束、把 Phase gate、最终验收</span></small></div>
     </div>
   </div>
 </section>
@@ -297,7 +297,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <div class="tphase"><span class="pn">Phase 3</span><div class="pt"><span class="lang-en">MCP write</span><span class="lang-cn">MCP 写</span></div><div class="pd"><span class="lang-en"><code>save_session_handoff</code> → inbox (atomic)</span><span class="lang-cn"><code>save_session_handoff</code> → 收件箱（原子写）</span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase"><span class="pn">Phase 4</span><div class="pt"><span class="lang-en">Package</span><span class="lang-cn">打包</span></div><div class="pd"><span class="lang-en">bundled with app / <code>.mcpb</code></span><span class="lang-cn">随 app 打包 / <code>.mcpb</code></span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase"><span class="pn">Phase 5</span><div class="pt"><span class="lang-en">Tutorial</span><span class="lang-cn">连接教程</span></div><div class="pd"><span class="lang-en">client matrix, real config paths</span><span class="lang-cn">客户端矩阵、真实配置路径</span></div><span class="pass">SELF-TEST</span></div>
-    <div class="tphase"><span class="pn">Phase 6</span><div class="pt"><span class="lang-en">Telemetry + redline</span><span class="lang-cn">埋点 + 红线</span></div><div class="pd"><span class="lang-en">local telemetry + status UI + red-line regression</span><span class="lang-cn">本地埋点 + 状态 UI + 红线回归</span></div><span class="pass">SELF-TEST</span></div>
+    <div class="tphase"><span class="pn">Phase 6</span><div class="pt"><span class="lang-en">Telemetry + constraints</span><span class="lang-cn">埋点 + 规则检查</span></div><div class="pd"><span class="lang-en">local telemetry + status UI + constraint regression</span><span class="lang-cn">本地埋点 + 状态 UI + 约束回归</span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase gate"><span class="pn">P1</span><div class="pt"><span class="lang-en">Browser plugin</span><span class="lang-cn">浏览器插件</span></div><div class="pd"><span class="lang-en">spike, gated behind user validation</span><span class="lang-cn">spike，验证用户后再做</span></div><span class="pass">GATED</span></div>
   </div>
   <p class="txt" style="font-size:13px;color:var(--muted);margin-top:var(--s-2)">
@@ -310,14 +310,14 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 <section class="sect reveal">
   <span class="lbl"><span class="lang-en">04 · Multi-agent orchestration</span><span class="lang-cn">04 · 多 Agent 编排</span></span>
   <h2>
-    <span class="lang-en">Who did what — and who held the gate<span class="en">谁做什么，谁守关</span></span>
-    <span class="lang-cn">谁做什么，谁守关<span class="en">Who did what — and who held the gate</span></span>
+    <span class="lang-en">Who did what<span class="en">各自的角色</span></span>
+    <span class="lang-cn">分工<span class="en">Who did what</span></span>
   </h2>
   <div class="orch-board">
     <div class="orch-pm">
       <span class="who"><span class="lang-en">Human PM (me)</span><span class="lang-cn">人类 PM（我）</span></span>
       <span class="tag">owner · gate · redline</span>
-      <span class="does"><span class="lang-en">Scope · red lines · the PRD contract · every phase gate · final acceptance.</span><span class="lang-cn">定范围 · 画红线 · 写 PRD 契约 · 把每一道 Phase gate · 最终验收。</span></span>
+      <span class="does"><span class="lang-en">Scope · constraints · the PRD contract · every phase gate · final acceptance.</span><span class="lang-cn">定范围 · 定约束规则 · 写 PRD 契约 · 把每一道 Phase gate · 最终验收。</span></span>
     </div>
     <div class="orch-flow">
       <span class="lang-en">↓&nbsp;&nbsp;one PRD handed down as the single contract&nbsp;&nbsp;↓</span>
@@ -359,7 +359,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
   </p>
   <p class="txt">
     <span class="lang-en">When one spec is handed to several AI tools, things break at the <strong>seams</strong>: two of them read the same field, or the same write, two different ways, and quietly disagree. The PM job is to spot those seams ahead of time and pin them down in the spec before anyone hits them. Four of the patches that came out of that:</span>
-    <span class="lang-cn">把同一份规格交给几个 AI 工具，出事的地方往往在<strong>接缝</strong>上：两个工具把同一个字段、同一次写入各自理解，悄悄就不一致了。我要做的是提前看到这些接缝，先把规格写死。下面是这么来的四个补丁：</span>
+    <span class="lang-cn">把同一份规格交给几个 AI 工具，容易出问题的地方往往是<strong>同一个字段被不同工具各自理解</strong>：两个工具读同一段规格，却给出了不一致的实现。我要做的是提前看到这些歧义点，在规格里明确约定。下面是这么来的四个补丁：</span>
   </p>
   <div class="cards">
     <div class="card accent full">
@@ -372,7 +372,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
       </ol>
     </div>
     <div class="card full">
-      <span class="k"><span class="lang-en">One more seam · two entry paths, one structure</span><span class="lang-cn">还有一处接缝 · 两条入口，进库前归一</span></span>
+      <span class="k"><span class="lang-en">One more point · two entry paths, one structure</span><span class="lang-cn">还有一处 · 两条入口，进库前归一</span></span>
       <p><span class="lang-en">Memory can arrive two ways, so I made them converge before anything is stored: a <strong>manual paste</strong> is parsed from raw Markdown; an <strong>MCP</strong> call arrives as structured fields. Either way, it's normalised into the same structure in the inbox — so the Review screen never has to care where it came from. The shared floor: nothing is written to real memory until the user confirms.</span><span class="lang-cn">记忆有两种来路，所以我让它们在入库前先归一：<strong>手动粘贴</strong>从原始 Markdown 解析；<strong>MCP</strong> 调用直接收结构化字段。无论哪条，进收件箱时都归一成同一个结构。Review 界面就不用关心它从哪来。共同的底线是：用户不确认，就不写进正式记忆。</span></p>
       <span class="src">PRD §4.1</span>
     </div>
@@ -385,10 +385,10 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 
 <!-- ═══ 05 · GUARDRAILS ═══ -->
 <section class="sect reveal">
-  <span class="lbl"><span class="lang-en">05 · Guardrails</span><span class="lang-cn">05 · 红线</span></span>
+  <span class="lbl"><span class="lang-en">05 · Guardrails</span><span class="lang-cn">05 · 约束规则</span></span>
   <h2>
-    <span class="lang-en">Red lines written into the spec<span class="en">把红线写进规格，让只图方便的 agent 没法悄悄换掉它们</span></span>
-    <span class="lang-cn">写进规格的红线<span class="en">So an agent optimising for convenience can't quietly trade them away</span></span>
+    <span class="lang-en">Constraints written into the spec<span class="en">把约束写进规格，防止 agent 为图省事绕过关键限制</span></span>
+    <span class="lang-cn">写进规格的约束<span class="en">So an agent optimising for convenience can't quietly bypass them</span></span>
   </h2>
   <div class="guards">
     <div class="guard"><div class="gt"><span class="lang-en">No silent capture</span><span class="lang-cn">不静默抓取</span></div><div class="gd"><span class="lang-en">every handoff goes to the inbox first</span><span class="lang-cn">任何 handoff 先进收件箱</span></div></div>
@@ -410,10 +410,10 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
   <div class="verify">
     <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Pure-logic self-test: parse / supersede merge / <code>editPercent</code> behave identically in app &amp; server</span><span class="lang-cn">纯逻辑自测：解析 / supersede 合并 / <code>editPercent</code> 在 app 与 server 行为一致</span></span></div>
     <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">In-memory MCP protocol roundtrip: initialize → tools/list → tools/call</span><span class="lang-cn">in-memory MCP 协议 roundtrip：initialize → tools/list → tools/call</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Read-only red-line assertion: server refuses any write outside <code>.memoryos/inbox</code></span><span class="lang-cn">只读红线断言：server 拒绝写 <code>.memoryos/inbox</code> 以外的任何位置</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Read-only constraint check: server refuses any write outside <code>.memoryos/inbox</code></span><span class="lang-cn">只写限制检查：server 拒绝写 <code>.memoryos/inbox</code> 以外的任何位置</span></span></div>
     <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Real-subprocess stdio smoke: spawn the server, run a full pull over stdio</span><span class="lang-cn">真子进程 stdio smoke：起 server 子进程，跑通一次完整 pull</span></span></div>
     <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en"><code>.mcpb</code> build + Claude Desktop install verified end-to-end (enable → restart → new chat)</span><span class="lang-cn"><code>.mcpb</code> 打包 + Claude Desktop 安装端到端跑通（启用 → 重启 → 新对话）</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Red-line regression: no listening port, no user-content upload, no handoff bypassing Review</span><span class="lang-cn">红线回归：无监听端口、无用户内容外传、无 handoff 绕过 Review</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Constraint regression: no listening port, no user-content upload, no handoff bypassing Review</span><span class="lang-cn">约束回归：无监听端口、无用户内容外传、无 handoff 绕过 Review</span></span></div>
   </div>
 
   <span class="lbl" style="margin-top:var(--s-8)"><span class="lang-en">MCP client support: honest tiers</span><span class="lang-cn">MCP 客户端支持：诚实分档</span></span>
@@ -437,7 +437,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 
   <p class="pull">
     <span class="lang-en">The part that doesn't automate: holding the product's story — local-first, user owns the data, never bypass Review — steady while the agents do the building.</span>
-    <span class="lang-cn">不会被自动化掉的那部分：在 agent 负责做的时候，把产品叙事稳稳守住。</span>
+    <span class="lang-cn">不会被自动化掉的那部分：在 agent 负责执行的时候，把产品方向始终握在手里。</span>
   </p>
 
   <div class="cta-out">

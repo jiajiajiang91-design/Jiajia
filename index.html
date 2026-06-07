@@ -748,7 +748,7 @@ html{scroll-behavior:smooth;scroll-padding-top:clamp(200px,22vh,280px)}
 .contact dd a:hover{color:var(--signal);border-bottom-color:var(--signal)}
 /* 两端对齐：首列贴左、末列贴右、中列居中 → contact 左右留白对称 */
 .contact dl:nth-child(3n+2){align-items:center;text-align:center}
-.contact dl:nth-child(3n){align-items:center;text-align:center}
+.contact dl:nth-child(3n){align-items:flex-end;text-align:right}
 
 @media(max-width:900px){
   .contact dl:nth-child(3n+2),.contact dl:nth-child(3n){align-items:flex-start;text-align:left}
@@ -1030,8 +1030,7 @@ body[data-lang="cn"] .lang-cn{
 <!-- 00 / LANDING PLATE ────────────────────────────────────────── -->
 <section class="landing">
   <div class="landing-eyebrow">
-    <span><span class="num">00</span> &nbsp; <span class="lang-en">LANDING PLATE</span><span class="lang-cn">封面</span></span>
-    <span>PORTFOLIO 2025 — 2026 · LONDON / SHANGHAI</span>
+    <span>PORTFOLIO 2025–2026 · LONDON / SHANGHAI</span>
   </div>
 
   <div class="landing-grid">
@@ -1045,8 +1044,8 @@ body[data-lang="cn"] .lang-cn{
       <p class="landing-now">
         <span class="now-lbl"><span class="lang-en">Current product</span><span class="lang-cn">当前产品</span></span>
         <a href="case_study.html">MemoryOS v0.2.0</a>
-        <span class="meta lang-en">· cross-AI work log · connects to AI via MCP · MIT open source</span>
-        <span class="meta lang-cn">· 跨 AI 工作记录 · MCP 接入 · 独立定义、开发并发布</span>
+        <span class="meta lang-en">· stores work progress per project · AI reads &amp; writes via MCP</span>
+        <span class="meta lang-cn">· 按项目存储工作进展 · AI 通过 MCP 直接读写</span>
       </p>
 
       <p class="landing-pos">
@@ -1081,12 +1080,11 @@ body[data-lang="cn"] .lang-cn{
         <li><a href="#row-03"><span class="k">03</span><span class="t"><span class="lang-en">Kimi — Agent Workflow Testing</span><span class="lang-cn">Kimi — Agent 工作流测试</span></span><span class="y">26</span></a></li>
         <li class="div"><span></span><span class="dv"><span class="lang-en">MArch Thesis</span><span class="lang-cn">硕士毕设</span></span><span></span></li>
         <li><a href="#row-04"><span class="k">04</span><span class="t"><span class="lang-en">Programming Decay — Algorithmic Remediation</span><span class="lang-cn">Programming Decay — 算法驱动的场地修复</span></span><span class="y">25 — 26</span></a></li>
-        <li class="sub"><a href="entropy-atlas.html"><span class="k">↳</span><span class="t"><span class="lang-en">Entropy Atlas · Barking Reach 3D · Research Atlas</span><span class="lang-cn">Entropy Atlas · Barking Reach 3D · 研究图集</span></span><span class="y">↗</span></a></li>
+        <li class="sub"><a href="entropy-atlas.html"><span class="k">↳</span><span class="t"><span class="lang-en">Entropy Atlas: evidence map of ~1,000 East London post-industrial sites</span><span class="lang-cn">Entropy Atlas：东伦敦约 1,000 处后工业场地证据地图</span></span><span class="y">↗</span></a></li>
         <li><a href="#row-05"><span class="k">05</span><span class="t"><span class="lang-en">Before Programming Decay — Bio-Cybernetic Prototype</span><span class="lang-cn">Before Programming Decay — 生物控制论原型</span></span><span class="y">25</span></a></li>
       </ol>
       <footer class="lc-foot">
-        <span><span class="lang-en">5 ENTRIES</span><span class="lang-cn">5 个项目</span></span>
-        <span><span class="lang-en">1 PRODUCT · 2 ANALYSES · 1 THESIS (+3)</span><span class="lang-cn">1 产品 · 2 竞品分析 · 1 毕设 (+3 输出)</span></span>
+        <span><span class="lang-en">1 product + 2 analyses + 1 thesis</span><span class="lang-cn">1 个产品 + 2 份分析 + 1 个毕设</span></span>
       </footer>
     </aside>
   </div>
@@ -1096,7 +1094,7 @@ body[data-lang="cn"] .lang-cn{
 <header class="sect-head" id="product">
   <div class="sect-head-num">
     <span><span class="n">01</span> &nbsp; <span class="lang-en">INDEPENDENT PRODUCT · MEMORYOS</span><span class="lang-cn">独立产品 · MEMORYOS</span></span>
-    <span><span class="lang-en">SHIPPED · SELF-USE · v0.2.0 · MIT</span><span class="lang-cn">已交付 · 自己也在用 · v0.2.0 · MIT</span></span>
+    <span><span class="lang-en">v0.2.0 · MIT open source · self-use validated</span><span class="lang-cn">v0.2.0 · MIT 开源 · 自己也在用</span></span>
   </div>
   <h2 class="sect-head-title">
     <span class="lang-en">MemoryOS — Cross-AI Work Log</span>
@@ -1252,7 +1250,7 @@ body[data-lang="cn"] .lang-cn{
                 <section class="mosx-sec">
                   <h2 class="mosx-h2"><span class="lang-en">Current state</span><span class="lang-cn">当前状态</span></h2>
                   <div class="mosx-state">
-                    <p style="margin:0 0 8px"><span class="lang-en"><b>v0.2.0 shipped</b>: closes the loop both ways: AI reads memory through MCP, and writes land in a review inbox first.</span><span class="lang-cn"><b>v0.2.0 已发布</b>。闭环两头打通：AI 通过 MCP 读取记忆，写回先进「记忆收件箱」。</span></p>
+                    <p style="margin:0 0 8px"><span class="lang-en"><b>v0.2.0 shipped</b>: AI reads memory through MCP; writes land in the review inbox for user approval.</span><span class="lang-cn"><b>v0.2.0 已发布</b>。AI 通过 MCP 读取记忆；写回先进「记忆收件箱」，用户审核后才入库。</span></p>
                     <ul class="mosx-bullets" style="margin-bottom:0">
                       <li><span class="lang-en">MCP server live in Claude Desktop (read-only tools verified)</span><span class="lang-cn">MCP server 已在 Claude Desktop 跑通（只读工具已验证）</span></li>
                       <li><span class="lang-en">Review inbox: every write-back confirmed per item</span><span class="lang-cn">记忆收件箱：每条写回都逐条确认</span></li>
@@ -1391,7 +1389,7 @@ body[data-lang="cn"] .lang-cn{
                           <div class="head"><span class="lb"><span class="lang-en">▸ Full file preview (with additions)</span><span class="lang-cn">▸ 完整文件预览（含新增内容）</span></span><button class="edit"><span class="lang-en">Edit</span><span class="lang-cn">编辑</span></button></div>
                           <div class="mosx-superseded">
                             <span class="sl"><span class="lang-en">⚠ Outdated — removed on confirm</span><span class="lang-cn">⚠ 已过时 — 确认后自动删除</span></span>
-                            <span class="txt"><span class="lang-en">MCP: read tools only, write-back not yet wired</span><span class="lang-cn">MCP：仅只读工具，写回尚未打通</span></span>
+                            <span class="txt"><span class="lang-en">MCP: read tools only, write-back not yet connected</span><span class="lang-cn">MCP：仅只读工具，写回尚未接入</span></span>
                           </div>
                           <div class="mosx-old"><span class="lang-en">Status: clipboard bridge working across ChatGPT / Claude / Cursor.</span><span class="lang-cn">状态：剪贴板桥接已在 ChatGPT / Claude / Cursor 间跑通。</span></div>
                           <div class="mosx-newsep"></div>
@@ -1536,13 +1534,13 @@ Output: What we worked on / Key decisions / Current state / Next actions</pre><p
      <aside class="ship-cta-col">
       <a class="ship-cta ship-cta--highlight" href="case_study.html">
         <span class="cta-lbl"><span class="lang-en">Read case study ↗</span><span class="lang-cn">阅读 Case Study ↗</span></span>
-        <span class="cta-name"><span class="lang-en">Problem · users · flow · tests · limits</span><span class="lang-cn">问题 · 用户 · 流程 · 测试 · 限制</span></span>
+        <span class="cta-name"><span class="lang-en">Why I built it · who uses it · how it works</span><span class="lang-cn">为什么做 · 谁在用 · 怎么运作</span></span>
         <span class="cta-sub"><span class="lang-en">The full product story and the decisions behind it</span><span class="lang-cn">完整的产品故事与背后的决策</span></span>
       </a>
       <a class="ship-cta ship-cta--highlight" href="product-architecture.html">
         <span class="cta-lbl"><span class="lang-en">Product architecture →</span><span class="lang-cn">产品架构 →</span></span>
-        <span class="cta-name"><span class="lang-en">Business · Logic · Data · Flow · Roadmap</span><span class="lang-cn">业务架构 · 逻辑层 · 数据层 · 关键流程 · 路线图</span></span>
-        <span class="cta-sub"><span class="lang-en">How the product is structured and why each piece exists</span><span class="lang-cn">产品怎么拆的、每一块为什么存在</span></span>
+        <span class="cta-name"><span class="lang-en">How the product is structured</span><span class="lang-cn">产品怎么拆的、每一块为什么存在</span></span>
+        <span class="cta-sub"><span class="lang-en">Three layers: data · logic · interface. Plus the critical path and roadmap.</span><span class="lang-cn">三层架构：数据层 · 逻辑层 · 表现层。含关键流程与路线图。</span></span>
       </a>
       <a class="ship-cta ship-cta--highlight" href="process.html">
         <span class="cta-lbl"><span class="lang-en">Process / PRD →</span><span class="lang-cn">工作方法 / PRD →</span></span>
@@ -1915,24 +1913,24 @@ Output: What we worked on / Key decisions / Current state / Next actions</pre><p
     <dd><a href="mailto:jiajia.jiang.25@ucl.ac.uk">jiajia.jiang.25@ucl.ac.uk</a></dd>
   </dl>
   <dl>
-    <dt><span class="lang-en">Email · Personal</span><span class="lang-cn">邮箱 · 个人</span></dt>
-    <dd><a href="mailto:jiangjiajia0520@163.com">jiangjiajia0520@163.com</a></dd>
-  </dl>
-  <dl>
     <dt>GitHub</dt>
     <dd><a href="https://github.com/jiajiajiang91-design" target="_blank" rel="noopener">github.com/jiajiajiang91-design ↗</a></dd>
+  </dl>
+  <dl>
+    <dt><span class="lang-en">Email · Personal</span><span class="lang-cn">邮箱 · 个人</span></dt>
+    <dd><a href="mailto:jiangjiajia0520@163.com">jiangjiajia0520@163.com</a></dd>
   </dl>
   <dl>
     <dt>LinkedIn</dt>
     <dd><a href="https://www.linkedin.com/in/jiajia-jiang-179231390" target="_blank" rel="noopener">linkedin.com/in/jiajia-jiang-179231390 ↗</a></dd>
   </dl>
   <dl>
-    <dt><span class="lang-en">Based in</span><span class="lang-cn">位置</span></dt>
-    <dd><span class="lang-en">London / Shanghai</span><span class="lang-cn">伦敦 / 上海</span></dd>
-  </dl>
-  <dl>
     <dt><span class="lang-en">Xiaohongshu</span><span class="lang-cn">小红书</span></dt>
     <dd><a href="https://xhslink.com/m/7Qpx0ixpMTS" target="_blank" rel="noopener"><span class="lang-en">@江喷瓜 · 20.5K likes &amp; saves ↗</span><span class="lang-cn">@江喷瓜 · 20.5K 赞与收藏 ↗</span></a></dd>
+  </dl>
+  <dl>
+    <dt><span class="lang-en">Based in</span><span class="lang-cn">位置</span></dt>
+    <dd><span class="lang-en">London / Shanghai</span><span class="lang-cn">伦敦 / 上海</span></dd>
   </dl>
 </section>
 
