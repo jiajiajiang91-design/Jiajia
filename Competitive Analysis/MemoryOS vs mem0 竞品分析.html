@@ -1472,7 +1472,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section alt" id="findings" data-screen-label="02 Findings">
   <div class="wrap">
     <div class="eyebrow"><span class="num">01</span><span>THREE KEY FINDINGS</span></div>
-    <h2>三个关键发现<span class="sub">基于亲手使用。</span></h2>
+    <h2>三个关键发现</h2>
 
     <p class="lede" style="margin-bottom:40px">先说清楚：mem0 在它的主场很强——能自动从对话里抽取记忆、有成熟的开发者 API、云端同步和生态入口，这些 MemoryOS 都没有。下面三条是我在自己的测试范围里观察到的问题。<br><span style="font-size:14px;color:var(--muted)">测试范围：2026.05 · 同一账号、真实工作内容 · 入口涵盖 Chrome 插件 / 网页后台 / 开发者工具（Claude Code）· 结论仅适用于此范围。</span></p>
 
@@ -1517,7 +1517,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="market" data-screen-label="03 Market & Profiles">
   <div class="wrap">
     <div class="eyebrow"><span class="num">1</span><span>市场结构 & 产品画像</span></div>
-    <h2>不同赛道，不同产品<span class="sub">"AI 记忆"工具分两层市场——先分清楚谁是谁，再讨论差异。</span></h2>
+    <h2>不同赛道，不同产品<span class="sub">"AI 记忆"工具分两层市场。</span></h2>
 
     <div class="mp-dashboard">
 
@@ -1596,7 +1596,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="jtbd" data-screen-label="05 JTBD">
   <div class="wrap">
     <div class="eyebrow"><span class="num">2</span><span>各自在解决什么问题</span></div>
-    <h2>从解决的不同问题看出核心区别<span class="sub">从解决的不同问题看出核心区别。后面所有产品差异，都从这里长出来。</span></h2>
+    <h2>从解决的不同问题看出核心区别<span class="sub">后面所有产品差异，都从这里出发。</span></h2>
 
     <div class="jtbd">
       <div class="jtbd-side">
@@ -1635,7 +1635,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="users" data-screen-label="06 Users">
   <div class="wrap">
     <div class="eyebrow"><span class="num">3</span><span>谁在用这两个产品</span></div>
-    <h2>用户不一样，结论才成立<span class="sub">两个产品服务的人群不同，所有差异不是"谁更好"，而是各自在哪些方面有优势。</span></h2>
+    <h2>用户不一样，结论才成立<span class="sub">两个产品服务的人群不同，差异不是"谁更好"。</span></h2>
 
     <div class="jtbd">
       <div class="jtbd-side">
@@ -1653,13 +1653,13 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         <dl>
           <dt>典型场景</dt><dd>研究生用 Claude 和 ChatGPT 推论文，每次开新对话花 10 分钟重述上次到哪了；自由职业者跨几个 AI 管两三个项目，决策散落各处。已感到复制粘贴之痛，但非技术背景。</dd>
           <dt>使用频率</dt><dd>每天在 AI 上工作数小时，同一项目跨越数周到数月，上下文连续性是刚需。</dd>
-          <dt>摩擦容忍度</dt><dd>较高。愿意花 30 秒确认一次，换下次不用重述 10 分钟背景——手动确认是"AI 记对了"的安全感。</dd>
+          <dt>摩擦容忍度</dt><dd>较高。愿意花 30 秒确认一次，换下次不用重述 10 分钟背景。手动确认是"AI 记对了"的安全感。</dd>
         </dl>
       </div>
     </div>
 
     <div class="jtbd-bridge">
-      MemoryOS 不是给日常聊天设计的 —— <em>日常场景下 mem0 的"装上就忘"确实更好</em>。
+      MemoryOS 不是给日常聊天设计的。<em>日常场景下 mem0 的"装上就忘"确实更好</em>。
     </div>
   </div>
 </section>
@@ -1668,7 +1668,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section alt" id="arch" data-screen-label="07 Architecture">
   <div class="wrap">
     <div class="eyebrow"><span class="num">4</span><span>产品架构逆向拆解</span></div>
-    <h2>mem0 架构深度拆解<span class="sub">按产品架构四层框架（逻辑层 / 算法层 / 数据层 / 表现层），逆向拆解 mem0 的实现。</span></h2>
+    <h2>mem0 架构深度拆解<span class="sub">按产品架构四层框架逆向拆解。</span></h2>
 
     <!-- ═══ mem0 独立拆解 dashboard ═══ -->
     <p class="arch-intro">每一层按 <em>这层在干什么</em><span class="flow-arrow">→</span><em>mem0 选了什么策略</em><span class="flow-arrow">→</span><em>这个选择的代价</em> 三段拆，推理链尽量贴源码。</p>
@@ -1696,7 +1696,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <div class="arch-col">
             <div class="col-label">为什么这么选</div>
             <h3 class="col-headline">保留历史完整性</h3>
-            <p class="col-body">新旧冲突时不直接覆盖，而是 <strong>追加新记忆并关联旧的</strong>——用户的偏好演变、经历变化全部保留。自动修正需用户自己设计 agent 工作流调 <code>update(memory_id)</code>。</p>
+            <p class="col-body">新旧冲突时不直接覆盖，而是 <strong>追加新记忆并关联旧的</strong>。用户的偏好演变、经历变化全部保留。自动修正需用户自己设计 agent 工作流调 <code>update(memory_id)</code>。</p>
           </div>
           <div class="arch-col cost">
             <div class="col-label">这个选择的代价</div>
@@ -1731,7 +1731,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
             <div class="arch-pipeline-arrow">›</div>
             <div class="arch-pipeline-step"><span class="step-name">存储</span><span class="step-sub">向量库</span></div>
           </div>
-          <p class="arch-pipeline-note">关键点：第 4 步用 <code>ADDITIVE_EXTRACTION_PROMPT</code> 让 LLM 输出 JSON 记忆——不是规则匹配，是模型判断</p>
+          <p class="arch-pipeline-note">关键点：第 4 步用 <code>ADDITIVE_EXTRACTION_PROMPT</code> 让 LLM 输出 JSON 记忆。不是规则匹配，是模型判断</p>
         </div>
 
         <div class="arch-cols-2">
@@ -1812,7 +1812,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
                 <div class="pill-label">新增</div>
               </div>
             </div>
-            <p class="col-body">查看 / 删除都比较直接。但<strong>新增必须通过对话触发</strong>——在 AI 里说"请记住 X"，不能在记忆库手动创建一条。</p>
+            <p class="col-body">查看 / 删除都比较直接。但<strong>新增必须通过对话触发</strong>：在 AI 里说"请记住 X"，不能在记忆库手动创建一条。</p>
           </div>
           <div class="arch-col">
             <div class="col-label">为什么这么选</div>
@@ -1822,7 +1822,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
           <div class="arch-col cost">
             <div class="col-label">这个选择的代价</div>
             <h3 class="col-headline">主动需求没有入口</h3>
-            <p class="col-body">当用户想<strong>主动告诉 AI 一个事实</strong>（"我刚搬家，地址改了"），不是在自然对话里，而是直接想录入——mem0 没有路径。用户必须先开个对话、绕一圈让 AI 提取，才能写入。</p>
+            <p class="col-body">当用户想<strong>主动告诉 AI 一个事实</strong>（"我刚搬家，地址改了"），不是在自然对话里，而是直接想录入。mem0 没有提供这个路径。用户必须先开个对话、绕一圈让 AI 提取，才能写入。</p>
           </div>
         </div>
       </article>
@@ -1866,7 +1866,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="axes" data-screen-label="08 Axes">
   <div class="wrap">
     <div class="eyebrow"><span class="num">5</span><span>产品特性与差异</span></div>
-    <h2>四条关键差异<span class="sub">"记 人" vs "记 事"，直接决定了四个方面做出相反的选择。</span></h2>
+    <h2>四条关键差异<span class="sub">"记人" vs "记事"，直接决定了四个方面做出相反的选择。</span></h2>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
 
@@ -1942,7 +1942,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="hands-on" data-screen-label="08 Hands-on">
   <div class="wrap">
     <div class="eyebrow"><span class="num">6</span><span>亲手使用产品的体验记录</span></div>
-    <h2>用真实工作内容测试 mem0<span class="sub">三个场景检验三个核心宣传点——证据全部来自真实操作。</span></h2>
+    <h2>用真实工作内容测试 mem0<span class="sub">三个场景检验三个核心宣传点。</span></h2>
 
     <div class="ho-log">
 
@@ -2166,7 +2166,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section" id="surprises" data-screen-label="10 Surprises">
   <div class="wrap">
     <div class="eyebrow"><span class="num">8</span><span>意外发现</span></div>
-    <h2>体验前没有预判到的意外发现<span class="sub">这些是真实使用后才知道的事情。</span></h2>
+    <h2>体验前没有预判到的意外发现</h2>
 
     <div class="spr">
       <div class="spr-n">意外 01<br><span style="color:var(--muted);font-size:11px;letter-spacing:.14em">信息安全性存疑</span></div>
@@ -2223,7 +2223,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
 <section class="section alt" id="strategy" data-screen-label="11 Strategy">
   <div class="wrap">
     <div class="eyebrow"><span class="num">9</span><span>MemoryOS 接下来做什么</span></div>
-    <h2>定位调整 · 资源优先级<span class="sub">建议从"跨 AI 记忆"调整为"跨 AI 工作记录"。</span></h2>
+    <h2>定位调整 · 资源优先级</h2>
 
     <div class="rec-grid">
       <div>
@@ -2282,7 +2282,7 @@ footer strong{color:var(--ink);font-weight:500;margin-right:6px}
         </div>
         <div class="item">
           <h4>"建议确认"模式 <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:#2e7d32;border:1px solid #2e7d32;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle">✓ 已落地</span></h4>
-          <p>在"全自动"和"全手动"之间找平衡——AI 推荐要保存的内容，用户审核确认。v0.2.0 把它做成了通道无关的「记忆收件箱」：无论 MCP 写回还是手动导入，都先进收件箱、按风险分级、逐条确认后才入库。</p>
+          <p>在"全自动"和"全手动"之间找平衡：AI 推荐要保存的内容，用户审核确认。v0.2.0 把它做成了通道无关的「记忆收件箱」：无论 MCP 写回还是手动导入，都先进收件箱、按风险分级、逐条确认后才入库。</p>
         </div>
       </div>
     </div>

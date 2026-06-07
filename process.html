@@ -200,8 +200,8 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
       <span class="lang-cn">用一份 PRD 驱动 AI 辅助开发<span class="en">以 PM、规格作者的角色交付了 MemoryOS v0.2.0</span></span>
     </h1>
     <p class="hero-sub">
-      <span class="lang-en">"Vibe coding" usually means chatting a feature into existence. I treated the PRD as the single source of truth instead: Claude Code implemented it phase by phase, Codex reviewed independently, and I controlled scope, red lines and the phase gates — plus pre-empting the exact places two tools would read the same spec differently.</span>
-      <span class="lang-cn">Vibe coding 常被理解成"聊着聊着功能就出来了"。我换了种做法：把 PRD 当唯一事实源——Claude Code 按 Phase 实现，Codex 独立 review，我负责范围、红线和每道 Phase gate，并提前堵住两个工具可能把同一份规格理解不一致的地方。</span>
+      <span class="lang-en">I wrote a PRD as the single source of truth — not a vague feature wishlist. Claude Code implemented it phase by phase. Codex reviewed independently. I controlled scope, red lines, and every phase gate. Before any code was written, I identified the seams where two AI tools could read the same spec differently, and pinned them down in the PRD.</span>
+      <span class="lang-cn">我写了一份 PRD 当唯一事实源。不是模糊的需求描述，是精确到 AI 能照章执行的工程文档。Claude Code 按 Phase 实现，Codex 独立复审。我负责范围、红线、每道 Phase gate。写代码之前，我先预判了两个 AI 可能把同一段规格各自理解的地方，在 PRD 里提前写死。</span>
     </p>
     <div class="tags">
       <span class="tag tag--signal">PRD-driven</span>
@@ -298,7 +298,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <div class="tphase"><span class="pn">Phase 4</span><div class="pt"><span class="lang-en">Package</span><span class="lang-cn">打包</span></div><div class="pd"><span class="lang-en">bundled with app / <code>.mcpb</code></span><span class="lang-cn">随 app 打包 / <code>.mcpb</code></span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase"><span class="pn">Phase 5</span><div class="pt"><span class="lang-en">Tutorial</span><span class="lang-cn">连接教程</span></div><div class="pd"><span class="lang-en">client matrix, real config paths</span><span class="lang-cn">客户端矩阵、真实配置路径</span></div><span class="pass">SELF-TEST</span></div>
     <div class="tphase"><span class="pn">Phase 6</span><div class="pt"><span class="lang-en">Telemetry + redline</span><span class="lang-cn">埋点 + 红线</span></div><div class="pd"><span class="lang-en">local telemetry + status UI + red-line regression</span><span class="lang-cn">本地埋点 + 状态 UI + 红线回归</span></div><span class="pass">SELF-TEST</span></div>
-    <div class="tphase gate"><span class="pn">P1</span><div class="pt"><span class="lang-en">Browser plugin</span><span class="lang-cn">浏览器插件</span></div><div class="pd"><span class="lang-en">spike — gated behind user validation</span><span class="lang-cn">spike——验证用户后再做</span></div><span class="pass">GATED</span></div>
+    <div class="tphase gate"><span class="pn">P1</span><div class="pt"><span class="lang-en">Browser plugin</span><span class="lang-cn">浏览器插件</span></div><div class="pd"><span class="lang-en">spike, gated behind user validation</span><span class="lang-cn">spike，验证用户后再做</span></div><span class="pass">GATED</span></div>
   </div>
   <p class="txt" style="font-size:13px;color:var(--muted);margin-top:var(--s-2)">
     <span class="lang-en">"Self-test" here means the per-phase checks listed in §06 below (pure-logic / in-memory MCP / real-subprocess stdio) — not a CI badge.</span>
@@ -327,59 +327,59 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
       <div class="ag">
         <div class="who">Claude Code</div>
         <span class="tag">primary build</span>
-        <div class="does"><span class="lang-en">Implements each phase against the contract; writes the Node MCP server; spawns read-only review subagents.</span><span class="lang-cn">照契约实现每个 Phase；写 Node MCP server；派生只读子 agent 复审。</span></div>
+        <div class="does"><span class="lang-en">Implements each phase against the contract; writes the Node MCP server; creates read-only review subagents.</span><span class="lang-cn">照契约实现每个 Phase；写 Node MCP server；派生只读子 agent 复审。</span></div>
       </div>
       <div class="ag">
         <div class="who"><span class="lang-en">Review subagent</span><span class="lang-cn">只读子 agent</span></div>
         <span class="tag">read-only audit</span>
-        <div class="does"><span class="lang-en">A spawned agent re-reads each phase's diff against the §8 acceptance list and flags bugs / risks — read-only.</span><span class="lang-cn">派生的 agent 按 §8 验收清单逐条复读 Phase 改动，挑 bug / 风险——只读不改。</span></div>
+        <div class="does"><span class="lang-en">A spawned agent re-reads each phase's diff against the §8 acceptance list and flags bugs / risks, read-only.</span><span class="lang-cn">派生的 agent 按 §8 验收清单逐条复读 Phase 改动，挑 bug / 风险，只读不改。</span></div>
       </div>
       <div class="ag">
         <div class="who">Codex</div>
         <span class="tag">independent review</span>
-        <div class="does"><span class="lang-en">A different model cross-checks the spec &amp; the <code>.mcpb</code> packaging; its corrections became the disambiguation patches.</span><span class="lang-cn">换一个模型交叉核对规格与 <code>.mcpb</code> 打包；它的修正变成了规格里的消歧补丁。</span></div>
+        <div class="does"><span class="lang-en">A different model cross-checks the spec &amp; the <code>.mcpb</code> packaging; its corrections were applied as spec patches before implementation.</span><span class="lang-cn">换一个模型交叉核对规格与 <code>.mcpb</code> 打包；它的修正作为规格补丁，在写代码前就合并进了 PRD。</span></div>
       </div>
     </div>
   </div>
 
   <div class="shots">
     <figure>
-      <a class="frame" href="images_memoryos/v020_06_vibecoding_claudecode.png" data-zoom="images_memoryos/v020_06_vibecoding_claudecode.png" data-cap="Claude Code 实现 Phase 2 后，派生一个只读子 agent「Review Phase 2 MCP server」按验收清单复审——主 agent 编排、子 agent 审计。"><img src="images_memoryos/v020_06_vibecoding_claudecode.png" alt="Claude Code spawning a read-only review subagent for Phase 2" loading="lazy"><span class="zoom-cue">⤢</span></a>
-      <figcaption><span class="lang-en">Claude Code spawns a read-only review subagent to audit Phase 2</span><span class="lang-cn">Claude Code 派生只读子 agent 复审 Phase 2</span></figcaption>
+      <a class="frame" href="images_memoryos/v020_06_vibecoding_claudecode.png" data-zoom="images_memoryos/v020_06_vibecoding_claudecode.png" data-cap="Claude Code 实现 Phase 2 后，派生一个只读子 agent「Review Phase 2 MCP server」按验收清单复审。主 agent 编排、子 agent 审计。"><img src="images_memoryos/v020_06_vibecoding_claudecode.png" alt="Claude Code creating a read-only review subagent for Phase 2" loading="lazy"><span class="zoom-cue">⤢</span></a>
+      <figcaption><span class="lang-en">Claude Code creates a read-only review subagent to audit Phase 2</span><span class="lang-cn">Claude Code 派生只读子 agent 复审 Phase 2</span></figcaption>
     </figure>
     <figure>
-      <a class="frame" href="images_memoryos/v020_07_vibecoding_cursor.png" data-zoom="images_memoryos/v020_07_vibecoding_cursor.png" data-cap="Codex 作为独立 reviewer，审查记忆同步 PRD 与 .mcpb 打包 manifest——和 Claude Code 用的是不同模型，交叉核对。"><img src="images_memoryos/v020_07_vibecoding_cursor.png" alt="Codex reviewing the PRD and .mcpb packaging as an independent agent" loading="lazy"><span class="zoom-cue">⤢</span></a>
+      <a class="frame" href="images_memoryos/v020_07_vibecoding_cursor.png" data-zoom="images_memoryos/v020_07_vibecoding_cursor.png" data-cap="Codex 作为独立 reviewer，审查记忆同步 PRD 与 .mcpb 打包 manifest。和 Claude Code 用的是不同模型，交叉核对。"><img src="images_memoryos/v020_07_vibecoding_cursor.png" alt="Codex reviewing the PRD and .mcpb packaging as an independent agent" loading="lazy"><span class="zoom-cue">⤢</span></a>
       <figcaption><span class="lang-en">Codex, a different model, cross-reviews the PRD &amp; <code>.mcpb</code> packaging</span><span class="lang-cn">Codex（不同模型）独立交叉审查 PRD 与 <code>.mcpb</code> 打包</span></figcaption>
     </figure>
   </div>
 
   <p class="txt">
-    <span class="lang-en">All three read the same contract — the PRD. <a class="linklike" href="prd-full.html">Read the full PRD →</a></span>
+    <span class="lang-en">All three read the same contract: the PRD. <a class="linklike" href="prd-full.html">Read the full PRD →</a></span>
     <span class="lang-cn">三方读的是同一份 PRD。<a class="linklike" href="prd-full.html">展开看全文 PRD →</a></span>
   </p>
   <p class="txt">
-    <span class="lang-en">When one spec is handed to several AI tools, things break at the <strong>seams</strong>: two of them read the same field, or the same write, two different ways — and quietly disagree. The PM job is to spot those seams ahead of time and pin them down in the spec before anyone hits them. Four of the patches that came out of that:</span>
+    <span class="lang-en">When one spec is handed to several AI tools, things break at the <strong>seams</strong>: two of them read the same field, or the same write, two different ways, and quietly disagree. The PM job is to spot those seams ahead of time and pin them down in the spec before anyone hits them. Four of the patches that came out of that:</span>
     <span class="lang-cn">把同一份规格交给几个 AI 工具，出事的地方往往在<strong>接缝</strong>上：两个工具把同一个字段、同一次写入各自理解，悄悄就不一致了。我要做的是提前看到这些接缝，先把规格写死。下面是这么来的四个补丁：</span>
   </p>
   <div class="cards">
     <div class="card accent full">
-      <span class="k"><span class="lang-en">Disambiguation patches — problem → fix</span><span class="lang-cn">消歧补丁 — 不打会出什么事 → 怎么解</span></span>
+      <span class="k"><span class="lang-en">Spec patches — problems found and fixed</span><span class="lang-cn">消歧补丁：4 个提前发现并修复的问题</span></span>
       <ol class="patchlist">
-        <li><span class="pn">01</span><div class="pc"><span class="lang-en"><strong>Who actually wrote this memory?</strong> One handoff can come from different channels (manual / MCP) and different clients (Claude Desktop / Codex…). Crammed into one field, they're indistinguishable — so I split it into <code>sourceChannel</code> + <code>sourceClient</code>, and made the often-unreliable "platform" field nullable.</span><span class="lang-cn"><strong>这条记忆到底谁写的？</strong>一份 handoff 可能来自不同通道（手动 / MCP）、不同客户端（Claude Desktop / Codex…）。挤在一个字段里就分不清——所以拆成 <code>sourceChannel</code> ＋ <code>sourceClient</code> 两个字段，那个常常填不准的"平台"字段干脆设成可空。</span></div></li>
-        <li><span class="pn">02</span><div class="pc"><span class="lang-en"><strong>Two processes writing the same log collide.</strong> The app and the server are separate processes; if both append to one telemetry file they race. So each writes its own file, merged only at analysis time.</span><span class="lang-cn"><strong>两个进程写同一份埋点会打架。</strong>app 和 server 是两个进程，都往同一个埋点文件追加就会并发冲突——让它们各写各的文件，分析时再合并。</span></div></li>
+        <li><span class="pn">01</span><div class="pc"><span class="lang-en"><strong>Who actually wrote this memory?</strong> One handoff can come from different channels (manual / MCP) and different clients (Claude Desktop / Codex…). Crammed into one field, they're indistinguishable — so I split it into <code>sourceChannel</code> + <code>sourceClient</code>, and made the often-unreliable "platform" field nullable.</span><span class="lang-cn"><strong>这条记忆到底谁写的？</strong>一份 handoff 可能来自不同通道（手动 / MCP）、不同客户端（Claude Desktop / Codex…）。挤在一个字段里就分不清，所以拆成 <code>sourceChannel</code> ＋ <code>sourceClient</code> 两个字段，那个常常填不准的"平台"字段干脆设成可空。</span></div></li>
+        <li><span class="pn">02</span><div class="pc"><span class="lang-en"><strong>Two processes writing the same log collide.</strong> The app and the server are separate processes; if both append to one telemetry file they race. So each writes its own file, merged only at analysis time.</span><span class="lang-cn"><strong>两个进程写同一份埋点会打架。</strong>app 和 server 是两个进程，都往同一个埋点文件追加就会并发冲突。让它们各写各的文件，分析时再合并。</span></div></li>
         <li><span class="pn">03</span><div class="pc"><span class="lang-en"><strong>A bad write must not corrupt a file or escape the folder.</strong> The server writes the inbox as "write a temp file, then rename" so a half-written file never appears; and it checks the resolved path stays inside the workspace, rejecting <code>..</code> and symlink escapes.</span><span class="lang-cn"><strong>一次写操作不能写坏文件、也不能逃出目录。</strong>server 写收件箱用"先写临时文件、再改名"，保证不会出现写到一半的坏文件；并校验解析后的真实路径必须留在工作区内，挡掉 <code>..</code> 和软链接逃逸。</span></div></li>
-        <li><span class="pn">04</span><div class="pc"><span class="lang-en"><strong>Two saves in the same minute would overwrite each other.</strong> Session filenames are precise to the minute; saving twice in one minute clobbers the first. On conflict it auto-appends <code>_2 / _3</code>.</span><span class="lang-cn"><strong>同一分钟存两条会互相覆盖。</strong>session 文件名精确到分钟，同分钟保存两次会盖掉前一条——冲突时自动加 <code>_2 / _3</code>。</span></div></li>
+        <li><span class="pn">04</span><div class="pc"><span class="lang-en"><strong>Two saves in the same minute would overwrite each other.</strong> Session filenames are precise to the minute; saving twice in one minute clobbers the first. On conflict it auto-appends <code>_2 / _3</code>.</span><span class="lang-cn"><strong>同一分钟存两条会互相覆盖。</strong>session 文件名精确到分钟，同分钟保存两次会盖掉前一条。冲突时自动加 <code>_2 / _3</code>。</span></div></li>
       </ol>
     </div>
     <div class="card full">
       <span class="k"><span class="lang-en">One more seam · two entry paths, one structure</span><span class="lang-cn">还有一处接缝 · 两条入口，进库前归一</span></span>
-      <p><span class="lang-en">Memory can arrive two ways, so I made them converge before anything is stored: a <strong>manual paste</strong> is parsed from raw Markdown; an <strong>MCP</strong> call arrives as structured fields. Either way, it's normalised into the same structure in the inbox — so the Review screen never has to care where it came from. The shared floor: nothing is written to real memory until the user confirms.</span><span class="lang-cn">记忆有两种来路，所以我让它们在入库前先归一：<strong>手动粘贴</strong>从原始 Markdown 解析；<strong>MCP</strong> 调用直接收结构化字段。无论哪条，进收件箱时都归一成同一个结构——Review 界面就不用关心它从哪来。共同的底线是：用户不确认，就不写进正式记忆。</span></p>
+      <p><span class="lang-en">Memory can arrive two ways, so I made them converge before anything is stored: a <strong>manual paste</strong> is parsed from raw Markdown; an <strong>MCP</strong> call arrives as structured fields. Either way, it's normalised into the same structure in the inbox — so the Review screen never has to care where it came from. The shared floor: nothing is written to real memory until the user confirms.</span><span class="lang-cn">记忆有两种来路，所以我让它们在入库前先归一：<strong>手动粘贴</strong>从原始 Markdown 解析；<strong>MCP</strong> 调用直接收结构化字段。无论哪条，进收件箱时都归一成同一个结构。Review 界面就不用关心它从哪来。共同的底线是：用户不确认，就不写进正式记忆。</span></p>
       <span class="src">PRD §4.1</span>
     </div>
   </div>
   <details class="more">
     <summary><span class="lang-en">Implementation notes (files &amp; reuse)</span><span class="lang-cn">实现细节（文件与复用）</span></summary>
-    <p><span class="lang-en">Shared pure logic reused across app &amp; server: <code>parseHandoff</code> / <code>parseSessionFile</code> / <code>extractSuperseded</code> / <code>editPercent</code> / prompt builders. The Node server re-implements file I/O on the same path &amp; naming contract (Tauri's <code>fs.ts</code> can't run under Node). Server↔app talk only through workspace files (server writes inbox, app reads it) — no RPC, no port.</span><span class="lang-cn">app 与 server 共享纯逻辑：<code>parseHandoff</code> / <code>parseSessionFile</code> / <code>extractSuperseded</code> / <code>editPercent</code> / prompt builder。Node server 按同一路径/命名契约用 Node fs 重写文件读写（Tauri 的 <code>fs.ts</code> 不能在 Node 跑）。server↔app 只通过 workspace 文件通信（server 写 inbox，app 读）——无 RPC、不开端口。</span></p>
+    <p><span class="lang-en">Shared pure logic reused across app &amp; server: <code>parseHandoff</code> / <code>parseSessionFile</code> / <code>extractSuperseded</code> / <code>editPercent</code> / prompt builders. The Node server re-implements file I/O on the same path &amp; naming contract (Tauri's <code>fs.ts</code> can't run under Node). Server↔app talk only through workspace files (server writes inbox, app reads it) — no RPC, no port.</span><span class="lang-cn">app 与 server 共享纯逻辑：<code>parseHandoff</code> / <code>parseSessionFile</code> / <code>extractSuperseded</code> / <code>editPercent</code> / prompt builder。Node server 按同一路径/命名契约用 Node fs 重写文件读写（Tauri 的 <code>fs.ts</code> 不能在 Node 跑）。server↔app 只通过 workspace 文件通信（server 写 inbox，app 读）。无 RPC、不开端口。</span></p>
   </details>
 </section>
 
@@ -408,15 +408,15 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <span class="lang-cn">每个 Phase 怎么验的<span class="en">How each phase was checked</span></span>
   </h2>
   <div class="verify">
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Pure-logic self-test — parse / supersede merge / <code>editPercent</code> behave identically in app &amp; server</span><span class="lang-cn">纯逻辑自测——解析 / supersede 合并 / <code>editPercent</code> 在 app 与 server 行为一致</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">In-memory MCP protocol roundtrip — initialize → tools/list → tools/call</span><span class="lang-cn">in-memory MCP 协议 roundtrip——initialize → tools/list → tools/call</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Read-only red-line assertion — server refuses any write outside <code>.memoryos/inbox</code></span><span class="lang-cn">只读红线断言——server 拒绝写 <code>.memoryos/inbox</code> 以外的任何位置</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Real-subprocess stdio smoke — spawn the server, run a full pull over stdio</span><span class="lang-cn">真子进程 stdio smoke——起 server 子进程，跑通一次完整 pull</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Pure-logic self-test: parse / supersede merge / <code>editPercent</code> behave identically in app &amp; server</span><span class="lang-cn">纯逻辑自测：解析 / supersede 合并 / <code>editPercent</code> 在 app 与 server 行为一致</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">In-memory MCP protocol roundtrip: initialize → tools/list → tools/call</span><span class="lang-cn">in-memory MCP 协议 roundtrip：initialize → tools/list → tools/call</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Read-only red-line assertion: server refuses any write outside <code>.memoryos/inbox</code></span><span class="lang-cn">只读红线断言：server 拒绝写 <code>.memoryos/inbox</code> 以外的任何位置</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Real-subprocess stdio smoke: spawn the server, run a full pull over stdio</span><span class="lang-cn">真子进程 stdio smoke：起 server 子进程，跑通一次完整 pull</span></span></div>
     <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en"><code>.mcpb</code> build + Claude Desktop install verified end-to-end (enable → restart → new chat)</span><span class="lang-cn"><code>.mcpb</code> 打包 + Claude Desktop 安装端到端跑通（启用 → 重启 → 新对话）</span></span></div>
-    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Red-line regression — no listening port, no user-content upload, no handoff bypassing Review</span><span class="lang-cn">红线回归——无监听端口、无用户内容外传、无 handoff 绕过 Review</span></span></div>
+    <div class="vrow"><span class="vk">✓</span><span class="vt"><span class="lang-en">Red-line regression: no listening port, no user-content upload, no handoff bypassing Review</span><span class="lang-cn">红线回归：无监听端口、无用户内容外传、无 handoff 绕过 Review</span></span></div>
   </div>
 
-  <span class="lbl" style="margin-top:var(--s-8)"><span class="lang-en">MCP client support — honest tiers</span><span class="lang-cn">MCP 客户端支持 — 诚实分档</span></span>
+  <span class="lbl" style="margin-top:var(--s-8)"><span class="lang-en">MCP client support: honest tiers</span><span class="lang-cn">MCP 客户端支持：诚实分档</span></span>
   <div class="tiers">
     <div class="tier v">
       <span class="th"><span class="lang-en">Verified</span><span class="lang-cn">已实测</span></span>
@@ -426,7 +426,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <div class="tier a">
       <span class="th"><span class="lang-en">Advanced · manual MCP stdio</span><span class="lang-cn">进阶 · 手动 MCP stdio</span></span>
       <div class="list">Codex · Claude Code · Cursor · Cline</div>
-      <div class="note"><span class="lang-en">same server via each client's config — Codex &amp; Claude Code verified; Cursor / Cline not yet</span><span class="lang-cn">各客户端配置指向同一 server——已实测 Codex 与 Claude Code，Cursor / Cline 未逐一验证</span></div>
+      <div class="note"><span class="lang-en">same server via each client's config. Codex &amp; Claude Code verified; Cursor / Cline not yet</span><span class="lang-cn">各客户端配置指向同一 server。已实测 Codex 与 Claude Code，Cursor / Cline 未逐一验证</span></div>
     </div>
     <div class="tier p">
       <span class="th"><span class="lang-en">Planned / fallback</span><span class="lang-cn">计划 / 兜底</span></span>

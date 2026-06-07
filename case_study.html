@@ -779,15 +779,15 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--hero" id="hero">
         <h1>MemoryOS</h1>
-        <p class="cs-hero-tagline">跨 AI 的本地工作记忆 —— 按项目整理, 记忆保持现时。</p>
+        <p class="cs-hero-tagline">跨 AI 的本地工作记忆。一个 Windows 桌面应用：每次跟 AI 聊完，把工作进展存到本地。换一个 AI，不用重新交代上下文。</p>
 
-        <p class="cs-hero-body">连续三个月，我用一套 Markdown 文件夹在 ChatGPT、Claude、Cursor、Gemini 之间手动同步上下文。每次开新对话都要重新交代我是谁、上次做到哪——重复久了我意识到，问题不只是复制粘贴麻烦，而是 AI 工具之间缺一层持续的项目记忆。</p>
+        <p class="cs-hero-body">连续三个月，我用一套 Markdown 文件夹在 ChatGPT、Claude、Cursor、Gemini 之间手动同步上下文。每次开新对话都要重新交代我是谁、上次做到哪。重复久了才意识到，问题不只是复制粘贴麻烦，而是 AI 工具之间缺一层持续的项目记忆。</p>
 
-        <p class="cs-hero-body">ChatGPT Memory 记住的是"你是谁", Claude Projects 只对 Claude 生效, Notion AI 锁在自己的工作区。<strong>但没有工具帮你记住"这件事做到哪了、为什么这么决定的"</strong> —— 我把这件事做成了一个桌面 app。</p>
+        <p class="cs-hero-body">ChatGPT Memory 记住的是"你是谁", Claude Projects 只对 Claude 生效, Notion AI 锁在自己的工作区。<strong>但没有工具帮你记住"这件事做到哪了、为什么这么决定的"。</strong>我把这件事做成了一个桌面 app。</p>
 
         <div class="cs-hero-takeaway">
           <span class="lbl"><span class="lang-en">What I did as PM on this project</span><span class="lang-cn">作为 PM，我在这个项目里做的</span></span>
-          <p>定义一个 AI 工作流问题 → 设计最小可验证闭环 → 交付可运行的桌面 Demo → 基于真实使用摩擦持续迭代。<span class="en">This project trained me to define an AI workflow problem, design a minimum testable loop, ship a working desktop demo, and iterate based on real usage friction.</span></p>
+          <p>定义一个 AI 工作流问题 → 设计最小可验证闭环 → 交付可运行的桌面 Demo → 基于真实使用反馈持续迭代。<span class="en">This project taught me to: define an AI workflow problem, design the smallest testable loop, ship a working desktop demo, and iterate on real usage feedback.</span></p>
         </div>
 
         <dl class="cs-meta-strip" aria-label="Project metadata">
@@ -822,7 +822,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
            Section 2 · Why I built it from a personal pain
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--why" id="why">
-        <h2>痛点 — 反复交代「我是谁、上次到哪」</h2>
+        <h2>痛点</h2>
 
         <p>3 个月里我每天在 4 个 AI 之间切换，每次开新对话都要先粘一大段「我是谁 / 上次到哪了」，一天要重复好几次。（以下是我个人的使用记录，不是统计数据。）</p>
 
@@ -859,7 +859,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption>Fig. 01 — 切换 AI 时工作记录如何丢失 (左) vs MemoryOS 介入后按项目保留记录 (右)</figcaption>
         </figure>
 
-        <p>更深的痛不是粘贴慢，是<strong>没有产品帮你记住"这件事做到哪了、为什么这么决定"</strong>。ChatGPT Memory 记住"你喜欢简洁回答"，Claude Projects 只对 Claude 生效——它们帮 AI 认识你，但不管跨 AI 的工作进展。</p>
+        <p>更深的痛不是粘贴慢，是<strong>没有产品帮你记住"这件事做到哪了、为什么这么决定"</strong>。ChatGPT Memory 记住"你喜欢简洁回答"，Claude Projects 只对 Claude 生效。它们帮 AI 认识你，但不管跨 AI 的工作进展。</p>
 
         <p>现有工具更多在处理「个人画像」或「单平台记忆」。我想试的是另一件事：把工作进展按项目存在用户自己的电脑上，让不同 AI 都能读到同一份上下文。</p>
       </section>
@@ -868,7 +868,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
            Section 2.5 · Market Landscape
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--market" id="market">
-        <h2>市场定位 — 我观察到的一个空位</h2>
+        <h2>市场定位</h2>
 
         <!-- ───── Fig. 02 — Market Map ───── -->
         <figure class="cs-figure">
@@ -925,17 +925,16 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption style="margin-top:14px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 02 — 市场地图（我的观察）· MemoryOS 落在右上：跨 AI + 数据在本地</figcaption>
         </figure>
 
-        <p><strong>在我的观察里，右上角（跨 AI + 数据在用户手里）还没有被很好服务。</strong>现有产品要么主要对一个 AI 生效（ChatGPT Memory），要么绑定平台（Notion AI）；mem0、Obsidian 插件等也在做这个方向，但我自己用下来，跨入口的记忆都还没真正打通。MemoryOS 想落在这里——在任意 AI 之间切换都能续上工作，数据始终在自己电脑上。</p>
+        <p><strong>右上角（跨 AI + 数据在本地）目前还是一个空位。</strong>现有产品要么只对一个 AI 生效（ChatGPT Memory），要么绑定平台（Notion AI）。我自己试用下来，跨入口的记忆一致性还没有现成的解决方案。MemoryOS 想落在这个位置：切换 AI 工具时能续上工作，数据始终在自己电脑上。</p>
       </section>
 
       <!-- ═══════════════════════════════════════════════════════
            Section 3 · 用户旅程
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--who" id="who">
-        <h2>用户旅程 — 谁用、怎么用</h2>
-        <span class="cs-step-anchor cs-step-anchor--block">USER · INTERACTION</span>
+        <h2>用户旅程</h2>
 
-        <p>MemoryOS 面向两类用户，对应两条接入路径：<strong>普通用户</strong>——在多个 AI 之间切换、要反复交代上下文，但非技术背景，走零配置的剪贴板桥接；<strong>开发者 / 高级用户</strong>——愿意装一次 MCP，让 AI 直接读写本地记忆。两条路最后都汇到同一个 Review。</p>
+        <p>MemoryOS 面向两类用户，对应两条接入路径。<strong>普通用户</strong>：在多个 AI 之间切换、要反复交代上下文，但非技术背景，走零配置的剪贴板桥接。<strong>开发者 / 高级用户</strong>：愿意装一次 MCP，让 AI 直接读写本地记忆。两条路最后都汇到同一个 Review。</p>
 
         <p style="margin-top:var(--s-3)"><strong>v0.2.0 起有两条路，最后都汇到同一个 Review：</strong>支持 MCP 的客户端（已实测 Claude Desktop）走下面的主路径，AI 直接读记忆、一条指令把总结写进收件箱，省掉复制粘贴；还连不上 MCP 的网页聊天 AI（ChatGPT / Kimi 等）走再下面的手动 5 步兜底。</p>
 
@@ -967,7 +966,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption style="margin-top:10px;text-align:center;font-family:var(--font-mono);font-size:var(--mono-s,10px);color:var(--muted);letter-spacing:.04em;">Fig. 03a — MCP 主路径（v0.2.0）：读直连 · 一条指令写回收件箱 · 仍由用户审核入库</figcaption>
         </figure>
 
-        <p style="margin-top:var(--s-4)">网页聊天 AI 连不上本地 server，走<strong>手动 5 步兜底</strong>——用剪贴板桥接，殊途同归到同一个收件箱：</p>
+        <p style="margin-top:var(--s-4)">网页聊天 AI 连不上本地 server，走<strong>手动 5 步兜底</strong>，用剪贴板桥接，殊途同归到同一个收件箱：</p>
 
         <!-- ───── Fig. 03 — Dashboard-style 5-step flow (manual fallback) ───── -->
         <figure class="cs-figure">
@@ -1072,14 +1071,14 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption>Fig. 04 — 工作台（v0.2.0）: 当前目标、复制开始/结束指令，右上「1 条待审」是新的记忆收件箱入口</figcaption>
         </figure>
 
-        <p>不管走哪条路，最后那一关都不变: <strong>不是 AI 直接写文件, 是用户在收件箱里按风险分级勾选、确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场 —— AI 读取与起草、用户确认入库。下一节展开。</p>
+        <p>不管走哪条路，最后那一关都不变: <strong>不是 AI 直接写文件, 是用户在收件箱里按风险分级勾选、确认每一行写入</strong>。这是 MemoryOS 最重要的产品立场：AI 读取与起草、用户确认入库。下一节展开。</p>
       </section>
 
       <!-- ═══════════════════════════════════════════════════════
            Section 4 · How it works
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--how" id="how">
-        <h2>系统架构 — 本地三层，读可直连、写必经审核</h2>
+        <h2>系统架构</h2>
 
         <!-- ───── Fig. 05 — Dashboard-style Architecture ───── -->
         <figure class="cs-figure">
@@ -1150,7 +1149,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <span class="cs-layer-name">1. 存储层</span>
               <span class="cs-step-anchor">INPUT</span>
             </div>
-            <p>用户电脑上的 Markdown 文件（<code>about_me.md</code> + 每个项目的 <code>00_context.md</code> / <code>decisions.md</code> / <code>sessions/*</code>）。不是数据库——拷贝文件夹就是完整备份，任何编辑器都能打开。</p>
+            <p>用户电脑上的 Markdown 文件（<code>about_me.md</code> + 每个项目的 <code>00_context.md</code> / <code>decisions.md</code> / <code>sessions/*</code>）。不是数据库。拷贝文件夹就是完整备份，任何编辑器都能打开。</p>
           </li>
           <li>
             <div class="cs-layer-head">
@@ -1164,7 +1163,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
               <span class="cs-layer-name">3. 桥接层</span>
               <span class="cs-step-anchor">OUTPUT</span>
             </div>
-            <p>两条桥并行。<strong>剪贴板</strong>桥接所有 AI、无需任何配置：把上下文写进剪贴板，用户粘到任意 AI，输出复制回来勾选保存。<strong>MCP</strong>（v0.2.0 新增）让支持的客户端（已实测 Claude Desktop）一次配置后直接<em>读取</em>本地记忆、并把总结<em>写回</em>——但写回只进「待审收件箱」，不绕过用户。换 AI 不用重述上下文，直接接着上次做。</p>
+            <p>两条桥并行。<strong>剪贴板</strong>桥接所有 AI、无需任何配置：把上下文写进剪贴板，用户粘到任意 AI，输出复制回来勾选保存。<strong>MCP</strong>（v0.2.0 新增）让支持的客户端（已实测 Claude Desktop）一次配置后直接<em>读取</em>本地记忆、并把总结<em>写回</em>。写回只进「待审收件箱」，不绕过用户。换 AI 不用重述上下文，直接接着上次做。</p>
           </li>
         </ol>
 
@@ -1174,7 +1173,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <figcaption>Fig. 06 — 复制结束对话指令: 选附带哪些上下文 / 选目标 AI / 预览指令</figcaption>
         </figure>
 
-        <h3>AI 调用边界 — 哪一步用 AI，哪一步根本不用</h3>
+        <h3>AI 调用边界</h3>
 
         <table>
           <thead>
@@ -1192,10 +1191,10 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           </tbody>
         </table>
 
-        <p>v0.1.2 之前，唯一的 AI 调用都发生在用户的浏览器里。v0.2.0 让 AI 能通过 MCP 直接读本地记忆，但 <strong>MCP server 全程只跑本地 stdio、不开端口、不联网，写回一律先进收件箱</strong>——读可以直连，<strong>写这道关永远在用户手里（AI 可读取、不可直接写入）</strong>。三层依旧可以离线工作。</p>
+        <p>v0.1.2 之前，唯一的 AI 调用都发生在用户的浏览器里。v0.2.0 让 AI 能通过 MCP 直接读本地记忆，但 <strong>MCP server 全程只跑本地 stdio、不开端口、不联网，写回一律先进收件箱</strong>。读可以直连，<strong>写这道关永远在用户手里（AI 可读取、不可直接写入）</strong>。三层都可以离线工作。</p>
 
-        <h3>v0.2.0 — 连接 AI（MCP）+ 记忆收件箱</h3>
-        <p>v0.1.2 之前，AI 读到记忆全靠用户复制粘贴。v0.2.0 多了一条 <strong>MCP 通道</strong>：把 server 打包成 <code>memoryos.mcpb</code>，在 Claude Desktop 里装上、填一个工作区路径，AI 就能直接 <code>list_projects</code> / <code>get_project_memory</code>。但反方向写回被刻意做"窄"——AI 调 <code>save_session_handoff</code> 只能把总结送进<strong>待审收件箱</strong>，必须用户回到 App 里逐条 Review 才入库。这条「读直连、写经审」的边界，是整个 local-first 叙事在接入自动化之后还能立住的关键。</p>
+        <h3>v0.2.0: 连接 AI（MCP）</h3>
+        <p>v0.1.2 之前，AI 读到记忆全靠用户复制粘贴。v0.2.0 多了一条 <strong>MCP 通道</strong>：把 server 打包成 <code>memoryos.mcpb</code>，在 Claude Desktop 里装上、填一个工作区路径，AI 就能直接 <code>list_projects</code> / <code>get_project_memory</code>。但反方向写回被刻意做"窄"：AI 调 <code>save_session_handoff</code> 只能把总结送进<strong>待审收件箱</strong>，必须用户回到 App 里逐条 Review 才入库。这条「读直连、写经审」的边界，是整个 local-first 叙事在接入自动化之后还能立住的关键。</p>
 
         <div class="cs-shot-row">
           <figure>
@@ -1258,7 +1257,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
            Section 5 · Decisions & Trade-offs
            ═══════════════════════════════════════════════════════ -->
       <section class="cs-section cs-section--decisions" id="decisions">
-        <h2>关键决策 — 六次取舍</h2>
+        <h2>关键决策</h2>
 
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-3);margin-block:var(--s-4) var(--s-8);max-width:none">
 
@@ -1266,7 +1265,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <div style="padding:var(--s-3);border:1px solid var(--rule);background:var(--paper-soft)">
             <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">01</div>
             <div style="font-family:var(--font-sans);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:var(--s-2)">数据在用户电脑 vs 云同步</div>
-            <p style="font-size:var(--caption);line-height:1.65;color:var(--ink);margin:0">选本地——用户拷贝文件夹就是完整备份，不需要账号，不依赖任何服务。</p>
+            <p style="font-size:var(--caption);line-height:1.65;color:var(--ink);margin:0">选本地。用户拷贝文件夹就是完整备份，不需要账号，不依赖任何服务。</p>
             <div style="margin-top:var(--s-2);font-family:var(--font-mono);font-size:10px;color:var(--muted)">验证：种子用户说"冲着本地才用"→ 成立</div>
           </div>
 
@@ -1288,7 +1287,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           <div style="padding:var(--s-3);border:1px solid var(--rule);background:var(--paper-soft)">
             <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:6px">04</div>
             <div style="font-family:var(--font-sans);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:var(--s-2)">风险分级导入，不做自动写</div>
-            <p style="font-size:var(--caption);line-height:1.65;color:var(--ink);margin:0">dogfood 时 AI 加了一条错误假设，两周后才发现。改成三级风险：低（默认勾）/ 中（review 提示）/ 高（默认不勾 + 警告）。</p>
+            <p style="font-size:var(--caption);line-height:1.65;color:var(--ink);margin:0">自己用时发现 AI 加了一条错误假设，两周后才察觉。改成三级风险：低（默认勾）/ 中（review 提示）/ 高（默认不勾 + 警告）。</p>
           </div>
 
           <!-- D5 -->
@@ -1353,11 +1352,11 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
         <ul class="cs-northstar">
           <li>
             <span class="cs-northstar-when">v0.2.0 目标</span>
-            <span>已达成：我自己 dogfood ≥ 1 个月不脱离 + MCP 在 Claude Desktop 真实跑通读取/写回链路。待验证：10 个种子用户安装上 + 至少 3 个走完 1 次含 Superseded 合并的完整 Start → Save loop。</span>
+            <span>已达成：自己持续使用 ≥ 1 个月 + MCP 在 Claude Desktop 真实跑通读取/写回链路。待验证：10 个种子用户安装 + 至少 3 个走完 1 次含 Superseded 合并的完整 Start → Save loop。</span>
           </li>
           <li>
             <span class="cs-northstar-when">v0.2 · 2026.08</span>
-            <span>月活 ≥ 30 + 至少 5 位主动反馈一个具体痛点 (而不是"挺好用的") + GitHub stars ≥ 50。</span>
+            <span>月活 ≥ 30 + 至少 5 位主动反馈一个具体痛点 (不是"挺好用的") + GitHub stars ≥ 50。</span>
           </li>
           <li>
             <span class="cs-northstar-when">v0.3 · 2026.10</span>
@@ -1369,16 +1368,16 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
           </li>
         </ul>
 
-        <h3>已知风险 — 我打算怎么验证 / 怎么 fallback</h3>
+        <h3>已知风险</h3>
 
         <div class="cs-risks">
           <div>
             <h4>用户可能嫌"审核"这一步麻烦。</h4>
-            <p>v0.2.0 的 MCP 已经把"复制粘贴"从支持的客户端里去掉了——一条指令完成读取与待审暂存。但写回仍要回 App 审核一下才入库。如果种子用户连这一下都反馈"太烦"，"用户是最后一道关"的红线就需要重判，而不是继续往全自动加码。</p>
+            <p>v0.2.0 的 MCP 已经把"复制粘贴"从支持的客户端里去掉了，一条指令完成读取与待审暂存。但写回仍要回 App 审核一下才入库。如果种子用户连这一下都反馈"太烦"，"用户是最后一道关"的红线就需要重判，不能继续往全自动加码。</p>
           </div>
           <div>
             <h4>AI 平台可能自己做项目级记录。</h4>
-            <p>MemoryOS 的价值在"跨所有 AI + 数据在本地"——即使各家自带了项目记录, 用户仍然需要一个不绑定厂商的统一入口。</p>
+            <p>MemoryOS 的价值在"跨所有 AI + 数据在本地"。即使各家自带了项目记录，用户仍然需要一个不绑定厂商的统一入口。</p>
           </div>
         </div>
 
@@ -1400,7 +1399,7 @@ html{scroll-padding-top:clamp(96px,14vh,144px)}
             </a>
           </li>
         </ul>
-        <p style="margin-top:var(--s-3);font-family:var(--font-mono);font-size:var(--mono-s);letter-spacing:.04em;color:var(--muted)">GitHub repo &amp; Download 链接见页面顶部 —— Hero 区下方。</p>
+        <p style="margin-top:var(--s-3);font-family:var(--font-mono);font-size:var(--mono-s);letter-spacing:.04em;color:var(--muted)">GitHub repo 和下载链接见页面顶部。</p>
       </section>
 
     </article>

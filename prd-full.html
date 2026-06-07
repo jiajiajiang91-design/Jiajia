@@ -123,7 +123,7 @@ html{scroll-padding-top:78px}
     <div class="doc-hero-inner">
       <span class="status"><span class="lang-en">The verbatim artifact · PRD</span><span class="lang-cn">原始工件 · PRD</span></span>
       <h1>MemoryOS PRD</h1>
-      <p><span class="lang-en">The full product requirements doc that Claude Code and Codex built MemoryOS v0.2.0 from — shown verbatim (Chinese, as written). The method narrative is on the <a class="linklike" href="process.html">Process page</a>.</span><span class="lang-cn">Claude Code 和 Codex 据此交付 MemoryOS v0.2.0 的完整产品需求文档——原文照登。方法叙事见 <a class="linklike" href="process.html">工作方法页</a>。</span></p>
+      <p><span class="lang-en">The full product requirements doc that Claude Code and Codex built MemoryOS v0.2.0 from, shown verbatim (Chinese, as written). The method narrative is on the <a class="linklike" href="process.html">Process page</a>.</span><span class="lang-cn">Claude Code 和 Codex 据此交付 MemoryOS v0.2.0 的完整产品需求文档，原文照登。方法叙事见 <a class="linklike" href="process.html">工作方法页</a>。</span></p>
       <a class="back" href="process.html">← <span class="lang-en">Back to Process</span><span class="lang-cn">返回工作方法</span></a>
     </div>
   </header>
@@ -140,7 +140,7 @@ html{scroll-padding-top:78px}
   <blockquote class="rl"><strong>实现对齐补丁</strong>（已合并进正文，逐条对应章节，给多 agent 协作消歧）：
     <ol>
       <li><strong>来源字段拆分</strong>（§4.2）：<code>sourceChannel</code>（manual/mcp/browser）+ <code>sourceClient</code>（Claude Desktop/Codex/ChatGPT Web…）；<code>sourcePlatform</code> 设为<strong>可选/可空</strong>（常不可靠）。<code>cross_ai_reuse</code> 以 <code>sourceClient</code> 为准。</li>
-      <li><strong>埋点改通道无关</strong>（§4.2）：事件带 <code>channel</code> 字段；按"写入进程"分文件避免并发写竞争——app 写 <code>telemetry.jsonl</code>，server 写 <code>telemetry.server.jsonl</code>，<strong>不再用 <code>mcp.</code> 前缀</strong>。</li>
+      <li><strong>埋点改通道无关</strong>（§4.2）：事件带 <code>channel</code> 字段；按"写入进程"分文件避免并发写竞争：app 写 <code>telemetry.jsonl</code>，server 写 <code>telemetry.server.jsonl</code>，<strong>不再用 <code>mcp.</code> 前缀</strong>。</li>
       <li><strong>Inbox handoff schema 对齐现有 <code>ParsedHandoff</code> 字段名</strong>（§4.2/§5.1），新增三个转换函数 <code>parsedToInboxHandoff</code> / <code>inboxHandoffToMarkdown</code> / <code>inboxItemToReviewState</code>。</li>
       <li><strong>导入即 Review</strong>（§4.3/§6）：手动粘贴导入后"写 Inbox 并立即打开该 item 的 Review"；定义「取消=保留 pending」「丢弃=移 archive(discarded)」。</li>
       <li><strong>session 文件名防覆盖</strong>（§7）：同分钟 apply 两条会覆盖；冲突时自动加 <code>_2/_3</code>（或加秒/uuid）。</li>
@@ -163,7 +163,7 @@ html{scroll-padding-top:78px}
   <h2 id="s05"><span class="n">0.5</span>技术现实硬约束</h2>
   <ol>
     <li>本地 MCP server 只能被本地客户端连接（stdio / 本地配置）：Claude Desktop、Claude Code、Codex（CLI+IDE 扩展）、Cursor / Windsurf / VS Code / Cline、Kimi Code CLI。</li>
-    <li><strong>ChatGPT / Kimi 聊天 app / DeepSeek / Gemini 的网页·桌面聊天端连不上本地 server。</strong>技术上有 remote MCP / 隧道，但引入联网/账号/权限复杂度——<strong>本期 P0 主动不采用</strong>。这些走 Inbox 的"复制粘贴/插件"入口。</li>
+    <li><strong>ChatGPT / Kimi 聊天 app / DeepSeek / Gemini 的网页·桌面聊天端连不上本地 server。</strong>技术上有 remote MCP / 隧道，但引入联网/账号/权限复杂度。<strong>本期 P0 主动不采用</strong>。这些走 Inbox 的"复制粘贴/插件"入口。</li>
     <li><strong>.mcpb 是开放规范</strong>（已并入 MCP 项目）；<strong>当前优先服务 Claude Desktop / Claude Code / MCP for Windows</strong>，其他本地客户端用 JSON/TOML 配置兜底，指向同一 server。</li>
     <li>prompts 原语 GUI 支持不均；<strong>tools 为骨架</strong>，prompts 可选。</li>
     <li><code>fs.ts</code> 依赖 Tauri，不能给 Node server 直接用；可共享纯逻辑：<code>parseHandoff</code> / <code>parseSessionFile</code> / <code>extractSuperseded</code> / <code>editPercent</code> / prompt builder。</li>
@@ -175,7 +175,7 @@ html{scroll-padding-top:78px}
   <h3>1.1 痛点</h3>
   <p>多 AI 协作做一个项目时切换 AI，丢失结构化项目状态（决策、文件位置、handoff、待办、踩坑）；现状靠手动复制粘贴。</p>
   <h3>1.2 目标用户</h3>
-  <p>跨多个 AI 做真实项目的知识工作者；同时有多个项目；一部分用本地 agent（Codex/Cursor/Claude Desktop），一部分只用网页聊天 AI——这正是为什么要"通道无关 Inbox"。</p>
+  <p>跨多个 AI 做真实项目的知识工作者；同时有多个项目；一部分用本地 agent（Codex/Cursor/Claude Desktop），一部分只用网页聊天 AI。这正是为什么要"通道无关 Inbox"。</p>
   <h3>1.3 差异化（P0，已据 Codex 修正）</h3>
   <p>竞品两类：<strong>静默抓取+自动注入型</strong>（OpenMemory/Rethread）；<strong>human-in-the-loop 可携带文件型</strong>（Memory Sync：<code>Memory.md</code> + Pull/Edit/Push + 用户审核，理念接近 MemoryOS）。</p>
   <p><strong>MemoryOS 独有点（差异化锁定这两条，刻意不堆亮点）：</strong></p>

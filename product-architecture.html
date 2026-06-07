@@ -459,7 +459,7 @@
 
       <p class="lede">
         <span class="lang-en">The minimum shippable version of a local-first cross-AI memory tool: working memory that lives on the user's machine, drafted by AI, confirmed by the user — every write a deliberate act.</span>
-        <span class="lang-cn">一个 local-first 跨 AI 记忆工具的最小可用版本：工作记忆存在用户自己电脑上，AI 起草、用户确认——每一次写入都是一次明确的动作。</span>
+        <span class="lang-cn">一个 local-first 跨 AI 记忆工具的最小可用版本：工作记忆存在用户自己电脑上，AI 起草、用户确认。每一次写入都是一次明确的动作。</span>
       </p>
 
       <div class="cover-meta">
@@ -542,7 +542,7 @@
           </div>
           <div class="desc">
             <span class="lang-en">The single gate for <em>every</em> write — clipboard import and MCP write-back both queue here. Grouped by risk: low (default-on) / medium / high (default-off + warning). Only user-approved items are committed to local memory.</span>
-            <span class="lang-cn">所有写回的<em>唯一</em>关口——剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。只有用户确认的条目才会写进本地记忆。</span>
+            <span class="lang-cn">所有写回的<em>唯一</em>关口。剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。只有用户确认的条目才会写进本地记忆。</span>
           </div>
           <div class="file">ReviewPage.tsx · inbox</div>
         </div>
@@ -568,7 +568,7 @@
           </div>
           <div class="desc">
             <span class="lang-en">Local stdio MCP server, packaged as <code>memoryos.mcpb</code> for Claude Desktop. AI reads memory directly (<code>list_projects</code> / <code>get_project_memory</code>); write-back (<code>save_session_handoff</code>) only stages to the inbox — never bypasses review.</span>
-            <span class="lang-cn">本地 stdio MCP server,打包成 <code>memoryos.mcpb</code> 给 Claude Desktop。AI 直接读记忆(<code>list_projects</code> / <code>get_project_memory</code>);写回(<code>save_session_handoff</code>)只暂存进收件箱——绝不绕过审核。</span>
+            <span class="lang-cn">本地 stdio MCP server,打包成 <code>memoryos.mcpb</code> 给 Claude Desktop。AI 直接读记忆(<code>list_projects</code> / <code>get_project_memory</code>);写回(<code>save_session_handoff</code>)只暂存进收件箱，绝不绕过审核。</span>
           </div>
           <div class="file">server/ · memoryos.mcpb</div>
         </div>
@@ -619,11 +619,11 @@
           <ul>
             <li>
               <strong><span class="lang-en">Business logic · the path that solves the pain</span><span class="lang-cn">业务逻辑 · 解决痛点的路径</span></strong>
-              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools — so the user is the bridge. End a session: user picks what to carry; start the next: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, user approves every write. Memory stays current: AI marks what's outdated in each handoff (Superseded), the app merges new over old, stale decisions retire — so the next AI always gets up-to-date context.</span><span class="lang-cn">核心思路: 用户是唯一同时存在于所有 AI 工具里的实体——所以让用户当桥。结束对话: 用户选要带走什么;开始下一段: MemoryOS 把它拼成下一个 AI 能读的 prompt;导入: AI 的回复被解析、分组待审;审核: AI 建议更新,用户亲手确认才写盘。记忆保持现时: AI 在 handoff 里标出过时内容(Superseded),app 把新旧合并、过时决策退场——下一个 AI 拿到的永远是最新上下文。</span></span>
+              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools, so the user is the bridge. End a session: user picks what to carry; start the next: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, user approves every write. Memory stays current: AI marks what's outdated in each handoff (Superseded), the app merges new over old, stale decisions retire. The next AI always gets up-to-date context.</span><span class="lang-cn">核心思路：用户是唯一同时存在于所有 AI 工具里的实体，所以让用户当桥。结束对话：用户选要带走什么；开始下一段：MemoryOS 把它拼成下一个 AI 能读的 prompt；导入：AI 的回复被解析、分组待审；审核：AI 建议更新，用户亲手确认才写盘。记忆保持现时：AI 在 handoff 里标出过时内容（Superseded），app 把新旧合并、过时决策退场。下一个 AI 拿到的永远是最新上下文。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">Algorithm · how the modules connect</span><span class="lang-cn">算法 · 模块之间的衔接</span></strong>
-              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + standardised prompt template into clipboard. Fault-tolerant parser: recognise headings with or without <code>##</code>, numbered / bold / plain-text / indented variants, zh + en section names — never assume the AI's output is perfectly formatted. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. Superseded merge: AI marks outdated content in the handoff → parser extracts → Review shows old (strikethrough) vs new (highlighted) → user confirms → stale memory retires.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 标准化指令模板打包进剪贴板。容错解析: 有无 <code>##</code>、数字 / 粗体 / 纯文本 / 带缩进的标题都认, 中英文段名都认——不假设 AI 输出格式完美。风险路由: 把每条建议更新标为低 / 中 / 高风险, 决定 Review 里哪些默认勾、哪些默认不勾。Superseded 合并: AI 在 handoff 里标注哪些旧内容已过时 → parser 提取 → Review 页划线对比新旧 → 用户确认 → 过时记忆退场。</span></span>
+              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + standardised prompt template into clipboard. Fault-tolerant parser: recognise headings with or without <code>##</code>, numbered / bold / plain-text / indented variants, zh + en section names — never assume the AI's output is perfectly formatted. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. Superseded merge: AI marks outdated content in the handoff → parser extracts → Review shows old (strikethrough) vs new (highlighted) → user confirms → stale memory retires.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 标准化指令模板打包进剪贴板。容错解析: 有无 <code>##</code>、数字 / 粗体 / 纯文本 / 带缩进的标题都认, 中英文段名都认，不假设 AI 输出格式完美。风险路由: 把每条建议更新标为低 / 中 / 高风险, 决定 Review 里哪些默认勾、哪些默认不勾。Superseded 合并: AI 在 handoff 里标注哪些旧内容已过时 → parser 提取 → Review 页划线对比新旧 → 用户确认 → 过时记忆退场。</span></span>
             </li>
           </ul>
         </div>
@@ -637,7 +637,7 @@
           <ul>
             <li>
               <strong><span class="lang-en">Business data · what flows through the product</span><span class="lang-cn">业务数据 · 在产品里流转的内容</span></strong>
-              <span class="sub"><span class="lang-en"><code>about_me.md</code> — the user's long-term identity and preferences, shared across all projects. <code>00_context.md</code> — per-project working snapshot, updated after each session. <code>decisions.md</code> — key decisions accumulated over time. <code>sessions/*</code> — timestamped per-session summaries. These four file types are the product's entire data model — input to the next prompt, output from the last AI, and the user's accumulated working memory.</span><span class="lang-cn"><code>about_me.md</code> — 用户的长期身份和偏好,跨项目共享。<code>00_context.md</code> — 每个项目的工作快照,每次对话结束后更新。<code>decisions.md</code> — 积累的关键决策记录。<code>sessions/*</code> — 按时间戳存的每次对话总结。这四种文件就是产品的全部数据模型——上一次 AI 的输出变成下一次 prompt 的输入,用户的工作记忆就这样积累起来。</span></span>
+              <span class="sub"><span class="lang-en"><code>about_me.md</code>: the user's long-term identity and preferences, shared across all projects. <code>00_context.md</code>: per-project working snapshot, updated after each session. <code>decisions.md</code>: key decisions accumulated over time. <code>sessions/*</code>: timestamped per-session summaries. These four file types are the product's entire data model. Input to the next prompt, output from the last AI, the user's accumulated working memory.</span><span class="lang-cn"><code>about_me.md</code>：用户的长期身份和偏好，跨项目共享。<code>00_context.md</code>：每个项目的工作快照，每次对话结束后更新。<code>decisions.md</code>：积累的关键决策记录。<code>sessions/*</code>：按时间戳存的每次对话总结。这四种文件就是产品的全部数据模型。上一次 AI 的输出变成下一次 prompt 的输入，用户的工作记忆就这样积累起来。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">Feedback channel</span><span class="lang-cn">反馈通道</span></strong>
@@ -686,7 +686,7 @@
             </div>
             <div class="layer-cell">
               <span class="k"><span class="lang-en">INSIGHT</span><span class="lang-cn">洞察</span></span>
-              <span class="v"><span class="lang-en">AI already read old files in end-prompt — it knows what changed. App reads the structured field and shows the user what's new vs outdated.</span><span class="lang-cn">AI 生成 handoff 时已读过旧文件——它知道什么变了。App 读取结构化字段，展示给用户看哪些是新的、哪些过时了。</span></span>
+              <span class="v"><span class="lang-en">AI already read old files in end-prompt, so it knows what changed. App reads the structured field and shows the user what's new vs outdated.</span><span class="lang-cn">AI 生成 handoff 时已读过旧文件，所以它知道什么变了。App 读取结构化字段，展示给用户看哪些是新的、哪些过时了。</span></span>
             </div>
             <div class="layer-cell">
               <span class="k"><span class="lang-en">RULED OUT</span><span class="lang-cn">排除的路</span></span>
@@ -778,7 +778,7 @@
 
       <p class="lede">
         <span class="lang-en">v0.2.0 makes the MCP path primary — no more copy-paste on supported clients. The old manual flow stays as a fallback for web chat AIs that can't reach a local server.</span>
-        <span class="lang-cn">v0.2.0 起 MCP 是主路径——支持的客户端不再需要复制粘贴。旧的手动流程降级为兜底，留给连不上本地 server 的网页聊天 AI。</span>
+        <span class="lang-cn">v0.2.0 起 MCP 是主路径。支持的客户端不再需要复制粘贴。旧的手动流程降级为兜底，留给连不上本地 server 的网页聊天 AI。</span>
       </p>
 
       <!-- PRIMARY · MCP path (v0.2.0) -->
@@ -794,7 +794,7 @@
         </div>
         <div class="path-step">
           <div class="step-num">02</div>
-          <div class="step-what"><span class="lang-en">Structured handoff is atomically written to the inbox — pending, never touches live memory</span><span class="lang-cn">结构化 handoff 原子写进收件箱——待审，不碰正式记忆</span></div>
+          <div class="step-what"><span class="lang-en">Structured handoff is atomically written to the inbox, pending, never touches live memory</span><span class="lang-cn">结构化 handoff 原子写进收件箱，待审，不碰正式记忆</span></div>
           <div class="step-where"><code>.memoryos/inbox</code> · tmp→rename</div>
         </div>
         <div class="path-step">
@@ -816,7 +816,7 @@
         </div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px">
           <span class="lang-en">Both paths converge at the same Review — the write gate never moves.</span>
-          <span class="lang-cn">两条路汇到同一个 Review——写回这道关从不挪位。</span>
+          <span class="lang-cn">两条路汇到同一个 Review。写回这道关从不挪位。</span>
         </div>
       </div>
     </div>
@@ -897,7 +897,7 @@
 
         <p class="road-tail">
           <span class="lang-en">This is a rough order, not a contract — what actually gets built next depends on what breaks first for the people using it.</span>
-          <span class="lang-cn">这是个大致顺序,不是承诺——实际先做哪个,看用的人先在哪一步卡住。</span>
+          <span class="lang-cn">这是个大致顺序，不是承诺。实际先做哪个，看用的人先在哪一步卡住。</span>
         </p>
       </div>
     </div>
