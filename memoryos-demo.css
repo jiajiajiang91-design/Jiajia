@@ -8,10 +8,10 @@
    ════════════════════════════════════════════════════════════════════════ */
 
 .mosx{
-  /* ── 真实 app 调色板（来自 tailwind.config.js） ── */
-  --paper:#FAFAF7; --surface:#FFFFFF; --surface-soft:#F4F4F5; --surface-warm:#EBEBEE;
-  --ink:#18181B; --ink-soft:#52525B; --ink-faint:#A1A1AA; --hairline:#E4E4E7;
-  --slate:#525A6B; --ochre:#D4A571; --warn:#C44545; --ok:#16A34A;
+  /* ── 真实 app 调色板（来自 tailwind.config.js，v0.3 克莱因蓝视觉） ── */
+  --paper:#EEF1F6; --surface:#FFFFFF; --surface-soft:#F2F4FA; --surface-warm:#E7EBF4;
+  --ink:#13151B; --ink-soft:#4B5263; --ink-faint:#9AA1B2; --hairline:#E0E4EE;
+  --slate:#002FA7; --ochre:#D4A571; --warn:#C44545; --ok:#16A34A;
   --amber-bg:#FFF5E1; --amber-bd:#EAD9A8; --amber-ink:#A37A1C;
 
   /* ── 瑞士呈现层 token ── */
@@ -259,6 +259,23 @@ body[data-lang="cn"] .mosx .lang-en{display:none}
 .mosx-sessrow .goal{font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mosx-sessmore{text-align:center;margin-top:14px}
 .mosx-sessmore button{background:0;border:0;color:var(--slate);font-size:12.5px;font-weight:500;cursor:pointer;font-family:var(--font-app)}
+
+/* ── 记忆卡片（v0.3 dashboard 主区） ── */
+.mosx-cardshead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.mosx-cardshead .mosx-h2{margin:0}
+.mosx-cardshead .stamp{font-family:var(--font-appmono);font-size:11px;color:var(--ink-faint)}
+.mosx-cardlead{font-size:12.5px;color:var(--ink-soft);background:var(--surface-soft);border-left:3px solid var(--slate);padding:10px 14px;margin-bottom:14px;line-height:1.7}
+.mosx-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mosx-card{border:1px solid var(--hairline);background:var(--surface);border-radius:6px;padding:13px 15px}
+.mosx-card .chh{font-size:12.5px;font-weight:600;color:var(--slate);margin-bottom:9px;letter-spacing:.02em}
+.mosx-card ul{margin:0;padding-left:16px;font-size:12.5px;line-height:1.65;color:var(--ink-soft)}
+.mosx-card li+li{margin-top:6px}
+.mosx-card .src{font-family:var(--font-appmono);font-size:10.5px;color:var(--slate)}
+
+/* ── 信任模式（右栏） ── */
+.mosx-trust{display:flex;gap:9px;align-items:flex-start;font-size:11.5px;color:var(--ink-soft);line-height:1.55}
+.mosx-trust .tsw{width:27px;height:16px;border-radius:999px;background:var(--slate);position:relative;flex-shrink:0;margin-top:1px}
+.mosx-trust .tsw .knob{position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
 
 /* ════════════════ RIGHT METADATA PANEL ════════════════ */
 .mosx-meta{width:210px;flex-shrink:0;background:var(--surface-soft);border-left:1px solid var(--hairline);

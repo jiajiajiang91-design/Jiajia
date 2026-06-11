@@ -437,7 +437,7 @@
     <span class="sep">·</span>
     <button class="lang-btn" data-lang-set="cn" aria-pressed="true">中</button>
     <span class="sep">|</span>
-    <span class="acc" id="slideCounter">01</span> / 06
+    <span class="acc" id="slideCounter">01</span> / 07
   </div>
 </header>
 
@@ -458,12 +458,11 @@
       </h1>
 
       <p class="lede">
-        <span class="lang-en">The minimum shippable version of a local-first cross-AI memory tool: working memory that lives on the user's machine, drafted by AI, confirmed by the user — every write a deliberate act.</span>
-        <span class="lang-cn">一个 local-first 跨 AI 记忆工具的最小可用版本：工作记忆存在用户自己电脑上，AI 起草、用户确认。每一次写入都是一次明确的动作。</span>
+        <span class="lang-en">A cross-AI memory tool: each project's working memory lives on one page of cards, drafted by AI, confirmed by the user. Every write is a deliberate act.</span>
+        <span class="lang-cn">一个跨 AI 记忆工具：每个项目的工作记忆整理成一页记忆卡片，AI 起草、用户确认。每一次写入都是一次明确的动作。</span>
       </p>
 
       <div class="cover-meta">
-        <span>v0.2.0</span>
         <span>Tauri + React · MCP</span>
         <span>MIT · Windows</span>
       </div>
@@ -502,10 +501,10 @@
             <span class="lang-cn">项目工作区</span>
           </div>
           <div class="desc">
-            <span class="lang-en">Sidebar lists all projects; each is an isolated folder with its own about / context / decisions / sessions.</span>
-            <span class="lang-cn">侧栏列出所有项目;每个项目独立一个文件夹,有自己的 about / context / decisions / sessions。</span>
+            <span class="lang-en">Sidebar lists all projects; each is an isolated folder. The project page shows its memory cards in full — what you see is what the AI reads.</span>
+            <span class="lang-cn">侧栏列出所有项目，每个项目独立一个文件夹。项目主页完整显示记忆卡片，页面上看到的就是 AI 读到的。</span>
           </div>
-          <div class="file">Sidebar.tsx · Dashboard.tsx</div>
+          <div class="file">Sidebar.tsx · Dashboard.tsx · cards.ts</div>
         </div>
 
         <div class="biz-card">
@@ -528,8 +527,8 @@
             <span class="lang-cn">导入对话总结</span>
           </div>
           <div class="desc">
-            <span class="lang-en">Paste the AI's 9-section Markdown back; parser slices it into typed fields ready for review.</span>
-            <span class="lang-cn">把 AI 输出的 9 段式 Markdown 贴回来;parser 切成结构化字段,准备进 Review。</span>
+            <span class="lang-en">Paste the AI's Markdown back: a session summary plus an updated page of memory cards. The fault-tolerant parser slices it into fields ready for review.</span>
+            <span class="lang-cn">把 AI 输出的 Markdown 贴回来：本次总结 + 记忆卡片新版。容错 parser 切成结构化字段，准备进确认页。</span>
           </div>
           <div class="file">ImportHandoffModal.tsx · parser.ts</div>
         </div>
@@ -537,14 +536,14 @@
         <div class="biz-card">
           <div class="num">④ / REVIEW</div>
           <div class="title">
-            <span class="lang-en">Risk-tiered review inbox</span>
-            <span class="lang-cn">风险分级收件箱 Review</span>
+            <span class="lang-en">Inbox + review page + trust mode</span>
+            <span class="lang-cn">收件箱 + 确认页 + 信任模式</span>
           </div>
           <div class="desc">
-            <span class="lang-en">The single gate for <em>every</em> write — clipboard import and MCP write-back both queue here. Grouped by risk: low (default-on) / medium / high (default-off + warning). Only user-approved items are committed to local memory.</span>
-            <span class="lang-cn">所有写回的<em>唯一</em>关口。剪贴板导入和 MCP 写回都在这里排队待审。按风险分组:低(默认勾选) / 中 / 高(默认不勾 + 警告)。只有用户确认的条目才会写进本地记忆。</span>
+            <span class="lang-en">The single gate for every write: manual import and MCP write-back both queue here. Old vs new shown as a strikethrough diff; AI suggestions listed separately, adopt or dismiss. Trust mode (per project) auto-saves routine updates; anything doubtful still asks the user.</span>
+            <span class="lang-cn">所有写回的唯一关口：手动导入和 MCP 写回都在这里排队。新旧内容划线对比；AI 建议单独列出，可采纳可驳回。信任模式按项目开关：常规更新自动入库，存疑内容仍请用户过目。</span>
           </div>
-          <div class="file">ReviewPage.tsx · inbox</div>
+          <div class="file">ReviewPage.tsx · inbox · trustMode</div>
         </div>
 
         <div class="biz-card">
@@ -619,11 +618,11 @@
           <ul>
             <li>
               <strong><span class="lang-en">Business logic · the path that solves the pain</span><span class="lang-cn">业务逻辑 · 解决痛点的路径</span></strong>
-              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools, so the user is the bridge. End a session: user picks what to carry; start the next: MemoryOS assembles it into a prompt the next AI can read; import: AI's response gets parsed and staged for review; review: AI suggests updates, user approves every write. Memory stays current: AI marks what's outdated in each handoff (Superseded), the app merges new over old, stale decisions retire. The next AI always gets up-to-date context.</span><span class="lang-cn">核心思路：用户是唯一同时存在于所有 AI 工具里的实体，所以让用户当桥。结束对话：用户选要带走什么；开始下一段：MemoryOS 把它拼成下一个 AI 能读的 prompt；导入：AI 的回复被解析、分组待审；审核：AI 建议更新，用户亲手确认才写盘。记忆保持现时：AI 在 handoff 里标出过时内容（Superseded），app 把新旧合并、过时决策退场。下一个 AI 拿到的永远是最新上下文。</span></span>
+              <span class="sub"><span class="lang-en">Core insight: the user is the only entity that exists across all AI tools, so the user is the bridge. Each project's memory is distilled into one page of cards under 1200 characters; the AI reads it at session start and drafts an updated version at session end. Updates go through the inbox; the user confirms what's saved. Memory stays current: outdated entries are archived, never deleted, and the next AI always gets the latest page.</span><span class="lang-cn">核心思路：用户是唯一同时存在于所有 AI 工具里的实体，所以让用户当桥。每个项目的记忆浓缩成一页 1200 字内的卡片：AI 开场读这一页，结束时起草新版。更新经收件箱，用户确认后入库。记忆保持现时：过时条目归档而不删除，下一个 AI 拿到的永远是最新一页。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">Algorithm · how the modules connect</span><span class="lang-cn">算法 · 模块之间的衔接</span></strong>
-              <span class="sub"><span class="lang-en">Prompt assembly: pack user's context files + standardised prompt template into clipboard. Fault-tolerant parser: recognise headings with or without <code>##</code>, numbered / bold / plain-text / indented variants, zh + en section names — never assume the AI's output is perfectly formatted. Risk router: categorise each suggested update as low / medium / high risk, decide what's default-on vs default-off in Review. Superseded merge: AI marks outdated content in the handoff → parser extracts → Review shows old (strikethrough) vs new (highlighted) → user confirms → stale memory retires.</span><span class="lang-cn">Prompt 组装: 把用户的上下文文件 + 标准化指令模板打包进剪贴板。容错解析: 有无 <code>##</code>、数字 / 粗体 / 纯文本 / 带缩进的标题都认, 中英文段名都认，不假设 AI 输出格式完美。风险路由: 把每条建议更新标为低 / 中 / 高风险, 决定 Review 里哪些默认勾、哪些默认不勾。Superseded 合并: AI 在 handoff 里标注哪些旧内容已过时 → parser 提取 → Review 页划线对比新旧 → 用户确认 → 过时记忆退场。</span></span>
+              <span class="sub"><span class="lang-en">Prompt assembly: pack the memory cards + a standardised prompt template into the clipboard. Fault-tolerant parser: recognise headings with or without <code>##</code>, numbered / bold / plain-text / indented variants, zh + en section names — never assume the AI's output is perfectly formatted. Source tagging: the user's decisions and the AI's suggestions are extracted into separate channels, so a suggestion can never be saved as a decision. Card merge: parser extracts the updated card page → review shows old (strikethrough) vs new (highlighted) → user confirms → superseded entries move to the archive.</span><span class="lang-cn">Prompt 组装：把记忆卡片 + 标准化指令模板打包进剪贴板。容错解析：有无 <code>##</code>、数字 / 粗体 / 纯文本 / 带缩进的标题都认，中英文段名都认，不假设 AI 输出格式完美。来源分流：用户的决定和 AI 的建议被解析进不同通道，建议不可能被存成决定。卡片合并：parser 提取卡片新版 → 确认页划线对比新旧 → 用户确认 → 被替代的条目移入历史档案。</span></span>
             </li>
           </ul>
         </div>
@@ -637,7 +636,7 @@
           <ul>
             <li>
               <strong><span class="lang-en">Business data · what flows through the product</span><span class="lang-cn">业务数据 · 在产品里流转的内容</span></strong>
-              <span class="sub"><span class="lang-en"><code>about_me.md</code>: the user's long-term identity and preferences, shared across all projects. <code>00_context.md</code>: per-project working snapshot, updated after each session. <code>decisions.md</code>: key decisions accumulated over time. <code>sessions/*</code>: timestamped per-session summaries. These four file types are the product's entire data model. Input to the next prompt, output from the last AI, the user's accumulated working memory.</span><span class="lang-cn"><code>about_me.md</code>：用户的长期身份和偏好，跨项目共享。<code>00_context.md</code>：每个项目的工作快照，每次对话结束后更新。<code>decisions.md</code>：积累的关键决策记录。<code>sessions/*</code>：按时间戳存的每次对话总结。这四种文件就是产品的全部数据模型。上一次 AI 的输出变成下一次 prompt 的输入，用户的工作记忆就这样积累起来。</span></span>
+              <span class="sub"><span class="lang-en"><code>about_me.md</code>: the user's identity and preferences, shared across projects. <code>cards.md</code>: one page of memory cards per project — what the AI reads first, updated after each session. <code>decisions.md</code>: the archive where superseded entries go. <code>sessions/*</code>: timestamped session summaries. These four file types are the product's entire data model: the last AI's output becomes the next AI's input.</span><span class="lang-cn"><code>about_me.md</code>：用户的身份和偏好，跨项目共享。<code>cards.md</code>：每个项目一页记忆卡片，AI 开场读的就是它，每次对话后更新。<code>decisions.md</code>：决策档案，被替代的条目去这里。<code>sessions/*</code>：按时间戳存的对话总结。这四种文件就是产品的全部数据模型：上一个 AI 的输出变成下一个 AI 的输入。</span></span>
             </li>
             <li>
               <strong><span class="lang-en">Feedback channel</span><span class="lang-cn">反馈通道</span></strong>
@@ -649,114 +648,168 @@
     </div>
   </section>
 
-  <!-- ============ SLIDE 3.5 · FOUR-LAYER DEEP DIVE (记忆现时性) ============ -->
+  <!-- ============ SLIDE 3.5 · MEMORY SYSTEM (PRD 功能架构) ============ -->
   <section class="slide" data-bg="layers">
     <div class="slide-inner">
       <div class="kicker">
         <span class="dot"></span>
         <span class="acc">02.5</span>
-        <span class="lang-en">Memory freshness · Four-layer breakdown</span>
-        <span class="lang-cn">记忆现时性 · 四层拆解</span>
+        <span class="lang-en">Memory system · From the PRD</span>
+        <span class="lang-cn">记忆系统 · 出自 PRD 功能架构</span>
       </div>
 
       <div style="display:flex;align-items:baseline;gap:var(--s-4);margin-bottom:var(--s-3)">
         <h2 class="anchor" style="margin-bottom:0;white-space:nowrap">
-          <span class="lang-en">How memory <span class="acc">stays current</span></span>
-          <span class="lang-cn">记忆如何<span class="acc">保持现时</span></span>
+          <span class="lang-en">Four <span class="acc">modules</span> of memory</span>
+          <span class="lang-cn">记忆系统的<span class="acc">四个模块</span></span>
         </h2>
-        <p class="lede" style="margin-bottom:0;white-space:nowrap">
-          <span class="lang-en">The hardest part isn't recording — it's retiring what's outdated. Four layers, each with a clear input → process → output.</span>
-          <span class="lang-cn">最难的不是记录，是让过时的内容被替换掉。四层架构，每层都有明确的 输入 → 处理 → 输出。</span>
+        <p class="lede" style="margin-bottom:0">
+          <span class="lang-en">The architecture follows the three common stages of LLM memory systems (write, update, read), plus a measurable evaluation layer.</span>
+          <span class="lang-cn">架构参照大模型记忆系统的通用三段机制（写入、更新、读取），再加一层可量化的验收。</span>
         </p>
       </div>
 
       <div class="layer-dash">
-        <div class="layer-ghost">4L</div>
+        <div class="layer-ghost">4M</div>
 
-        <!-- Card 1 · Logic -->
+        <!-- Module 1 · WRITE -->
         <div class="layer-card layer-card--accent">
           <div class="layer-card-head">
             <span class="layer-card-num">01</span>
-            <span class="layer-card-name"><span class="lang-en">Logic</span><span class="lang-cn">逻辑层</span></span>
+            <span class="layer-card-name"><span class="lang-en">Write</span><span class="lang-cn">写入 · WRITE</span></span>
           </div>
           <div class="layer-card-body">
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">PAIN</span><span class="lang-cn">痛点</span></span>
-              <span class="v"><span class="lang-en">Direction A→B, task done — old memory stays → next AI misled</span><span class="lang-cn">假设用户方向 A→B、任务完成 → 旧记忆未更新 → 下个 AI 被误导</span></span>
+              <span class="k"><span class="lang-en">Structured Handoff</span><span class="lang-cn">结构化交接</span></span>
+              <span class="v"><span class="lang-en">Session output sorted into facts / decisions / suggestions / next starting point</span><span class="lang-cn">按事实、决策、建议、起点四类整理本次输出</span></span>
             </div>
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">INSIGHT</span><span class="lang-cn">洞察</span></span>
-              <span class="v"><span class="lang-en">AI already read old files in end-prompt, so it knows what changed. App reads the structured field and shows the user what's new vs outdated.</span><span class="lang-cn">AI 生成 handoff 时已读过旧文件，所以它知道什么变了。App 读取结构化字段，展示给用户看哪些是新的、哪些过时了。</span></span>
-            </div>
-            <div class="layer-cell">
-              <span class="k"><span class="lang-en">RULED OUT</span><span class="lang-cn">排除的路</span></span>
-              <span class="v"><span class="lang-en">❌ AI auto-writes (user loses control)<br>❌ User manually diffs (the pain itself)</span><span class="lang-cn">❌ AI 全自动改文件（失去控制权）<br>❌ 用户手动校对（痛点本身）</span></span>
+              <span class="k"><span class="lang-en">Source Tracking</span><span class="lang-cn">来源标记</span></span>
+              <span class="v"><span class="lang-en">Every decision carries a date and its original wording; an AI idea is never recorded as the user's call</span><span class="lang-cn">每条决策附日期与原话出处；AI 的想法不会被写成用户的决定</span></span>
             </div>
           </div>
         </div>
 
-        <!-- Card 2 · Algorithm -->
+        <!-- Module 2 · UPDATE -->
         <div class="layer-card layer-card--accent">
           <div class="layer-card-head">
             <span class="layer-card-num">02</span>
-            <span class="layer-card-name"><span class="lang-en">Algorithm</span><span class="lang-cn">算法层</span></span>
+            <span class="layer-card-name"><span class="lang-en">Update</span><span class="lang-cn">更新 · UPDATE</span></span>
           </div>
           <div class="layer-card-body">
             <div class="layer-cell">
-              <span class="k">01 · INGEST</span>
-              <span class="v"><span class="lang-en">Manual paste → <code>parseHandoff()</code> slices raw Markdown; MCP <code>save_session_handoff</code> takes structured input directly. Both normalise to one inbox structure.</span><span class="lang-cn">手动粘贴 → <code>parseHandoff()</code> 切原始 Markdown;MCP <code>save_session_handoff</code> 直接收结构化入参。两者归一成同一收件箱结构。</span></span>
+              <span class="k"><span class="lang-en">Consolidation</span><span class="lang-cn">记忆整合</span></span>
+              <span class="v"><span class="lang-en">New progress merges into current status; one latest version per topic</span><span class="lang-cn">新进展并入当前状态，同一主题只留最新版</span></span>
             </div>
             <div class="layer-cell">
-              <span class="k">02 · DETECT</span>
-              <span class="v"><span class="lang-en">Non-empty → trigger Superseded merge Review</span><span class="lang-cn">非空 → 触发 Superseded 合并 Review</span></span>
+              <span class="k"><span class="lang-en">Conflict Resolution</span><span class="lang-cn">冲突处理</span></span>
+              <span class="v"><span class="lang-en">When old and new conflict, the old decision is voided with a pointer to its replacement</span><span class="lang-cn">新旧矛盾时旧决策作废，留下指向新版的指针</span></span>
             </div>
             <div class="layer-cell">
-              <span class="k">03 · COMPARE</span>
-              <span class="v"><span class="lang-en">Old <del>strikethrough</del> vs new <strong>highlight</strong> → user confirms</span><span class="lang-cn">旧 <del>划线</del> vs 新 <strong>高亮</strong> → 用户确认写入</span></span>
-            </div>
-            <div class="layer-cell">
-              <span class="k">04 · LOOP</span>
-              <span class="v"><span class="lang-en"><code>buildStartSessionPrompt()</code> → AI gets fresh context</span><span class="lang-cn"><code>buildStartSessionPrompt()</code> → AI 拿到现时记忆</span></span>
+              <span class="k"><span class="lang-en">Forgetting as Archiving</span><span class="lang-cn">遗忘即归档</span></span>
+              <span class="v"><span class="lang-en">Superseded entries leave the first page but are never deleted</span><span class="lang-cn">被替代的条目退出第一页，但永不删除</span></span>
             </div>
           </div>
         </div>
 
-        <!-- Card 3 · Data -->
+        <!-- Module 3 · READ -->
         <div class="layer-card">
           <div class="layer-card-head">
             <span class="layer-card-num">03</span>
-            <span class="layer-card-name"><span class="lang-en">Data</span><span class="lang-cn">数据层</span></span>
+            <span class="layer-card-name"><span class="lang-en">Read</span><span class="lang-cn">读取 · READ</span></span>
           </div>
           <div class="layer-card-body">
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">LIVE FILES</span><span class="lang-cn">活文件</span></span>
-              <span class="v"><code>decisions.md</code> · <code>00_context.md</code> · <code>about_me.md</code><br><span class="lang-en">— overwritable via Superseded merge</span><span class="lang-cn">— 可被 Superseded 合并覆写</span></span>
+              <span class="k"><span class="lang-en">Hierarchical Injection</span><span class="lang-cn">分层注入</span></span>
+              <span class="v"><span class="lang-en">The one-page summary is always loaded; details fetched on demand</span><span class="lang-cn">概要常驻一页，细节按需检索</span></span>
             </div>
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">ARCHIVE</span><span class="lang-cn">归档</span></span>
-              <span class="v"><code>sessions/*</code><br><span class="lang-en">— append-only, never re-fed to AI</span><span class="lang-cn">— 只追加，不喂给下次 AI</span></span>
+              <span class="k"><span class="lang-en">Token Budget</span><span class="lang-cn">上下文预算</span></span>
+              <span class="v"><span class="lang-en">Opening injection capped at 1200 characters; overlong context makes models overlook the middle</span><span class="lang-cn">开场注入限 1200 字；注入太长，模型会忽略中段内容</span></span>
             </div>
           </div>
         </div>
 
-        <!-- Card 4 · Presentation -->
+        <!-- Module 4 · EVALUATION -->
         <div class="layer-card">
           <div class="layer-card-head">
             <span class="layer-card-num">04</span>
-            <span class="layer-card-name"><span class="lang-en">Presentation</span><span class="lang-cn">表现层</span></span>
+            <span class="layer-card-name"><span class="lang-en">Evaluation</span><span class="lang-cn">验收 · EVALUATION</span></span>
           </div>
           <div class="layer-card-body">
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">USER PATH</span><span class="lang-cn">交互路径</span></span>
-              <span class="v"><span class="lang-en">End → Import → Review (old <del>×</del> / new <strong>✓</strong>) → Confirm<br><strong>~4 actions (standard flow)</strong></span><span class="lang-cn">结束 → 导入 → Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 确认<br><strong>标准流程约 4 步</strong></span></span>
+              <span class="k"><span class="lang-en">Three-question test</span><span class="lang-cn">三问测试</span></span>
+              <span class="v"><span class="lang-en">A fresh AI must answer in 30s: who am I and how do we work / where is the project / where do we start today</span><span class="lang-cn">全新 AI 30 秒内答对：我是谁怎么协作 / 项目到哪了 / 这次从哪开始</span></span>
             </div>
             <div class="layer-cell">
-              <span class="k"><span class="lang-en">BRANCH</span><span class="lang-cn">分叉</span></span>
-              <span class="v"><span class="lang-en">No update → save session only, skip merge</span><span class="lang-cn">没有更新 → 直接保存，跳过合并</span></span>
+              <span class="k"><span class="lang-en">Cold-start check</span><span class="lang-cn">冷启动对照</span></span>
+              <span class="v"><span class="lang-en">Tested in a no-background chat: injection halved, all three questions answered correctly</span><span class="lang-cn">无背景新对话实测：注入量降到原来一半以下，三问全对</span></span>
             </div>
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3.6 · BUSINESS LOOP (PRD 业务流程) ============ -->
+  <section class="slide" data-bg="business">
+    <div class="slide-inner">
+      <div class="kicker">
+        <span class="dot"></span>
+        <span class="acc">02.6</span>
+        <span class="lang-en">Business flow · From the PRD</span>
+        <span class="lang-cn">业务流程 · 出自 PRD</span>
+      </div>
+
+      <h2 class="anchor">
+        <span class="lang-en">The flow is <span class="acc">a closed loop</span></span>
+        <span class="lang-cn">业务流程是<span class="acc">一个闭环</span></span>
+      </h2>
+
+      <p class="lede">
+        <span class="lang-en">Every step's output is the next step's input. The end of one session prepares the start of the next, in any AI.</span>
+        <span class="lang-cn">每一步的出口都是下一步的入口。这次对话的结束，就是下次对话（任何 AI）的开场准备。</span>
+      </p>
+
+      <div class="path-flow">
+        <div class="path-step">
+          <div class="step-num">01</div>
+          <div class="step-what"><span class="lang-en">Session opens: the AI reads the memory cards and picks up in 30 seconds</span><span class="lang-cn">会话开始：AI 读记忆卡片，30 秒接上进度</span></div>
+          <div class="step-where"><span class="lang-en">MCP read / paste start prompt</span><span class="lang-cn">MCP 直读 / 粘贴开始指令</span></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">02</div>
+          <div class="step-what"><span class="lang-en">Work as usual — MemoryOS stays out of the conversation</span><span class="lang-cn">正常工作，MemoryOS 不参与对话</span></div>
+          <div class="step-where">—</div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">03</div>
+          <div class="step-what"><span class="lang-en">Session ends: the AI drafts a summary plus an updated card page</span><span class="lang-cn">会话结束：AI 起草总结 + 记忆卡片新版</span></div>
+          <div class="step-where"><span class="lang-en">end prompt / MCP write-back</span><span class="lang-cn">结束指令 / MCP 写回</span></div>
+        </div>
+      </div>
+      <div class="path-flow" style="margin-top:var(--s-2)">
+        <div class="path-step">
+          <div class="step-num">04</div>
+          <div class="step-what"><span class="lang-en">The update lands in the inbox, pending — live memory untouched</span><span class="lang-cn">更新进收件箱待审，不碰正式记忆</span></div>
+          <div class="step-where"><code>inbox</code></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">05</div>
+          <div class="step-what"><span class="lang-en">The user confirms: strikethrough diff; adopt or dismiss each AI suggestion</span><span class="lang-cn">用户确认：划线对比；AI 建议逐条采纳或驳回</span></div>
+          <div class="step-where"><code>ReviewPage.tsx</code></div>
+        </div>
+        <div class="path-step">
+          <div class="step-num">06</div>
+          <div class="step-what"><span class="lang-en">Saved: cards stamped with today's date; superseded entries archived</span><span class="lang-cn">入库：卡片盖上当天日期，被替代条目归档</span></div>
+          <div class="step-where"><code>cards.md</code> · <code>decisions.md</code></div>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s-3);font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted)">
+        <span class="lang-en">↩ Step 06 feeds step 01 of the next session — in any AI. If the three-question test fails, the loop tells you which step to fix.</span>
+        <span class="lang-cn">↩ 第 06 步的输出就是下一次（任何 AI）第 01 步的输入。三问测试不过关时，顺着闭环就能定位该修哪一段。</span>
       </div>
     </div>
   </section>
@@ -777,14 +830,14 @@
       </h2>
 
       <p class="lede">
-        <span class="lang-en">v0.2.0 makes the MCP path primary — no more copy-paste on supported clients. The old manual flow stays as a fallback for web chat AIs that can't reach a local server.</span>
-        <span class="lang-cn">v0.2.0 起 MCP 是主路径。支持的客户端不再需要复制粘贴。旧的手动流程降级为兜底，留给连不上本地 server 的网页聊天 AI。</span>
+        <span class="lang-en">MCP is the primary path — no copy-paste on supported clients. The manual flow stays as a fallback for web chat AIs that can't reach a local program.</span>
+        <span class="lang-cn">MCP 是主路径，支持的客户端不需要复制粘贴。手动流程作为兜底，留给连不上本地程序的网页聊天 AI。</span>
       </p>
 
-      <!-- PRIMARY · MCP path (v0.2.0) -->
+      <!-- PRIMARY · MCP path -->
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);margin-bottom:var(--s-2)">
-        <span class="lang-en">Primary · v0.2.0 / MCP · Verified: Claude Desktop (.mcpb) · Manually verified: Codex / Claude Code · Configurable, not yet verified: Cursor / Cline · Fallback: clipboard</span>
-        <span class="lang-cn">主路径 · v0.2.0 / MCP · 已实测：Claude Desktop (.mcpb) · 已手动验证：Codex / Claude Code · 可配置但未逐一验证：Cursor / Cline · 兜底：剪贴板</span>
+        <span class="lang-en">Primary · MCP · Verified: Claude Desktop (.mcpb) · Manually verified: Codex / Claude Code · Configurable, not yet verified: Cursor / Cline · Fallback: clipboard</span>
+        <span class="lang-cn">主路径 · MCP · 已实测：Claude Desktop (.mcpb) · 已手动验证：Codex / Claude Code · 可配置但未逐一验证：Cursor / Cline · 兜底：复制粘贴</span>
       </div>
       <div class="path-flow">
         <div class="path-step">
@@ -799,8 +852,8 @@
         </div>
         <div class="path-step">
           <div class="step-num">03</div>
-          <div class="step-what"><span class="lang-en">Back in the app: review each suggestion (old <del>×</del> / new <strong>✓</strong>) → write</span><span class="lang-cn">回 App 逐条 Review（旧 <del>×</del> / 新 <strong>✓</strong>）→ 入库</span></div>
-          <div class="step-where"><code>ReviewPage.tsx</code></div>
+          <div class="step-what"><span class="lang-en">Back in the app: confirm via strikethrough diff → save. With trust mode on, routine updates save automatically</span><span class="lang-cn">回 App 划线对比确认 → 入库。开了信任模式，常规更新自动入库</span></div>
+          <div class="step-where"><code>ReviewPage.tsx</code> · trustMode</div>
         </div>
       </div>
 
@@ -833,8 +886,8 @@
       </div>
 
       <h2 class="anchor">
-        <span class="lang-en">v0.2.0 <span class="acc">/ Now</span></span>
-        <span class="lang-cn">v0.2.0 <span class="acc">/ 现在</span></span>
+        <span class="lang-en">Shipped so far <span class="acc">/ Now</span></span>
+        <span class="lang-cn">已经走到哪 <span class="acc">/ 现在</span></span>
       </h2>
 
       <div class="road-list">
@@ -862,36 +915,28 @@
             <span class="lang-cn">解析容错 · Superseded 记忆合并(旧划线 / 新高亮) · App 内文件编辑 · 反馈通道 · Prompt 格式契约</span>
           </span>
         </div>
-        <div class="road-item now">
-          <span class="road-mark">●</span>
+        <div class="road-item done">
+          <span class="road-mark">✓</span>
           <span class="road-ver">v0.2.0</span>
           <span class="road-what">
-            <span class="lang-en">Connect AI (MCP) + memory inbox — local stdio MCP server + <code>memoryos.mcpb</code>, AI reads memory directly in Claude Desktop; every write-back (MCP or manual) lands in a review inbox before it's saved <em>(current)</em></span>
-            <span class="lang-cn">连接 AI(MCP) + 记忆收件箱 — 本地 stdio MCP server + <code>memoryos.mcpb</code>, AI 在 Claude Desktop 里直接读记忆;所有写回(MCP / 手动)都先进收件箱待审再入库 <em>(当前)</em></span>
+            <span class="lang-en">Connect AI (MCP) + memory inbox — local stdio MCP server + <code>memoryos.mcpb</code>, AI reads memory directly in Claude Desktop; every write-back lands in the inbox before it's saved</span>
+            <span class="lang-cn">连接 AI（MCP）+ 记忆收件箱 — 本地 stdio MCP server + <code>memoryos.mcpb</code>，AI 在 Claude Desktop 里直接读记忆，所有写回先进收件箱再入库</span>
           </span>
         </div>
-        <div class="road-item todo">
-          <span class="road-mark">○</span>
-          <span class="road-ver">v0.2.x</span>
-          <span class="road-what">
-            <span class="lang-en">Cross-AI output consistency — run the full loop on ChatGPT / Claude / Cursor / Kimi, verify the Superseded merge works across all AIs + 10 seed-user interviews + web-AI connection spike</span>
-            <span class="lang-cn">跨 AI 输出一致性验证 — 在 ChatGPT / Claude / Cursor / Kimi 上各跑完整循环, 验证 Superseded 合并跨 AI 都能用 + 10 个种子用户 1v1 访谈 + 网页端 AI 接入 spike</span>
-          </span>
-        </div>
-        <div class="road-item todo">
-          <span class="road-mark">○</span>
+        <div class="road-item now">
+          <span class="road-mark">●</span>
           <span class="road-ver">v0.3</span>
           <span class="road-what">
-            <span class="lang-en">Mac / Linux build + code signing — platform coverage + kill the "unknown publisher" first-launch warning</span>
-            <span class="lang-cn">Mac / Linux 构建 + 代码签名 — 平台覆盖 + 干掉首次启动的「未知发行者」警告</span>
+            <span class="lang-en">Memory cards + trust mode — one card page per project (under 1200 chars, sources marked, outdated entries archived); review page with strikethrough diff; per-project trust mode auto-saves routine updates; one-prompt upgrade for old projects <em>(current)</em></span>
+            <span class="lang-cn">记忆卡片 + 信任模式 — 每个项目一页卡片（1200 字内、来源分明、过时归档）；确认页划线对比；信任模式按项目自动保存常规更新；旧项目一条指令升级 <em>(当前)</em></span>
           </span>
         </div>
         <div class="road-item todo">
           <span class="road-mark">○</span>
-          <span class="road-ver">later</span>
+          <span class="road-ver">next</span>
           <span class="road-what">
-            <span class="lang-en">Multi-machine sync without going cloud — explore Git / iCloud / Dropbox as the bridge, no vendor account, no central server</span>
-            <span class="lang-cn">不上云的多机器同步 — 用 Git / iCloud / Dropbox 当桥, 不要厂商账号、不要中心服务器</span>
+            <span class="lang-en">Validation and reach — seed users running the loop on their own projects (scale TBD); more AI clients; Mac / Linux builds; code signing</span>
+            <span class="lang-cn">验证与扩展 — 种子用户在自己的项目上跑完整闭环（规模待定）；连接更多 AI 客户端；Mac / Linux 版本；代码签名</span>
           </span>
         </div>
 

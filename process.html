@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Process — How I Used a PRD to Drive v0.2.0 | Jiajia Jiang</title>
-<meta name="description" content="How MemoryOS v0.2.0 was shipped — a PRD precise enough to drive AI-assisted development, with Claude Code building and Codex reviewing. By Jiajia Jiang.">
+<title>Process — How I Use a PRD to Drive AI-Assisted Development | Jiajia Jiang</title>
+<meta name="description" content="How MemoryOS releases are shipped: a PRD precise enough to drive AI-assisted development, with Claude Code building and Codex reviewing. By Jiajia Jiang.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -192,12 +192,12 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
 <header class="hero">
   <div class="hero-content">
     <span class="status">
-      <span class="lang-en">Process · how I used a PRD to drive AI-assisted development of v0.2.0</span>
-      <span class="lang-cn">工作方法 · 用一份 PRD 驱动 v0.2.0 的 AI 辅助开发</span>
+      <span class="lang-en">Process · how I use a PRD to drive AI-assisted development</span>
+      <span class="lang-cn">工作方法 · 用一份 PRD 驱动 AI 辅助开发</span>
     </span>
     <h1>
-      <span class="lang-en">How I used a PRD to drive AI-assisted development<span class="en">I shipped MemoryOS v0.2.0 as PM and spec author — AI coding tools implemented against the PRD, while I owned scope, acceptance criteria and release decisions.</span></span>
-      <span class="lang-cn">用一份 PRD 驱动 AI 辅助开发<span class="en">以 PM、规格作者的角色交付了 MemoryOS v0.2.0</span></span>
+      <span class="lang-en">How I use a PRD to drive AI-assisted development<span class="en">I ship MemoryOS releases as PM and spec author. AI coding tools implement against the PRD, while I own scope, acceptance criteria and release decisions.</span></span>
+      <span class="lang-cn">用一份 PRD 驱动 AI 辅助开发<span class="en">以 PM、规格作者的角色交付 MemoryOS 的每个版本</span></span>
     </h1>
     <p class="hero-sub">
       <span class="lang-en">I wrote a PRD as the single source of truth — not a vague feature wishlist. Claude Code implemented it phase by phase. Codex reviewed independently. I controlled scope, red lines, and every phase gate. Before any code was written, I identified the seams where two AI tools could read the same spec differently, and pinned them down in the PRD.</span>
@@ -268,7 +268,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
   <div class="ba">
     <div class="box">
       <span class="t"><span class="lang-en">Vague want</span><span class="lang-cn">模糊需求</span></span>
-      <p><span class="lang-en">"Let my AIs share memory across tools, without me copy-pasting."</span><span class="lang-cn">"让我的几个 AI 跨工具共享记忆，不用我复制粘贴。"</span></p>
+      <p><span class="lang-en">"Let my AIs share memory across tools, without me copy-pasting."</span><span class="lang-cn">「让我的几个 AI 跨工具共享记忆，不用我复制粘贴。」</span></p>
     </div>
     <div class="arrow">→</div>
     <div class="box after">
@@ -302,7 +302,7 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
   </div>
   <p class="txt" style="font-size:13px;color:var(--muted);margin-top:var(--s-2)">
     <span class="lang-en">"Self-test" here means the per-phase checks listed in §06 below (pure-logic / in-memory MCP / real-subprocess stdio) — not a CI badge.</span>
-    <span class="lang-cn">这里的"Self-test"指下方 §06 列出的每个 Phase 的实际检查（纯逻辑 / in-memory MCP / 真子进程 stdio），不是 CI 徽章。</span>
+    <span class="lang-cn">这里的「Self-test」指下方 §06 列出的每个 Phase 的实际检查（纯逻辑 / in-memory MCP / 真子进程 stdio），不是 CI 徽章。</span>
   </p>
 </section>
 
@@ -365,9 +365,9 @@ details.more code{font-family:var(--font-mono);font-size:.85em;color:var(--signa
     <div class="card accent full">
       <span class="k"><span class="lang-en">Spec patches — problems found and fixed</span><span class="lang-cn">消歧补丁：4 个提前发现并修复的问题</span></span>
       <ol class="patchlist">
-        <li><span class="pn">01</span><div class="pc"><span class="lang-en"><strong>Who actually wrote this memory?</strong> One handoff can come from different channels (manual / MCP) and different clients (Claude Desktop / Codex…). Crammed into one field, they're indistinguishable — so I split it into <code>sourceChannel</code> + <code>sourceClient</code>, and made the often-unreliable "platform" field nullable.</span><span class="lang-cn"><strong>这条记忆到底谁写的？</strong>一份 handoff 可能来自不同通道（手动 / MCP）、不同客户端（Claude Desktop / Codex…）。挤在一个字段里就分不清，所以拆成 <code>sourceChannel</code> ＋ <code>sourceClient</code> 两个字段，那个常常填不准的"平台"字段干脆设成可空。</span></div></li>
+        <li><span class="pn">01</span><div class="pc"><span class="lang-en"><strong>Who actually wrote this memory?</strong> One handoff can come from different channels (manual / MCP) and different clients (Claude Desktop / Codex…). Crammed into one field, they're indistinguishable — so I split it into <code>sourceChannel</code> + <code>sourceClient</code>, and made the often-unreliable "platform" field nullable.</span><span class="lang-cn"><strong>这条记忆到底谁写的？</strong>一份 handoff 可能来自不同通道（手动 / MCP）、不同客户端（Claude Desktop / Codex…）。挤在一个字段里就分不清，所以拆成 <code>sourceChannel</code> ＋ <code>sourceClient</code> 两个字段，那个常常填不准的「平台」字段干脆设成可空。</span></div></li>
         <li><span class="pn">02</span><div class="pc"><span class="lang-en"><strong>Two processes writing the same log collide.</strong> The app and the server are separate processes; if both append to one telemetry file they race. So each writes its own file, merged only at analysis time.</span><span class="lang-cn"><strong>两个进程写同一份埋点会打架。</strong>app 和 server 是两个进程，都往同一个埋点文件追加就会并发冲突。让它们各写各的文件，分析时再合并。</span></div></li>
-        <li><span class="pn">03</span><div class="pc"><span class="lang-en"><strong>A bad write must not corrupt a file or escape the folder.</strong> The server writes the inbox as "write a temp file, then rename" so a half-written file never appears; and it checks the resolved path stays inside the workspace, rejecting <code>..</code> and symlink escapes.</span><span class="lang-cn"><strong>一次写操作不能写坏文件、也不能逃出目录。</strong>server 写收件箱用"先写临时文件、再改名"，保证不会出现写到一半的坏文件；并校验解析后的真实路径必须留在工作区内，挡掉 <code>..</code> 和软链接逃逸。</span></div></li>
+        <li><span class="pn">03</span><div class="pc"><span class="lang-en"><strong>A bad write must not corrupt a file or escape the folder.</strong> The server writes the inbox as "write a temp file, then rename" so a half-written file never appears; and it checks the resolved path stays inside the workspace, rejecting <code>..</code> and symlink escapes.</span><span class="lang-cn"><strong>一次写操作不能写坏文件、也不能逃出目录。</strong>server 写收件箱用「先写临时文件、再改名」，保证不会出现写到一半的坏文件；并校验解析后的真实路径必须留在工作区内，挡掉 <code>..</code> 和软链接逃逸。</span></div></li>
         <li><span class="pn">04</span><div class="pc"><span class="lang-en"><strong>Two saves in the same minute would overwrite each other.</strong> Session filenames are precise to the minute; saving twice in one minute clobbers the first. On conflict it auto-appends <code>_2 / _3</code>.</span><span class="lang-cn"><strong>同一分钟存两条会互相覆盖。</strong>session 文件名精确到分钟，同分钟保存两次会盖掉前一条。冲突时自动加 <code>_2 / _3</code>。</span></div></li>
       </ol>
     </div>

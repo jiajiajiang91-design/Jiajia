@@ -6,18 +6,18 @@
 
     function lang(){ return document.body.getAttribute("data-lang")==="cn" ? "cn" : "en"; }
     var T = {
-      cn:{ start:"已复制开始对话指令。粘贴到 AI 让它读取你的上下文。",
-           end:"已复制结束对话指令。粘贴到 AI 让它生成总结。",
-           import:"粘贴 AI 输出的对话总结，更新决策和项目说明。",
-           saved:"已保存对话总结。更新了 {n} 个文件。",
+      cn:{ start:"已复制开始对话指令。粘贴到 AI，让它读取记忆卡片。",
+           end:"已复制结束对话指令。粘贴到 AI，让它整理总结和卡片新版。",
+           import:"粘贴 AI 输出的总结，更新记忆卡片。",
+           saved:"已保存。更新了 {n} 项。",
            nothing:"没有勾选任何项。",
-           discarded:"已丢弃这份待审记忆。" },
-      en:{ start:"Start prompt copied. Paste it into your AI to load your context.",
-           end:"End prompt copied. Paste it into your AI to generate a handoff.",
-           import:"Paste the AI handoff to update decisions and context.",
-           saved:"Handoff saved. {n} file(s) updated.",
+           discarded:"已丢弃这份待审更新。" },
+      en:{ start:"Start prompt copied. Paste it into your AI to load the memory cards.",
+           end:"End prompt copied. Paste it into your AI to draft the summary and updated cards.",
+           import:"Paste the AI's summary to update the memory cards.",
+           saved:"Saved. {n} item(s) updated.",
            nothing:"Nothing selected.",
-           discarded:"Pending memory discarded." }
+           discarded:"Pending update discarded." }
     };
 
     /* ── reveal on enter ── */
