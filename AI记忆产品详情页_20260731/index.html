@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="江佳佳的 AI 记忆产品案例：从跨对话记忆断裂出发，展示需求排序、功能结构、交互原型和使用验证。">
+  <title>AI 记忆产品｜江佳佳产品案例</title>
+  <link rel="stylesheet" href="styles.css?v=20260731-01">
+  <script src="app.js?v=20260731-01" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#case-main">跳到主要内容</a>
+
+  <main class="case-page" id="case-main">
+    <header class="case-bar" aria-label="案例页导航">
+      <a href="../index.html">← 返回作品集首页</a>
+      <span>江佳佳｜产品案例</span>
+    </header>
+
+    <section class="case-section hero-section" aria-labelledby="case-title">
+      <p class="eyebrow">AI 产品 · 独立项目</p>
+      <h1 id="case-title">AI 记忆产品</h1>
+      <p class="hero-lead">我把分散在项目和对话中的工作记忆整理成可确认、可检索的条目。新对话可以继续使用已有背景和决定。</p>
+      <div class="tag-row" aria-label="项目能力标签">
+        <span class="tag bg-blue">产品策略</span>
+        <span class="tag bg-yellow">信息架构</span>
+        <span class="tag bg-green">AI 工作流程</span>
+      </div>
+
+      <div class="prototype-viewport" data-scale-viewport>
+        <section class="memory-demo" data-scale-canvas aria-label="AI 记忆产品交互原型">
+          <div class="demo-header neo-panel">
+            <div class="demo-brand"><span class="demo-logo">记</span><strong>AI 记忆工作台</strong><span>／ 求职准备</span></div>
+            <div class="demo-actions"><span class="mcp-status">● MCP 已连接</span><button type="button">＋ 新增记忆</button></div>
+          </div>
+
+          <div class="demo-tabs" role="tablist" aria-label="产品流程">
+            <button class="demo-tab is-active state-blue" type="button" role="tab" aria-selected="true" aria-controls="demo-state-sort" data-demo-tab="sort"><b>01</b><strong>分类整理</strong><span>当前</span></button>
+            <button class="demo-tab state-yellow" type="button" role="tab" aria-selected="false" aria-controls="demo-state-read" data-demo-tab="read"><b>02</b><strong>按需读取</strong><span>当前</span></button>
+            <button class="demo-tab state-green" type="button" role="tab" aria-selected="false" aria-controls="demo-state-review" data-demo-tab="review"><b>03</b><strong>确认更新</strong><span>当前</span></button>
+          </div>
+
+          <div class="demo-states">
+            <section class="demo-state state-sort is-active" id="demo-state-sort" role="tabpanel" data-demo-state="sort">
+              <aside class="demo-panel scope-panel">
+                <p class="demo-kicker">记忆范围</p>
+                <button class="scope-item selected" type="button"><strong>项目库</strong><b>18 条</b></button>
+                <button class="scope-item" type="button">全局库</button>
+                <button class="scope-item" type="button">技能库</button>
+                <button class="scope-item" type="button">全部记忆</button>
+                <hr>
+                <p class="demo-kicker">当前项目</p>
+                <div class="current-project"><strong>求职准备</strong><span>最近更新 · 18 条</span></div>
+                <p class="demo-kicker">常用分类</p>
+                <div class="mini-tags"><span>决策</span><span>约束</span><span>状态</span><span>偏好</span></div>
+              </aside>
+
+              <div class="demo-panel library-panel">
+                <div class="library-tools"><span class="search-box">搜索正文、编号或关联</span><span class="soft-chip">来源：全部</span><span class="soft-chip">重要度：全部</span></div>
+                <div class="view-switch"><div><button class="active" type="button">给我看</button><button type="button">给 AI 看</button><button type="button">星图</button></div><span>项目库 · 18 条</span></div>
+                <article class="memory-entry">
+                  <div><strong>作品集先讲清产品结果</strong><b>M-01</b></div>
+                  <p>首屏先说明用户问题、关键判断和当前结果，再展开过程材料。</p>
+                  <footer><span class="chip blue">决策</span><span class="chip">用户</span><span class="chip yellow">重要度 高</span></footer>
+                </article>
+                <article class="memory-entry">
+                  <div><strong>AI 建议确认后写入</strong><b>M-02</b></div>
+                  <p>普通更新可按项目设置自动处理。建议与冲突内容继续由用户确认。</p>
+                  <footer><span class="chip yellow">约束</span><span class="chip">AI 建议 · 已确认</span><span class="chip yellow">重要度 高</span></footer>
+                </article>
+                <article class="memory-entry">
+                  <div><strong>相近文本匹配仍在优化</strong><b>M-03</b></div>
+                  <p>当前按文本相似度补充结果。不同说法的识别准确度仍需验证。</p>
+                  <footer><span class="chip green">状态</span><span class="chip">用户</span><span class="chip">重要度 中</span></footer>
+                </article>
+              </div>
+
+              <aside class="demo-panel preview-panel">
+                <div class="preview-title"><strong>条目调用说明</strong><span>5 条 / 863 字</span></div>
+                <p>这条高重要度项目决策会进入下一次对话的开场记忆。</p>
+                <article class="selected-memory"><b>决策 · 项目库</b><strong>作品集先讲清产品结果</strong><p>首屏先说明用户问题、关键判断和当前结果，再展开过程材料。</p><footer><span>来源：用户</span><span class="yellow">高重要度</span></footer></article>
+                <div class="reason-box"><b>入选原因</b><span>• 当前项目范围内</span><span>• 重要度高，近期仍在使用</span><span>• 与“作品集结构”存在关联</span></div>
+                <button class="demo-next blue-button" type="button" data-demo-go="read">查看检索与读取 →</button>
+              </aside>
+            </section>
+
+            <section class="demo-state state-read" id="demo-state-read" role="tabpanel" data-demo-state="read" hidden>
+              <div class="demo-panel search-workspace">
+                <div class="query-box"><strong>作品集 展示顺序</strong><span>ENTER</span></div>
+                <div class="filter-row"><span class="chip blue">项目库：求职准备</span><span class="chip">类型：决策</span><span class="chip">来源：全部</span><span class="chip">重要度：高</span></div>
+                <div class="result-summary"><strong>找到 6 条相关记忆</strong><span>3 条直接命中 · 2 条关联结果 · 1 条相近匹配</span></div>
+                <article class="search-result"><header><strong>作品集先讲清产品结果</strong><span class="blue">直接命中</span></header><p>首屏先说明用户问题、关键判断和当前结果，再展开过程材料。</p><b>决策 · 用户 · 高重要度</b></article>
+                <article class="search-result"><header><strong>AI 记忆产品放在文章和视频之前</strong><span class="green">关联结果</span></header><p>产品项目优先展示，毕业设计视频与公开内容放在后续区域。</p><b>约束 · 用户 · 关联：作品集结构</b></article>
+                <article class="search-result"><header><strong>每个项目保留独立案例页</strong><span class="lavender">相近匹配</span></header><p>首页提供项目入口，详情页说明问题、判断、方案、验证和下一步。</p><b>决策 · AI 建议已确认 · 高重要度</b></article>
+              </div>
+              <aside class="demo-panel read-panel">
+                <div class="read-title"><strong>给 AI 看</strong><span class="chip yellow">开场记忆</span></div>
+                <div class="budget"><b>已选 5 条</b><strong>863 / 1,200 字</strong><span><i></i></span></div>
+                <article class="opening-memory"><b>开场读取</b><strong>当前项目目标与关键决定</strong><p>优先求职 AI 应用产品经理；作品集先展示产品结果，再展开过程材料。</p><footer><span>项目库</span><span class="blue">决策</span><span class="yellow">高重要度</span></footer></article>
+                <article class="follow-search"><b>对话中继续检索</b><p>信息不足时，AI 可以查询旧决定、约束和归档内容。</p><code>search_memory("作品集 展示顺序")</code></article>
+                <button class="demo-next dark-button" type="button" data-demo-go="review">查看更新确认 →</button>
+              </aside>
+            </section>
+
+            <section class="demo-state state-review" id="demo-state-review" role="tabpanel" data-demo-state="review" hidden>
+              <aside class="demo-panel inbox-panel">
+                <p class="demo-kicker">更新收件箱</p><h3>待审 4 组</h3>
+                <button class="inbox-item selected" type="button"><span>刚刚 <b>5 条更新</b></span><strong>作品集结构讨论</strong></button>
+                <button class="inbox-item" type="button"><span>昨天 <b>3 条更新</b></span><strong>求职岗位筛选</strong></button>
+                <button class="inbox-item" type="button"><span>7 月 29 日 <b>2 条更新</b></span><strong>AI 记忆产品</strong></button>
+                <button class="inbox-item" type="button"><span>7 月 28 日 <b>1 条更新</b></span><strong>毕业设计整理</strong></button>
+              </aside>
+              <div class="demo-panel review-content">
+                <div class="review-heading"><div><h3>本次新增与建议</h3><p>查看来源和风险后，再选择处理方式。</p></div><span class="chip yellow">已选择 3 / 5 条</span></div>
+                <article class="review-item selected"><span class="checkbox">✓</span><div><header><strong>首页先展示产品项目</strong><span class="chip blue">新增记忆</span></header><p>作品集首页将 AI 记忆产品和古建归档产品放在文章、视频之前。</p><footer><span class="chip">来源：用户</span><span class="chip">可直接确认</span></footer></div></article>
+                <article class="review-item"><span class="checkbox"></span><div><header><strong>产品详情页减少技术说明</strong><span class="chip yellow">需要确认</span></header><p>先讲用户问题、产品判断和使用结果，再补充必要的实现信息。</p><footer><span class="chip">来源：AI 建议</span><span class="chip">默认未选中</span></footer></div></article>
+                <article class="review-item selected"><span class="checkbox">✓</span><div><header><strong>AI 记忆产品继续使用中文名称</strong><span class="chip green">约束</span></header><p>对外统一使用中文名称，省略版本号和工程名称。</p><footer><span class="chip">来源：用户</span><span class="chip">可直接确认</span></footer></div></article>
+                <div class="review-options"><span>全选新增记忆</span><span class="lavender">AI 建议保持待审</span><span>冲突内容会单独提示</span></div>
+              </div>
+              <aside class="demo-panel summary-panel">
+                <h3>本次处理结果</h3>
+                <div class="metric-row"><div class="bg-green"><strong>3 条</strong><span>写入</span></div><div class="bg-yellow"><strong>1 条</strong><span>待审</span></div><div class="bg-red"><strong>1 条</strong><span>驳回</span></div></div>
+                <div class="rules-box"><b>处理规则</b><span>• 普通更新默认进入待审</span><span>• 可信项目可自动处理普通更新</span><span>• AI 建议和冲突继续人工确认</span><span>• 驳回内容会留下防复提记录</span></div>
+                <div class="after-box"><b>确认后</b><p>写入的条目会进入下一次开场读取，也能在会话中继续检索。</p></div>
+                <button class="demo-next green-button" type="button" data-demo-go="sort">确认写入 3 条记忆</button>
+                <button class="secondary-button" type="button">先保留待审</button>
+              </aside>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="case-section evidence-section" aria-labelledby="evidence-title">
+      <header class="section-heading"><p class="eyebrow">产品界面</p><h2 id="evidence-title">关键界面与使用流程</h2></header>
+      <div class="evidence-grid">
+        <figure class="evidence-card evidence-blue"><figcaption>分类、来源与重要度</figcaption><img src="assets/screenshots/memory-library.png" alt="记忆库界面，展示三套记忆库、分类筛选、来源和重要度" loading="lazy"></figure>
+        <figure class="evidence-card evidence-yellow"><figcaption>开场读取与字数预算</figcaption><img class="crop-left" src="assets/screenshots/startup-reading.png" alt="给 AI 看界面，展示开场记忆和字数预算" loading="lazy"></figure>
+        <figure class="evidence-card evidence-green"><figcaption>新增内容确认</figcaption><img src="assets/screenshots/update-review.png" alt="更新确认界面，展示过时内容和 AI 建议的人工确认" loading="lazy"></figure>
+        <figure class="evidence-card evidence-lavender"><figcaption>相近内容与重复处理</figcaption><img class="crop-top" src="assets/screenshots/related-memory.png" alt="记忆检索界面，展示相近记忆、重复判断和关联结果" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="case-section public-notes" aria-labelledby="notes-title">
+      <header class="section-heading"><p class="eyebrow">公开记录</p><h2 id="notes-title">公开记录中的产品判断</h2></header>
+      <div class="note-grid">
+        <article class="note-card">
+          <img src="assets/public-notes/note-why-memory-product.png" alt="我为什么开始做 AI 记忆产品的小红书封面" loading="lazy">
+          <p class="card-kicker">项目起点</p><h3>我为什么开始做 AI 记忆产品</h3><p class="note-meta">15 赞 · 小红书</p>
+          <a href="https://www.xiaohongshu.com/user/profile/5c8a1d8c000000001201295d/6a07cb7b0000000035031e67" target="_blank" rel="noopener noreferrer">查看相关公开记录 ↗</a>
+        </article>
+        <article class="note-card">
+          <img src="assets/public-notes/note-product-structure.png" alt="AI 记忆产品功能结构的小红书封面" loading="lazy">
+          <p class="card-kicker">产品结构</p><h3>AI 记忆产品的功能结构如何形成</h3><p class="note-meta">9 赞 · 小红书</p>
+          <a href="https://www.xiaohongshu.com/user/profile/5c8a1d8c000000001201295d/6a066cc8000000003503bab4" target="_blank" rel="noopener noreferrer">查看相关公开记录 ↗</a>
+        </article>
+        <article class="note-card">
+          <img src="assets/public-notes/note-architecture-to-ai.png" alt="建筑背景如何参与 AI 产品开发的小红书封面" loading="lazy">
+          <p class="card-kicker">产品开发</p><h3>建筑背景如何参与 AI 产品开发</h3><p class="note-meta">13 赞 · 小红书</p>
+          <a href="https://www.xiaohongshu.com/explore/6a2a1f0c0000000035025af0?xsec_token=ABqYdxy0ZVP3zKPQvwLAZQlicRhkd0_F-ByWeOU94agJw=&amp;xsec_source=pc_user" target="_blank" rel="noopener noreferrer">查看小红书原文 ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section compact-section" aria-labelledby="context-title">
+      <header class="section-heading"><p class="eyebrow">项目起点</p><h2 id="context-title">重复说明项目背景会打断工作进度</h2></header>
+      <div class="info-grid three-columns">
+        <article class="info-card bg-blue"><p class="card-kicker">用户问题</p><h3>反复补充背景</h3><p>切换对话或 AI 工具后，需要重新说明项目目标、偏好和已有决定。</p></article>
+        <article class="info-card bg-yellow"><p class="card-kicker">产品目标</p><h3>保留项目背景与进度</h3><p>用户可以查看内容的来源、分类和调用条件，也可以随时修改。</p></article>
+        <article class="info-card bg-red"><p class="card-kicker">我的工作</p><h3>从需求到原型</h3><p>整理问题和使用记录，确定需求优先级，再设计信息结构和使用流程。</p></article>
+      </div>
+    </section>
+
+    <section class="case-section compact-section" aria-labelledby="priority-title">
+      <header class="section-heading"><p class="eyebrow">需求排序</p><h2 id="priority-title">需求优先级决定功能结构</h2></header>
+      <div class="info-grid three-columns">
+        <article class="info-card bg-yellow"><p class="card-kicker">优先级 1</p><h3>先保证内容准确</h3><p>条目记录类型、来源和重要度。AI 提出的调整进入待审，由用户决定是否写入。</p></article>
+        <article class="info-card bg-green"><p class="card-kicker">优先级 2</p><h3>重要内容先出现</h3><p>界面和 AI 读取使用同一套重要度规则。钉住的内容不会自动降级或归档。</p></article>
+        <article class="info-card bg-blue"><p class="card-kicker">优先级 3</p><h3>新对话延续现有进度</h3><p>对话开始时读取相关记忆。信息不足时，AI 再检索已有决定、约束和方法。</p></article>
+      </div>
+    </section>
+
+    <section class="case-section compact-section" aria-labelledby="modules-title">
+      <header class="section-heading"><p class="eyebrow">核心功能</p><h2 id="modules-title">存储、检索和读取如何配合</h2></header>
+      <div class="info-grid three-columns">
+        <article class="info-card bg-red"><p class="card-kicker">存储</p><h3>保存为独立条目</h3><p>系统将记忆存为独立条目，按八种类型整理到项目库、全局库和技能库。</p></article>
+        <article class="info-card bg-blue"><p class="card-kicker">检索</p><h3>检索相关内容</h3><p>按关键词、编号、类型、来源和重要度检索。结果会补充关联条目和相近文本。</p></article>
+        <article class="info-card bg-green"><p class="card-kicker">读取</p><h3>开场读取，按需检索</h3><p>开场读取重点条目。信息不足时，AI 可以继续检索旧内容。</p></article>
+      </div>
+    </section>
+
+    <section class="case-section compact-section" aria-labelledby="iteration-title">
+      <header class="section-heading"><p class="eyebrow">产品迭代</p><h2 id="iteration-title">每次改动都从使用问题开始</h2></header>
+      <div class="info-grid three-columns">
+        <article class="info-card iteration-card bg-blue"><p class="card-kicker">第一阶段｜调整存储结构</p><h3>从整页卡片改为独立条目</h3><p>每条记忆可以分类、编辑和关联，并进入项目库、全局库或技能库。</p></article>
+        <article class="info-card iteration-card bg-yellow"><p class="card-kicker">第二阶段｜完善内容管理</p><h3>记录来源和重要度</h3><p>新增来源、重要度、钉住、归档和捞回。用户可以控制内容的保留方式。</p></article>
+        <article class="info-card iteration-card bg-green"><p class="card-kicker">第三阶段｜完善写入与读取</p><h3>开场读取，后续按需检索</h3><p>AI 开场读取重点条目，过程中查询旧决定，对话结束后提交新增记忆供用户确认。</p></article>
+      </div>
+    </section>
+
+    <section class="case-section compact-section" aria-labelledby="validation-title">
+      <header class="section-heading"><p class="eyebrow">使用验证</p><h2 id="validation-title">目前完成了哪些功能</h2></header>
+      <div class="info-grid two-columns">
+        <article class="info-card bg-green"><p class="card-kicker">已经完成</p><h3>写入、检索和读取已经连通</h3><p>系统可以写入记忆条目，用户和 AI 都能检索。用户确认更新后，内容进入下一次读取。</p></article>
+        <article class="info-card bg-yellow"><p class="card-kicker">继续验证</p><h3>检索结果与外部使用</h3><p>相近文本匹配仍需优化。权限控制、跨 AI 自动共享和外部用户反馈尚未验证。</p></article>
+      </div>
+    </section>
+
+    <footer class="case-links">
+      <h2>查看项目代码</h2>
+      <p><a href="https://github.com/jiajiajiang91-design/memoryos" target="_blank" rel="noopener noreferrer">GitHub：jiajiajiang91-design/memoryos ↗</a></p>
+    </footer>
+  </main>
+</body>
+</html>
