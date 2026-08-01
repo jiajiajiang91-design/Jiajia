@@ -18,6 +18,24 @@ if (navToggle && navLinks) {
   });
 }
 
+const socialToggle = document.querySelector(".social-toggle");
+const socialMore = document.querySelector("#social-more");
+
+if (socialToggle && socialMore) {
+  const socialToggleLabel = socialToggle.querySelector(".social-toggle-label");
+  socialMore.hidden = true;
+  socialToggle.hidden = false;
+
+  socialToggle.addEventListener("click", () => {
+    const willExpand = socialToggle.getAttribute("aria-expanded") !== "true";
+    socialToggle.setAttribute("aria-expanded", String(willExpand));
+    socialMore.hidden = !willExpand;
+    if (socialToggleLabel) {
+      socialToggleLabel.textContent = willExpand ? "收起更多内容" : "展开更多内容";
+    }
+  });
+}
+
 const revealItems = [...document.querySelectorAll(".reveal")];
 revealItems.forEach((item, index) => {
   item.style.setProperty("--reveal-order", String(index % 4));

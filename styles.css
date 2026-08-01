@@ -440,8 +440,16 @@ main section[id] { scroll-margin-top: 120px; }
 .video-banner:hover .video-cover { transform: scale(1.015); filter: brightness(.92); }
 .video-banner:hover .video-play { transform: translate(calc(-50% - 2px), calc(-50% - 2px)); box-shadow: 6px 6px 0 var(--ink); }
 
-.content { min-height: 1782px; }
+.content { min-height: auto; }
 .social-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
+.social-more { margin-top: 48px; }
+.social-more[hidden],
+.social-toggle[hidden] { display: none; }
+.social-toggle { width: 100%; min-height: 72px; margin-top: 48px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; color: var(--ink); background: var(--yellow); border: var(--border); box-shadow: var(--shadow-small); font: 900 18px/26px var(--display); cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.social-toggle:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.social-toggle:active { transform: translate(3px, 3px); box-shadow: none; }
+.social-toggle-icon { font: 700 24px/1 var(--mono); transition: transform .2s ease; }
+.social-toggle[aria-expanded="true"] .social-toggle-icon { transform: rotate(180deg); }
 .social-card { position: relative; height: 676px; min-height: 676px; margin-bottom: 29px; padding: 17px; display: flex; flex-direction: column; overflow: visible; background: var(--white); border: var(--border); box-shadow: 6px 6px 0 var(--ink); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
 .social-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
 .social-card:active { transform: translate(3px, 3px); box-shadow: none; }
@@ -708,6 +716,8 @@ main section[id] { scroll-margin-top: 120px; }
   .note-grid,
   .capability-grid,
   .responsibility-grid { grid-template-columns: 1fr; }
+  .social-more { margin-top: 32px; }
+  .social-toggle { min-height: 64px; margin-top: 32px; padding: 0 18px; }
   .mini-card:last-child,
   .other-card:last-child,
   .priority-item:last-child,
