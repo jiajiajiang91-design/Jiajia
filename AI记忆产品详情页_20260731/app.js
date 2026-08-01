@@ -82,6 +82,13 @@ document.querySelectorAll("[data-demo-go]").forEach((button) => {
 function scalePrototype(viewport) {
   const canvas = viewport.querySelector("[data-scale-canvas]");
   if (!canvas) return;
+  const usesMobileLayout = window.matchMedia("(max-width: 960px)").matches;
+  canvas.classList.toggle("uses-mobile-layout", usesMobileLayout);
+  if (usesMobileLayout) {
+    canvas.style.transform = "none";
+    viewport.style.height = "auto";
+    return;
+  }
   const scale = Math.min(1, viewport.clientWidth / 1248);
   canvas.style.transform = `scale(${scale})`;
   viewport.style.height = `${780 * scale}px`;
