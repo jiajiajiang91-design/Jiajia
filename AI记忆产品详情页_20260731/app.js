@@ -1,3 +1,44 @@
+const header = document.querySelector("[data-header]");
+const navToggle = document.querySelector(".nav-toggle");
+const navLinks = document.querySelector(".nav-links");
+const sectionLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+
+function closeNavigation() {
+  navLinks?.classList.remove("open");
+  navToggle?.setAttribute("aria-expanded", "false");
+}
+
+navToggle?.addEventListener("click", () => {
+  const isOpen = navLinks?.classList.toggle("open") ?? false;
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+sectionLinks.forEach((link) => link.addEventListener("click", closeNavigation));
+
+const observedSections = sectionLinks
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+if ("IntersectionObserver" in window && observedSections.length) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    sectionLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
+    });
+  }, { rootMargin: "-25% 0px -55%", threshold: [0, .1, .35, .6] });
+  observedSections.forEach((section) => sectionObserver.observe(section));
+}
+
+function updateHeader() {
+  header?.classList.toggle("is-scrolled", window.scrollY > 36);
+}
+
+updateHeader();
+window.addEventListener("scroll", updateHeader, { passive: true });
+
 const tabs = [...document.querySelectorAll("[data-demo-tab]")];
 const states = [...document.querySelectorAll("[data-demo-state]")];
 const stateNames = new Set(states.map((node) => node.dataset.demoState));

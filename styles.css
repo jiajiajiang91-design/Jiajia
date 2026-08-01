@@ -153,7 +153,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   width: min(calc(100% - (var(--side) * 2)), var(--max));
   margin-inline: auto;
 }
-main section[id] { scroll-margin-top: 120px; }
+main section[id],
+.contact-group { scroll-margin-top: 120px; }
 .section-rule { padding-top: var(--section-gap); }
 .eyebrow {
   margin: 0 0 12px;
@@ -328,8 +329,9 @@ main section[id] { scroll-margin-top: 120px; }
   font: 700 11px/18px var(--mono);
 }
 .statement-box h2 { margin: 0; font: 900 30px/42px var(--display); }
-.statement { min-height: 794px; }
+.statement { min-height: 400px; }
 .statement-note { width: 1000px; min-height: 56px; max-width: 1000px; margin: 32px auto 64px; text-align: center; font-size: 17px; font-weight: 700; line-height: 28px; }
+.recent-section { min-height: 520px; }
 .recent-head { height: 58px; margin-bottom: 34px; }
 .recent-head .eyebrow {
   display: inline-block;
@@ -656,6 +658,7 @@ main section[id] { scroll-margin-top: 120px; }
   .statement-box,
   .statement-note { width: 100%; max-width: 100%; }
   .statement,
+  .recent-section,
   .timeline-section,
   .products,
   .thesis,

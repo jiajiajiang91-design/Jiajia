@@ -5,18 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="江佳佳的 AI 记忆产品案例：从跨对话记忆断裂出发，展示需求排序、功能结构、交互原型和使用验证。">
   <title>AI 记忆产品｜江佳佳产品案例</title>
-  <link rel="stylesheet" href="styles.css?v=20260731-01">
-  <script src="app.js?v=20260731-01" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260802-01">
+  <script src="app.js?v=20260802-01" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#case-main">跳到主要内容</a>
 
-  <main class="case-page" id="case-main">
-    <header class="case-bar" aria-label="案例页导航">
-      <a href="../index.html">← 返回作品集首页</a>
-      <span>江佳佳｜产品案例</span>
-    </header>
+  <header class="site-header" data-header>
+    <nav class="nav-shell" aria-label="案例页导航">
+      <a class="nav-brand" href="../index.html" aria-label="返回作品集首页">首页</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="case-nav-links">菜单</button>
+      <div class="nav-links" id="case-nav-links">
+        <a href="#user-problem">用户问题</a>
+        <a href="#core-judgment">核心判断</a>
+        <a href="#current-result">当前结果</a>
+      </div>
+    </nav>
+  </header>
 
+  <main class="case-page" id="case-main">
     <section class="case-section hero-section" aria-labelledby="case-title">
       <p class="eyebrow">AI 产品 · 独立项目</p>
       <h1 id="case-title">AI 记忆产品</h1>
@@ -162,7 +169,7 @@
       </div>
     </section>
 
-    <section class="case-section compact-section" aria-labelledby="context-title">
+    <section class="case-section compact-section" id="user-problem" aria-labelledby="context-title">
       <header class="section-heading"><p class="eyebrow">项目起点</p><h2 id="context-title">重复说明项目背景会打断工作进度</h2></header>
       <div class="info-grid three-columns">
         <article class="info-card bg-blue"><p class="card-kicker">用户问题</p><h3>反复补充背景</h3><p>切换对话或 AI 工具后，需要重新说明项目目标、偏好和已有决定。</p></article>
@@ -171,7 +178,7 @@
       </div>
     </section>
 
-    <section class="case-section compact-section" aria-labelledby="priority-title">
+    <section class="case-section compact-section" id="core-judgment" aria-labelledby="priority-title">
       <header class="section-heading"><p class="eyebrow">需求排序</p><h2 id="priority-title">需求优先级决定功能结构</h2></header>
       <div class="info-grid three-columns">
         <article class="info-card bg-yellow"><p class="card-kicker">优先级 1</p><h3>先保证内容准确</h3><p>条目记录类型、来源和重要度。AI 提出的调整进入待审，由用户决定是否写入。</p></article>
@@ -198,7 +205,7 @@
       </div>
     </section>
 
-    <section class="case-section compact-section" aria-labelledby="validation-title">
+    <section class="case-section compact-section" id="current-result" aria-labelledby="validation-title">
       <header class="section-heading"><p class="eyebrow">使用验证</p><h2 id="validation-title">目前完成了哪些功能</h2></header>
       <div class="info-grid two-columns">
         <article class="info-card bg-green"><p class="card-kicker">已经完成</p><h3>写入、检索和读取已经连通</h3><p>系统可以写入记忆条目，用户和 AI 都能检索。用户确认更新后，内容进入下一次读取。</p></article>
