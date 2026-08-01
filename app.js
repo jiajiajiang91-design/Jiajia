@@ -36,6 +36,103 @@ if (socialToggle && socialMore) {
   });
 }
 
+const practiceGalleries = {
+  latent: {
+    title: "Latent Walk：探索材料变化路径",
+    images: [
+      "assets/images/home/ai-practice/latent-walk-01.webp",
+      "assets/images/home/ai-practice/latent-walk-02.webp",
+    ],
+  },
+  nca: {
+    title: "NCA：模拟空间策略演化",
+    images: [
+      "assets/images/home/ai-practice/nca-01.webp",
+      "assets/images/home/ai-practice/nca-02.webp",
+      "assets/images/home/ai-practice/nca-03.webp",
+      "assets/images/home/ai-practice/nca-04.webp",
+    ],
+  },
+};
+
+const practiceLightbox = document.querySelector("#practice-lightbox");
+
+if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
+  const lightboxTitle = practiceLightbox.querySelector("#practice-lightbox-title");
+  const lightboxCount = practiceLightbox.querySelector(".practice-lightbox-count");
+  const lightboxImage = practiceLightbox.querySelector(".practice-lightbox-image");
+  const lightboxZoom = practiceLightbox.querySelector(".practice-lightbox-zoom");
+  const lightboxPrev = practiceLightbox.querySelector(".practice-lightbox-prev");
+  const lightboxNext = practiceLightbox.querySelector(".practice-lightbox-next");
+  const lightboxClose = practiceLightbox.querySelector(".practice-lightbox-close");
+  let activeGallery = null;
+  let activeIndex = 0;
+  let lastTrigger = null;
+
+  function resetLightboxZoom() {
+    lightboxZoom.setAttribute("aria-pressed", "false");
+    lightboxZoom.setAttribute("aria-label", "放大当前图纸");
+    practiceLightbox.querySelector(".practice-lightbox-stage").scrollTo(0, 0);
+  }
+
+  function renderPracticeImage() {
+    if (!activeGallery) return;
+    const total = activeGallery.images.length;
+    lightboxTitle.textContent = activeGallery.title;
+    lightboxCount.textContent = `${activeIndex + 1} / ${total}`;
+    lightboxImage.src = activeGallery.images[activeIndex];
+    lightboxImage.alt = `${activeGallery.title}项目图纸，第 ${activeIndex + 1} 页，共 ${total} 页`;
+    lightboxPrev.disabled = activeIndex === 0;
+    lightboxNext.disabled = activeIndex === total - 1;
+    resetLightboxZoom();
+  }
+
+  document.querySelectorAll("[data-gallery]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      activeGallery = practiceGalleries[trigger.dataset.gallery];
+      if (!activeGallery) return;
+      activeIndex = 0;
+      lastTrigger = trigger;
+      renderPracticeImage();
+      practiceLightbox.showModal();
+      document.body.classList.add("lightbox-open");
+      lightboxClose.focus();
+    });
+  });
+
+  lightboxPrev.addEventListener("click", () => {
+    if (activeIndex <= 0) return;
+    activeIndex -= 1;
+    renderPracticeImage();
+  });
+
+  lightboxNext.addEventListener("click", () => {
+    if (!activeGallery || activeIndex >= activeGallery.images.length - 1) return;
+    activeIndex += 1;
+    renderPracticeImage();
+  });
+
+  lightboxZoom.addEventListener("click", () => {
+    const willZoom = lightboxZoom.getAttribute("aria-pressed") !== "true";
+    lightboxZoom.setAttribute("aria-pressed", String(willZoom));
+    lightboxZoom.setAttribute("aria-label", willZoom ? "缩小当前图纸" : "放大当前图纸");
+  });
+
+  lightboxClose.addEventListener("click", () => practiceLightbox.close());
+  practiceLightbox.addEventListener("click", (event) => {
+    if (event.target === practiceLightbox) practiceLightbox.close();
+  });
+  practiceLightbox.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") lightboxPrev.click();
+    if (event.key === "ArrowRight") lightboxNext.click();
+  });
+  practiceLightbox.addEventListener("close", () => {
+    document.body.classList.remove("lightbox-open");
+    resetLightboxZoom();
+    if (lastTrigger) lastTrigger.focus();
+  });
+}
+
 const revealItems = [...document.querySelectorAll(".reveal")];
 revealItems.forEach((item, index) => {
   item.style.setProperty("--reveal-order", String(index % 4));
