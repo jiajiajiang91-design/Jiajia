@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="江佳佳的 AI 产品经理作品集：AI 记忆产品、古建成果生产与归档产品，以及 AI 与空间设计实践。">
   <title>江佳佳｜AI 应用产品经理作品集</title>
-  <link rel="stylesheet" href="styles.css?v=20260802-01">
-  <script src="app.js?v=20260801-02" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260805-02">
+  <script src="app.js?v=20260805-02" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -192,6 +192,24 @@
       </div>
     </dialog>
 
+    <dialog class="recommendation-dialog" id="recommendation-dialog" aria-labelledby="recommendation-dialog-title">
+      <div class="recommendation-dialog-shell">
+        <header class="recommendation-dialog-header">
+          <div>
+            <p>推荐信</p>
+            <h2 id="recommendation-dialog-title">项目合作推荐信</h2>
+          </div>
+          <div class="recommendation-dialog-tools">
+            <a href="assets/documents/Jiajia-Jiang-Recommendation-Letter.pdf" target="_blank" rel="noopener noreferrer">打开 PDF 原件 ↗</a>
+            <button class="recommendation-dialog-close" type="button" aria-label="关闭推荐信">×</button>
+          </div>
+        </header>
+        <div class="recommendation-dialog-stage">
+          <img src="assets/images/home/recommendation-letter-preview.png" alt="项目合作推荐信全文预览">
+        </div>
+      </div>
+    </dialog>
+
     <section class="thesis section section-rule" id="thesis">
       <div class="section-heading reveal">
         <p class="eyebrow">毕业设计</p>
@@ -259,8 +277,8 @@
           <li class="timeline-item right reveal">
             <article><div class="timeline-meta"><span class="timeline-type">产品</span><time>2026.06 — 至今</time></div><h3>古建成果生产与归档产品｜独立研究</h3><p>比较相关行业流程，梳理资料治理、成果生成、质量责任与持续归档能力。</p></article>
           </li>
-          <li class="timeline-item left reveal">
-            <article><div class="timeline-meta"><span class="timeline-type">内容</span><time>持续更新</time></div><h3>AI × 设计内容账号｜独立运营</h3><p>持续记录 AI 工作流、产品实践和设计工具；精选内容会在网站保留原文入口。</p></article>
+          <li class="timeline-item left reveal has-recommendation">
+            <article><div class="timeline-meta"><span class="timeline-type">内容</span><time>持续更新</time></div><h3>AI × 设计内容账号｜独立运营</h3><p>持续记录 AI 工作流、产品实践和设计工具；精选内容会在网站保留原文入口。</p><button class="timeline-letter-button" type="button" aria-haspopup="dialog" aria-controls="recommendation-dialog">查看推荐信 ↗</button></article>
           </li>
           <li class="timeline-item right reveal timeline-future">
             <article><div class="timeline-meta"><span class="timeline-type">下一站</span><time>继续更新</time></div><h3>继续探索 AI 产品</h3><p>继续研究新工具和真实需求，把想法做成原型，在使用中一点点改好。</p></article>

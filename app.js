@@ -133,6 +133,28 @@ if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
   });
 }
 
+const recommendationDialog = document.querySelector("#recommendation-dialog");
+const recommendationTrigger = document.querySelector(".timeline-letter-button");
+
+if (recommendationDialog && recommendationTrigger && typeof recommendationDialog.showModal === "function") {
+  const recommendationClose = recommendationDialog.querySelector(".recommendation-dialog-close");
+
+  recommendationTrigger.addEventListener("click", () => {
+    recommendationDialog.showModal();
+    document.body.classList.add("lightbox-open");
+    recommendationClose.focus();
+  });
+
+  recommendationClose.addEventListener("click", () => recommendationDialog.close());
+  recommendationDialog.addEventListener("click", (event) => {
+    if (event.target === recommendationDialog) recommendationDialog.close();
+  });
+  recommendationDialog.addEventListener("close", () => {
+    document.body.classList.remove("lightbox-open");
+    recommendationTrigger.focus();
+  });
+}
+
 const revealItems = [...document.querySelectorAll(".reveal")];
 revealItems.forEach((item, index) => {
   item.style.setProperty("--reveal-order", String(index % 4));

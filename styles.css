@@ -397,6 +397,12 @@ main section[id],
 .timeline-item:nth-child(5) .timeline-type { background: var(--lavender); }
 .timeline-item h3 { margin: 0 0 8px; font-size: 22px; font-weight: 900; line-height: 32px; }
 .timeline-item p { margin: 0; color: var(--muted); font-size: 15px; line-height: 24px; }
+.timeline-item.has-recommendation { min-height: 258px; }
+.timeline-item.has-recommendation article { height: 232px; }
+.timeline-letter-button { margin-top: 14px; padding: 7px 12px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); font: 800 13px/18px var(--sans); cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.timeline-letter-button:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+.timeline-letter-button:active { transform: translate(3px, 3px); box-shadow: none; }
+.timeline-letter-button:focus-visible { outline: 4px solid var(--blue); outline-offset: 3px; }
 
 .products { min-height: 940px; }
 .product-grid { height: 620px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
@@ -500,6 +506,20 @@ main section[id],
 .practice-lightbox-close:focus-visible,
 .practice-lightbox-nav:focus-visible,
 .practice-lightbox-zoom:focus-visible { outline: 4px solid var(--blue); outline-offset: -4px; }
+
+.recommendation-dialog { width: min(94vw, 1100px); height: min(94vh, 1040px); max-width: none; max-height: none; padding: 0; overflow: visible; color: var(--ink); background: transparent; border: 0; }
+.recommendation-dialog::backdrop { background: rgba(0, 0, 0, .84); }
+.recommendation-dialog-shell { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--ink); border: var(--border); box-shadow: 10px 10px 0 var(--blue); }
+.recommendation-dialog-header { min-height: 82px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--yellow); border-bottom: var(--border); }
+.recommendation-dialog-header p { margin: 0 0 3px; font: 700 10px/14px var(--mono); letter-spacing: .6px; }
+.recommendation-dialog-header h2 { margin: 0; font: 900 24px/32px var(--display); }
+.recommendation-dialog-tools { display: flex; align-items: center; gap: 14px; }
+.recommendation-dialog-tools a { color: var(--ink); font: 800 12px/18px var(--sans); text-underline-offset: 4px; }
+.recommendation-dialog-close { width: 46px; height: 46px; display: grid; place-items: center; color: var(--white); background: var(--ink); border: 2px solid var(--ink); font: 700 28px/1 var(--display); cursor: pointer; }
+.recommendation-dialog-stage { min-height: 0; overflow: auto; padding: 24px; display: grid; place-items: start center; background: #070707; }
+.recommendation-dialog-stage img { width: min(100%, 760px); height: auto; display: block; background: var(--white); }
+.recommendation-dialog-close:focus-visible,
+.recommendation-dialog-tools a:focus-visible { outline: 4px solid var(--blue); outline-offset: 3px; }
 
 .contact { min-height: 418px; padding-top: 100px; padding-bottom: 48px; }
 .contact-box { min-height: 246px; padding: 38px 48px; background: var(--green); border: var(--border); box-shadow: 8px 8px 0 var(--ink); }
@@ -722,6 +742,7 @@ main section[id],
   .practice-lightbox-header { min-height: 74px; }
   .practice-lightbox-header h2 { font-size: 20px; line-height: 28px; }
   .practice-lightbox-zoom { padding: 18px 58px; }
+  .recommendation-dialog { width: calc(100vw - 28px); height: calc(100vh - 28px); }
   .mini-card:last-child,
   .other-card:last-child,
   .priority-item:last-child,
@@ -769,6 +790,13 @@ main section[id],
   .practice-lightbox-close { width: 40px; height: 40px; }
   .practice-lightbox-zoom { padding: 14px 46px; }
   .practice-lightbox-nav { top: auto; bottom: 14px; width: 44px; height: 44px; }
+  .timeline-item.has-recommendation article { height: auto; min-height: 260px; }
+  .recommendation-dialog-header { padding: 10px 12px; gap: 12px; }
+  .recommendation-dialog-header h2 { font-size: 18px; line-height: 26px; }
+  .recommendation-dialog-tools { gap: 8px; }
+  .recommendation-dialog-tools a { font-size: 11px; line-height: 16px; }
+  .recommendation-dialog-close { width: 40px; height: 40px; }
+  .recommendation-dialog-stage { padding: 12px; }
   .social-more { margin-top: 32px; }
   .social-toggle { min-height: 64px; margin-top: 32px; padding: 0 18px; }
   .mini-card:last-child,
