@@ -1,7 +1,11 @@
-/* 配置：同源代理端点、模型与提示词。浏览器不接触服务端密钥。 */
+/* 配置：同源或受控跨域代理端点、模型与提示词。浏览器不接触服务端密钥。 */
+const apiBase = (document.querySelector('meta[name="gujian-api-base"]')?.content || "")
+  .trim()
+  .replace(/\/+$/, "");
+
 window.CFG = {
-  API_PROXY: "/api/ai",
-  API_STATUS: "/api/status",
+  API_PROXY: `${apiBase}/api/ai`,
+  API_STATUS: `${apiBase}/api/status`,
   CFG_STORE: "gujian-wt-cfg",
 
   // 默认组合：对话用快的，识别用准的。
