@@ -4,6 +4,7 @@ const navLinks = document.querySelector('.nav-links');
 const sectionLinks = [...document.querySelectorAll('.nav-links a')];
 const prototypeShell = document.querySelector('.prototype-shell');
 const prototypeFrame = document.querySelector('[data-prototype-frame] iframe');
+const prototypeUrl = 'prototype/index.html?v=20260807-02';
 
 const mobileSteps = [
   {
@@ -113,9 +114,9 @@ document.querySelector('[data-prototype-reset]')?.addEventListener('click', () =
   try {
     const resetButton = prototypeFrame.contentDocument?.querySelector('#btnReset');
     if (resetButton) resetButton.click();
-    else prototypeFrame.src = 'prototype/index.html';
+    else prototypeFrame.src = prototypeUrl;
   } catch (error) {
-    prototypeFrame.src = 'prototype/index.html';
+    prototypeFrame.src = prototypeUrl;
   }
 });
 
@@ -125,7 +126,7 @@ document.querySelector('[data-prototype-fullscreen]')?.addEventListener('click',
     if (document.fullscreenElement) await document.exitFullscreen();
     else await prototypeShell.requestFullscreen();
   } catch (error) {
-    window.open('prototype/index.html', '_blank', 'noopener,noreferrer');
+    window.open(prototypeUrl, '_blank', 'noopener,noreferrer');
   }
 });
 

@@ -109,7 +109,7 @@ button:disabled {
 /* ===== 应用布局 ===== */
 .app {
   display: grid;
-  grid-template-columns: clamp(220px, 17vw, 260px) minmax(560px, 1fr) clamp(340px, 27vw, 420px);
+  grid-template-columns: clamp(220px, 15vw, 240px) minmax(680px, 1fr) clamp(330px, 22vw, 380px);
   width: 100%;
   height: 100vh;
   height: 100dvh;
@@ -118,7 +118,7 @@ button:disabled {
 }
 
 .app.assistant-collapsed {
-  grid-template-columns: clamp(220px, 17vw, 260px) minmax(0, 1fr) 0;
+  grid-template-columns: clamp(220px, 15vw, 240px) minmax(0, 1fr) 0;
 }
 
 .app.assistant-collapsed .col-right {
@@ -389,16 +389,25 @@ button:disabled {
 }
 
 /* ===== 顶部状态与页面标签 ===== */
-.mode-bar {
+.top-meta-shell {
   display: flex;
   height: var(--top-meta-h);
   min-height: var(--top-meta-h);
+  border-bottom: var(--hairline);
+  background: var(--panel);
+}
+
+.mode-bar {
+  display: flex;
+  min-width: 0;
+  flex: 1;
   align-items: center;
   gap: 8px;
   padding: 7px 14px;
-  border-bottom: var(--hairline);
   color: var(--ink);
   font-size: 11.5px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .mode-bar.demo {
@@ -434,9 +443,9 @@ button:disabled {
   display: flex;
   min-width: 0;
   flex: 1;
-  gap: 7px;
+  gap: 6px;
   overflow-x: auto;
-  padding: 10px 12px;
+  padding: 9px 12px;
   background: var(--panel);
 }
 
@@ -444,8 +453,9 @@ button:disabled {
   display: flex;
   flex: none;
   align-items: center;
-  gap: 5px;
-  padding: 8px 10px 8px 4px;
+  gap: 4px;
+  padding: 4px 10px;
+  border-left: var(--hairline);
   background: var(--panel);
 }
 
@@ -458,8 +468,8 @@ button:disabled {
 }
 
 .layout-btn {
-  min-height: 30px;
-  padding: 4px 8px;
+  min-height: 27px;
+  padding: 3px 7px;
   border: 1px solid #77756e;
   background: var(--panel);
   color: var(--ink);
@@ -484,8 +494,9 @@ button:disabled {
 }
 
 .tab {
-  flex: none;
-  padding: 7px 11px;
+  min-width: max-content;
+  flex: 1 1 auto;
+  padding: 7px 9px;
   border: var(--border-thin);
   background: var(--panel);
   color: var(--ink);
@@ -552,19 +563,25 @@ button:disabled {
 
 /* ===== 工作区 ===== */
 .pane-data {
-  width: 44%;
-  min-width: 330px;
-  max-width: 580px;
+  display: flex;
+  width: 52%;
+  min-width: 420px;
+  max-width: 720px;
+  min-height: 0;
+  flex-direction: column;
   container-type: inline-size;
   container-name: workpane;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 18px 18px 0 !important;
   border-right: var(--hairline);
   background: var(--canvas);
 }
 
 .pane-body {
+  min-height: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding-bottom: 16px;
 }
 
@@ -671,6 +688,111 @@ button:disabled {
   margin-bottom: 9px;
   font-size: 13px;
   font-weight: 900;
+}
+
+/* 构件页用紧凑问题队列代替整段问题堆叠。 */
+.question-queue {
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid var(--warn);
+  background: var(--warn-soft);
+}
+
+.queue-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 11px 8px;
+  border-bottom: 1px solid #d5b66a;
+}
+
+.queue-head .card-title {
+  margin-bottom: 1px;
+}
+
+.queue-count {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  flex: none;
+  border: var(--border-thin);
+  background: var(--panel);
+  font-family: var(--mono);
+  font-weight: 900;
+}
+
+.question-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: #d5b66a;
+}
+
+.question-item {
+  display: flex;
+  min-width: 0;
+  min-height: 82px;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px 10px;
+  border: 0;
+  background: var(--warn-soft);
+  text-align: left;
+}
+
+.question-item:hover,
+.question-item:focus-visible {
+  position: relative;
+  z-index: 1;
+  background: var(--accent-soft);
+}
+
+.question-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.question-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--ink-2);
+  font-size: 11px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.question-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 7px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.question-meta strong {
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.parts-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.parts-table-card > .card-title {
+  margin: 0;
+  padding: 10px 12px;
+  border-bottom: var(--hairline);
 }
 
 .hint {
@@ -914,10 +1036,10 @@ input[type="radio"] {
 
 /* 每一步底部都有明确的下一步操作。 */
 .action-bar {
-  position: sticky;
-  bottom: 0;
+  position: static;
   z-index: 8;
-  margin: 12px -18px 0;
+  flex: none;
+  margin: 0 -18px;
   padding: 12px 18px 15px;
   border-top: var(--border-thin);
   background: var(--panel);
@@ -972,7 +1094,7 @@ input[type="radio"] {
   display: flex;
   min-width: 0;
   min-height: 38px;
-  height: 50px;
+  height: 44px;
   align-items: center;
   justify-content: center;
   padding: 6px 10px;
@@ -1030,7 +1152,7 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
   overflow: auto;
-  padding: 16px;
+  padding: 24px;
   background-color: var(--subtle);
   background-image:
     linear-gradient(rgba(0, 0, 0, .04) 1px, transparent 1px),
@@ -1040,6 +1162,7 @@ input[type="radio"] {
 
 .evi-wrap {
   position: relative;
+  width: min(100%, 980px);
   border: var(--border);
   background: var(--panel);
   box-shadow: var(--shadow);
@@ -1048,6 +1171,7 @@ input[type="radio"] {
 
 .evi-wrap img {
   display: block;
+  width: 100%;
   max-width: 100%;
   max-height: 100%;
 }
@@ -1166,7 +1290,7 @@ input[type="radio"] {
 }
 
 .msg {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   font-size: 12.5px;
 }
 
@@ -1296,6 +1420,10 @@ input[type="radio"] {
   background: var(--subtle);
   color: #4c4a44;
   font-size: 11.5px;
+}
+
+.msg.sys {
+  margin-bottom: 8px;
 }
 
 .msg-card {
@@ -1582,7 +1710,7 @@ input[type="radio"] {
   }
 
   .pane-data {
-    min-width: 310px;
+    min-width: 340px;
   }
 
   .mode-bar .spacer {
@@ -1594,10 +1722,11 @@ input[type="radio"] {
   }
 }
 
-@media (max-width: 980px) {
+/* 作品集嵌入宽度下，把助手移到底部，避免照片区被压成窄条。 */
+@media (max-width: 1400px) {
   .app {
     grid-template-columns: 190px minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) 285px;
+    grid-template-rows: minmax(0, 1fr) 230px;
   }
 
   .col-left {
@@ -1644,8 +1773,8 @@ input[type="radio"] {
   }
 
   .pane-data {
-    width: 48%;
-    min-width: 300px;
+    width: 50%;
+    min-width: 320px;
   }
 
   .brand-text {
@@ -1666,6 +1795,14 @@ input[type="radio"] {
 @media (max-width: 720px) {
   .app {
     min-width: 680px;
+  }
+
+  .question-list {
+    grid-template-columns: 1fr;
+  }
+
+  .question-item {
+    min-height: 92px;
   }
 }
 

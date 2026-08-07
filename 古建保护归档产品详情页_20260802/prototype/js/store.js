@@ -69,6 +69,17 @@ window.Store = (function () {
         });
       }
     });
+    // 旧版点击未开始步骤会反复写入提示，清理这些导航噪声并合并连续重复消息。
+    const 导航提示 = /^「.+」还没有开始。这里先显示待处理内容，完成前一步后会自动更新。$/;
+    const 整理后 = [];
+    (S.消息 || []).forEach(m => {
+      if (导航提示.test(m.text || "")) return;
+      const 上条 = 整理后[整理后.length - 1];
+      const 纯文本重复 = 上条 && 上条.who === m.who && 上条.text === m.text &&
+        !上条.card && !m.card && !上条.process && !m.process && !上条.edits && !m.edits;
+      if (!纯文本重复) 整理后.push(m);
+    });
+    S.消息 = 整理后.slice(-40);
     save();
   }
   function save() {
@@ -93,6 +104,10 @@ window.Store = (function () {
 
   // ===== 消息 =====
   function say(who, text, extra) {
+    const last = S.消息[S.消息.length - 1];
+    if (!extra && last && last.who === who && last.text === text && Date.now() - last.t < 3000) {
+      return last;
+    }
     S.消息.push(Object.assign({ who, text, t: Date.now() }, extra || {}));
     emit();
     return S.消息[S.消息.length - 1];

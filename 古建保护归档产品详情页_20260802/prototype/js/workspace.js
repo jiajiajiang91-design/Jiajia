@@ -51,11 +51,7 @@ window.Workspace = (function () {
       const b = UI.el("button", "tab" + (S.当前视图 === st.视图 ? " active" : "") + (未开始 ? " locked" : ""),
         VIEWS[st.视图].名);
       b.onclick = () => {
-        const 首次提示 = 未开始 && S.当前视图 !== st.视图;
         Store.goto(st.视图);
-        if (首次提示) {
-          Store.say("sys", "「" + VIEWS[st.视图].名 + "」还没有开始。这里先显示待处理内容，完成前一步后会自动更新。");
-        }
       };
       tabs.appendChild(b);
     });

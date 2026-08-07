@@ -39,14 +39,19 @@ window.ViewParts = function (root) {
 
     let 存疑块 = "";
     if (未决.length) {
-      存疑块 = '<div class="card" style="border-color:var(--warn);background:var(--warn-soft)">' +
-        '<div class="card-title">' + 未决.length + " 个构件待确认</div>" +
+      存疑块 = '<section class="card question-queue">' +
+        '<div class="queue-head"><div><div class="card-title">待确认问题</div>' +
+        '<div class="hint">先处理影响构件身份和出图的判断</div></div>' +
+        '<span class="queue-count">' + 未决.length + "</span></div>" +
+        '<div class="question-list">' +
         未决.map(q =>
-          '<div class="q-item" data-q="' + q.id + '" style="padding:6px 0;border-bottom:1px solid rgba(168,149,90,.3);cursor:pointer">' +
-          "<b>" + UI.esc(q.标题) + "</b>" + (q.构件 ? ' <span class="mono">' + q.构件 + "</span>" : "") +
-          '<div class="hint">' + UI.esc(q.问题) + "</div>" +
-          '<div class="hint" style="color:var(--warn)">需要：' + UI.esc(q.需要) + "，点这里处理</div></div>"
-        ).join("") + "</div>";
+          '<button type="button" class="question-item" data-q="' + q.id + '">' +
+          '<span class="question-title"><b>' + UI.esc(q.标题) + "</b>" +
+          (q.构件 ? ' <span class="mono">' + q.构件 + "</span>" : "") + "</span>" +
+          '<span class="question-summary">' + UI.esc(q.问题) + "</span>" +
+          '<span class="question-meta"><span>需要：' + UI.esc(q.需要) +
+          '</span><strong>查看判断 →</strong></span></button>'
+        ).join("") + "</div></section>";
     }
 
     const sel = S.选中构件 ? Store.findPart(S.选中构件) : null;
@@ -67,13 +72,14 @@ window.ViewParts = function (root) {
       '<div class="pane-title"><span>构件核对</span><span class="hint">共 ' + S.构件.length +
       " 项，其中 " + S.构件.filter(p => p.状态 === "measured").length + " 项有实测支持</span></div>" +
       存疑块 +
-      '<div class="card">' + UI.table(["编号", "名称", "类别", "尺寸", "状态"], [rows]) + "</div>" +
+      '<div class="card parts-table-card"><div class="card-title">构件清单</div>' +
+      UI.table(["编号", "名称", "类别", "尺寸", "状态"], [rows]) + "</div>" +
       详情;
 
     data.querySelectorAll("tr.row").forEach(tr => {
       tr.onclick = () => { Store.selectPart(tr.dataset.no); };
     });
-    data.querySelectorAll(".q-item").forEach(d => {
+    data.querySelectorAll(".question-item").forEach(d => {
       d.onclick = () => Orchestrator.openQuestion(d.dataset.q);
     });
     const bw = data.querySelector("#btnWrong");
