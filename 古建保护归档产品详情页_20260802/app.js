@@ -8,18 +8,18 @@ const prototypeFrame = document.querySelector('[data-prototype-frame] iframe');
 const mobileSteps = [
   {
     title: '建立任务',
-    summary: '先写清这次项目要交付什么，后续资料清单和检查项都从这里产生。',
-    points: ['确定保护对象与项目用途', '选择成果、规范和精度要求', '记录操作、审核、接收和确认角色']
+    summary: '用户用自然语言说明任务，AI 提取对象、成果、规范和缺失信息。',
+    points: ['用户确认任务范围与角色', 'AI 形成结构化任务草稿', '未知项不自动补全']
   },
   {
     title: '整理资料',
-    summary: '把照片、尺寸、草图和既有文件放进同一项任务，并标出缺失与质量问题。',
-    points: ['登记来源、时间和使用条件', '检查遮挡、模糊、缺面和重复', '生成补拍、补测或补文件任务']
+    summary: 'AI 读取照片、尺寸、草图和既有文件，并标出缺失与质量问题。',
+    points: ['登记来源、时间和使用条件', '识别遮挡、模糊、缺面和重复', '用户确认补拍、补测或补文件任务']
   },
   {
     title: '核对构件',
-    summary: '系统形成构件和关系草稿，用户逐项查看依据并处理未知内容。',
-    points: ['查看候选类别、位置和证据', '确认或修改构件信息', '记录修改原因与影响范围']
+    summary: 'AI 形成构件候选和判断理由，用户逐项确认并处理未知内容。',
+    points: ['查看候选类别、位置和证据', '确认或修改构件信息', '修改后再运行规则检查']
   },
   {
     title: '记录现状',
@@ -28,13 +28,13 @@ const mobileSteps = [
   },
   {
     title: '制作成果',
-    summary: '同一版对象数据用于生成图纸、清单和现状记录，减少多份文件重复修改。',
-    points: ['选择适用的画法和版式', '预览图纸与配套材料', '导出正式文件和结构化数据']
+    summary: '规则程序根据已确认数据生成图纸、清单和现状记录。',
+    points: ['程序执行尺寸换算与几何生成', '预览图纸与配套材料', '人工确认后导出正式文件']
   },
   {
     title: '检查成果',
-    summary: '尺寸、规范、完整性和责任确认分别检查，问题可以回到对应对象与资料。',
-    points: ['运行输入与图纸预检', '按风险处理未知项和冲突', '记录退回、修改、复核和确认']
+    summary: '规则程序检查确定性问题，专业人员处理规范、未知项和责任确认。',
+    points: ['运行输入、尺寸与图纸预检', '按风险处理未知项和冲突', '记录退回、修改、复核和确认']
   },
   {
     title: '准备交付',
@@ -111,11 +111,12 @@ sectionLinks.forEach((link) => link.addEventListener('click', closeMobileNav));
 
 document.querySelector('[data-prototype-reset]')?.addEventListener('click', () => {
   try {
-    prototypeFrame.contentWindow.localStorage.clear();
+    const resetButton = prototypeFrame.contentDocument?.querySelector('#btnReset');
+    if (resetButton) resetButton.click();
+    else prototypeFrame.src = 'prototype/index.html';
   } catch (error) {
-    console.info('原型进度将在重新加载后复位。', error);
+    prototypeFrame.src = 'prototype/index.html';
   }
-  prototypeFrame.src = 'prototype/index.html';
 });
 
 document.querySelector('[data-prototype-fullscreen]')?.addEventListener('click', async () => {

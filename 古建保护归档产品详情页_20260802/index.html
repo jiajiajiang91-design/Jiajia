@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="江佳佳的古建保护成果生产与持续归档工作台案例，展示交互原型、调研过程、产品判断、功能结构和当前验证边界。">
-  <title>古建保护成果工作台｜江佳佳产品案例</title>
-  <link rel="stylesheet" href="styles.css?v=20260805-01">
-  <script src="app.js?v=20260802-01" defer></script>
+  <meta name="description" content="江佳佳的古建测绘成果工作台案例，展示 AI 理解与识别、规则程序校验、人工确认和成果交付的完整链路。">
+  <title>古建测绘成果工作台｜江佳佳产品案例</title>
+  <link rel="stylesheet" href="styles.css?v=20260807-01">
+  <script src="app.js?v=20260807-01" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#case-main">跳到主要内容</a>
@@ -26,12 +26,12 @@
   <main class="case-page" id="case-main">
     <section class="case-section hero-section" aria-labelledby="case-title">
       <p class="eyebrow">AI 产品 · 独立项目</p>
-      <h1 id="case-title"><span>古建保护成果生产与</span><span>持续归档工作台</span></h1>
-      <p class="hero-lead">我把测绘资料、构件记录、成果检查和交付文件整理进同一条工作流程。每项结果都保留来源、修改记录和确认人，便于团队核对、交付和后续复查。</p>
+      <h1 id="case-title"><span>古建测绘成果</span><span>工作台</span></h1>
+      <p class="hero-lead">我把任务理解、资料整理、实测核对、构件识别、程序出图和交付检查放进同一工作台。AI 负责理解与解释，规则程序负责确定性计算，专业人员处理存疑并签发。</p>
       <div class="tag-row" aria-label="项目能力标签">
-        <span class="tag bg-blue">产品策略</span>
-        <span class="tag bg-yellow">专业工作流程</span>
-        <span class="tag bg-green">AI 辅助生产</span>
+        <span class="tag bg-blue">AI 工作流</span>
+        <span class="tag bg-yellow">规则校验</span>
+        <span class="tag bg-green">人工责任</span>
       </div>
 
       <div class="prototype-shell neo-panel">
@@ -39,7 +39,7 @@
           <div>
             <span class="status-dot" aria-hidden="true"></span>
             <strong>交互原型</strong>
-            <span>从建立任务到准备交付</span>
+            <span>AI、规则程序与人工协同完成一类立面成果</span>
           </div>
           <div class="prototype-actions">
             <button type="button" data-prototype-reset>重新开始</button>
@@ -90,7 +90,7 @@
         <li><span>01</span><div><h3>区分使用者和责任人</h3><p>绘图员负责整理和校正，项目负责人负责检查和确认，接收方核对交付内容。采购关系仍需在真实项目中验证。</p></div></li>
         <li><span>02</span><div><h3>从正式成果反推输入</h3><p>先写清成果类型、规范、精度、角色和验收条件，再生成资料清单和检查要求。</p></div></li>
         <li><span>03</span><div><h3>比较关联行业的工作流程</h3><p>我比较了测绘、遗产数字化、档案、工业质检等相关流程，提取任务定义、资料治理、对象结构、质量责任和交付归档等稳定能力。</p></div></li>
-        <li><span>04</span><div><h3>划清 AI 的使用范围</h3><p>AI 适合整理、草拟、生成、规则检查和问题定位。实测、规范选择、专业判断和正式签发继续由项目人员完成。</p></div></li>
+        <li><span>04</span><div><h3>划清 AI、程序与人工边界</h3><p>AI 读取任务与资料、识别构件、解释问题并提出建议；尺寸换算、几何校验、出图和组包由规则程序完成；实测、专业判断和签发由人负责。</p></div></li>
       </ol>
     </section>
 
@@ -101,8 +101,8 @@
       </header>
       <blockquote class="statement-card">近期目标是让一类立面成果可以生产、检查、确认和交付。持续档案需要真实使用频率、复查责任和预算支持。</blockquote>
       <div class="info-grid three-columns judgment-grid">
-        <article class="info-card bg-blue"><p class="card-kicker">产品目标</p><h3>形成可核验的成果包</h3><p>正式文件、结构化数据、检查记录、版本说明和交付清单保持关联。</p></article>
-        <article class="info-card bg-yellow"><p class="card-kicker">AI 边界</p><h3>处理重复工作与问题定位</h3><p>AI 提供草稿和检查提示。专业人员处理未知项、冲突、责任确认和最终签发。</p></article>
+        <article class="info-card bg-blue"><p class="card-kicker">产品目标</p><h3>完成一类可核验交付</h3><p>从任务要求到正式文件、结构化数据、检查记录和交付清单保持关联。</p></article>
+        <article class="info-card bg-yellow"><p class="card-kicker">AI 边界</p><h3>建议不直接写入正式成果</h3><p>AI 输出经过字段限制和规则复核，专业人员处理未知项、冲突并最终签发。</p></article>
         <article class="info-card bg-green"><p class="card-kicker">验证边界</p><h3>记录采用、质量和成本</h3><p>样本可以说明路径可运行。真实项目才能说明成果是否采用、是否减少成本、是否有付费可能。</p></article>
       </div>
     </section>
@@ -132,34 +132,34 @@
       <div class="flow-board">
         <article><span>输入</span><h3>任务与资料</h3><p>任务要求决定资料清单。缺失、遮挡和权限问题先进入待处理列表。</p></article>
         <i aria-hidden="true">→</i>
-        <article><span>整理</span><h3>对象与证据</h3><p>系统形成构件和关系草稿。用户确认类别、位置、依据和未知项。</p></article>
+        <article><span>AI</span><h3>理解与识别</h3><p>AI 形成任务结构、构件候选和判断理由，未知项保留给用户处理。</p></article>
         <i aria-hidden="true">→</i>
-        <article><span>生产</span><h3>成果与检查</h3><p>结构化数据生成图纸和记录。检查结果回到对应对象和来源。</p></article>
+        <article><span>程序</span><h3>计算、出图与检查</h3><p>规则程序换算尺寸、生成图纸并校验确定性问题，结果回到对应对象。</p></article>
         <i aria-hidden="true">→</i>
-        <article><span>输出</span><h3>交付与版本</h3><p>成果、检查、修改和确认记录组成交付包，历史版本继续保留。</p></article>
+        <article><span>人工</span><h3>确认与交付</h3><p>专业人员处理存疑、复核修改并签发，成果与记录组成交付包。</p></article>
       </div>
     </section>
 
     <section class="case-section result-section" id="current-result" aria-labelledby="result-title">
       <header class="section-heading">
         <p class="eyebrow">当前结果</p>
-        <h2 id="result-title">产品方向已经形成，真实交付仍待验证</h2>
+        <h2 id="result-title">AI 已进入关键步骤，交付价值仍待验证</h2>
       </header>
       <div class="result-grid">
         <article class="result-card completed">
           <p class="card-kicker">已经完成</p>
-          <h3>交互原型与完整流程</h3>
-          <ul><li>原型覆盖任务建立、资料整理、对象确认、成果检查和交付准备。</li><li>样本工作流程已经串联照片识别、结构化记录、人工核对、脚本出图和目检。</li><li>产品模块、AI 职责、专业责任和版本进入条件已经整理。</li></ul>
+          <h3>可操作的协同流程</h3>
+          <ul><li>支持自然语言任务、图片与文档上传、构件识别和判断理由展示。</li><li>AI 建议、规则校验、人工确认和程序出图已经进入同一流程。</li><li>交付前可查看问题、修改记录和责任状态。</li></ul>
         </article>
         <article class="result-card pending">
           <p class="card-kicker">仍待验证</p>
-          <h3>采用、质量、成本与付费</h3>
-          <ul><li>真实项目中的资料覆盖、实测精度和成果采用。</li><li>绘图、审核和返工人时能否减少。</li><li>接收方需要哪些检查记录、版本信息和结构化数据。</li><li>数据权属、部署条件和采购关系。</li></ul>
+          <h3>真实项目价值与部署条件</h3>
+          <ul><li>识别准确性、建议采用率和正式成果采用情况。</li><li>整理、绘图、审核和返工人时能否减少。</li><li>接收方需要的检查记录、版本信息和结构化数据。</li><li>数据权属、部署条件和采购关系。</li></ul>
         </article>
       </div>
       <div class="next-step-panel">
         <div><p class="card-kicker">下一步</p><h3>先完成一次代理交付</h3></div>
-        <ol><li>取得带任务要求、适用规范和实测基准的完整资料。</li><li>记录原流程在整理、绘图、审核和返工上的人时。</li><li>按同一套验收条件比较成果质量、交付时间和退回问题。</li></ol>
+        <ol><li>取得带任务要求、适用规范和实测基准的完整资料。</li><li>记录人工基线、AI 建议采用率、修改和返工人时。</li><li>按同一套验收条件比较成果质量、交付时间和退回问题。</li></ol>
       </div>
     </section>
 
@@ -175,6 +175,6 @@
     </section>
   </main>
 
-  <footer class="site-footer"><span>江佳佳 Jiajia Jiang</span><span>古建保护成果工作台 · 2026</span></footer>
+  <footer class="site-footer"><span>江佳佳 Jiajia Jiang</span><span>古建测绘成果工作台 · 2026</span></footer>
 </body>
 </html>
