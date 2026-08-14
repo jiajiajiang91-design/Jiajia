@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="江佳佳的 AI 产品经理作品集：AI 记忆产品、古建测绘成果工作台，以及 AI 与空间设计实践。">
   <title>江佳佳｜AI 应用产品经理作品集</title>
-  <link rel="stylesheet" href="styles.css?v=20260814-02">
-  <script src="app.js?v=20260814-02" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260815-03">
+  <script src="app.js?v=20260815-03" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -178,7 +178,7 @@
             <h2 id="practice-lightbox-title">Latent Walk</h2>
           </div>
           <div class="practice-lightbox-tools">
-            <a class="practice-lightbox-source" href="#" target="_blank" rel="noopener noreferrer" hidden>在设计作品集查看 ↗</a>
+            <a class="practice-lightbox-source icon-button" href="#" hidden aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
             <span class="practice-lightbox-count" aria-live="polite">1 / 2</span>
             <button class="practice-lightbox-close" type="button" aria-label="关闭图纸">×</button>
           </div>
@@ -201,7 +201,7 @@
             <h2 id="folio-pdf-title">RemediScape</h2>
           </div>
           <div class="practice-lightbox-tools">
-            <a class="practice-lightbox-source" href="assets/documents/RemediScape-drawings.pdf" target="_blank" rel="noopener noreferrer">新标签页打开 ↗</a>
+            <a class="icon-button" href="assets/documents/RemediScape-drawings.pdf?v=20260815-03" target="_blank" rel="noopener noreferrer" aria-label="新标签页打开 PDF" title="新标签页打开 PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v6H4V5h6"/></svg></a>
             <button class="pdf-dialog-close practice-lightbox-close" type="button" aria-label="关闭图纸">×</button>
           </div>
         </header>
@@ -245,82 +245,105 @@
       </button>
       <div class="folio-more" id="folio-more">
         <div class="folio-grid">
-          <button class="folio-card reveal" type="button" id="folio-remediscape-card" aria-haspopup="dialog">
-            <span class="folio-card-media">
+          <article class="folio-card reveal">
+            <button class="folio-card-media folio-pdf-trigger" type="button" aria-haspopup="dialog" aria-label="打开 RemediScape 图纸 PDF">
               <img src="assets/images/home/design-portfolio/remediscape-thumb.webp" width="1080" height="1080" loading="lazy" alt="RemediScape 毕业设计项目封面">
-            </span>
-            <span class="folio-card-body">
+            </button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>MArch · 01</small><small>2025—2026</small></span>
               <strong>RemediScape</strong>
               <span class="folio-card-sub">污染场地修复设计 · 伦敦 · 英国</span>
-              <em>滚动查看 76 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-neighbors-no-boundaries" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/neighbors-no-boundaries-thumb.webp" width="1080" height="1080" loading="lazy" alt="邻里无界项目封面，深圳城中村更新研究"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=remediscape" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button folio-pdf-trigger" type="button" aria-haspopup="dialog" aria-label="查看图纸 PDF" title="查看图纸 PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-neighbors-no-boundaries" aria-haspopup="dialog" aria-label="打开邻里无界图纸浏览器"><img src="assets/images/home/design-portfolio/neighbors-no-boundaries-thumb.webp" width="1080" height="1080" loading="lazy" alt="邻里无界项目封面，深圳城中村更新研究"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 01</small><small>2023</small></span>
               <strong>邻里无界</strong>
               <span class="folio-card-sub">Neighbors But No Boundaries · 深圳 · 中国</span>
-              <em>查看 6 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-liquid-legacy" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/liquid-legacy-thumb.webp" width="1080" height="1080" loading="lazy" alt="流动遗产项目封面，上海遗产场地与水体修复"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=neighbors-no-boundaries" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-neighbors-no-boundaries" aria-haspopup="dialog" aria-label="查看 6 页图纸" title="查看 6 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-liquid-legacy" aria-haspopup="dialog" aria-label="打开流动遗产图纸浏览器"><img src="assets/images/home/design-portfolio/liquid-legacy-thumb.webp" width="1080" height="1080" loading="lazy" alt="流动遗产项目封面，上海遗产场地与水体修复"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 02</small><small>2024—2025</small></span>
               <strong>流动遗产</strong>
               <span class="folio-card-sub">Liquid Legacy · 上海 · 中国</span>
-              <em>查看 6 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-living-with-rainforest" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/living-with-rainforest-thumb.webp" width="1080" height="1080" loading="lazy" alt="与雨林共生项目封面，巴西区域生态规划"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=liquid-legacy" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-liquid-legacy" aria-haspopup="dialog" aria-label="查看 6 页图纸" title="查看 6 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-living-with-rainforest" aria-haspopup="dialog" aria-label="打开与雨林共生图纸浏览器"><img src="assets/images/home/design-portfolio/living-with-rainforest-thumb.webp" width="1080" height="1080" loading="lazy" alt="与雨林共生项目封面，巴西区域生态规划"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 03</small><small>2024</small></span>
               <strong>与雨林共生</strong>
               <span class="folio-card-sub">Living With The Rainforest · 马托格罗索 · 巴西</span>
-              <em>查看 5 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-playcube" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/playcube-thumb.webp" width="1080" height="1080" loading="lazy" alt="玩乐方块项目封面，包容性儿童景观设计"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=living-with-rainforest" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-living-with-rainforest" aria-haspopup="dialog" aria-label="查看 5 页图纸" title="查看 5 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-playcube" aria-haspopup="dialog" aria-label="打开玩乐方块图纸浏览器"><img src="assets/images/home/design-portfolio/playcube-thumb.webp" width="1080" height="1080" loading="lazy" alt="玩乐方块项目封面，包容性儿童景观设计"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 04</small><small>2022—2023</small></span>
               <strong>玩乐方块</strong>
               <span class="folio-card-sub">PlayCube · 新泽西 · 美国</span>
-              <em>查看 6 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-revival-paradise" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/revival-paradise-thumb.webp" width="1080" height="1080" loading="lazy" alt="复兴乐园项目封面，人犬共生与废弃物系统设计"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=playcube" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-playcube" aria-haspopup="dialog" aria-label="查看 6 页图纸" title="查看 6 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-revival-paradise" aria-haspopup="dialog" aria-label="打开复兴乐园图纸浏览器"><img src="assets/images/home/design-portfolio/revival-paradise-thumb.webp" width="1080" height="1080" loading="lazy" alt="复兴乐园项目封面，人犬共生与废弃物系统设计"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 05</small><small>2022</small></span>
               <strong>复兴乐园</strong>
               <span class="folio-card-sub">Revival Paradise · 休斯敦 · 美国</span>
-              <em>查看 6 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-dubai-collage-city" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/dubai-collage-city-thumb.webp" width="1080" height="1080" loading="lazy" alt="迪拜拼贴城市项目封面，国际竞赛团队项目"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=revival-paradise" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-revival-paradise" aria-haspopup="dialog" aria-label="查看 6 页图纸" title="查看 6 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-dubai-collage-city" aria-haspopup="dialog" aria-label="打开迪拜拼贴城市图纸浏览器"><img src="assets/images/home/design-portfolio/dubai-collage-city-thumb.webp" width="1080" height="1080" loading="lazy" alt="迪拜拼贴城市项目封面，国际竞赛团队项目"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>PRO · 01</small><small>2025</small></span>
               <strong>迪拜拼贴城市</strong>
               <span class="folio-card-sub">Dubai-Collage City · 迪拜 · 阿联酋</span>
-              <em>查看 5 页图纸 ↗</em>
-            </span>
-          </button>
-          <button class="folio-card reveal" type="button" data-gallery="folio-walk-by-water" aria-haspopup="dialog">
-            <span class="folio-card-media"><img src="assets/images/home/design-portfolio/walk-by-water-thumb.webp" width="1080" height="1080" loading="lazy" alt="逐水而行项目封面，咸海渔业中心复兴设计"></span>
-            <span class="folio-card-body">
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=dubai-collage-city" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-dubai-collage-city" aria-haspopup="dialog" aria-label="查看 5 页图纸" title="查看 5 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
+          <article class="folio-card reveal">
+            <button class="folio-card-media" type="button" data-gallery="folio-walk-by-water" aria-haspopup="dialog" aria-label="打开逐水而行图纸浏览器"><img src="assets/images/home/design-portfolio/walk-by-water-thumb.webp" width="1080" height="1080" loading="lazy" alt="逐水而行项目封面，咸海渔业中心复兴设计"></button>
+            <div class="folio-card-body">
               <span class="folio-card-meta"><small>UG · 07</small><small>2021—2022</small></span>
               <strong>逐水而行</strong>
               <span class="folio-card-sub">Walk By Water · 穆伊纳克 · 乌兹别克斯坦</span>
-              <em>查看 5 页图纸 ↗</em>
-            </span>
-          </button>
+              <span class="folio-card-actions">
+                <a class="icon-button" href="设计项目详情页_20260815/index.html?id=walk-by-water" aria-label="查看详细介绍" title="查看详细介绍"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9.5 13h5M9.5 17h5"/></svg></a>
+                <button class="icon-button" type="button" data-gallery="folio-walk-by-water" aria-haspopup="dialog" aria-label="查看 5 页图纸" title="查看 5 页图纸"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M3 16v5h5"/><path d="M21 16v5h-5"/></svg></button>
+              </span>
+            </div>
+          </article>
         </div>
-        <p class="folio-footnote reveal"><a href="https://jiajiajiang91-design.github.io/jiajia-portfolio-site/index.html" target="_blank" rel="noopener noreferrer">查看完整设计作品集 ↗</a></p>
       </div>
     </section>
 

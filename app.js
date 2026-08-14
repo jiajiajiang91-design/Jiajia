@@ -68,7 +68,7 @@ const folioProjects = [
 folioProjects.forEach(([id, title, pages]) => {
   practiceGalleries[`folio-${id}`] = {
     title,
-    link: `https://jiajiajiang91-design.github.io/jiajia-portfolio-site/project.html?id=${id}`,
+    link: `设计项目详情页_20260815/index.html?id=${id}`,
     images: Array.from(
       { length: pages },
       (_, index) => `assets/images/home/design-portfolio/${id}-page-${String(index + 1).padStart(2, "0")}.webp`,
@@ -182,23 +182,27 @@ if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
 }
 
 const folioPdfDialog = document.querySelector("#folio-pdf-dialog");
-const folioPdfTrigger = document.querySelector("#folio-remediscape-card");
+const folioPdfTriggers = [...document.querySelectorAll(".folio-pdf-trigger")];
 
-if (folioPdfDialog && folioPdfTrigger && typeof folioPdfDialog.showModal === "function") {
+if (folioPdfDialog && folioPdfTriggers.length && typeof folioPdfDialog.showModal === "function") {
   const folioPdfFrame = folioPdfDialog.querySelector(".pdf-dialog-frame");
   const folioPdfClose = folioPdfDialog.querySelector(".pdf-dialog-close");
-  const folioPdfUrl = "assets/documents/RemediScape-drawings.pdf";
+  const folioPdfUrl = "assets/documents/RemediScape-drawings.pdf?v=20260815-03";
+  let folioPdfLastTrigger = folioPdfTriggers[0];
 
-  folioPdfTrigger.addEventListener("click", () => {
-    // 手机端浏览器 iframe 内嵌 PDF 支持差，直接新标签页打开
-    if (window.innerWidth < 820) {
-      window.open(folioPdfUrl, "_blank", "noopener");
-      return;
-    }
-    if (!folioPdfFrame.src) folioPdfFrame.src = `${folioPdfUrl}#view=FitV&pagemode=none`;
-    folioPdfDialog.showModal();
-    document.body.classList.add("lightbox-open");
-    folioPdfClose.focus();
+  folioPdfTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      // 手机端浏览器 iframe 内嵌 PDF 支持差，直接新标签页打开
+      if (window.innerWidth < 820) {
+        window.open(folioPdfUrl, "_blank", "noopener");
+        return;
+      }
+      folioPdfLastTrigger = trigger;
+      if (!folioPdfFrame.src) folioPdfFrame.src = `${folioPdfUrl}#view=FitV&pagemode=none`;
+      folioPdfDialog.showModal();
+      document.body.classList.add("lightbox-open");
+      folioPdfClose.focus();
+    });
   });
 
   folioPdfClose.addEventListener("click", () => folioPdfDialog.close());
@@ -207,7 +211,7 @@ if (folioPdfDialog && folioPdfTrigger && typeof folioPdfDialog.showModal === "fu
   });
   folioPdfDialog.addEventListener("close", () => {
     document.body.classList.remove("lightbox-open");
-    folioPdfTrigger.focus();
+    folioPdfLastTrigger.focus();
   });
 }
 
