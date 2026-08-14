@@ -55,10 +55,50 @@ const practiceGalleries = {
   },
 };
 
+const folioProjects = [
+  ["neighbors-no-boundaries", "邻里无界 Neighbors But No Boundaries", 6],
+  ["liquid-legacy", "流动遗产 Liquid Legacy", 6],
+  ["living-with-rainforest", "与雨林共生 Living With The Rainforest", 5],
+  ["playcube", "玩乐方块 PlayCube", 6],
+  ["revival-paradise", "复兴乐园 Revival Paradise", 6],
+  ["dubai-collage-city", "迪拜拼贴城市 Dubai-Collage City", 5],
+  ["walk-by-water", "逐水而行 Walk By Water", 5],
+];
+
+folioProjects.forEach(([id, title, pages]) => {
+  practiceGalleries[`folio-${id}`] = {
+    title,
+    link: `https://jiajiajiang91-design.github.io/jiajia-portfolio-site/project.html?id=${id}`,
+    images: Array.from(
+      { length: pages },
+      (_, index) => `assets/images/home/design-portfolio/${id}-page-${String(index + 1).padStart(2, "0")}.webp`,
+    ),
+  };
+});
+
+const folioToggle = document.querySelector(".folio-toggle");
+const folioMore = document.querySelector("#folio-more");
+
+if (folioToggle && folioMore) {
+  const folioToggleLabel = folioToggle.querySelector(".social-toggle-label");
+  folioMore.hidden = true;
+  folioToggle.hidden = false;
+
+  folioToggle.addEventListener("click", () => {
+    const willExpand = folioToggle.getAttribute("aria-expanded") !== "true";
+    folioToggle.setAttribute("aria-expanded", String(willExpand));
+    folioMore.hidden = !willExpand;
+    if (folioToggleLabel) {
+      folioToggleLabel.textContent = willExpand ? "看完了？收起设计作品集" : "想了解我在做产品之前的设计功底吗？点击查看设计作品集";
+    }
+  });
+}
+
 const practiceLightbox = document.querySelector("#practice-lightbox");
 
 if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
   const lightboxTitle = practiceLightbox.querySelector("#practice-lightbox-title");
+  const lightboxSource = practiceLightbox.querySelector(".practice-lightbox-source");
   const lightboxCount = practiceLightbox.querySelector(".practice-lightbox-count");
   const lightboxImage = practiceLightbox.querySelector(".practice-lightbox-image");
   const lightboxZoom = practiceLightbox.querySelector(".practice-lightbox-zoom");
@@ -84,6 +124,14 @@ if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
     lightboxImage.alt = `${activeGallery.title}项目图纸，第 ${activeIndex + 1} 页，共 ${total} 页`;
     lightboxPrev.disabled = activeIndex === 0;
     lightboxNext.disabled = activeIndex === total - 1;
+    if (lightboxSource) {
+      if (activeGallery.link) {
+        lightboxSource.href = activeGallery.link;
+        lightboxSource.hidden = false;
+      } else {
+        lightboxSource.hidden = true;
+      }
+    }
     resetLightboxZoom();
   }
 
