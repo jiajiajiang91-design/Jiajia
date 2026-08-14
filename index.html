@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="江佳佳的 AI 产品经理作品集：AI 记忆产品、古建测绘成果工作台，以及 AI 与空间设计实践。">
   <title>江佳佳｜AI 应用产品经理作品集</title>
-  <link rel="stylesheet" href="styles.css?v=20260814-01">
-  <script src="app.js?v=20260814-01" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260814-02">
+  <script src="app.js?v=20260814-02" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -193,6 +193,24 @@
       </div>
     </dialog>
 
+    <dialog class="practice-lightbox pdf-dialog" id="folio-pdf-dialog" aria-labelledby="folio-pdf-title">
+      <div class="practice-lightbox-shell">
+        <header class="practice-lightbox-header">
+          <div>
+            <p>毕业设计图纸</p>
+            <h2 id="folio-pdf-title">RemediScape</h2>
+          </div>
+          <div class="practice-lightbox-tools">
+            <a class="practice-lightbox-source" href="assets/documents/RemediScape-drawings.pdf" target="_blank" rel="noopener noreferrer">新标签页打开 ↗</a>
+            <button class="pdf-dialog-close practice-lightbox-close" type="button" aria-label="关闭图纸">×</button>
+          </div>
+        </header>
+        <div class="pdf-dialog-stage">
+          <iframe class="pdf-dialog-frame" title="RemediScape 毕业设计图纸 PDF"></iframe>
+        </div>
+      </div>
+    </dialog>
+
     <dialog class="recommendation-dialog" id="recommendation-dialog" aria-labelledby="recommendation-dialog-title">
       <div class="recommendation-dialog-shell">
         <header class="recommendation-dialog-header">
@@ -227,18 +245,17 @@
       </button>
       <div class="folio-more" id="folio-more">
         <div class="folio-grid">
-          <a class="folio-card reveal" href="https://jiajiajiang91-design.github.io/jiajia-portfolio-site/project.html?id=remediscape" target="_blank" rel="noopener noreferrer">
+          <button class="folio-card reveal" type="button" id="folio-remediscape-card" aria-haspopup="dialog">
             <span class="folio-card-media">
               <img src="assets/images/home/design-portfolio/remediscape-thumb.webp" width="1080" height="1080" loading="lazy" alt="RemediScape 毕业设计项目封面">
-              <span class="folio-card-badge">图纸整理中</span>
             </span>
             <span class="folio-card-body">
               <span class="folio-card-meta"><small>MArch · 01</small><small>2025—2026</small></span>
               <strong>RemediScape</strong>
               <span class="folio-card-sub">污染场地修复设计 · 伦敦 · 英国</span>
-              <em>在设计作品集查看 ↗</em>
+              <em>滚动查看 76 页图纸 ↗</em>
             </span>
-          </a>
+          </button>
           <button class="folio-card reveal" type="button" data-gallery="folio-neighbors-no-boundaries" aria-haspopup="dialog">
             <span class="folio-card-media"><img src="assets/images/home/design-portfolio/neighbors-no-boundaries-thumb.webp" width="1080" height="1080" loading="lazy" alt="邻里无界项目封面，深圳城中村更新研究"></span>
             <span class="folio-card-body">

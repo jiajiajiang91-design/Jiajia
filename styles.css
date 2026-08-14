@@ -481,6 +481,8 @@ main section[id],
 .folio-footnote a { color: var(--ink); font: 700 13px/20px var(--mono); text-decoration: underline; text-underline-offset: 4px; }
 .practice-lightbox-source { color: var(--ink); font: 700 12px/18px var(--mono); text-decoration: underline; text-underline-offset: 4px; white-space: nowrap; }
 .practice-lightbox-source[hidden] { display: none; }
+.pdf-dialog-stage { min-height: 0; background: #070707; }
+.pdf-dialog-frame { width: 100%; height: 100%; display: block; border: 0; }
 .social-card { position: relative; height: 676px; min-height: 676px; margin-bottom: 29px; padding: 17px; display: flex; flex-direction: column; overflow: visible; background: var(--white); border: var(--border); box-shadow: 6px 6px 0 var(--ink); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
 .social-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
 .social-card:active { transform: translate(3px, 3px); box-shadow: none; }

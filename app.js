@@ -181,6 +181,36 @@ if (practiceLightbox && typeof practiceLightbox.showModal === "function") {
   });
 }
 
+const folioPdfDialog = document.querySelector("#folio-pdf-dialog");
+const folioPdfTrigger = document.querySelector("#folio-remediscape-card");
+
+if (folioPdfDialog && folioPdfTrigger && typeof folioPdfDialog.showModal === "function") {
+  const folioPdfFrame = folioPdfDialog.querySelector(".pdf-dialog-frame");
+  const folioPdfClose = folioPdfDialog.querySelector(".pdf-dialog-close");
+  const folioPdfUrl = "assets/documents/RemediScape-drawings.pdf";
+
+  folioPdfTrigger.addEventListener("click", () => {
+    // 手机端浏览器 iframe 内嵌 PDF 支持差，直接新标签页打开
+    if (window.innerWidth < 820) {
+      window.open(folioPdfUrl, "_blank", "noopener");
+      return;
+    }
+    if (!folioPdfFrame.src) folioPdfFrame.src = `${folioPdfUrl}#view=FitV&pagemode=none`;
+    folioPdfDialog.showModal();
+    document.body.classList.add("lightbox-open");
+    folioPdfClose.focus();
+  });
+
+  folioPdfClose.addEventListener("click", () => folioPdfDialog.close());
+  folioPdfDialog.addEventListener("click", (event) => {
+    if (event.target === folioPdfDialog) folioPdfDialog.close();
+  });
+  folioPdfDialog.addEventListener("close", () => {
+    document.body.classList.remove("lightbox-open");
+    folioPdfTrigger.focus();
+  });
+}
+
 const recommendationDialog = document.querySelector("#recommendation-dialog");
 const recommendationTrigger = document.querySelector(".timeline-letter-button");
 
